@@ -18,11 +18,12 @@
     self.window = [[UIWindow alloc] initWithFrame:frame];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
     MainViewController* mvCtr = [[MainViewController alloc] initWithFrame:frame];
     self.window.rootViewController = mvCtr;
     [self.window makeKeyAndVisible];
     [mvCtr createCameraController];
-    [mvCtr viewDidUnload];
+    //[mvCtr viewDidUnload];
     return YES;
 }
 

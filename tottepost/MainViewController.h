@@ -7,19 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingViewController.h"
 
 /*!
  * Main view controller
  */
 @interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
-    UIImagePickerController* imagePicker_;
-    UIBarButtonItem* cameraButton_;
+@protected
+    __strong SettingViewController *settingViewController_;
+    __strong UINavigationController *settingNavigationController_;
+    __strong UIImagePickerController* imagePicker_;
+    __strong UIBarButtonItem* cameraButton_;
+    __strong UIButton *settingButton_;
+    __strong UIView *imagePickerOverlayView_;
     UIDevice* device_;
     int row;
     int prevRow;
 }
 
-- (id)initWithFrame:(CGRect)frame;
+- (id) initWithFrame:(CGRect)frame;
 - (void) createCameraController;
 - (void) viewDidShow: (UIView *)view;
 
