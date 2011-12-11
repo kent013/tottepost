@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A51494C5AB00380D30 /* MainViewController.m */; };
+		3704D5AA1494C5B600380D30 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A91494C5B600380D30 /* MainView.m */; };
+		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
+		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
+		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
+		376E15471494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E15451494C47800A34E7D /* InfoPlist.strings */; };
+		376E15491494C47800A34E7D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15481494C47800A34E7D /* main.m */; };
+		376E154D1494C47800A34E7D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E154C1494C47800A34E7D /* AppDelegate.m */; };
+		376E15551494C47800A34E7D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15541494C47800A34E7D /* SenTestingKit.framework */; };
+		376E15561494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
+		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
+		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
+		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		376E15581494C47800A34E7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 376E152F1494C47800A34E7D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 376E15371494C47800A34E7D;
+			remoteInfo = tottepost;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3704D5A41494C5AB00380D30 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../../../NU/tottepost/tottepost/MainViewController.h; sourceTree = "<group>"; };
+		3704D5A51494C5AB00380D30 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../../../NU/tottepost/tottepost/MainViewController.m; sourceTree = "<group>"; };
+		3704D5A81494C5B600380D30 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainView.h; path = ../../../NU/tottepost/tottepost/MainView.h; sourceTree = "<group>"; };
+		3704D5A91494C5B600380D30 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainView.m; path = ../../../NU/tottepost/tottepost/MainView.m; sourceTree = "<group>"; };
+		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		376E15401494C47800A34E7D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		376E15441494C47800A34E7D /* tottepost-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tottepost-Info.plist"; sourceTree = "<group>"; };
+		376E15461494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		376E15481494C47800A34E7D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		376E154A1494C47800A34E7D /* tottepost-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tottepost-Prefix.pch"; sourceTree = "<group>"; };
+		376E154B1494C47800A34E7D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		376E154C1494C47800A34E7D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		376E15531494C47800A34E7D /* tottepostTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tottepostTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		376E15541494C47800A34E7D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		376E155C1494C47800A34E7D /* tottepostTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tottepostTests-Info.plist"; sourceTree = "<group>"; };
+		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
+		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		376E15351494C47800A34E7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
+				376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */,
+				376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		376E154F1494C47800A34E7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E15551494C47800A34E7D /* SenTestingKit.framework in Frameworks */,
+				376E15561494C47800A34E7D /* UIKit.framework in Frameworks */,
+				376E15571494C47800A34E7D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		376E152D1494C47800A34E7D = {
+			isa = PBXGroup;
+			children = (
+				376E15421494C47800A34E7D /* tottepost */,
+				376E155A1494C47800A34E7D /* tottepostTests */,
+				376E153B1494C47800A34E7D /* Frameworks */,
+				376E15391494C47800A34E7D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		376E15391494C47800A34E7D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				376E15381494C47800A34E7D /* tottepost.app */,
+				376E15531494C47800A34E7D /* tottepostTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		376E153B1494C47800A34E7D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				376E153C1494C47800A34E7D /* UIKit.framework */,
+				376E153E1494C47800A34E7D /* Foundation.framework */,
+				376E15401494C47800A34E7D /* CoreGraphics.framework */,
+				376E15541494C47800A34E7D /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		376E15421494C47800A34E7D /* tottepost */ = {
+			isa = PBXGroup;
+			children = (
+				3704D5A81494C5B600380D30 /* MainView.h */,
+				3704D5A91494C5B600380D30 /* MainView.m */,
+				3704D5A41494C5AB00380D30 /* MainViewController.h */,
+				3704D5A51494C5AB00380D30 /* MainViewController.m */,
+				376E154B1494C47800A34E7D /* AppDelegate.h */,
+				376E154C1494C47800A34E7D /* AppDelegate.m */,
+				376E15431494C47800A34E7D /* Supporting Files */,
+			);
+			path = tottepost;
+			sourceTree = "<group>";
+		};
+		376E15431494C47800A34E7D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				376E15441494C47800A34E7D /* tottepost-Info.plist */,
+				376E15451494C47800A34E7D /* InfoPlist.strings */,
+				376E15481494C47800A34E7D /* main.m */,
+				376E154A1494C47800A34E7D /* tottepost-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		376E155A1494C47800A34E7D /* tottepostTests */ = {
+			isa = PBXGroup;
+			children = (
+				376E15601494C47800A34E7D /* tottepostTests.h */,
+				376E15611494C47800A34E7D /* tottepostTests.m */,
+				376E155B1494C47800A34E7D /* Supporting Files */,
+			);
+			path = tottepostTests;
+			sourceTree = "<group>";
+		};
+		376E155B1494C47800A34E7D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				376E155C1494C47800A34E7D /* tottepostTests-Info.plist */,
+				376E155D1494C47800A34E7D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		376E15371494C47800A34E7D /* tottepost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 376E15651494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepost" */;
+			buildPhases = (
+				376E15341494C47800A34E7D /* Sources */,
+				376E15351494C47800A34E7D /* Frameworks */,
+				376E15361494C47800A34E7D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tottepost;
+			productName = tottepost;
+			productReference = 376E15381494C47800A34E7D /* tottepost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		376E15521494C47800A34E7D /* tottepostTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 376E15681494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepostTests" */;
+			buildPhases = (
+				376E154E1494C47800A34E7D /* Sources */,
+				376E154F1494C47800A34E7D /* Frameworks */,
+				376E15501494C47800A34E7D /* Resources */,
+				376E15511494C47800A34E7D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				376E15591494C47800A34E7D /* PBXTargetDependency */,
+			);
+			name = tottepostTests;
+			productName = tottepostTests;
+			productReference = 376E15531494C47800A34E7D /* tottepostTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		376E152F1494C47800A34E7D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 376E15321494C47800A34E7D /* Build configuration list for PBXProject "tottepost" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 376E152D1494C47800A34E7D;
+			productRefGroup = 376E15391494C47800A34E7D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				376E15371494C47800A34E7D /* tottepost */,
+				376E15521494C47800A34E7D /* tottepostTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		376E15361494C47800A34E7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E15471494C47800A34E7D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		376E15501494C47800A34E7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		376E15511494C47800A34E7D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		376E15341494C47800A34E7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E15491494C47800A34E7D /* main.m in Sources */,
+				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
+				3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */,
+				3704D5AA1494C5B600380D30 /* MainView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		376E154E1494C47800A34E7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376E15621494C47800A34E7D /* tottepostTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		376E15591494C47800A34E7D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 376E15371494C47800A34E7D /* tottepost */;
+			targetProxy = 376E15581494C47800A34E7D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		376E15451494C47800A34E7D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				376E15461494C47800A34E7D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		376E155D1494C47800A34E7D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				376E155E1494C47800A34E7D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		376E15631494C47800A34E7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		376E15641494C47800A34E7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		376E15661494C47800A34E7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		376E15671494C47800A34E7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		376E15691494C47800A34E7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tottepost.app/tottepost";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		376E156A1494C47800A34E7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tottepost.app/tottepost";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		376E15321494C47800A34E7D /* Build configuration list for PBXProject "tottepost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				376E15631494C47800A34E7D /* Debug */,
+				376E15641494C47800A34E7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		376E15651494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				376E15661494C47800A34E7D /* Debug */,
+				376E15671494C47800A34E7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		376E15681494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepostTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				376E15691494C47800A34E7D /* Debug */,
+				376E156A1494C47800A34E7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 376E152F1494C47800A34E7D /* Project object */;
+}
