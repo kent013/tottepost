@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A51494C5AB00380D30 /* MainViewController.m */; };
 		3704D5AA1494C5B600380D30 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A91494C5B600380D30 /* MainView.m */; };
+		3704D5B31494CFFE00380D30 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5B21494CFFE00380D30 /* SettingViewController.m */; };
+		3704D5B81494DB7900380D30 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3704D5B71494DB7900380D30 /* setting.png */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
@@ -37,6 +39,9 @@
 		3704D5A51494C5AB00380D30 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../../../NU/tottepost/tottepost/MainViewController.m; sourceTree = "<group>"; };
 		3704D5A81494C5B600380D30 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainView.h; path = ../../../NU/tottepost/tottepost/MainView.h; sourceTree = "<group>"; };
 		3704D5A91494C5B600380D30 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainView.m; path = ../../../NU/tottepost/tottepost/MainView.m; sourceTree = "<group>"; };
+		3704D5B11494CFFE00380D30 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = ../../../NU/tottepost/tottepost/SettingViewController.h; sourceTree = "<group>"; };
+		3704D5B21494CFFE00380D30 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = ../../../NU/tottepost/tottepost/SettingViewController.m; sourceTree = "<group>"; };
+		3704D5B71494DB7900380D30 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = ../../../NU/tottepost/tottepost/Resources/images/setting.png; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,6 +84,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3704D5AF1494CD5A00380D30 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				3704D5A81494C5B600380D30 /* MainView.h */,
+				3704D5A91494C5B600380D30 /* MainView.m */,
+				3704D5A41494C5AB00380D30 /* MainViewController.h */,
+				3704D5A51494C5AB00380D30 /* MainViewController.m */,
+			);
+			name = MainView;
+			sourceTree = "<group>";
+		};
+		3704D5B01494CD7E00380D30 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3704D5B11494CFFE00380D30 /* SettingViewController.h */,
+				3704D5B21494CFFE00380D30 /* SettingViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		3704D5B41494DAD000380D30 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3704D5B51494DAE100380D30 /* images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		3704D5B51494DAE100380D30 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				3704D5B71494DB7900380D30 /* setting.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
@@ -112,13 +153,12 @@
 		376E15421494C47800A34E7D /* tottepost */ = {
 			isa = PBXGroup;
 			children = (
-				3704D5A81494C5B600380D30 /* MainView.h */,
-				3704D5A91494C5B600380D30 /* MainView.m */,
-				3704D5A41494C5AB00380D30 /* MainViewController.h */,
-				3704D5A51494C5AB00380D30 /* MainViewController.m */,
+				3704D5AF1494CD5A00380D30 /* MainView */,
+				3704D5B01494CD7E00380D30 /* Settings */,
+				376E15431494C47800A34E7D /* Supporting Files */,
 				376E154B1494C47800A34E7D /* AppDelegate.h */,
 				376E154C1494C47800A34E7D /* AppDelegate.m */,
-				376E15431494C47800A34E7D /* Supporting Files */,
+				3704D5B41494DAD000380D30 /* Resources */,
 			);
 			path = tottepost;
 			sourceTree = "<group>";
@@ -224,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				376E15471494C47800A34E7D /* InfoPlist.strings in Resources */,
+				3704D5B81494DB7900380D30 /* setting.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +303,7 @@
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
 				3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */,
 				3704D5AA1494C5B600380D30 /* MainView.m in Sources */,
+				3704D5B31494CFFE00380D30 /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

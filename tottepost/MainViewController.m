@@ -8,13 +8,54 @@
 
 #import "MainViewController.h"
 #import "MainView.h"
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface MainViewController(PrivateImplementation)
+- (void) setupInitialState: (CGRect) aFrame;
+- (void) didSettingButtonTapped: (id) sender;
+- (void) updateCoodinates;
 @end
 
 @implementation MainViewController(PrivateImplementation)
+/*!
+ * Initialize view controller
+ */
+- (void) setupInitialState: (CGRect) aFrame{
+    NSLog(@"width = %f",aFrame.size.width);
+    NSLog(@"height = %f",aFrame.size.height);
+    aFrame.origin.y = 20;
+    self.view = [[MainView alloc] initWithFrame:aFrame];
+    
+    // iPad か iPhone/iPod touch かの判定
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        // iPad 時の処理
+    }else{
+        // iPhone/iPod touch の処理
+    }
+    
+    settingViewController_ = 
+        [[SettingViewController alloc] initWithFrame: CGRectZero];
+    settingViewController_.view.backgroundColor = [UIColor blueColor];
+    settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
+    settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
+    settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+}
+
+/*!
+ * on setting button tapped, open setting view
+ */
+- (void) didSettingButtonTapped:(id)sender{
+    [self presentModalViewController:settingNavigationController_ animated:YES];
+}
+
+/*!
+ * update control coodinates
+ */
+- (void)updateCoodinates{
+    
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -25,39 +66,35 @@
 {
     self = [super init];
     if(self){
-        self.view = [[MainView alloc] initWithFrame:frame];
-
-        
-        bool isCameraSupported = [UIImagePickerController isSourceTypeAvailable:
-                                  UIImagePickerControllerSourceTypeCamera];        
-        if (isCameraSupported == false) {
-            // TODO: カメラがサポートしてないときの処理
-            NSLog(@"カメラがサポートされていません。");
-            return self;
-        }
-         
-        // iPad か iPhone/iPod touch かの判定
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-            // iPad 時の処理
-        }else{
-            // iPhone/iPod touch の処理
-        }
+        [self setupInitialState:frame];
     }
-
-    NSLog(@"width = %f",frame.size.width);
-    NSLog(@"height = %f",frame.size.height);
-
+    bool isCameraSupported = [UIImagePickerController isSourceTypeAvailable:
+                              UIImagePickerControllerSourceTypeCamera];        
+    if (isCameraSupported == false) {
+        // TODO: カメラがサポートしてないときの処理
+        NSLog(@"カメラがサポートされていません。");
+    }
     return self;
 }
 
 // モーダルビューとしてカメラ画面を呼び出す
 - (void) createCameraController
 {
+    imagePickerOverlayView_ = [[UIView alloc] initWithFrame:self.view.frame];
     imagePicker_ = [[UIImagePickerController alloc] init];
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker_.cameraOverlayView = self.view;
-
+    imagePicker_.cameraOverlayView = imagePickerOverlayView_;
+    //imagePicker_.showsCameraControls = NO;
+    
+    settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 
+             forControlEvents:UIControlEventTouchUpInside];
+    [settingButton_ setImage:[UIImage imageNamed:@"setting.png"] 
+                    forState: UIControlStateNormal];
+    [settingButton_ setFrame:CGRectMake(10, 10, 32, 32)];
+    [imagePicker_.view addSubview:settingButton_];
+    
     //ツールバー追加
     CGRect toolbarRect = CGRectMake(0, self.view.frame.size.height - 55, self.view.frame.size.width, 55);
     UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:toolbarRect];
@@ -71,6 +108,7 @@
                                                  action:@selector(clickPhoto:)];
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
+    
     //カメラボタンを真ん中に寄せるためのスペース
     UIBarButtonItem* fixedSpace = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
@@ -80,8 +118,9 @@
     
     [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, cameraButton_, nil]];
     
+    [self.view addSubview:imagePicker_.view];
     //イメージピッカーを前面に表示
-    [self presentModalViewController:imagePicker_ animated:YES];    
+    //[self presentModalViewController:imagePicker_ animated:YES];    
 }
 
 //撮影ボタンを押したときに呼ばれるメソッド
@@ -149,10 +188,11 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - View lifecycle
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return YES;
+}
+
+- (void)viewDidShow:(UIView *)view{
 }
 @end
