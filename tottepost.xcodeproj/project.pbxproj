@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A51494C5AB00380D30 /* MainViewController.m */; };
-		3704D5AA1494C5B600380D30 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5A91494C5B600380D30 /* MainView.m */; };
-		3704D5B31494CFFE00380D30 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3704D5B21494CFFE00380D30 /* SettingViewController.m */; };
-		3704D5B81494DB7900380D30 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3704D5B71494DB7900380D30 /* setting.png */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
@@ -22,6 +18,10 @@
 		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
+		37FB64D71496237500387490 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingViewController.m */; };
+		37FB64DD1496238600387490 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DA1496238600387490 /* MainView.m */; };
+		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
+		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,13 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3704D5A41494C5AB00380D30 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../../../NU/tottepost/tottepost/MainViewController.h; sourceTree = "<group>"; };
-		3704D5A51494C5AB00380D30 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../../../NU/tottepost/tottepost/MainViewController.m; sourceTree = "<group>"; };
-		3704D5A81494C5B600380D30 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainView.h; path = ../../../NU/tottepost/tottepost/MainView.h; sourceTree = "<group>"; };
-		3704D5A91494C5B600380D30 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainView.m; path = ../../../NU/tottepost/tottepost/MainView.m; sourceTree = "<group>"; };
-		3704D5B11494CFFE00380D30 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = ../../../NU/tottepost/tottepost/SettingViewController.h; sourceTree = "<group>"; };
-		3704D5B21494CFFE00380D30 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = ../../../NU/tottepost/tottepost/SettingViewController.m; sourceTree = "<group>"; };
-		3704D5B71494DB7900380D30 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = ../../../NU/tottepost/tottepost/Resources/images/setting.png; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,6 +51,13 @@
 		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
+		37FB64D51496237500387490 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		37FB64D61496237500387490 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		37FB64D91496238600387490 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		37FB64DA1496238600387490 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,10 +87,10 @@
 		3704D5AF1494CD5A00380D30 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				3704D5A81494C5B600380D30 /* MainView.h */,
-				3704D5A91494C5B600380D30 /* MainView.m */,
-				3704D5A41494C5AB00380D30 /* MainViewController.h */,
-				3704D5A51494C5AB00380D30 /* MainViewController.m */,
+				37FB64D91496238600387490 /* MainView.h */,
+				37FB64DA1496238600387490 /* MainView.m */,
+				37FB64DB1496238600387490 /* MainViewController.h */,
+				37FB64DC1496238600387490 /* MainViewController.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -98,8 +98,8 @@
 		3704D5B01494CD7E00380D30 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				3704D5B11494CFFE00380D30 /* SettingViewController.h */,
-				3704D5B21494CFFE00380D30 /* SettingViewController.m */,
+				37FB64D51496237500387490 /* SettingViewController.h */,
+				37FB64D61496237500387490 /* SettingViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -115,7 +115,7 @@
 		3704D5B51494DAE100380D30 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				3704D5B71494DB7900380D30 /* setting.png */,
+				37FB64DF1496239700387490 /* setting.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				376E15471494C47800A34E7D /* InfoPlist.strings in Resources */,
-				3704D5B81494DB7900380D30 /* setting.png in Resources */,
+				37FB64E01496239700387490 /* setting.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,9 +301,9 @@
 			files = (
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
-				3704D5A61494C5AB00380D30 /* MainViewController.m in Sources */,
-				3704D5AA1494C5B600380D30 /* MainView.m in Sources */,
-				3704D5B31494CFFE00380D30 /* SettingViewController.m in Sources */,
+				37FB64D71496237500387490 /* SettingViewController.m in Sources */,
+				37FB64DD1496238600387490 /* MainView.m in Sources */,
+				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
