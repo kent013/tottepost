@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingViewController.h"
+#import "Facebook.h"
 
 /*!
  * Main view controller
@@ -24,6 +25,8 @@
     int row;
     int prevRow;
 }
+
+@property (nonatomic, readonly) Facebook *facebook;
 
 - (id) initWithFrame:(CGRect)frame;
 - (void) createCameraController;

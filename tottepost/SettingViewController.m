@@ -22,7 +22,7 @@
 @implementation SettingViewController(PrivateImplementation)
 - (void)setupInitialState{
     self.tableView.delegate = self;
-    //self.view = [[UIView alloc] initWithFrame:aFrame];
+    facebookSettingViewController_ = [[FacebookSettingViewController alloc] init];
 }
 - (void)settingDone:(id)sender{
     [self.parentViewController dismissModalViewControllerAnimated:YES];
@@ -88,6 +88,11 @@
  * on row selected
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == SV_SECTION_ACCOUNTS){
+        switch (indexPath.row) {
+            case 0: [self.navigationController pushViewController:facebookSettingViewController_ animated:YES]; break;
+        }
+    }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 @end
@@ -96,6 +101,9 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation SettingViewController
+- (Facebook *)facebook{
+    return facebookSettingViewController_.facebook;
+}
 /*!
  * initialize with frame
  */

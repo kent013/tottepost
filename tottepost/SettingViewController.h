@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FacebookSettingViewController.h"
 
-@interface SettingViewController : UITableViewController
+@interface SettingViewController : UITableViewController{
+    __strong FacebookSettingViewController *facebookSettingViewController_;
+}
+@property (nonatomic, readonly) Facebook* facebook;
 @end

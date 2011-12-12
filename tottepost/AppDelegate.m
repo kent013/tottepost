@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 
 @implementation AppDelegate
 @synthesize window = _window;
+@synthesize mainViewController = _mainViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -19,12 +19,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    MainViewController* mvCtr = [[MainViewController alloc] initWithFrame:frame];
-    self.window.rootViewController = mvCtr;
+    self.mainViewController = [[MainViewController alloc] initWithFrame:frame];
+    self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
-    [mvCtr createCameraController];
+    [self.mainViewController createCameraController];
     //[mvCtr viewDidUnload];
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [self.mainViewController.facebook handleOpenURL:url]; 
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
