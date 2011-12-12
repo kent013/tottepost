@@ -9,6 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingViewController : UITableViewController
-
-- (id) initWithFrame:(CGRect) frame;
 @end

@@ -7,16 +7,20 @@
 //
 
 #import "SettingViewController.h"
+
+#define SV_SECTION_GENERAL  0
+#define SV_SECTION_ACCOUNTS 1
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface SettingViewController(PrivateImplementation)
-- (void) setupInitialState: (CGRect) aFrame;
+- (void) setupInitialState;
 - (void) settingDone:(id)sender;
+- (UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName;
 @end
 
 @implementation SettingViewController(PrivateImplementation)
-- (void)setupInitialState:(CGRect)aFrame{
+- (void)setupInitialState{
     self.tableView.delegate = self;
     //self.view = [[UIView alloc] initWithFrame:aFrame];
 }
@@ -26,7 +30,7 @@
 //テーブルに表示するセクションの数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 //セクションに表示する列の数
@@ -35,29 +39,56 @@
     return 3;
 }
 
-//セルを生成
+//ヘッダの取得
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case SV_SECTION_GENERAL : return @"General"; break;
+        case SV_SECTION_ACCOUNTS: return @"Accounts"; break;
+    }
+    return nil;
+}
+
+/*!
+ * create cell
+ */
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.textLabel.text = @"moge";
+{    
+    UITableViewCell *cell;
+    if(indexPath.section == SV_SECTION_GENERAL){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        cell.textLabel.text = @"moge";
+    }else if(indexPath.section == SV_SECTION_ACCOUNTS){
+        if(indexPath.row == 0){
+            cell = [self createSocialAppButtonWithTitle: @"Facebook" imageName:@"facebook_32.png"];
+        }else if(indexPath.row == 1){
+            cell = [self createSocialAppButtonWithTitle: @"Twitter" imageName:@"twitter_32.png"];
+        }else if(indexPath.row == 2){
+            cell = [self createSocialAppButtonWithTitle: @"Flickr" imageName:@"flickr_32.png"];
+        }
+    }
     return cell;
 }
 
--(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 25;
+/*!
+ * create social app button
+ */
+-(UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    cell.imageView.image = [UIImage imageNamed:imageName];
+    cell.textLabel.text = title;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    NSLog(@"%f", self.tableView.frame.size.width);
+    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 180, 8, 100, 30)];
+    [cell.contentView addSubview:s];
+    return cell;
 }
 
+/*!
+ * on row selected
+ */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == 0){
-        cell.backgroundColor = [UIColor lightGrayColor];        
-    }else if ((indexPath.row + 1) % 2 == 0) {
-        UIColor *altCellColor = [UIColor colorWithWhite:0.7 alpha:0.1];
-        cell.backgroundColor = altCellColor;
-    }
 }
 @end
 
@@ -68,10 +99,10 @@
 /*!
  * initialize with frame
  */
-- (id) initWithFrame:(CGRect)frame{
-    self = [super init];
+- (id) init{
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if(self){
-        [self setupInitialState:frame];
+        [self setupInitialState];
     }
     return self;
 }
