@@ -62,10 +62,6 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation MainViewController
-- (Facebook *) facebook{
-    return settingViewController_.facebook;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super init];

@@ -26,8 +26,6 @@
     int prevRow;
 }
 
-@property (nonatomic, readonly) Facebook *facebook;
-
 - (id) initWithFrame:(CGRect)frame;
 - (void) createCameraController;
 - (void) viewDidShow: (UIView *)view;

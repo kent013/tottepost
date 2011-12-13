@@ -35,7 +35,8 @@
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
     facebookSettingViewController_ = [[FacebookSettingViewController alloc] init];
-    facebookSettingViewController_.delegate = self;
+    
+    [PhotoSubmitter facebookPhotoSubmitter].delegate = self;
 }
 
 #pragma mark -
@@ -57,7 +58,7 @@
         case SV_SECTION_GENERAL: return 1;
         case SV_SECTION_ACCOUNTS: return 3;
     }
-    return nil;
+    return 0;
 }
 
 /*!
@@ -106,12 +107,9 @@
     [cell.contentView addSubview:s];
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     
-    //set default state for switch.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@",[defaults objectForKey:@"FBAccessTokenKey"]);
     switch (tag) {
         case SV_ACCOUNTS_FACEBOOK:
-            if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+            if ([[PhotoSubmitter facebookPhotoSubmitter] isLogined]){
                 [s setOn:YES animated:YES];
             }else{
                 [s setOn:NO animated:YES];
@@ -150,9 +148,9 @@
     switch (s.tag) {
         case SV_ACCOUNTS_FACEBOOK:
             if(s.on){
-                [facebookSettingViewController_ login];
+                [[PhotoSubmitter facebookPhotoSubmitter] login];
             }else{
-                [facebookSettingViewController_ logout];
+                [[PhotoSubmitter facebookPhotoSubmitter] logout];
             }
             break;
     } 
@@ -165,12 +163,6 @@
 #pragma mark Public Implementations
 //-----------------------------------------------------------------------------
 @implementation SettingTableViewController
-/*!
- * facebook instance for app delegate
- */
-- (Facebook *)facebook{
-    return facebookSettingViewController_.facebook;
-}
 /*!
  * initialize with frame
  */
@@ -187,7 +179,7 @@
 /*!
  * facebook did login
  */
-- (void)fbDidLogin{
+- (void)facebookPhotoSubmitterDidLogin{
     UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
     [s setOn:YES animated:YES];
 }
@@ -195,7 +187,7 @@
 /*!
  * facebook did logout
  */
-- (void)fbDidLogout{
+- (void)facebookPhotoSubmitterDidLogout{
     UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
     [s setOn:NO animated:YES];    
 }

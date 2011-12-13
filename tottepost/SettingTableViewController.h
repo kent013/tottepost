@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "FacebookSettingViewController.h"
+#import "PhotoSubmitter.h"
 
-@interface SettingTableViewController : UITableViewController<FacebookSettingViewControllerDelegate>{
+@interface SettingTableViewController : UITableViewController<FacebookPhotoSubmitterDelegate>{
 @protected
     __strong FacebookSettingViewController *facebookSettingViewController_;
     __strong NSMutableDictionary *switches_;
 }
-@property (nonatomic, readonly) Facebook* facebook;
 @end

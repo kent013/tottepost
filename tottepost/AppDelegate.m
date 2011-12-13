@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "PhotoSubmitter.h"
 
 @implementation AppDelegate
 @synthesize window = _window;
@@ -29,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [self.mainViewController.facebook handleOpenURL:url]; 
+    return [[PhotoSubmitter facebookPhotoSubmitter].facebook handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
