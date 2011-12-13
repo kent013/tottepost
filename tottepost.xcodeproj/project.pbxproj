@@ -37,8 +37,8 @@
 		37FB65331496415700387490 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65261496415700387490 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB65341496415700387490 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65281496415700387490 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB65351496415700387490 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB652A1496415700387490 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65421497210200387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65411497210200387490 /* PhotoSubmitter.m */; };
-		37FB6546149726A100387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6545149726A100387490 /* FacebookPhotoSubmitter.m */; };
+		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
+		37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,11 +103,11 @@
 		37FB65281496415700387490 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		37FB65291496415700387490 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		37FB652A1496415700387490 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		37FB65401497210200387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitter.h; sourceTree = "<group>"; };
-		37FB65411497210200387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitter.m; sourceTree = "<group>"; };
-		37FB6543149721FA00387490 /* PhotoSubmitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterProtocol.h; sourceTree = "<group>"; };
-		37FB6544149726A100387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
-		37FB6545149726A100387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
+		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB65491497313500387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
+		37FB654A1497313500387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitter.m; path = PhotoSubmitter/PhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterProtocol.h; path = PhotoSubmitter/PhotoSubmitterProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,9 +211,9 @@
 				37FB65121496415600387490 /* FBConnect */,
 				3704D5AF1494CD5A00380D30 /* MainView */,
 				3704D5B01494CD7E00380D30 /* Settings */,
+				37FB653F14970D9C00387490 /* PhotoSubmitter */,
 				376E154B1494C47800A34E7D /* AppDelegate.h */,
 				376E154C1494C47800A34E7D /* AppDelegate.m */,
-				37FB653F14970D9C00387490 /* Util */,
 				376E15431494C47800A34E7D /* Supporting Files */,
 				3704D5B41494DAD000380D30 /* Resources */,
 			);
@@ -288,16 +288,16 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
-		37FB653F14970D9C00387490 /* Util */ = {
+		37FB653F14970D9C00387490 /* PhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
-				37FB65401497210200387490 /* PhotoSubmitter.h */,
-				37FB65411497210200387490 /* PhotoSubmitter.m */,
-				37FB6543149721FA00387490 /* PhotoSubmitterProtocol.h */,
-				37FB6544149726A100387490 /* FacebookPhotoSubmitter.h */,
-				37FB6545149726A100387490 /* FacebookPhotoSubmitter.m */,
+				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
+				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
+				37FB65491497313500387490 /* PhotoSubmitter.h */,
+				37FB654A1497313500387490 /* PhotoSubmitter.m */,
+				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 			);
-			name = Util;
+			name = PhotoSubmitter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,8 +426,8 @@
 				37FB65331496415700387490 /* SBJsonBase.m in Sources */,
 				37FB65341496415700387490 /* SBJsonParser.m in Sources */,
 				37FB65351496415700387490 /* SBJsonWriter.m in Sources */,
-				37FB65421497210200387490 /* PhotoSubmitter.m in Sources */,
-				37FB6546149726A100387490 /* FacebookPhotoSubmitter.m in Sources */,
+				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
+				37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,7 @@
 #import "FacebookPhotoSubmitter.h"
 
 /*!
- * 履歴がどこから追加されたのかを表す列挙子
+ * Submitter Types
  */
 typedef enum {
     PhotoSubmitterTypeFacebook,
