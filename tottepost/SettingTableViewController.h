@@ -10,7 +10,7 @@
 #import "FacebookSettingViewController.h"
 #import "PhotoSubmitter.h"
 
-@interface SettingTableViewController : UITableViewController<FacebookPhotoSubmitterDelegate>{
+@interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate>{
 @protected
     __strong FacebookSettingViewController *facebookSettingViewController_;
     __strong NSMutableDictionary *switches_;

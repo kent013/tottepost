@@ -41,6 +41,8 @@
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [[PhotoSubmitter getInstance] setPhotoDelegate:self];
 }
 
 /*!
@@ -132,8 +134,7 @@
 
 //画像が選択された時に呼ばれるデリゲートメソッド
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
-    
-    
+    [[PhotoSubmitter getInstance] submitPhoto:image];
 }
 
 //画像の保存完了時に呼ばれるメソッド
@@ -143,8 +144,12 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     if(error){
         // 保存失敗時
     }else{
-        // 保存成功時
+        [[PhotoSubmitter getInstance] submitPhoto:image];
     }
+}
+
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(PhotoSubmitterType)type suceeded:(BOOL)suceeded message:(NSString *)message{
+    NSLog(@"%@", message);
 }
 
 - (void)viewDidUnload {

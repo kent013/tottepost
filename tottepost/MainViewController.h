@@ -13,7 +13,7 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
+@interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
     __strong UINavigationController *settingNavigationController_;

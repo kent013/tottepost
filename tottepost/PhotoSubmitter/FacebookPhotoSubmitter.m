@@ -3,7 +3,7 @@
 //  tottepost
 //
 //  Created by ISHITOYA Kentaro on 11/12/13.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
 #import "FacebookPhotoSubmitter.h"
@@ -16,40 +16,12 @@
 @end
 
 @implementation FacebookPhotoSubmitter(PrivateImplementation)
+#pragma mark -
+#pragma mark private implementations
+/*!
+ * initializer
+ */
 -(void)setupInitialState{
-}
-
-/*!
- * facebook delegate, did login suceeded
- */
-- (void)fbDidLogin {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook_ accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook_ expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    if([self.delegate respondsToSelector:@selector(facebookPhotoSubmitterDidLogin)]){
-        [self.delegate facebookPhotoSubmitterDidLogin];
-    }
-}
-
-/*!
- * facebook delegate, if not login
- */
--(void)fbDidNotLogin:(BOOL)cancelled {
-    [self clearCredentials];
-    if([self.delegate respondsToSelector:@selector(facebookPhotoSubmitterDidLogout)]){
-        [self.delegate facebookPhotoSubmitterDidLogout];
-    }
-}
-
-/*!
- * facebook delegate, if logout
- */
-- (void) fbDidLogout {
-    [self clearCredentials];
-    if([self.delegate respondsToSelector:@selector(facebookPhotoSubmitterDidLogout)]){
-        [self.delegate facebookPhotoSubmitterDidLogout];
-    }
 }
 
 /*!
@@ -63,6 +35,63 @@
         [defaults synchronize];
     } 
 }
+
+#pragma mark -
+#pragma mark facebook delegates
+/*!
+ * facebook delegate, did login suceeded
+ */
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook_ accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook_ expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
+}
+
+/*!
+ * facebook delegate, if not login
+ */
+-(void)fbDidNotLogin:(BOOL)cancelled {
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * facebook delegate, if logout
+ */
+- (void) fbDidLogout {
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * facebook request delegate, did receive response
+ */
+- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"%@", response.description);
+};
+
+/*!
+ * facebook request delegate, did load
+ */
+- (void)request:(FBRequest *)request didLoad:(id)result {
+	if ([result isKindOfClass:[NSArray class]]) {
+		result = [result objectAtIndex:0];
+	}
+	if ([result objectForKey:@"owner"]) {
+        [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:YES message:@"Photo upload succeeded"];
+	} else {
+        [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:NO message:[result objectForKey:@"name"]];
+	}
+};
+
+/*!
+ * facebook request delegate, did fail
+ */
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
+    [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:NO message:[error localizedDescription]];
+};
 @end
 
 //-----------------------------------------------------------------------------
@@ -70,20 +99,31 @@
 //-----------------------------------------------------------------------------
 @implementation FacebookPhotoSubmitter
 @synthesize facebook = facebook_;
-@synthesize delegate;
-
+@synthesize authDelegate;
+@synthesize photoDelegate;
+#pragma mark -
+#pragma mark public implementations
 /*!
  * submit photo
  */
-- (BOOL)submitPhoto:(UIImage *)photo{
+- (void)submitPhoto:(UIImage *)photo{
     return [self submitPhoto:photo comment:nil];
 }
 
 /*!
  * submit photo with comment
  */
-- (BOOL)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
-    return NO;
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+    NSMutableDictionary *params = 
+      [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+       photo, @"picture", 
+       comment, @"caption",
+       nil];
+    [facebook_ requestWithMethodName:@"photos.upload"
+                          andParams:params
+                      andHttpMethod:@"POST"
+                        andDelegate:self];
+
 }
 
 /*!
@@ -116,6 +156,20 @@
  * check is logined
  */
 - (BOOL)isLogined{
+    return [FacebookPhotoSubmitter isEnabled];
+}
+
+/*!
+ * return type
+ */
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeFacebook;
+}
+
+/*!
+ * isEnabled
+ */
++ (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"]) {
         return YES;

@@ -22,6 +22,7 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
 @implementation PhotoSubmitter(PrivateImplementation)
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
+    [self loadSubmitters];
 }
 @end
 
@@ -67,23 +68,49 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
 /*!
  * submit photo to social app
  */
-- (BOOL)submitPhoto:(UIImage *)photo{
-    return [self submitPhoto:photo comment:nil];
+- (void)submitPhoto:(UIImage *)photo{
+    [self submitPhoto:photo comment:nil];
 }
 
 /*!
  * submit photo with comment to social app
  */
-- (BOOL)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
-            if([submitter submitPhoto:photo] == NO){
-                return NO; 
-            }
+            [submitter submitPhoto:photo];
         }
     }
-    return YES;
+}
+
+/*!
+ * set authentication delegate to submitters
+ */
+- (void)setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>)delegate{
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        submitter.authDelegate = delegate;
+    }
+}
+
+/*!
+ * set photo delegate to submitters
+ */
+- (void)setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)delegate{
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        submitter.photoDelegate = delegate;
+    }
+}
+
+/*!
+ * load selected submitters
+ */
+- (void)loadSubmitters{
+    if([FacebookPhotoSubmitter isEnabled]){
+        [self submitterWithType:PhotoSubmitterTypeFacebook];
+    }
 }
 
 #pragma mark -

@@ -34,9 +34,7 @@
 - (void)setupInitialState{
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
-    facebookSettingViewController_ = [[FacebookSettingViewController alloc] init];
-    
-    [PhotoSubmitter facebookPhotoSubmitter].delegate = self;
+    [[PhotoSubmitter getInstance] setAuthenticationDelegate:self];
 }
 
 #pragma mark -
@@ -177,18 +175,36 @@
 #pragma mark -
 #pragma mark FacebookSettingViewController delegate methods
 /*!
- * facebook did login
+ * photo submitter did login
  */
-- (void)facebookPhotoSubmitterDidLogin{
-    UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogin:(PhotoSubmitterType)type{
+    UISwitch *s = nil;
+    switch(type){
+        case PhotoSubmitterTypeFacebook:
+            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
+            break;
+        case PhotoSubmitterTypeTwitter:
+            break;
+        case PhotoSubmitterTypeFlickr:
+            break;
+    }
     [s setOn:YES animated:YES];
 }
 
 /*!
- * facebook did logout
+ * photo submitter did logout
  */
-- (void)facebookPhotoSubmitterDidLogout{
-    UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogout:(PhotoSubmitterType)type{
+    UISwitch *s = nil;
+    switch(type){
+        case PhotoSubmitterTypeFacebook:
+            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
+            break;
+        case PhotoSubmitterTypeTwitter:
+            break;
+        case PhotoSubmitterTypeFlickr:
+            break;
+    }
     [s setOn:NO animated:YES];    
 }
 
