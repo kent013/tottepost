@@ -36,7 +36,7 @@ typedef enum {
 @end
 
 /*!
- * protocol for delegate
+ * protocol for authentication delegate
  */
 @protocol PhotoSubmitterAuthenticationDelegate <NSObject>
 @required
@@ -45,7 +45,7 @@ typedef enum {
 @end
 
 /*!
- * protocol for delegate
+ * protocol for photo delegate
  */
 @protocol PhotoSubmitterPhotoDelegate <NSObject>
 @required

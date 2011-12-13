@@ -42,6 +42,7 @@
 		37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655C14978CBF00387490 /* UIImage+Digest.m */; };
 		37FB656014978CD200387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655F14978CD200387490 /* NSData+Digest.m */; };
+		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,8 @@
 		37FB655C14978CBF00387490 /* UIImage+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Digest.m"; sourceTree = "<group>"; };
 		37FB655E14978CD200387490 /* NSData+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Digest.h"; sourceTree = "<group>"; };
 		37FB655F14978CD200387490 /* NSData+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Digest.m"; sourceTree = "<group>"; };
+		37FB65611497AAD300387490 /* ProgressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTableViewController.h; sourceTree = "<group>"; };
+		37FB65621497AAD300387490 /* ProgressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 				37FB64DA1496238600387490 /* MainView.m */,
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
+				37FB65611497AAD300387490 /* ProgressTableViewController.h */,
+				37FB65621497AAD300387490 /* ProgressTableViewController.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */,
 				37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */,
 				37FB656014978CD200387490 /* NSData+Digest.m in Sources */,
+				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

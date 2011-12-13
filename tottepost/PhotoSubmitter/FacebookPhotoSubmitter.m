@@ -25,6 +25,13 @@
  */
 -(void)setupInitialState{
     requests_ = [[NSMutableDictionary alloc] init];
+    facebook_ = [[Facebook alloc] initWithAppId:@"206421902773102" andDelegate:self];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook_.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook_.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
 }
 
 /*!
@@ -159,13 +166,6 @@
  * login to facebook
  */
 -(void)login{
-    facebook_ = [[Facebook alloc] initWithAppId:@"206421902773102" andDelegate:self];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook_.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook_.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-    }
     if (![facebook_ isSessionValid]) {
         NSArray *permissions = 
         [NSArray arrayWithObjects:@"publish_stream", @"offline_access", nil];

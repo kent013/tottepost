@@ -42,7 +42,10 @@
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
+    progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero];
+    
     [[PhotoSubmitter getInstance] setPhotoDelegate:self];
+    [self updateCoodinates];
 }
 
 /*!
@@ -56,7 +59,8 @@
  * update control coodinates
  */
 - (void)updateCoodinates{
-    
+    CGRect frame = self.view.frame;
+    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - 80, 40, 80, frame.size.height - 80)];
 }
 @end
 
@@ -102,6 +106,7 @@
     UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:toolbarRect];
     toolbar.barStyle = UIBarStyleBlack;
     [imagePicker_.view addSubview:toolbar];
+    [imagePicker_.view addSubview:progressTableViewController_.view];
     
     // カメラボタン
     cameraButton_ =
@@ -153,6 +158,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     NSLog(@"%@ upload started", imageHash);
+    [progressTableViewController_ addProgress:imageHash];
 }
 
 /*!
@@ -160,6 +166,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     NSLog(@"%@ submitted.", imageHash);
+    [progressTableViewController_ removeProgress:imageHash];
 }
 
 /*!
@@ -167,6 +174,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     NSLog(@"%@, %f", imageHash, progress);
+    [progressTableViewController_ updateProgress:imageHash progress:progress];
 }
 
 - (void)viewDidUnload {
@@ -200,6 +208,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     {
         return;
     }
+    [self updateCoodinates];
 }
 
 - (void)didReceiveMemoryWarning

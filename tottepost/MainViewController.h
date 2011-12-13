@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SettingTableViewController.h"
 #import "Facebook.h"
+#import "ProgressTableViewController.h"
 
 /*!
  * Main view controller
@@ -16,6 +17,7 @@
 @interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
+    __strong ProgressTableViewController *progressTableViewController_;
     __strong UINavigationController *settingNavigationController_;
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
