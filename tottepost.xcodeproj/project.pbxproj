@@ -39,6 +39,9 @@
 		37FB65351496415700387490 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB652A1496415700387490 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitter.m */; };
+		37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655C14978CBF00387490 /* UIImage+Digest.m */; };
+		37FB656014978CD200387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655F14978CD200387490 /* NSData+Digest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +111,12 @@
 		37FB65491497313500387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB654A1497313500387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitter.m; path = PhotoSubmitter/PhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterProtocol.h; path = PhotoSubmitter/PhotoSubmitterProtocol.h; sourceTree = "<group>"; };
+		37FB655714976ADD00387490 /* FBRequest+UploadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBRequest+UploadProgress.h"; path = "PhotoSubmitter/FBRequest+UploadProgress.h"; sourceTree = "<group>"; };
+		37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBRequest+UploadProgress.m"; path = "PhotoSubmitter/FBRequest+UploadProgress.m"; sourceTree = "<group>"; };
+		37FB655B14978CBF00387490 /* UIImage+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Digest.h"; sourceTree = "<group>"; };
+		37FB655C14978CBF00387490 /* UIImage+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Digest.m"; sourceTree = "<group>"; };
+		37FB655E14978CD200387490 /* NSData+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Digest.h"; sourceTree = "<group>"; };
+		37FB655F14978CD200387490 /* NSData+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Digest.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +217,7 @@
 		376E15421494C47800A34E7D /* tottepost */ = {
 			isa = PBXGroup;
 			children = (
+				37FB655A14978CA500387490 /* Util */,
 				37FB65121496415600387490 /* FBConnect */,
 				3704D5AF1494CD5A00380D30 /* MainView */,
 				3704D5B01494CD7E00380D30 /* Settings */,
@@ -291,6 +301,8 @@
 		37FB653F14970D9C00387490 /* PhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
+				37FB655714976ADD00387490 /* FBRequest+UploadProgress.h */,
+				37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
 				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
 				37FB65491497313500387490 /* PhotoSubmitter.h */,
@@ -298,6 +310,17 @@
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 			);
 			name = PhotoSubmitter;
+			sourceTree = "<group>";
+		};
+		37FB655A14978CA500387490 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				37FB655E14978CD200387490 /* NSData+Digest.h */,
+				37FB655F14978CD200387490 /* NSData+Digest.m */,
+				37FB655B14978CBF00387490 /* UIImage+Digest.h */,
+				37FB655C14978CBF00387490 /* UIImage+Digest.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,6 +451,9 @@
 				37FB65351496415700387490 /* SBJsonWriter.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
 				37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */,
+				37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */,
+				37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */,
+				37FB656014978CD200387490 /* NSData+Digest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

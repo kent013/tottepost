@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Facebook.h"
+#import "FBRequest+UploadProgress.h"
 #import "PhotoSubmitterProtocol.h"
 
 @protocol FacebookPhotoSubmitterDelegate;
@@ -16,9 +17,12 @@
  * photo submitter for facebook.
  * get instance with using 
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFacebook]
+ * or
+ * [PhotoSubmitter facebookPhotoSubmitter]
  */
-@interface FacebookPhotoSubmitter : NSObject<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestDelegate>{
+@interface FacebookPhotoSubmitter : NSObject<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
     __strong Facebook *facebook_;
+    __strong NSMutableDictionary *requests_;
 }
 @property (nonatomic, readonly) Facebook* facebook;
 @property (nonatomic, readonly) PhotoSubmitterType type;

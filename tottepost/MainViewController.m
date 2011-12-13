@@ -148,8 +148,25 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     }
 }
 
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(PhotoSubmitterType)type suceeded:(BOOL)suceeded message:(NSString *)message{
-    NSLog(@"%@", message);
+/*!
+ * photo upload start
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+    NSLog(@"%@ upload started", imageHash);
+}
+
+/*!
+ * photo submitted
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
+    NSLog(@"%@ submitted.", imageHash);
+}
+
+/*!
+ * photo upload progress changed
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+    NSLog(@"%@, %f", imageHash, progress);
 }
 
 - (void)viewDidUnload {

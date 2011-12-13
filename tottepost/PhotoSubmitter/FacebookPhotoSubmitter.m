@@ -7,6 +7,8 @@
 //
 
 #import "FacebookPhotoSubmitter.h"
+#import "UIImage+Digest.h"
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -22,6 +24,7 @@
  * initializer
  */
 -(void)setupInitialState{
+    requests_ = [[NSMutableDictionary alloc] init];
 }
 
 /*!
@@ -69,7 +72,6 @@
  * facebook request delegate, did receive response
  */
 - (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"%@", response.description);
 };
 
 /*!
@@ -79,19 +81,32 @@
 	if ([result isKindOfClass:[NSArray class]]) {
 		result = [result objectAtIndex:0];
 	}
+    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
 	if ([result objectForKey:@"owner"]) {
-        [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:YES message:@"Photo upload succeeded"];
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
 	} else {
-        [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:NO message:[result objectForKey:@"name"]];
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
 	}
+    [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
 };
 
 /*!
  * facebook request delegate, did fail
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    [self.photoDelegate photoSubmitter:self didSubmitted:self.type suceeded:NO message:[error localizedDescription]];
+    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
+    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
 };
+
+/*!
+ * facebook request delegate, upload progress
+ */
+- (void)request:(FBRequest *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
+    CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
+    [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -103,6 +118,17 @@
 @synthesize photoDelegate;
 #pragma mark -
 #pragma mark public implementations
+/*!
+ * initialize
+ */
+- (id)init{
+    self = [super init];
+    if (self) {
+        [self setupInitialState];
+    }
+    return self;
+}
+
 /*!
  * submit photo
  */
@@ -119,11 +145,14 @@
        photo, @"picture", 
        comment, @"caption",
        nil];
-    [facebook_ requestWithMethodName:@"photos.upload"
-                          andParams:params
-                      andHttpMethod:@"POST"
-                        andDelegate:self];
-
+    FBRequest *request =
+      [facebook_ requestWithMethodName:@"photos.upload"
+                             andParams:params
+                         andHttpMethod:@"POST"
+                           andDelegate:self];
+    NSString *hash = photo.MD5DigestString;
+    [requests_ setObject:hash forKey:[NSNumber numberWithInt: request.hash]];
+    [self.photoDelegate photoSubmitter:self willStartUpload:hash];
 }
 
 /*!
@@ -139,7 +168,7 @@
     }
     if (![facebook_ isSessionValid]) {
         NSArray *permissions = 
-        [NSArray arrayWithObjects:@"publish_stream", @"offline_access",nil];
+        [NSArray arrayWithObjects:@"publish_stream", @"offline_access", nil];
         [facebook_ authorize:permissions];
     }        
 }
