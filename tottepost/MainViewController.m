@@ -91,7 +91,7 @@
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker_.cameraOverlayView = imagePickerOverlayView_;
-    //imagePicker_.showsCameraControls = NO;
+    imagePicker_.showsCameraControls = NO;
     
     settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 
@@ -133,14 +133,14 @@
 //撮影ボタンを押したときに呼ばれるメソッド
 - (void)clickPhoto:(UIBarButtonItem*)sender
 {
-    NSLog(@"DEBUG");
-    //[imagePicker takePicture];    
+    [imagePicker_ takePicture];
 }
 
 //画像が選択された時に呼ばれるデリゲートメソッド
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
     [[PhotoSubmitter getInstance] submitPhoto:image];
 }
+
 
 //画像の保存完了時に呼ばれるメソッド
 -(void)targetImage:(UIImage*)image
@@ -149,8 +149,15 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     if(error){
         // 保存失敗時
     }else{
-        [[PhotoSubmitter getInstance] submitPhoto:image];
     }
+}
+
+/*! 
+ * take photo
+ */
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
+    [[PhotoSubmitter getInstance] submitPhoto:image];
 }
 
 /*!
