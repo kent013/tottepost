@@ -65,13 +65,22 @@
         return cell;
     }
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.backgroundColor = [UIColor clearColor];
     UIProgressView *p = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    p.frame = CGRectMake(10, 10, 60, 10);
+    p.frame = CGRectMake(10, 10, 100, 10);
+    p.backgroundColor = [UIColor clearColor];
+    p.progressTintColor = [UIColor colorWithRed:0 green:0 blue:0.8 alpha:0.5];
+    p.trackTintColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     [progressBars_ setObject:p forKey:hash];
     [cell.contentView addSubview:p];
     [cells_ setObject:cell forKey:hash];
     return cell;
+}
+
+/*!
+ * set color
+ */
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
 }
 
 /*!
