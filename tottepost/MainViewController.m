@@ -36,7 +36,7 @@
     }
     
     settingViewController_ = 
-        [[SettingViewController alloc] init];
+        [[SettingTableViewController alloc] init];
     settingViewController_.view.backgroundColor = [UIColor blueColor];
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;

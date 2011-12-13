@@ -9,9 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 
+@protocol FacebookSettingViewControllerDelegate;
+
 @interface FacebookSettingViewController : UIViewController<FBSessionDelegate>{
     __strong Facebook *facebook_;
 }
 
 @property (nonatomic, readonly) Facebook* facebook;
+@property (weak, nonatomic) id<FacebookSettingViewControllerDelegate> delegate;
+
+- (void) login;
+- (void) logout;
+@end
+
+/*!
+ * facebook setting view controller delegate
+ */
+@protocol FacebookSettingViewControllerDelegate <NSObject>
+- (void) fbDidLogout;
+- (void) fbDidLogin;
 @end

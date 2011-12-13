@@ -12,19 +12,57 @@
 //-----------------------------------------------------------------------------
 @interface FacebookSettingViewController(PrivateImplementation)
 - (void) setupInitialState;
-- (void) didLoginButtonTapped:(id)sender;
 @end
 
 @implementation FacebookSettingViewController(PrivateImplementation)
 -(void)setupInitialState{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.titleLabel.text = @"Login to facebook";
-    button.frame = CGRectMake(10, 10, 200, 30);
-    [button addTarget:self action:@selector(didLoginButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
 }
 
-- (void)didLoginButtonTapped:(id)sender{
+/*!
+ * facebook delegate, did login suceeded
+ */
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook_ accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook_ expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    if([self.delegate respondsToSelector:@selector(fbDidLogin)]){
+        [self.delegate fbDidLogin];
+    }
+}
+
+/*!
+ * facebook delegate, if not login
+ */
+-(void)fbDidNotLogin:(BOOL)cancelled {
+	NSLog(@"did not login");
+    if([self.delegate respondsToSelector:@selector(fbDidLogout)]){
+        [self.delegate fbDidLogout];
+    }
+}
+
+/*!
+ * facebook delegate, if logout
+ */
+- (void) fbDidLogout {
+    // Remove saved authorization information if it exists
+    if([self.delegate respondsToSelector:@selector(fbDidLogout)]){
+        [self.delegate fbDidLogout];
+    }
+}
+@end
+
+//-----------------------------------------------------------------------------
+//Public Implementations
+//-----------------------------------------------------------------------------
+@implementation FacebookSettingViewController
+@synthesize delegate = delegate_;
+@synthesize facebook = facebook_;
+
+/*!
+ * login to facebook
+ */
+-(void)login{
     facebook_ = [[Facebook alloc] initWithAppId:@"206421902773102" andDelegate:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"] 
@@ -33,27 +71,28 @@
         facebook_.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
     if (![facebook_ isSessionValid]) {
-        [facebook_ authorize:nil];
-    }    
-}
-@end
-
-//-----------------------------------------------------------------------------
-//Public Implementations
-//-----------------------------------------------------------------------------
-@implementation FacebookSettingViewController
-- (Facebook *)facebook{
-    return facebook_;
+        NSArray *permissions = 
+          [NSArray arrayWithObjects:@"publish_stream", @"offline_access",nil];
+        [facebook_ authorize:permissions];
+    }        
 }
 
-- (void)fbDidLogin {
+/*!
+ * logoff from facebook
+ */
+- (void)logout{
+    [facebook_ logout:self];   
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook_ accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook_ expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
+    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+        [defaults synchronize];
+    } 
 }
 
+/*!
+ * initialize
+ */
 - (id)init{
     self = [super init];
     if(self){
@@ -61,6 +100,7 @@
     }
     return self;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

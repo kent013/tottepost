@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "FacebookSettingViewController.h"
 
-@interface SettingViewController : UITableViewController{
+@interface SettingTableViewController : UITableViewController<FacebookSettingViewControllerDelegate>{
+@protected
     __strong FacebookSettingViewController *facebookSettingViewController_;
+    __strong NSMutableDictionary *switches_;
 }
 @property (nonatomic, readonly) Facebook* facebook;
 @end

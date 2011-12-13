@@ -18,7 +18,7 @@
 		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
-		37FB64D71496237500387490 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingViewController.m */; };
+		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
 		37FB64DD1496238600387490 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DA1496238600387490 /* MainView.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
@@ -66,8 +66,8 @@
 		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
-		37FB64D51496237500387490 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
-		37FB64D61496237500387490 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		37FB64D51496237500387490 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
+		37FB64D61496237500387490 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
 		37FB64D91496238600387490 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		37FB64DA1496238600387490 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -141,8 +141,8 @@
 		3704D5B01494CD7E00380D30 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				37FB64D51496237500387490 /* SettingViewController.h */,
-				37FB64D61496237500387490 /* SettingViewController.m */,
+				37FB64D51496237500387490 /* SettingTableViewController.h */,
+				37FB64D61496237500387490 /* SettingTableViewController.m */,
 				37FB64E71496384800387490 /* FacebookSettingViewController.h */,
 				37FB64E81496384800387490 /* FacebookSettingViewController.m */,
 			);
@@ -204,9 +204,10 @@
 				37FB65121496415600387490 /* FBConnect */,
 				3704D5AF1494CD5A00380D30 /* MainView */,
 				3704D5B01494CD7E00380D30 /* Settings */,
-				376E15431494C47800A34E7D /* Supporting Files */,
 				376E154B1494C47800A34E7D /* AppDelegate.h */,
 				376E154C1494C47800A34E7D /* AppDelegate.m */,
+				37FB653F14970D9C00387490 /* Util */,
+				376E15431494C47800A34E7D /* Supporting Files */,
 				3704D5B41494DAD000380D30 /* Resources */,
 			);
 			path = tottepost;
@@ -278,6 +279,13 @@
 				37FB652A1496415700387490 /* SBJsonWriter.m */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		37FB653F14970D9C00387490 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,7 +400,7 @@
 			files = (
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
-				37FB64D71496237500387490 /* SettingViewController.m in Sources */,
+				37FB64D71496237500387490 /* SettingTableViewController.m in Sources */,
 				37FB64DD1496238600387490 /* MainView.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
 				37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */,

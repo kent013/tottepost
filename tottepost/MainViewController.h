@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SettingViewController.h"
+#import "SettingTableViewController.h"
 #import "Facebook.h"
 
 /*!
@@ -15,7 +15,7 @@
  */
 @interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
 @protected
-    __strong SettingViewController *settingViewController_;
+    __strong SettingTableViewController *settingViewController_;
     __strong UINavigationController *settingNavigationController_;
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
