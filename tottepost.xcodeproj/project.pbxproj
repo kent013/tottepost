@@ -43,6 +43,8 @@
 		37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655C14978CBF00387490 /* UIImage+Digest.m */; };
 		37FB656014978CD200387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655F14978CD200387490 /* NSData+Digest.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
+		37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
+		37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65771498C8A100387490 /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 376E15371494C47800A34E7D;
 			remoteInfo = tottepost;
+		};
+		37FB65711498C6B300387490 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6A8666490F9593B200325E1C;
+			remoteInfo = "ObjectiveFlickr (framework)";
+		};
+		37FB65731498C6B300387490 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6ABF72E60F939BE600B9179E;
+			remoteInfo = "ObjectiveFlickr (library)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -120,6 +136,8 @@
 		37FB655F14978CD200387490 /* NSData+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Digest.m"; sourceTree = "<group>"; };
 		37FB65611497AAD300387490 /* ProgressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTableViewController.h; sourceTree = "<group>"; };
 		37FB65621497AAD300387490 /* ProgressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressTableViewController.m; sourceTree = "<group>"; };
+		37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = objectiveflickr/ObjectiveFlickr.xcodeproj; sourceTree = "<group>"; };
+		37FB65771498C8A100387490 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +145,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */,
+				37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */,
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
 				376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */,
 				376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */,
@@ -196,6 +216,7 @@
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
 				376E15391494C47800A34E7D /* Products */,
+				37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +232,7 @@
 		376E153B1494C47800A34E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37FB65771498C8A100387490 /* CFNetwork.framework */,
 				376E153C1494C47800A34E7D /* UIKit.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
 				376E15401494C47800A34E7D /* CoreGraphics.framework */,
@@ -328,6 +350,15 @@
 			name = Util;
 			sourceTree = "<group>";
 		};
+		37FB65691498C6B200387490 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				37FB65721498C6B300387490 /* ObjectiveFlickr.framework */,
+				37FB65741498C6B300387490 /* libObjectiveFlickr.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -385,6 +416,12 @@
 			mainGroup = 376E152D1494C47800A34E7D;
 			productRefGroup = 376E15391494C47800A34E7D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 37FB65691498C6B200387490 /* Products */;
+					ProjectRef = 37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				376E15371494C47800A34E7D /* tottepost */,
@@ -392,6 +429,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		37FB65721498C6B300387490 /* ObjectiveFlickr.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ObjectiveFlickr.framework;
+			remoteRef = 37FB65711498C6B300387490 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		37FB65741498C6B300387490 /* libObjectiveFlickr.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveFlickr.a;
+			remoteRef = 37FB65731498C6B300387490 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		376E15361494C47800A34E7D /* Resources */ = {
@@ -521,6 +575,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					objectiveflickr/LFWebAPIKit,
+					objectiveflickr/Source,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -540,6 +598,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					objectiveflickr/LFWebAPIKit,
+					objectiveflickr/Source,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
