@@ -14,7 +14,7 @@
 /*!
  * photo submitter aggregation class
  */
-@interface PhotoSubmitter : NSObject{
+@interface PhotoSubmitterManager : NSObject{
     @protected 
     __strong NSMutableDictionary *submitters_;
 }
@@ -26,7 +26,7 @@
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterWithType:(PhotoSubmitterType)type;
 - (BOOL) didOpenURL: (NSURL *)url;
-+ (PhotoSubmitter *)getInstance;
++ (PhotoSubmitterManager *)getInstance;
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter;
 + (FlickrPhotoSubmitter *)flickrPhotoSubmitter;
 @end

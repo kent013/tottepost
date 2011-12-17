@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FacebookSettingViewController.h"
-#import "PhotoSubmitter.h"
+#import "PhotoSubmitterManager.h"
 
 @interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate>{
 @protected

@@ -6,20 +6,20 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
-#import "PhotoSubmitter.h"
+#import "PhotoSubmitterManager.h"
 /*!
  * singleton instance
  */
-static PhotoSubmitter* TottePostPhotoSubmitter;
+static PhotoSubmitterManager* TottePostPhotoSubmitter;
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface PhotoSubmitter(PrivateImplementation)
+@interface PhotoSubmitterManager(PrivateImplementation)
 - (void) setupInitialState;
 @end
 
-@implementation PhotoSubmitter(PrivateImplementation)
+@implementation PhotoSubmitterManager(PrivateImplementation)
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
     [self loadSubmitters];
@@ -30,7 +30,7 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
 //Public Implementations
 //-----------------------------------------------------------------------------
 
-@implementation PhotoSubmitter
+@implementation PhotoSubmitterManager
 /*!
  * initializer
  */
@@ -132,9 +132,9 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
 /*!
  * singleton method
  */
-+ (PhotoSubmitter *)getInstance{
++ (PhotoSubmitterManager *)getInstance{
     if(TottePostPhotoSubmitter == nil){
-        TottePostPhotoSubmitter = [[PhotoSubmitter alloc]init];
+        TottePostPhotoSubmitter = [[PhotoSubmitterManager alloc]init];
     }
     return TottePostPhotoSubmitter;
 }
@@ -142,12 +142,12 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
  * get facebook photo submitter
  */
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter{
-    return (FacebookPhotoSubmitter *)[[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFacebook];
+    return (FacebookPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterWithType:PhotoSubmitterTypeFacebook];
 }
 /*!
  * get facebook photo submitter
  */
 + (FlickrPhotoSubmitter *)flickrPhotoSubmitter{
-    return (FlickrPhotoSubmitter *)[[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFlickr];
+    return (FlickrPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterWithType:PhotoSubmitterTypeFlickr];
 }
 @end

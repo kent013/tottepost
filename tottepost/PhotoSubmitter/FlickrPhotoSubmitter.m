@@ -62,7 +62,7 @@
 }
 
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest imageUploadSentBytes:(NSUInteger)inSentBytes totalBytes:(NSUInteger)inTotalBytes{
-    
+    //[self.photoDelegate photoSubmitter:self didProgressChanged:<#(NSString *)#> progress:inSentBytes / (float)inTotalBytes];
 }
 
 -(void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didObtainOAuthRequestToken:(NSString *)inRequestToken secret:(NSString *)inSecret{

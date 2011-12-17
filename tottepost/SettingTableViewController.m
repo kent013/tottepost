@@ -34,7 +34,7 @@
 - (void)setupInitialState{
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
-    [[PhotoSubmitter getInstance] setAuthenticationDelegate:self];
+    [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
 }
 
 #pragma mark -
@@ -108,14 +108,14 @@
     
     switch (tag) {
         case SV_ACCOUNTS_FACEBOOK:
-            if ([[PhotoSubmitter facebookPhotoSubmitter] isLogined]){
+            if ([[PhotoSubmitterManager facebookPhotoSubmitter] isLogined]){
                 [s setOn:YES animated:YES];
             }else{
                 [s setOn:NO animated:YES];
             }
             break;
         case SV_ACCOUNTS_FLICKR:
-            if ([[PhotoSubmitter flickrPhotoSubmitter] isLogined]){
+            if ([[PhotoSubmitterManager flickrPhotoSubmitter] isLogined]){
                 [s setOn:YES animated:YES];
             }else{
                 [s setOn:NO animated:YES];
@@ -154,16 +154,16 @@
     switch (s.tag) {
         case SV_ACCOUNTS_FACEBOOK:
             if(s.on){
-                [[PhotoSubmitter facebookPhotoSubmitter] login];
+                [[PhotoSubmitterManager facebookPhotoSubmitter] login];
             }else{
-                [[PhotoSubmitter facebookPhotoSubmitter] logout];
+                [[PhotoSubmitterManager facebookPhotoSubmitter] logout];
             }
             break;
         case SV_ACCOUNTS_FLICKR:
             if(s.on){
-                [[PhotoSubmitter flickrPhotoSubmitter] login];
+                [[PhotoSubmitterManager flickrPhotoSubmitter] login];
             }else{
-                [[PhotoSubmitter flickrPhotoSubmitter] logout];
+                [[PhotoSubmitterManager flickrPhotoSubmitter] logout];
             }
             break;
     } 

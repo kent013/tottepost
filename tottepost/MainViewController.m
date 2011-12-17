@@ -43,7 +43,7 @@
     
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero];
     
-    [[PhotoSubmitter getInstance] setPhotoDelegate:self];
+    [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
     [self updateCoodinates];
 }
 
@@ -137,7 +137,7 @@
 
 //画像が選択された時に呼ばれるデリゲートメソッド
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
-    [[PhotoSubmitter getInstance] submitPhoto:image];
+    [[PhotoSubmitterManager getInstance] submitPhoto:image];
 }
 
 
@@ -156,7 +156,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    [[PhotoSubmitter getInstance] submitPhoto:image];
+    [[PhotoSubmitterManager getInstance] submitPhoto:image];
 }
 
 /*!

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PhotoSubmitter.h"
+#import "PhotoSubmitterManager.h"
 
 @implementation AppDelegate
 @synthesize window = _window;
@@ -30,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[PhotoSubmitter getInstance] didOpenURL:url];
+    return [[PhotoSubmitterManager getInstance] didOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

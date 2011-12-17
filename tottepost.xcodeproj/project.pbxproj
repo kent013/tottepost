@@ -27,7 +27,7 @@
 		37FB64E614962B9400387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E514962B9400387490 /* twitter_32.png */; };
 		37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingViewController.m */; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
-		37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitter.m */; };
+		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
 		37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
 		37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65771498C8A100387490 /* CFNetwork.framework */; };
@@ -105,8 +105,8 @@
 		37FB64E81496384800387490 /* FacebookSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingViewController.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
-		37FB65491497313500387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
-		37FB654A1497313500387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitter.m; path = PhotoSubmitter/PhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB65491497313500387490 /* PhotoSubmitterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterManager.h; path = PhotoSubmitter/PhotoSubmitterManager.h; sourceTree = "<group>"; };
+		37FB654A1497313500387490 /* PhotoSubmitterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterManager.m; path = PhotoSubmitter/PhotoSubmitterManager.m; sourceTree = "<group>"; };
 		37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterProtocol.h; path = PhotoSubmitter/PhotoSubmitterProtocol.h; sourceTree = "<group>"; };
 		37FB65611497AAD300387490 /* ProgressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTableViewController.h; sourceTree = "<group>"; };
 		37FB65621497AAD300387490 /* ProgressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressTableViewController.m; sourceTree = "<group>"; };
@@ -341,8 +341,8 @@
 			children = (
 				37FB65841498D51800387490 /* PhotoSubmitterAPIKey.h */,
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
-				37FB65491497313500387490 /* PhotoSubmitter.h */,
-				37FB654A1497313500387490 /* PhotoSubmitter.m */,
+				37FB65491497313500387490 /* PhotoSubmitterManager.h */,
+				37FB654A1497313500387490 /* PhotoSubmitterManager.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
 				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
 				37FB657D1498CF0100387490 /* FlickrPhotoSubmitter.h */,
@@ -532,7 +532,7 @@
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
 				37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
-				37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */,
+				37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */,
 				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
 				37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */,
 				37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */,
