@@ -113,6 +113,19 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
     }
 }
 
+/*!
+ * on url loaded
+ */
+- (BOOL)didOpenURL:(NSURL *)url{
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        if([submitter isProcessableURL:url]){
+            return [submitter didOpenURL:url];
+        }
+    }
+    return NO; 
+}
+
 #pragma mark -
 #pragma mark static methods
 /*!

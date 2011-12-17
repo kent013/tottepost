@@ -26,25 +26,28 @@
 		37FB64E414962B8D00387490 /* flickr_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E214962B8D00387490 /* flickr_32.png */; };
 		37FB64E614962B9400387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E514962B9400387490 /* twitter_32.png */; };
 		37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingViewController.m */; };
-		37FB652B1496415700387490 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65141496415700387490 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB652C1496415700387490 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65161496415700387490 /* FBDialog.bundle */; };
-		37FB652D1496415700387490 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65181496415700387490 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB652E1496415700387490 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB651A1496415700387490 /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB652F1496415700387490 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB651C1496415700387490 /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65301496415700387490 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65201496415700387490 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65311496415700387490 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65221496415700387490 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65321496415700387490 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65241496415700387490 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65331496415700387490 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65261496415700387490 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65341496415700387490 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65281496415700387490 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB65351496415700387490 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB652A1496415700387490 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitter.m */; };
-		37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655C14978CBF00387490 /* UIImage+Digest.m */; };
-		37FB656014978CD200387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655F14978CD200387490 /* NSData+Digest.m */; };
+		37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
 		37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
 		37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65771498C8A100387490 /* CFNetwork.framework */; };
+		37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */; };
+		37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6587149C4E6D00387490 /* NSData+Digest.m */; };
+		37FB658B149C4E6D00387490 /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6589149C4E6D00387490 /* UIImage+Digest.m */; };
+		37FB6599149C4F2A00387490 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6590149C4F2A00387490 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB659A149C4F2A00387490 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 37FB6592149C4F2A00387490 /* FBDialog.bundle */; };
+		37FB659B149C4F2A00387490 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6594149C4F2A00387490 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB659C149C4F2A00387490 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6596149C4F2A00387490 /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB659D149C4F2A00387490 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6598149C4F2A00387490 /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65A1149C4F5300387490 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65A0149C4F5300387490 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65AF149C4F6800387490 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65A4149C4F6800387490 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B0149C4F6800387490 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65A6149C4F6800387490 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B1149C4F6800387490 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65A8149C4F6800387490 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B2149C4F6800387490 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65AA149C4F6800387490 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B3149C4F6800387490 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65AC149C4F6800387490 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65AE149C4F6800387490 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65B5149C512A00387490 /* libicucore.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,29 +103,6 @@
 		37FB64E514962B9400387490 /* twitter_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_32.png; path = Resources/images/twitter_32.png; sourceTree = "<group>"; };
 		37FB64E71496384800387490 /* FacebookSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookSettingViewController.h; sourceTree = "<group>"; };
 		37FB64E81496384800387490 /* FacebookSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingViewController.m; sourceTree = "<group>"; };
-		37FB65131496415700387490 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
-		37FB65141496415700387490 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
-		37FB65151496415700387490 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
-		37FB65161496415700387490 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
-		37FB65171496415700387490 /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDialog.h; sourceTree = "<group>"; };
-		37FB65181496415700387490 /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDialog.m; sourceTree = "<group>"; };
-		37FB65191496415700387490 /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLoginDialog.h; sourceTree = "<group>"; };
-		37FB651A1496415700387490 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
-		37FB651B1496415700387490 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
-		37FB651C1496415700387490 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
-		37FB651E1496415700387490 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		37FB651F1496415700387490 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		37FB65201496415700387490 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		37FB65211496415700387490 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		37FB65221496415700387490 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		37FB65231496415700387490 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		37FB65241496415700387490 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		37FB65251496415700387490 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		37FB65261496415700387490 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		37FB65271496415700387490 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		37FB65281496415700387490 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		37FB65291496415700387490 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		37FB652A1496415700387490 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65491497313500387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
@@ -130,14 +110,43 @@
 		37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterProtocol.h; path = PhotoSubmitter/PhotoSubmitterProtocol.h; sourceTree = "<group>"; };
 		37FB655714976ADD00387490 /* FBRequest+UploadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBRequest+UploadProgress.h"; path = "PhotoSubmitter/FBRequest+UploadProgress.h"; sourceTree = "<group>"; };
 		37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBRequest+UploadProgress.m"; path = "PhotoSubmitter/FBRequest+UploadProgress.m"; sourceTree = "<group>"; };
-		37FB655B14978CBF00387490 /* UIImage+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Digest.h"; sourceTree = "<group>"; };
-		37FB655C14978CBF00387490 /* UIImage+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Digest.m"; sourceTree = "<group>"; };
-		37FB655E14978CD200387490 /* NSData+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Digest.h"; sourceTree = "<group>"; };
-		37FB655F14978CD200387490 /* NSData+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Digest.m"; sourceTree = "<group>"; };
 		37FB65611497AAD300387490 /* ProgressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressTableViewController.h; sourceTree = "<group>"; };
 		37FB65621497AAD300387490 /* ProgressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressTableViewController.m; sourceTree = "<group>"; };
 		37FB65681498C6B200387490 /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = objectiveflickr/ObjectiveFlickr.xcodeproj; sourceTree = "<group>"; };
 		37FB65771498C8A100387490 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		37FB657D1498CF0100387490 /* FlickrPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrPhotoSubmitter.h; path = PhotoSubmitter/FlickrPhotoSubmitter.h; sourceTree = "<group>"; };
+		37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrPhotoSubmitter.m; path = PhotoSubmitter/FlickrPhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB65841498D51800387490 /* PhotoSubmitterAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterAPIKey.h; path = PhotoSubmitter/PhotoSubmitterAPIKey.h; sourceTree = "<group>"; };
+		37FB6586149C4E6D00387490 /* NSData+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Digest.h"; path = "Util/NSData+Digest.h"; sourceTree = "<group>"; };
+		37FB6587149C4E6D00387490 /* NSData+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Digest.m"; path = "Util/NSData+Digest.m"; sourceTree = "<group>"; };
+		37FB6588149C4E6D00387490 /* UIImage+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Digest.h"; path = "Util/UIImage+Digest.h"; sourceTree = "<group>"; };
+		37FB6589149C4E6D00387490 /* UIImage+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Digest.m"; path = "Util/UIImage+Digest.m"; sourceTree = "<group>"; };
+		37FB658F149C4F2A00387490 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Facebook.h; path = tottepost/Libraries/FBConnect/Facebook.h; sourceTree = SOURCE_ROOT; };
+		37FB6590149C4F2A00387490 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Facebook.m; path = tottepost/Libraries/FBConnect/Facebook.m; sourceTree = SOURCE_ROOT; };
+		37FB6591149C4F2A00387490 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnect.h; path = tottepost/Libraries/FBConnect/FBConnect.h; sourceTree = SOURCE_ROOT; };
+		37FB6592149C4F2A00387490 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = tottepost/Libraries/FBConnect/FBDialog.bundle; sourceTree = SOURCE_ROOT; };
+		37FB6593149C4F2A00387490 /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDialog.h; path = tottepost/Libraries/FBConnect/FBDialog.h; sourceTree = SOURCE_ROOT; };
+		37FB6594149C4F2A00387490 /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBDialog.m; path = tottepost/Libraries/FBConnect/FBDialog.m; sourceTree = SOURCE_ROOT; };
+		37FB6595149C4F2A00387490 /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginDialog.h; path = tottepost/Libraries/FBConnect/FBLoginDialog.h; sourceTree = SOURCE_ROOT; };
+		37FB6596149C4F2A00387490 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginDialog.m; path = tottepost/Libraries/FBConnect/FBLoginDialog.m; sourceTree = SOURCE_ROOT; };
+		37FB6597149C4F2A00387490 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequest.h; path = tottepost/Libraries/FBConnect/FBRequest.h; sourceTree = SOURCE_ROOT; };
+		37FB6598149C4F2A00387490 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBRequest.m; path = tottepost/Libraries/FBConnect/FBRequest.m; sourceTree = SOURCE_ROOT; };
+		37FB659F149C4F5300387490 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = Libraries/RegexKitLite/RegexKitLite.h; sourceTree = "<group>"; };
+		37FB65A0149C4F5300387490 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = Libraries/RegexKitLite/RegexKitLite.m; sourceTree = "<group>"; };
+		37FB65A2149C4F6800387490 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = tottepost/Libraries/JSON/JSON.h; sourceTree = SOURCE_ROOT; };
+		37FB65A3149C4F6800387490 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SBJSON.h"; path = "tottepost/Libraries/JSON/NSObject+SBJSON.h"; sourceTree = SOURCE_ROOT; };
+		37FB65A4149C4F6800387490 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SBJSON.m"; path = "tottepost/Libraries/JSON/NSObject+SBJSON.m"; sourceTree = SOURCE_ROOT; };
+		37FB65A5149C4F6800387490 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SBJSON.h"; path = "tottepost/Libraries/JSON/NSString+SBJSON.h"; sourceTree = SOURCE_ROOT; };
+		37FB65A6149C4F6800387490 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SBJSON.m"; path = "tottepost/Libraries/JSON/NSString+SBJSON.m"; sourceTree = SOURCE_ROOT; };
+		37FB65A7149C4F6800387490 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJSON.h; path = tottepost/Libraries/JSON/SBJSON.h; sourceTree = SOURCE_ROOT; };
+		37FB65A8149C4F6800387490 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJSON.m; path = tottepost/Libraries/JSON/SBJSON.m; sourceTree = SOURCE_ROOT; };
+		37FB65A9149C4F6800387490 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = tottepost/Libraries/JSON/SBJsonBase.h; sourceTree = SOURCE_ROOT; };
+		37FB65AA149C4F6800387490 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonBase.m; path = tottepost/Libraries/JSON/SBJsonBase.m; sourceTree = SOURCE_ROOT; };
+		37FB65AB149C4F6800387490 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonParser.h; path = tottepost/Libraries/JSON/SBJsonParser.h; sourceTree = SOURCE_ROOT; };
+		37FB65AC149C4F6800387490 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonParser.m; path = tottepost/Libraries/JSON/SBJsonParser.m; sourceTree = SOURCE_ROOT; };
+		37FB65AD149C4F6800387490 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = tottepost/Libraries/JSON/SBJsonWriter.h; sourceTree = SOURCE_ROOT; };
+		37FB65AE149C4F6800387490 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = tottepost/Libraries/JSON/SBJsonWriter.m; sourceTree = SOURCE_ROOT; };
+		37FB65B5149C512A00387490 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
 				37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */,
 				37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */,
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
@@ -212,6 +222,7 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
+				37FB65B5149C512A00387490 /* libicucore.dylib */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
@@ -244,8 +255,8 @@
 		376E15421494C47800A34E7D /* tottepost */ = {
 			isa = PBXGroup;
 			children = (
+				37FB6585149C4D1500387490 /* Libraries */,
 				37FB655A14978CA500387490 /* Util */,
-				37FB65121496415600387490 /* FBConnect */,
 				3704D5AF1494CD5A00380D30 /* MainView */,
 				3704D5B01494CD7E00380D30 /* Settings */,
 				37FB653F14970D9C00387490 /* PhotoSubmitter */,
@@ -290,17 +301,16 @@
 		37FB65121496415600387490 /* FBConnect */ = {
 			isa = PBXGroup;
 			children = (
-				37FB65131496415700387490 /* Facebook.h */,
-				37FB65141496415700387490 /* Facebook.m */,
-				37FB65151496415700387490 /* FBConnect.h */,
-				37FB65161496415700387490 /* FBDialog.bundle */,
-				37FB65171496415700387490 /* FBDialog.h */,
-				37FB65181496415700387490 /* FBDialog.m */,
-				37FB65191496415700387490 /* FBLoginDialog.h */,
-				37FB651A1496415700387490 /* FBLoginDialog.m */,
-				37FB651B1496415700387490 /* FBRequest.h */,
-				37FB651C1496415700387490 /* FBRequest.m */,
-				37FB651D1496415700387490 /* JSON */,
+				37FB658F149C4F2A00387490 /* Facebook.h */,
+				37FB6590149C4F2A00387490 /* Facebook.m */,
+				37FB6591149C4F2A00387490 /* FBConnect.h */,
+				37FB6592149C4F2A00387490 /* FBDialog.bundle */,
+				37FB6593149C4F2A00387490 /* FBDialog.h */,
+				37FB6594149C4F2A00387490 /* FBDialog.m */,
+				37FB6595149C4F2A00387490 /* FBLoginDialog.h */,
+				37FB6596149C4F2A00387490 /* FBLoginDialog.m */,
+				37FB6597149C4F2A00387490 /* FBRequest.h */,
+				37FB6598149C4F2A00387490 /* FBRequest.m */,
 			);
 			path = FBConnect;
 			sourceTree = "<group>";
@@ -308,33 +318,35 @@
 		37FB651D1496415700387490 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				37FB651E1496415700387490 /* JSON.h */,
-				37FB651F1496415700387490 /* NSObject+SBJSON.h */,
-				37FB65201496415700387490 /* NSObject+SBJSON.m */,
-				37FB65211496415700387490 /* NSString+SBJSON.h */,
-				37FB65221496415700387490 /* NSString+SBJSON.m */,
-				37FB65231496415700387490 /* SBJSON.h */,
-				37FB65241496415700387490 /* SBJSON.m */,
-				37FB65251496415700387490 /* SBJsonBase.h */,
-				37FB65261496415700387490 /* SBJsonBase.m */,
-				37FB65271496415700387490 /* SBJsonParser.h */,
-				37FB65281496415700387490 /* SBJsonParser.m */,
-				37FB65291496415700387490 /* SBJsonWriter.h */,
-				37FB652A1496415700387490 /* SBJsonWriter.m */,
+				37FB65A2149C4F6800387490 /* JSON.h */,
+				37FB65A3149C4F6800387490 /* NSObject+SBJSON.h */,
+				37FB65A4149C4F6800387490 /* NSObject+SBJSON.m */,
+				37FB65A5149C4F6800387490 /* NSString+SBJSON.h */,
+				37FB65A6149C4F6800387490 /* NSString+SBJSON.m */,
+				37FB65A7149C4F6800387490 /* SBJSON.h */,
+				37FB65A8149C4F6800387490 /* SBJSON.m */,
+				37FB65A9149C4F6800387490 /* SBJsonBase.h */,
+				37FB65AA149C4F6800387490 /* SBJsonBase.m */,
+				37FB65AB149C4F6800387490 /* SBJsonParser.h */,
+				37FB65AC149C4F6800387490 /* SBJsonParser.m */,
+				37FB65AD149C4F6800387490 /* SBJsonWriter.h */,
+				37FB65AE149C4F6800387490 /* SBJsonWriter.m */,
 			);
-			path = JSON;
+			name = JSON;
+			path = FBConnect/JSON;
 			sourceTree = "<group>";
 		};
 		37FB653F14970D9C00387490 /* PhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
-				37FB655714976ADD00387490 /* FBRequest+UploadProgress.h */,
-				37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */,
-				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
-				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
+				37FB65841498D51800387490 /* PhotoSubmitterAPIKey.h */,
+				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 				37FB65491497313500387490 /* PhotoSubmitter.h */,
 				37FB654A1497313500387490 /* PhotoSubmitter.m */,
-				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
+				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
+				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
+				37FB657D1498CF0100387490 /* FlickrPhotoSubmitter.h */,
+				37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */,
 			);
 			name = PhotoSubmitter;
 			sourceTree = "<group>";
@@ -342,10 +354,12 @@
 		37FB655A14978CA500387490 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				37FB655E14978CD200387490 /* NSData+Digest.h */,
-				37FB655F14978CD200387490 /* NSData+Digest.m */,
-				37FB655B14978CBF00387490 /* UIImage+Digest.h */,
-				37FB655C14978CBF00387490 /* UIImage+Digest.m */,
+				37FB655714976ADD00387490 /* FBRequest+UploadProgress.h */,
+				37FB655814976ADD00387490 /* FBRequest+UploadProgress.m */,
+				37FB6586149C4E6D00387490 /* NSData+Digest.h */,
+				37FB6587149C4E6D00387490 /* NSData+Digest.m */,
+				37FB6588149C4E6D00387490 /* UIImage+Digest.h */,
+				37FB6589149C4E6D00387490 /* UIImage+Digest.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -357,6 +371,25 @@
 				37FB65741498C6B300387490 /* libObjectiveFlickr.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		37FB6585149C4D1500387490 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				37FB659E149C4F3200387490 /* RegexKitLite */,
+				37FB651D1496415700387490 /* JSON */,
+				37FB65121496415600387490 /* FBConnect */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		37FB659E149C4F3200387490 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				37FB659F149C4F5300387490 /* RegexKitLite.h */,
+				37FB65A0149C4F5300387490 /* RegexKitLite.m */,
+			);
+			name = RegexKitLite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,7 +490,7 @@
 				37FB64E314962B8D00387490 /* facebook_32.png in Resources */,
 				37FB64E414962B8D00387490 /* flickr_32.png in Resources */,
 				37FB64E614962B9400387490 /* twitter_32.png in Resources */,
-				37FB652C1496415700387490 /* FBDialog.bundle in Resources */,
+				37FB659A149C4F2A00387490 /* FBDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,22 +531,24 @@
 				37FB64DD1496238600387490 /* MainView.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
 				37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */,
-				37FB652B1496415700387490 /* Facebook.m in Sources */,
-				37FB652D1496415700387490 /* FBDialog.m in Sources */,
-				37FB652E1496415700387490 /* FBLoginDialog.m in Sources */,
-				37FB652F1496415700387490 /* FBRequest.m in Sources */,
-				37FB65301496415700387490 /* NSObject+SBJSON.m in Sources */,
-				37FB65311496415700387490 /* NSString+SBJSON.m in Sources */,
-				37FB65321496415700387490 /* SBJSON.m in Sources */,
-				37FB65331496415700387490 /* SBJsonBase.m in Sources */,
-				37FB65341496415700387490 /* SBJsonParser.m in Sources */,
-				37FB65351496415700387490 /* SBJsonWriter.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
 				37FB654D1497313500387490 /* PhotoSubmitter.m in Sources */,
 				37FB655914976ADD00387490 /* FBRequest+UploadProgress.m in Sources */,
-				37FB655D14978CBF00387490 /* UIImage+Digest.m in Sources */,
-				37FB656014978CD200387490 /* NSData+Digest.m in Sources */,
 				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
+				37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */,
+				37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */,
+				37FB658B149C4E6D00387490 /* UIImage+Digest.m in Sources */,
+				37FB6599149C4F2A00387490 /* Facebook.m in Sources */,
+				37FB659B149C4F2A00387490 /* FBDialog.m in Sources */,
+				37FB659C149C4F2A00387490 /* FBLoginDialog.m in Sources */,
+				37FB659D149C4F2A00387490 /* FBRequest.m in Sources */,
+				37FB65A1149C4F5300387490 /* RegexKitLite.m in Sources */,
+				37FB65AF149C4F6800387490 /* NSObject+SBJSON.m in Sources */,
+				37FB65B0149C4F6800387490 /* NSString+SBJSON.m in Sources */,
+				37FB65B1149C4F6800387490 /* SBJSON.m in Sources */,
+				37FB65B2149C4F6800387490 /* SBJsonBase.m in Sources */,
+				37FB65B3149C4F6800387490 /* SBJsonParser.m in Sources */,
+				37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

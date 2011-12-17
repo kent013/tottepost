@@ -6,8 +6,10 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import "PhotoSubmitterAPIKey.h"
 #import "FacebookPhotoSubmitter.h"
 #import "UIImage+Digest.h"
+#import "RegexKitLite.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -25,7 +27,7 @@
  */
 -(void)setupInitialState{
     requests_ = [[NSMutableDictionary alloc] init];
-    facebook_ = [[Facebook alloc] initWithAppId:@"206421902773102" andDelegate:self];
+    facebook_ = [[Facebook alloc] initWithAppId:PHOTO_SUBMITTER_FACEBOOK_API_ID andDelegate:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"] 
         && [defaults objectForKey:@"FBExpirationDateKey"]) {
@@ -120,7 +122,6 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation FacebookPhotoSubmitter
-@synthesize facebook = facebook_;
 @synthesize authDelegate;
 @synthesize photoDelegate;
 #pragma mark -
@@ -193,6 +194,23 @@
  */
 - (PhotoSubmitterType) type{
     return PhotoSubmitterTypeFacebook;
+}
+
+/*!
+ * check url is processoble
+ */
+- (BOOL)isProcessableURL:(NSURL *)url{
+    if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+://authorize/"]){
+        return YES;
+    }
+    return NO;
+}
+
+/*!
+ * on open url finished
+ */
+- (BOOL)didOpenURL:(NSURL *)url{
+    return [facebook_ handleOpenURL:url];
 }
 
 /*!

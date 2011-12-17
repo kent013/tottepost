@@ -24,7 +24,6 @@
     __strong Facebook *facebook_;
     __strong NSMutableDictionary *requests_;
 }
-@property (nonatomic, readonly) Facebook* facebook;
 @property (nonatomic, readonly) PhotoSubmitterType type;
 @property (weak, nonatomic) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (weak, nonatomic) id<PhotoSubmitterPhotoDelegate> photoDelegate;

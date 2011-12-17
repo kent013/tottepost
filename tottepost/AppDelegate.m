@@ -30,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[PhotoSubmitter facebookPhotoSubmitter].facebook handleOpenURL:url];
+    return [[PhotoSubmitter getInstance] didOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

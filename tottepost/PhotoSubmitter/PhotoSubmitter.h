@@ -24,6 +24,7 @@
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterWithType:(PhotoSubmitterType)type;
+- (BOOL) didOpenURL: (NSURL *)url;
 + (PhotoSubmitter *)getInstance;
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter;
 @end

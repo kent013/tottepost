@@ -32,6 +32,8 @@ typedef enum {
 - (void) logout;
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
+- (BOOL) isProcessableURL:(NSURL *)url;
+- (BOOL) didOpenURL:(NSURL *)url;
 + (BOOL) isEnabled;
 @end
 
