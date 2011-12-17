@@ -211,6 +211,20 @@
 }
 
 /*!
+ * name
+ */
+- (NSString *)name{
+    return @"Twitter";
+}
+
+/*!
+ * icon image
+ */
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"twitter_32.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

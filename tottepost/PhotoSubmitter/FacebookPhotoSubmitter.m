@@ -238,6 +238,20 @@
 }
 
 /*!
+ * name
+ */
+- (NSString *)name{
+    return @"Facebook";
+}
+
+/*!
+ * icon image
+ */
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"facebook_32.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

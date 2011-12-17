@@ -26,6 +26,8 @@ typedef enum {
 @required
 @property (nonatomic, readonly) BOOL isLogined;
 @property (nonatomic, readonly) PhotoSubmitterType type;
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) UIImage *icon;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterPhotoDelegate> photoDelegate;
 - (void) login;

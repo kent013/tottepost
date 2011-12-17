@@ -21,7 +21,7 @@
 @interface SettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
 - (void) settingDone:(id)sender;
-- (UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName tag:(int)tag;
+- (UITableViewCell *) createSocialAppButtonWithTag:(int)tag;
 - (void) didSocialAppSwitchChanged:(id)sender;
 - (PhotoSubmitterType) indexToSubmitterType:(int) index;
 - (int) submitterTypeToIndex:(PhotoSubmitterType) type;
@@ -85,13 +85,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.textLabel.text = @"moge";
     }else if(indexPath.section == SV_SECTION_ACCOUNTS){
-        if(indexPath.row == SV_ACCOUNTS_FACEBOOK){
-            cell = [self createSocialAppButtonWithTitle: @"Facebook" imageName:@"facebook_32.png" tag:SV_ACCOUNTS_FACEBOOK];
-        }else if(indexPath.row == SV_ACCOUNTS_TWITTER){
-            cell = [self createSocialAppButtonWithTitle: @"Twitter" imageName:@"twitter_32.png" tag:SV_ACCOUNTS_TWITTER];
-        }else if(indexPath.row == SV_ACCOUNTS_FLICKR){
-            cell = [self createSocialAppButtonWithTitle: @"Flickr" imageName:@"flickr_32.png" tag:SV_ACCOUNTS_FLICKR];
-        }
+        cell = [self createSocialAppButtonWithTag:indexPath.row];
     }
     return cell;
 }
@@ -99,10 +93,13 @@
 /*!
  * create social app button
  */
--(UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName tag:(int)tag{
+-(UITableViewCell *) createSocialAppButtonWithTag:(int)tag{
+    PhotoSubmitterType type = [self indexToSubmitterType:tag];
+    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.imageView.image = [UIImage imageNamed:imageName];
-    cell.textLabel.text = title;
+    cell.imageView.image = submitter.icon;
+    cell.textLabel.text = submitter.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 180, 8, 100, 30)];
@@ -110,9 +107,6 @@
     [cell.contentView addSubview:s];
     s.tag = tag;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
-    
-    PhotoSubmitterType type = [self indexToSubmitterType:tag];
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
     if([submitter isLogined]){
         [s setOn:YES animated:YES];
     }else{

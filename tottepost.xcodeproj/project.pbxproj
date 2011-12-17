@@ -22,9 +22,6 @@
 		37FB64DD1496238600387490 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DA1496238600387490 /* MainView.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
-		37FB64E314962B8D00387490 /* facebook_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E114962B8D00387490 /* facebook_32.png */; };
-		37FB64E414962B8D00387490 /* flickr_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E214962B8D00387490 /* flickr_32.png */; };
-		37FB64E614962B9400387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64E514962B9400387490 /* twitter_32.png */; };
 		37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingViewController.m */; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
@@ -52,6 +49,9 @@
 		37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65CF149CB64A00387490 /* Twitter.framework */; };
 		37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65D6149CD5BD00387490 /* TwitterPhotoSubmitter.m */; };
 		37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65D8149CDFBC00387490 /* Accounts.framework */; };
+		37FB65DD149D028500387490 /* facebook_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DA149D028500387490 /* facebook_32.png */; };
+		37FB65DE149D028500387490 /* flickr_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DB149D028500387490 /* flickr_32.png */; };
+		37FB65DF149D028500387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DC149D028500387490 /* twitter_32.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,9 +102,6 @@
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
-		37FB64E114962B8D00387490 /* facebook_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_32.png; path = Resources/images/facebook_32.png; sourceTree = "<group>"; };
-		37FB64E214962B8D00387490 /* flickr_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_32.png; path = Resources/images/flickr_32.png; sourceTree = "<group>"; };
-		37FB64E514962B9400387490 /* twitter_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_32.png; path = Resources/images/twitter_32.png; sourceTree = "<group>"; };
 		37FB64E71496384800387490 /* FacebookSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookSettingViewController.h; sourceTree = "<group>"; };
 		37FB64E81496384800387490 /* FacebookSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingViewController.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
@@ -157,6 +154,9 @@
 		37FB65D5149CD5BC00387490 /* TwitterPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterPhotoSubmitter.h; path = PhotoSubmitter/TwitterPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65D6149CD5BD00387490 /* TwitterPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterPhotoSubmitter.m; path = PhotoSubmitter/TwitterPhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65D8149CDFBC00387490 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		37FB65DA149D028500387490 /* facebook_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_32.png; path = PhotoSubmitter/Images/facebook_32.png; sourceTree = "<group>"; };
+		37FB65DB149D028500387490 /* flickr_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_32.png; path = PhotoSubmitter/Images/flickr_32.png; sourceTree = "<group>"; };
+		37FB65DC149D028500387490 /* twitter_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_32.png; path = PhotoSubmitter/Images/twitter_32.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,20 +215,20 @@
 		3704D5B41494DAD000380D30 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3704D5B51494DAE100380D30 /* images */,
+				3704D5B51494DAE100380D30 /* Images */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		3704D5B51494DAE100380D30 /* images */ = {
+		3704D5B51494DAE100380D30 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				37FB64E514962B9400387490 /* twitter_32.png */,
-				37FB64E114962B8D00387490 /* facebook_32.png */,
-				37FB64E214962B8D00387490 /* flickr_32.png */,
 				37FB64DF1496239700387490 /* setting.png */,
+				37FB65DA149D028500387490 /* facebook_32.png */,
+				37FB65DB149D028500387490 /* flickr_32.png */,
+				37FB65DC149D028500387490 /* twitter_32.png */,
 			);
-			name = images;
+			name = Images;
 			sourceTree = "<group>";
 		};
 		376E152D1494C47800A34E7D = {
@@ -505,10 +505,10 @@
 			files = (
 				376E15471494C47800A34E7D /* InfoPlist.strings in Resources */,
 				37FB64E01496239700387490 /* setting.png in Resources */,
-				37FB64E314962B8D00387490 /* facebook_32.png in Resources */,
-				37FB64E414962B8D00387490 /* flickr_32.png in Resources */,
-				37FB64E614962B9400387490 /* twitter_32.png in Resources */,
 				37FB659A149C4F2A00387490 /* FBDialog.bundle in Resources */,
+				37FB65DD149D028500387490 /* facebook_32.png in Resources */,
+				37FB65DE149D028500387490 /* flickr_32.png in Resources */,
+				37FB65DF149D028500387490 /* twitter_32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

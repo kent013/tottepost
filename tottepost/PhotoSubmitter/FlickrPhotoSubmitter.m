@@ -256,6 +256,20 @@
 }
 
 /*!
+ * name
+ */
+- (NSString *)name{
+    return @"Flickr";
+}
+
+/*!
+ * icon image
+ */
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"flickr_32.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{
