@@ -11,6 +11,8 @@
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 
+#define PS_FLICKR_ENABLED @"PSFlickrEnabled"
+
 #define PS_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
 #define PS_FLICKR_AUTH_TOKEN @"FlickrOAuthToken"
 #define PS_FLICKR_AUTH_TOKEN_SECRET @"FlickrOAuthTokenSecret"
@@ -57,6 +59,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN];
     [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
+    [defaults removeObjectForKey:PS_FLICKR_ENABLED];
 }
 
 #pragma mark -
@@ -86,6 +89,7 @@
         [self removePhotoForRequest:inRequest];    
     }else{
         NSLog(@"flickr error:%@", inError);
+        [self clearCredentials];
         [self.authDelegate photoSubmitter:self didLogout:self.type];
     }
 }
@@ -119,6 +123,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:flickr_.OAuthToken forKey:PS_FLICKR_AUTH_TOKEN];
     [defaults setObject:flickr_.OAuthTokenSecret forKey:PS_FLICKR_AUTH_TOKEN_SECRET];
+    [defaults setObject:@"enabled" forKey:PS_FLICKR_ENABLED];
     
 }
 @end
@@ -170,7 +175,13 @@
 /*!
  * login to flickr
  */
--(void)login{  
+-(void)login{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]){
+        [defaults setObject:@"enabled" forKey:PS_FLICKR_ENABLED];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+        return;
+    }
     authRequest_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     authRequest_.delegate = self;
     authRequest_.sessionInfo = PS_FLICKR_API_REQUEST_TOKEN;
@@ -185,10 +196,26 @@
 }
 
 /*!
+ * disable
+ */
+- (void)disable{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:PS_FLICKR_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
  * check is logined
  */
 - (BOOL)isLogined{
-    return [FlickrPhotoSubmitter isEnabled];
+    if([FlickrPhotoSubmitter isEnabled] == false){
+        return NO;
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]) {
+        return YES;
+    }
+    return NO;
 }
 
 /*!
@@ -233,7 +260,7 @@
  */
 + (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]) {
+    if ([defaults objectForKey:PS_FLICKR_ENABLED]) {
         return YES;
     }
     return NO;

@@ -17,16 +17,19 @@
 @interface PhotoSubmitterManager : NSObject{
     @protected 
     __strong NSMutableDictionary *submitters_;
+    __strong NSMutableArray *supportedTypes_;
 }
+@property (nonatomic, readonly) NSArray* supportedTypes;
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
 
 - (void) loadSubmitters;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
-- (id<PhotoSubmitterProtocol>) submitterWithType:(PhotoSubmitterType)type;
+- (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
 - (BOOL) didOpenURL: (NSURL *)url;
 + (PhotoSubmitterManager *)getInstance;
++ (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter;
 + (FlickrPhotoSubmitter *)flickrPhotoSubmitter;
 @end

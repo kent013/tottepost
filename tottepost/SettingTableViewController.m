@@ -23,6 +23,8 @@
 - (void) settingDone:(id)sender;
 - (UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName tag:(int)tag;
 - (void) didSocialAppSwitchChanged:(id)sender;
+- (PhotoSubmitterType) indexToSubmitterType:(int) index;
+- (int) SubmitterTypeToIndex:(PhotoSubmitterType) type;
 @end
 
 #pragma mark -
@@ -34,6 +36,9 @@
 - (void)setupInitialState{
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
+    
+    accountTypes_ = [PhotoSubmitterManager getInstance].supportedTypes;
+    
     [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
 }
 
@@ -106,21 +111,12 @@
     s.tag = tag;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     
-    switch (tag) {
-        case SV_ACCOUNTS_FACEBOOK:
-            if ([[PhotoSubmitterManager facebookPhotoSubmitter] isLogined]){
-                [s setOn:YES animated:YES];
-            }else{
-                [s setOn:NO animated:YES];
-            }
-            break;
-        case SV_ACCOUNTS_FLICKR:
-            if ([[PhotoSubmitterManager flickrPhotoSubmitter] isLogined]){
-                [s setOn:YES animated:YES];
-            }else{
-                [s setOn:NO animated:YES];
-            }
-            break;
+    PhotoSubmitterType type = [self indexToSubmitterType:tag];
+    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+    if([submitter isLogined]){
+        [s setOn:YES animated:YES];
+    }else{
+        [s setOn:NO animated:YES];
     }
     return cell;
 }
@@ -156,17 +152,33 @@
             if(s.on){
                 [[PhotoSubmitterManager facebookPhotoSubmitter] login];
             }else{
-                [[PhotoSubmitterManager facebookPhotoSubmitter] logout];
+                [[PhotoSubmitterManager facebookPhotoSubmitter] disable];
             }
             break;
         case SV_ACCOUNTS_FLICKR:
             if(s.on){
                 [[PhotoSubmitterManager flickrPhotoSubmitter] login];
             }else{
-                [[PhotoSubmitterManager flickrPhotoSubmitter] logout];
+                [[PhotoSubmitterManager flickrPhotoSubmitter] disable];
             }
             break;
     } 
+}
+
+#pragma mark -
+#pragma mark conversion methods
+/*!
+ * convert index to PhotoSubmitterType
+ */
+- (PhotoSubmitterType)indexToSubmitterType:(int)index{
+    return (PhotoSubmitterType)[[accountTypes_ objectAtIndex:index] intValue];
+}
+
+/*!
+ * convert PhotoSubmitterType to index
+ */
+- (int)SubmitterTypeToIndex:(PhotoSubmitterType)type{
+    return [accountTypes_ indexOfObject:[NSNumber numberWithInt:type]]; 
 }
 @end
 

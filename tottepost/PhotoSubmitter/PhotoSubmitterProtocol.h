@@ -30,6 +30,7 @@ typedef enum {
 @property (nonatomic, assign) id<PhotoSubmitterPhotoDelegate> photoDelegate;
 - (void) login;
 - (void) logout;
+- (void) disable;
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
 - (BOOL) isProcessableURL:(NSURL *)url;

@@ -22,6 +22,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
 @implementation PhotoSubmitterManager(PrivateImplementation)
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
+    supportedTypes_ = [NSMutableArray arrayWithObjects:
+                     [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
+                     [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
+                     [NSNumber numberWithInt: PhotoSubmitterTypeFlickr], nil];
     [self loadSubmitters];
 }
 @end
@@ -31,6 +35,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
 //-----------------------------------------------------------------------------
 
 @implementation PhotoSubmitterManager
+@synthesize supportedTypes = supportedTypes_;
+
 /*!
  * initializer
  */
@@ -45,7 +51,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
 /*!
  * get submitter
  */
-- (id<PhotoSubmitterProtocol>)submitterWithType:(PhotoSubmitterType)type{
+- (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
     id <PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:[NSNumber numberWithInt:type]];
     if(submitter){
         return submitter;
@@ -62,7 +68,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
         default:
             break;
     }
-    [submitters_ setObject:submitter forKey:[NSNumber numberWithInt:type]];
+    if(submitter){
+        [submitters_ setObject:submitter forKey:[NSNumber numberWithInt:type]];
+    }
     return submitter;
 }
 
@@ -109,11 +117,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
  * load selected submitters
  */
 - (void)loadSubmitters{
-    if([FacebookPhotoSubmitter isEnabled]){
-        [self submitterWithType:PhotoSubmitterTypeFacebook];
-    }
-    if([FlickrPhotoSubmitter isEnabled]){
-        [self submitterWithType:PhotoSubmitterTypeFlickr];
+    for (NSNumber *t in supportedTypes_){
+        PhotoSubmitterType type = (PhotoSubmitterType)[t intValue];
+        [self submitterForType:type];
     }
 }
 
@@ -142,15 +148,22 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
     return TottePostPhotoSubmitter;
 }
 /*!
+ * get submitter
+ */
++ (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
+    return [[PhotoSubmitterManager getInstance] submitterForType:type];
+}
+
+/*!
  * get facebook photo submitter
  */
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter{
-    return (FacebookPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterWithType:PhotoSubmitterTypeFacebook];
+    return (FacebookPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterForType:PhotoSubmitterTypeFacebook];
 }
 /*!
  * get facebook photo submitter
  */
 + (FlickrPhotoSubmitter *)flickrPhotoSubmitter{
-    return (FlickrPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterWithType:PhotoSubmitterTypeFlickr];
+    return (FlickrPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterForType:PhotoSubmitterTypeFlickr];
 }
 @end

@@ -14,5 +14,6 @@
 @protected
     __strong FacebookSettingViewController *facebookSettingViewController_;
     __strong NSMutableDictionary *switches_;
+    __strong NSArray *accountTypes_;
 }
 @end

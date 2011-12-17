@@ -11,6 +11,10 @@
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 
+#define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
+#define PS_FACEBOOK_AUTH_TOKEN @"FBAccessTokenKey"
+#define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"FBExpirationDateKey"
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -28,10 +32,10 @@
 -(void)setupInitialState{
     facebook_ = [[Facebook alloc] initWithAppId:PHOTO_SUBMITTER_FACEBOOK_API_ID andDelegate:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook_.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook_.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN] 
+        && [defaults objectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE]) {
+        facebook_.accessToken = [defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN];
+        facebook_.expirationDate = [defaults objectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
     }
 }
 
@@ -40,9 +44,9 @@
  */
 - (void)clearCredentials{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
-        [defaults removeObjectForKey:@"FBAccessTokenKey"];
-        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN]) {
+        [defaults removeObjectForKey:PS_FACEBOOK_AUTH_TOKEN];
+        [defaults removeObjectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
         [defaults synchronize];
     } 
 }
@@ -54,8 +58,9 @@
  */
 - (void)fbDidLogin {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook_ accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook_ expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults setObject:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
+    [defaults setObject:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
+    [defaults setObject:@"enabled" forKey:PS_FACEBOOK_ENABLED];
     [defaults synchronize];
     [self.authDelegate photoSubmitter:self didLogin:self.type];
 }
@@ -170,7 +175,11 @@
         NSArray *permissions = 
         [NSArray arrayWithObjects:@"publish_stream", @"offline_access", nil];
         [facebook_ authorize:permissions];
-    }        
+    }else{
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"enabled" forKey:PS_FACEBOOK_ENABLED];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+    }
 }
 
 /*!
@@ -182,10 +191,26 @@
 }
 
 /*!
+ * disable
+ */
+- (void)disable{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:PS_FACEBOOK_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
  * check is logined
  */
 - (BOOL)isLogined{
-    return [FacebookPhotoSubmitter isEnabled];
+    if([FacebookPhotoSubmitter isEnabled] == false){
+        return NO;
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN]) {
+        return YES;
+    }
+    return NO;
 }
 
 /*!
@@ -217,7 +242,7 @@
  */
 + (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+    if ([defaults objectForKey:PS_FACEBOOK_ENABLED]) {
         return YES;
     }
     return NO;
