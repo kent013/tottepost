@@ -11,7 +11,15 @@
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 
-#define PHOTO_SUBMITTER_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
+#define PS_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
+#define PS_FLICKR_AUTH_TOKEN @"FlickrOAuthToken"
+#define PS_FLICKR_AUTH_TOKEN_SECRET @"FlickrOAuthTokenSecret"
+
+#define PS_FLICKR_API_CHECK_TOKEN @"check_token"
+#define PS_FLICKR_API_REQUEST_TOKEN @"request_token"
+#define PS_FLICKR_API_GET_TOKEN @"get_token"
+#define PS_FLICKR_API_UPLOAD_IMAGE @"upload_image"
+
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -31,8 +39,8 @@
     flickr_ = [[OFFlickrAPIContext alloc] initWithAPIKey:PHOTO_SUBMITTER_FLICKR_API_KEY sharedSecret:PHOTO_SUBMITTER_FLICKR_API_SECRET];        
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *authToken = [defaults objectForKey:@"FlickrOAuthToken"];
-    NSString *authTokenSecret = [defaults objectForKey:@"FlickrOAuthTokenSecret"];
+    NSString *authToken = [defaults objectForKey:PS_FLICKR_AUTH_TOKEN];
+    NSString *authTokenSecret = [defaults objectForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
     
     if (([authToken length] > 0) && ([authTokenSecret length] > 0)) {
         flickr_.OAuthToken = authToken;
@@ -41,30 +49,58 @@
 }
 
 /*!
- * clear facebook access token key
+ * clear flickr access token key
  */
 - (void)clearCredentials{
     flickr_.OAuthToken = nil;
     flickr_.OAuthTokenSecret = nil;  
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"FlickrOAuthToken"];
-    [defaults removeObjectForKey:@"FlickrOAuthTokenSecret"];
+    [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN];
+    [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
 }
 
+#pragma mark -
+#pragma mark flickr delegate methods
+/*!
+ * on request compleded
+ */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary{
-    if ([inRequest.sessionInfo isEqualToString: @"kCheckTokenStep"]) {
+    if ([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_CHECK_TOKEN]) {
 		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
-	}
+	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
+        NSString *hash = [self photoForRequest:inRequest];
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        [self removeRequest:inRequest];
+        [self removePhotoForRequest:inRequest];        
+    }
 }
 
+/*!
+ * flickr delegate, request did failed
+ */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
-    
+    if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
+        NSString *hash = [self photoForRequest:inRequest];
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
+        [self removeRequest:inRequest];
+        [self removePhotoForRequest:inRequest];    
+    }else{
+        NSLog(@"flickr error:%@", inError);
+        [self.authDelegate photoSubmitter:self didLogout:self.type];
+    }
 }
 
+/*!
+ * flickr delegate, progress
+ */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest imageUploadSentBytes:(NSUInteger)inSentBytes totalBytes:(NSUInteger)inTotalBytes{
-    //[self.photoDelegate photoSubmitter:self didProgressChanged:<#(NSString *)#> progress:inSentBytes / (float)inTotalBytes];
+    NSString * hash = [self photoForRequest:inRequest];
+    [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:inSentBytes / (float)inTotalBytes];
 }
 
+/*!
+ * flickr delegate, request oauth
+ */
 -(void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didObtainOAuthRequestToken:(NSString *)inRequestToken secret:(NSString *)inSecret{
     // these two lines are important
     flickr_.OAuthToken = inRequestToken;
@@ -74,12 +110,15 @@
     [[UIApplication sharedApplication] openURL:authURL];
 }
 
+/*!
+ * flickr delegate, request access token
+ */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didObtainOAuthAccessToken:(NSString *)inAccessToken secret:(NSString *)inSecret userFullName:(NSString *)inFullName userName:(NSString *)inUserName userNSID:(NSString *)inNSID{
     flickr_.OAuthToken = inAccessToken;
     flickr_.OAuthTokenSecret = inSecret;  
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:flickr_.OAuthToken forKey:@"FlickrOAuthToken"];
-    [defaults setObject:flickr_.OAuthTokenSecret forKey:@"FlickrOAuthTokenSecret"];
+    [defaults setObject:flickr_.OAuthToken forKey:PS_FLICKR_AUTH_TOKEN];
+    [defaults setObject:flickr_.OAuthTokenSecret forKey:PS_FLICKR_AUTH_TOKEN_SECRET];
     
 }
 @end
@@ -115,7 +154,16 @@
  * submit photo with comment
  */
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
+    [self addRequest:request];
+    
+    NSData *JPEGData = UIImageJPEGRepresentation(photo, 1.0);
+    [request uploadImageStream:[NSInputStream inputStreamWithData:JPEGData] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", comment, @"title", nil]];
+	
     NSString *hash = photo.MD5DigestString;
+    [self setPhotoHash:hash forRequest:request];
     [self.photoDelegate photoSubmitter:self willStartUpload:hash];
 }
 
@@ -123,10 +171,10 @@
  * login to flickr
  */
 -(void)login{  
-    request_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request_.delegate = self;
-    request_.sessionInfo = @"kFetchRequestTokenStep";
-    [request_ fetchOAuthRequestTokenWithCallbackURL:[NSURL URLWithString:PHOTO_SUBMITTER_FLICKR_AUTH_URL]];
+    authRequest_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    authRequest_.delegate = self;
+    authRequest_.sessionInfo = PS_FLICKR_API_REQUEST_TOKEN;
+    [authRequest_ fetchOAuthRequestTokenWithCallbackURL:[NSURL URLWithString:PS_FLICKR_AUTH_URL]];
 }
 
 /*!
@@ -154,8 +202,7 @@
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:PHOTO_SUBMITTER_FLICKR_AUTH_URL]){
-        NSLog(@"%@", url);
+    if([url.absoluteString isMatchedByRegex:PS_FLICKR_AUTH_URL]){
         return YES;    
     }
     return NO;
@@ -167,18 +214,17 @@
 - (BOOL)didOpenURL:(NSURL *)url{
     NSString *token = nil;
     NSString *verifier = nil;
-    BOOL result = OFExtractOAuthCallback(url, [NSURL URLWithString:PHOTO_SUBMITTER_FLICKR_AUTH_URL], &token, &verifier);
+    BOOL result = OFExtractOAuthCallback(url, [NSURL URLWithString:PS_FLICKR_AUTH_URL], &token, &verifier);
     
     if (!result) {
         NSLog(@"Cannot obtain token/secret from URL: %@", [url absoluteString]);
         return NO;
     }
     
-    
-    request_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request_.delegate = self;
-    request_.sessionInfo = @"kGetAccessTokenStep";
-    [request_ fetchOAuthAccessTokenWithRequestToken:token verifier:verifier];
+    authRequest_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    authRequest_.delegate = self;
+    authRequest_.sessionInfo = PS_FLICKR_API_GET_TOKEN;
+    [authRequest_ fetchOAuthAccessTokenWithRequestToken:token verifier:verifier];
     return YES;
 }
 
@@ -187,7 +233,7 @@
  */
 + (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+    if ([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]) {
         return YES;
     }
     return NO;

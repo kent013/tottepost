@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PhotoSubmitterProtocol.h"
+#import "PhotoSubmitter.h"
 #import "ObjectiveFlickr.h"
 
 /*!
@@ -17,9 +18,9 @@
  * or
  * [PhotoSubmitter flickrPhotoSubmitter]
  */
-@interface FlickrPhotoSubmitter : NSObject<PhotoSubmitterProtocol, OFFlickrAPIRequestDelegate>{
+@interface FlickrPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, OFFlickrAPIRequestDelegate>{
     __strong OFFlickrAPIContext *flickr_;
-    __strong OFFlickrAPIRequest *request_;
+    __strong OFFlickrAPIRequest *authRequest_;
 }
 @property (nonatomic, readonly) OFFlickrAPIContext* flickr;
 @property (nonatomic, readonly) PhotoSubmitterType type;

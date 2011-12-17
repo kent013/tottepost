@@ -29,7 +29,6 @@
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
-		37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
 		37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65771498C8A100387490 /* CFNetwork.framework */; };
 		37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */; };
 		37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB6587149C4E6D00387490 /* NSData+Digest.m */; };
@@ -48,6 +47,8 @@
 		37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65AE149C4F6800387490 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65B5149C512A00387490 /* libicucore.dylib */; };
 		37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */; };
+		37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65CA149C904D00387490 /* PhotoSubmitter.m */; };
+		37FB65CE149CB0ED00387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,8 @@
 		37FB65B5149C512A00387490 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		37FB65C3149C53D000387490 /* FBRequest+UploadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBRequest+UploadProgress.h"; path = "Util/FBRequest+UploadProgress.h"; sourceTree = "<group>"; };
 		37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBRequest+UploadProgress.m"; path = "Util/FBRequest+UploadProgress.m"; sourceTree = "<group>"; };
+		37FB65C9149C904D00387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
+		37FB65CA149C904D00387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitter.m; path = PhotoSubmitter/PhotoSubmitter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,9 +157,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FB65CE149CB0ED00387490 /* libObjectiveFlickr.a in Frameworks */,
 				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
 				37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */,
-				37FB65751498C88500387490 /* libObjectiveFlickr.a in Frameworks */,
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
 				376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */,
 				376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */,
@@ -343,6 +346,8 @@
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 				37FB65491497313500387490 /* PhotoSubmitterManager.h */,
 				37FB654A1497313500387490 /* PhotoSubmitterManager.m */,
+				37FB65C9149C904D00387490 /* PhotoSubmitter.h */,
+				37FB65CA149C904D00387490 /* PhotoSubmitter.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
 				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
 				37FB657D1498CF0100387490 /* FlickrPhotoSubmitter.h */,
@@ -549,6 +554,7 @@
 				37FB65B3149C4F6800387490 /* SBJsonParser.m in Sources */,
 				37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */,
 				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
+				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

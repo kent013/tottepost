@@ -10,6 +10,7 @@
 #import "Facebook.h"
 #import "FBRequest+UploadProgress.h"
 #import "PhotoSubmitterProtocol.h"
+#import "PhotoSubmitter.h"
 
 @protocol FacebookPhotoSubmitterDelegate;
 
@@ -20,9 +21,8 @@
  * or
  * [PhotoSubmitter facebookPhotoSubmitter]
  */
-@interface FacebookPhotoSubmitter : NSObject<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
+@interface FacebookPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
     __strong Facebook *facebook_;
-    __strong NSMutableDictionary *requests_;
 }
 @property (nonatomic, readonly) PhotoSubmitterType type;
 @property (weak, nonatomic) id<PhotoSubmitterAuthenticationDelegate> authDelegate;

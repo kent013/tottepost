@@ -112,6 +112,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
     if([FacebookPhotoSubmitter isEnabled]){
         [self submitterWithType:PhotoSubmitterTypeFacebook];
     }
+    if([FlickrPhotoSubmitter isEnabled]){
+        [self submitterWithType:PhotoSubmitterTypeFlickr];
+    }
 }
 
 /*!

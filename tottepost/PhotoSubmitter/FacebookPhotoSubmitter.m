@@ -26,7 +26,6 @@
  * initializer
  */
 -(void)setupInitialState{
-    requests_ = [[NSMutableDictionary alloc] init];
     facebook_ = [[Facebook alloc] initWithAppId:PHOTO_SUBMITTER_FACEBOOK_API_ID andDelegate:self];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"FBAccessTokenKey"] 
@@ -90,22 +89,22 @@
 	if ([result isKindOfClass:[NSArray class]]) {
 		result = [result objectAtIndex:0];
 	}
-    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
+    NSString *hash = [self photoForRequest:request];
 	if ([result objectForKey:@"owner"]) {
         [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
 	} else {
         [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
 	}
-    [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
+    [self removePhotoForRequest:request];
 };
 
 /*!
  * facebook request delegate, did fail
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
+    NSString *hash = [self photoForRequest:request];
     [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
+    [self removePhotoForRequest:request];
 };
 
 /*!
@@ -113,7 +112,7 @@
  */
 - (void)request:(FBRequest *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
     CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
-    NSString *hash = [requests_ objectForKey:[NSNumber numberWithInt:request.hash]];
+    NSString *hash = [self photoForRequest:request];
     [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 @end
@@ -159,7 +158,7 @@
                          andHttpMethod:@"POST"
                            andDelegate:self];
     NSString *hash = photo.MD5DigestString;
-    [requests_ setObject:hash forKey:[NSNumber numberWithInt: request.hash]];
+    [self setPhotoHash:hash forRequest:request];
     [self.photoDelegate photoSubmitter:self willStartUpload:hash];
 }
 
