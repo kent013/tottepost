@@ -57,6 +57,7 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
         case PhotoSubmitterTypeTwitter:
             break;
         case PhotoSubmitterTypeFlickr:
+            submitter = [[FlickrPhotoSubmitter alloc] init];
             break;
         default:
             break;
@@ -142,5 +143,11 @@ static PhotoSubmitter* TottePostPhotoSubmitter;
  */
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter{
     return (FacebookPhotoSubmitter *)[[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFacebook];
+}
+/*!
+ * get facebook photo submitter
+ */
++ (FlickrPhotoSubmitter *)flickrPhotoSubmitter{
+    return (FlickrPhotoSubmitter *)[[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFlickr];
 }
 @end

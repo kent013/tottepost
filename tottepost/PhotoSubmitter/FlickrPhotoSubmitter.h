@@ -19,6 +19,7 @@
  */
 @interface FlickrPhotoSubmitter : NSObject<PhotoSubmitterProtocol, OFFlickrAPIRequestDelegate>{
     __strong OFFlickrAPIContext *flickr_;
+    __strong OFFlickrAPIRequest *request_;
 }
 @property (nonatomic, readonly) OFFlickrAPIContext* flickr;
 @property (nonatomic, readonly) PhotoSubmitterType type;

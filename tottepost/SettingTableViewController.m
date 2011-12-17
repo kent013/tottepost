@@ -13,7 +13,7 @@
 
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
-#define SV_ACCOUNTS_FLICKER 2
+#define SV_ACCOUNTS_FLICKR 2
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -84,8 +84,8 @@
             cell = [self createSocialAppButtonWithTitle: @"Facebook" imageName:@"facebook_32.png" tag:SV_ACCOUNTS_FACEBOOK];
         }else if(indexPath.row == SV_ACCOUNTS_TWITTER){
             cell = [self createSocialAppButtonWithTitle: @"Twitter" imageName:@"twitter_32.png" tag:SV_ACCOUNTS_TWITTER];
-        }else if(indexPath.row == SV_ACCOUNTS_FLICKER){
-            cell = [self createSocialAppButtonWithTitle: @"Flickr" imageName:@"flickr_32.png" tag:SV_ACCOUNTS_FLICKER];
+        }else if(indexPath.row == SV_ACCOUNTS_FLICKR){
+            cell = [self createSocialAppButtonWithTitle: @"Flickr" imageName:@"flickr_32.png" tag:SV_ACCOUNTS_FLICKR];
         }
     }
     return cell;
@@ -103,11 +103,19 @@
     UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 180, 8, 100, 30)];
     [s addTarget:self action:@selector(didSocialAppSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     [cell.contentView addSubview:s];
+    s.tag = tag;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     
     switch (tag) {
         case SV_ACCOUNTS_FACEBOOK:
             if ([[PhotoSubmitter facebookPhotoSubmitter] isLogined]){
+                [s setOn:YES animated:YES];
+            }else{
+                [s setOn:NO animated:YES];
+            }
+            break;
+        case SV_ACCOUNTS_FLICKR:
+            if ([[PhotoSubmitter flickrPhotoSubmitter] isLogined]){
                 [s setOn:YES animated:YES];
             }else{
                 [s setOn:NO animated:YES];
@@ -151,6 +159,13 @@
                 [[PhotoSubmitter facebookPhotoSubmitter] logout];
             }
             break;
+        case SV_ACCOUNTS_FLICKR:
+            if(s.on){
+                [[PhotoSubmitter flickrPhotoSubmitter] login];
+            }else{
+                [[PhotoSubmitter flickrPhotoSubmitter] logout];
+            }
+            break;
     } 
 }
 @end
@@ -186,6 +201,7 @@
         case PhotoSubmitterTypeTwitter:
             break;
         case PhotoSubmitterTypeFlickr:
+            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FLICKR]];
             break;
     }
     [s setOn:YES animated:YES];
@@ -203,6 +219,7 @@
         case PhotoSubmitterTypeTwitter:
             break;
         case PhotoSubmitterTypeFlickr:
+            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FLICKR]];
             break;
     }
     [s setOn:NO animated:YES];    

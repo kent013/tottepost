@@ -9,6 +9,9 @@
 #import "PhotoSubmitterAPIKey.h"
 #import "FlickrPhotoSubmitter.h"
 #import "UIImage+Digest.h"
+#import "RegexKitLite.h"
+
+#define PHOTO_SUBMITTER_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -120,10 +123,10 @@
  * login to flickr
  */
 -(void)login{  
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = @"kFetchRequestTokenStep";
-    [request fetchOAuthRequestTokenWithCallbackURL:[NSURL URLWithString:@"tottepost://auth"]];
+    request_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request_.delegate = self;
+    request_.sessionInfo = @"kFetchRequestTokenStep";
+    [request_ fetchOAuthRequestTokenWithCallbackURL:[NSURL URLWithString:PHOTO_SUBMITTER_FLICKR_AUTH_URL]];
 }
 
 /*!
@@ -151,8 +154,11 @@
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    NSLog(@"%@", url);
-    return YES;
+    if([url.absoluteString isMatchedByRegex:PHOTO_SUBMITTER_FLICKR_AUTH_URL]){
+        NSLog(@"%@", url);
+        return YES;    
+    }
+    return NO;
 }
 
 /*!
@@ -161,7 +167,7 @@
 - (BOOL)didOpenURL:(NSURL *)url{
     NSString *token = nil;
     NSString *verifier = nil;
-    BOOL result = OFExtractOAuthCallback(url, [NSURL URLWithString:@"tottepost://auth"], &token, &verifier);
+    BOOL result = OFExtractOAuthCallback(url, [NSURL URLWithString:PHOTO_SUBMITTER_FLICKR_AUTH_URL], &token, &verifier);
     
     if (!result) {
         NSLog(@"Cannot obtain token/secret from URL: %@", [url absoluteString]);
@@ -169,10 +175,10 @@
     }
     
     
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = @"kGetAccessTokenStep";
-    [request fetchOAuthAccessTokenWithRequestToken:token verifier:verifier];
+    request_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request_.delegate = self;
+    request_.sessionInfo = @"kGetAccessTokenStep";
+    [request_ fetchOAuthAccessTokenWithRequestToken:token verifier:verifier];
     return YES;
 }
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PhotoSubmitterProtocol.h"
 #import "FacebookPhotoSubmitter.h"
+#import "FlickrPhotoSubmitter.h"
 
 /*!
  * photo submitter aggregation class
@@ -27,4 +28,5 @@
 - (BOOL) didOpenURL: (NSURL *)url;
 + (PhotoSubmitter *)getInstance;
 + (FacebookPhotoSubmitter *)facebookPhotoSubmitter;
++ (FlickrPhotoSubmitter *)flickrPhotoSubmitter;
 @end

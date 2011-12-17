@@ -222,7 +222,6 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
-				37FB65B5149C512A00387490 /* libicucore.dylib */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
@@ -243,6 +242,7 @@
 		376E153B1494C47800A34E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37FB65B5149C512A00387490 /* libicucore.dylib */,
 				37FB65771498C8A100387490 /* CFNetwork.framework */,
 				376E153C1494C47800A34E7D /* UIKit.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
