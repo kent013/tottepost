@@ -18,6 +18,7 @@
 @interface TwitterPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) startConnectionWithParam:(NSMutableDictionary *)param;
 @end
 
 @implementation TwitterPhotoSubmitter(PrivateImplementation)
@@ -56,6 +57,18 @@
     [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
+- (void)startConnectionWithParam:(NSMutableDictionary *)param{
+    NSURLRequest *request = [param objectForKey:@"request"];
+    NSString *imageHash = [param objectForKey:@"hash"];
+
+    NSURLConnection *connection = 
+      [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    if(connection){
+        [self setPhotoHash:imageHash forRequest:connection];
+        [self.photoDelegate photoSubmitter:self willStartUpload:imageHash];
+    }
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -109,14 +122,7 @@
                                  withName:@"media[]" type:@"multipart/form-data"];
                 [request addMultiPartData:[comment dataUsingEncoding:NSUTF8StringEncoding] 
                                  withName:@"status" type:@"multipart/form-data"];
-                NSLog(@"%@", request.signedURLRequest);
-                NSURLConnection *connection = 
-                  [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
-                NSString *hash = photo.MD5DigestString;
-                if(connection){
-                    [self.photoDelegate photoSubmitter:self willStartUpload:hash];
-                    [self setPhotoHash:hash forRequest:connection];
-                }
+                [self performSelectorOnMainThread:@selector(startConnectionWithParam:) withObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:request.signedURLRequest, @"request", photo.MD5DigestString, @"hash", nil] waitUntilDone:NO];
 			}
         }
 	}];
