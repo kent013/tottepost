@@ -10,6 +10,7 @@
 #import "PhotoSubmitterProtocol.h"
 #import "FacebookPhotoSubmitter.h"
 #import "FlickrPhotoSubmitter.h"
+#import "TwitterPhotoSubmitter.h"
 
 /*!
  * photo submitter aggregation class
@@ -30,6 +31,4 @@
 - (BOOL) didOpenURL: (NSURL *)url;
 + (PhotoSubmitterManager *)getInstance;
 + (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
-+ (FacebookPhotoSubmitter *)facebookPhotoSubmitter;
-+ (FlickrPhotoSubmitter *)flickrPhotoSubmitter;
 @end

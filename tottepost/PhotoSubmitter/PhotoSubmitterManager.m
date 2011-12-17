@@ -61,6 +61,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
             submitter = [[FacebookPhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeTwitter:
+            submitter = [[TwitterPhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeFlickr:
             submitter = [[FlickrPhotoSubmitter alloc] init];
@@ -152,18 +153,5 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
  */
 + (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
     return [[PhotoSubmitterManager getInstance] submitterForType:type];
-}
-
-/*!
- * get facebook photo submitter
- */
-+ (FacebookPhotoSubmitter *)facebookPhotoSubmitter{
-    return (FacebookPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterForType:PhotoSubmitterTypeFacebook];
-}
-/*!
- * get facebook photo submitter
- */
-+ (FlickrPhotoSubmitter *)flickrPhotoSubmitter{
-    return (FlickrPhotoSubmitter *)[[PhotoSubmitterManager getInstance] submitterForType:PhotoSubmitterTypeFlickr];
 }
 @end

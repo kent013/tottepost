@@ -50,6 +50,8 @@
 		37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65CA149C904D00387490 /* PhotoSubmitter.m */; };
 		37FB65CE149CB0ED00387490 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65741498C6B300387490 /* libObjectiveFlickr.a */; };
 		37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65CF149CB64A00387490 /* Twitter.framework */; };
+		37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65D6149CD5BD00387490 /* TwitterPhotoSubmitter.m */; };
+		37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65D8149CDFBC00387490 /* Accounts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +154,9 @@
 		37FB65C9149C904D00387490 /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitter.h; path = PhotoSubmitter/PhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65CA149C904D00387490 /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitter.m; path = PhotoSubmitter/PhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65CF149CB64A00387490 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		37FB65D5149CD5BC00387490 /* TwitterPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterPhotoSubmitter.h; path = PhotoSubmitter/TwitterPhotoSubmitter.h; sourceTree = "<group>"; };
+		37FB65D6149CD5BD00387490 /* TwitterPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterPhotoSubmitter.m; path = PhotoSubmitter/TwitterPhotoSubmitter.m; sourceTree = "<group>"; };
+		37FB65D8149CDFBC00387490 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */,
 				37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */,
 				37FB65CE149CB0ED00387490 /* libObjectiveFlickr.a in Frameworks */,
 				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
@@ -228,6 +234,7 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
+				37FB65D8149CDFBC00387490 /* Accounts.framework */,
 				37FB65CF149CB64A00387490 /* Twitter.framework */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
@@ -354,6 +361,8 @@
 				37FB65CA149C904D00387490 /* PhotoSubmitter.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
 				37FB65481497313500387490 /* FacebookPhotoSubmitter.m */,
+				37FB65D5149CD5BC00387490 /* TwitterPhotoSubmitter.h */,
+				37FB65D6149CD5BD00387490 /* TwitterPhotoSubmitter.m */,
 				37FB657D1498CF0100387490 /* FlickrPhotoSubmitter.h */,
 				37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */,
 			);
@@ -559,6 +568,7 @@
 				37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */,
 				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
 				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
+				37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,7 +24,7 @@
 - (UITableViewCell *) createSocialAppButtonWithTitle:(NSString *)title imageName:(NSString *)imageName tag:(int)tag;
 - (void) didSocialAppSwitchChanged:(id)sender;
 - (PhotoSubmitterType) indexToSubmitterType:(int) index;
-- (int) SubmitterTypeToIndex:(PhotoSubmitterType) type;
+- (int) submitterTypeToIndex:(PhotoSubmitterType) type;
 @end
 
 #pragma mark -
@@ -147,22 +147,13 @@
  */
 - (void)didSocialAppSwitchChanged:(id)sender{
     UISwitch *s = (UISwitch *)sender;
-    switch (s.tag) {
-        case SV_ACCOUNTS_FACEBOOK:
-            if(s.on){
-                [[PhotoSubmitterManager facebookPhotoSubmitter] login];
-            }else{
-                [[PhotoSubmitterManager facebookPhotoSubmitter] disable];
-            }
-            break;
-        case SV_ACCOUNTS_FLICKR:
-            if(s.on){
-                [[PhotoSubmitterManager flickrPhotoSubmitter] login];
-            }else{
-                [[PhotoSubmitterManager flickrPhotoSubmitter] disable];
-            }
-            break;
-    } 
+    PhotoSubmitterType type = [self indexToSubmitterType:s.tag];
+    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+    if(s.on){
+        [submitter login];
+    }else{
+        [submitter disable];
+    }
 }
 
 #pragma mark -
@@ -177,7 +168,7 @@
 /*!
  * convert PhotoSubmitterType to index
  */
-- (int)SubmitterTypeToIndex:(PhotoSubmitterType)type{
+- (int)submitterTypeToIndex:(PhotoSubmitterType)type{
     return [accountTypes_ indexOfObject:[NSNumber numberWithInt:type]]; 
 }
 @end
@@ -205,17 +196,8 @@
  * photo submitter did login
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogin:(PhotoSubmitterType)type{
-    UISwitch *s = nil;
-    switch(type){
-        case PhotoSubmitterTypeFacebook:
-            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
-            break;
-        case PhotoSubmitterTypeTwitter:
-            break;
-        case PhotoSubmitterTypeFlickr:
-            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FLICKR]];
-            break;
-    }
+    int index = [self submitterTypeToIndex:type];
+    UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
     [s setOn:YES animated:YES];
 }
 
@@ -223,17 +205,8 @@
  * photo submitter did logout
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogout:(PhotoSubmitterType)type{
-    UISwitch *s = nil;
-    switch(type){
-        case PhotoSubmitterTypeFacebook:
-            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FACEBOOK]];
-            break;
-        case PhotoSubmitterTypeTwitter:
-            break;
-        case PhotoSubmitterTypeFlickr:
-            s = [switches_ objectForKey:[NSNumber numberWithInt:SV_ACCOUNTS_FLICKR]];
-            break;
-    }
+    int index = [self submitterTypeToIndex:type];
+    UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
     [s setOn:NO animated:YES];    
 }
 
