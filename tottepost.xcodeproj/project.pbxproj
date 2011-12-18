@@ -18,6 +18,7 @@
 		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
+		37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7431C149D892E002EEADD /* UploadProgressEntity.m */; };
 		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
 		37FB64DD1496238600387490 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DA1496238600387490 /* MainView.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
@@ -95,6 +96,8 @@
 		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
+		37F7431B149D892E002EEADD /* UploadProgressEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadProgressEntity.h; sourceTree = "<group>"; };
+		37F7431C149D892E002EEADD /* UploadProgressEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadProgressEntity.m; sourceTree = "<group>"; };
 		37FB64D51496237500387490 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
 		37FB64D61496237500387490 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
 		37FB64D91496238600387490 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				37FB64DC1496238600387490 /* MainViewController.m */,
 				37FB65611497AAD300387490 /* ProgressTableViewController.h */,
 				37FB65621497AAD300387490 /* ProgressTableViewController.m */,
+				37F7431B149D892E002EEADD /* UploadProgressEntity.h */,
+				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
 				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
 				37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */,
+				37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

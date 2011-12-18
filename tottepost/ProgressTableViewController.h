@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UploadProgressEntity.h"
 
 @interface ProgressTableViewController : UITableViewController{
     __strong NSMutableArray *progresses_;
-    __strong NSMutableDictionary *progressBars_;
     __strong NSMutableDictionary *cells_;
 }
 
 - (id) initWithFrame:(CGRect)frame;
 - (void) updateWithFrame:(CGRect)frame;
 - (void) update;
-- (void) addProgress: (NSString *)hash;
-- (void) updateProgress: (NSString *)hash progress:(CGFloat)progress;
-- (void) removeProgress: (NSString *)hash;
-- (void) removeProgress: (NSString *)hash message:(NSString *)message;
+- (void) addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash;
+- (void) updateProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash progress:(CGFloat)progress;
+- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash;
+- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash message:(NSString *)message;
 @end

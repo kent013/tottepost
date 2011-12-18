@@ -164,7 +164,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     NSLog(@"%@ upload started", imageHash);
-    [progressTableViewController_ addProgress:imageHash];
+    [progressTableViewController_ addProgressWithType:photoSubmitter.type forHash:imageHash];
 }
 
 /*!
@@ -172,7 +172,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     NSLog(@"%@ submitted.", imageHash);
-    [progressTableViewController_ removeProgress:imageHash];
+    [progressTableViewController_ removeProgressWithType:photoSubmitter.type forHash:imageHash];
 }
 
 /*!
@@ -180,7 +180,7 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     NSLog(@"%@, %f", imageHash, progress);
-    [progressTableViewController_ updateProgress:imageHash progress:progress];
+    [progressTableViewController_ updateProgressWithType:photoSubmitter.type forHash:imageHash progress:progress];
 }
 
 - (void)viewDidUnload {

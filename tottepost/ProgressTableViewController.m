@@ -8,14 +8,17 @@
 
 #import "ProgressTableViewController.h"
 
+#define TOTTEPOST_PROGRESS_REMOVE_DELAY 5
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface ProgressTableViewController(PrivateImplementation)
 - (void) setupInitialState:(CGRect)frame;
-- (void) removeProgressCell:(NSString *)hash;
-- (void) showText:(NSString *)hash text:(NSString *)text;
+- (void) removeProgressCell:(UploadProgressEntity *)entity;
+- (void) showText:(UploadProgressEntity *)entity text:(NSString *)text;
+- (UploadProgressEntity *) progressForType:(PhotoSubmitterType)type andHash:(NSString *)hash;
+- (int) indexForProgress:(UploadProgressEntity *)e;
 @end
 
 #pragma mark -
@@ -32,7 +35,6 @@
     self.tableView.userInteractionEnabled = NO;
     
     progresses_ = [[NSMutableArray alloc] init];
-    progressBars_ = [[NSMutableDictionary alloc] init];
     cells_ = [[NSMutableDictionary alloc] init];
 }
 
@@ -59,8 +61,8 @@
  */
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    NSString *hash = [progresses_ objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [cells_ objectForKey:hash];
+    UploadProgressEntity *e = [progresses_ objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [cells_ objectForKey:e.progressHash];
     if(cell){
         return cell;
     }
@@ -70,9 +72,9 @@
     p.backgroundColor = [UIColor clearColor];
     p.progressTintColor = [UIColor colorWithRed:0 green:0 blue:0.8 alpha:0.5];
     p.trackTintColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-    [progressBars_ setObject:p forKey:hash];
+    e.progressBar = p;
     [cell.contentView addSubview:p];
-    [cells_ setObject:cell forKey:hash];
+    [cells_ setObject:cell forKey:e.progressHash];
     return cell;
 }
 
@@ -90,36 +92,61 @@
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 
+
+#pragma mark -
+#pragma mark ui parts delegates
 /*!
  * remove progress cell
  */
-- (void)removeProgressCell:(NSString *)hash{
-    int index = [progresses_ indexOfObject:hash];
+- (void)removeProgressCell:(UploadProgressEntity *)entity{
+    int index = [self indexForProgress:entity];
     [progresses_ removeObjectAtIndex:index];
-    [progressBars_ removeObjectForKey:hash];
-    [cells_ removeObjectForKey:hash];
+    [cells_ removeObjectForKey:entity.progressHash];
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationTop];
     NSLog(@"remove");
 }
 
+#pragma mark -
+#pragma mark util methods
 /*!
  * show text
  */
-- (void) showText:(NSString *)hash text:(NSString *)text{
-    int index = [progresses_ indexOfObject:hash];
-    UIProgressView *p = [progressBars_ objectForKey:hash];
-    [p removeFromSuperview];
-    UITableViewCell *cell = [cells_ objectForKey:hash];
+- (void) showText:(UploadProgressEntity *)entity text:(NSString *)text{
+    [entity.progressBar removeFromSuperview];
+    UITableViewCell *cell = [cells_ objectForKey:entity.progressHash];
     cell.textLabel.text = text;
     cell.textLabel.textColor = [UIColor blackColor];
     cell.textLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:10.0];
-    NSLog(@"show %@", text);
+    int index = [self indexForProgress:entity];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-#pragma mark -
-#pragma mark ui parts delegates
+/*!
+ * get progress entity
+ */
+- (UploadProgressEntity *)progressForType:(PhotoSubmitterType)type andHash:(NSString *)hash{
+    for(UploadProgressEntity *e in progresses_){
+        if(e.type == type && [e.photoHash isEqualToString:hash]){
+            return e;
+        }
+    }
+    return nil;
+}
+
+/*!
+ * get index entity
+ */
+- (int)indexForProgress:(UploadProgressEntity *)e{
+    int index = 0;
+    for(UploadProgressEntity *ep in progresses_){
+        if(ep.type == e.type && [ep.photoHash isEqualToString:e.photoHash]){
+            return index;
+        }
+        index++;
+    }
+    return index;
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -158,33 +185,36 @@
 /*!
  * add progress
  */
-- (void)addProgress:(NSString *)hash{
-    [progresses_ addObject:hash];
+- (void)addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash{
+    UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type photoHash:hash];
+    [progresses_ addObject:entity];
     [self.tableView reloadData];
 }
 
 /*!
  * update progress
  */
-- (void)updateProgress:(NSString *)hash progress:(CGFloat)progress{
-    UIProgressView *p = (UIProgressView *)[progressBars_ objectForKey:hash];
-    p.progress = progress;
+- (void)updateProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash progress:(CGFloat)progress{
+    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+    entity.progress = progress;
 }
 
 /*!
  * remove progress
  */
-- (void)removeProgress:(NSString *)hash{
-    [self showText:hash text:@"Upload completed"];
-    [self performSelector:@selector(removeProgressCell:) withObject:hash afterDelay:5];
+- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash{
+    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+    [self showText:entity text:@"Upload completed"];
+    [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:TOTTEPOST_PROGRESS_REMOVE_DELAY];
 }
 
 /*! 
  * remove progress with message
  */
-- (void)removeProgress:(NSString *)hash message:(NSString *)message{
-    [self showText:hash text:message];
-    [self performSelector:@selector(removeProgressCell:) withObject:hash afterDelay:5];
+- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash message:(NSString *)message{
+    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+    [self showText:entity text:message];
+    [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:TOTTEPOST_PROGRESS_REMOVE_DELAY];
 }
 
 #pragma mark -
