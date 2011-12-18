@@ -270,6 +270,13 @@
 }
 
 /*!
+ * small icon image
+ */
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"flickr_16.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

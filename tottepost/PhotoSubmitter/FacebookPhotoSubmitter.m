@@ -252,6 +252,13 @@
 }
 
 /*!
+ * small icon image
+ */
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"facebook_16.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

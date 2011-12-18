@@ -243,6 +243,13 @@
 }
 
 /*!
+ * small icon image
+ */
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"twitter_16.png"];
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

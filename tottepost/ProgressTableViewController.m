@@ -67,7 +67,7 @@
         return cell;
     }
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.imageView.image = e.submitter.icon;
+    cell.imageView.image = e.submitter.smallIcon;
     UIProgressView *p = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
     p.frame = CGRectMake(40, 10, 70, 10);
     p.backgroundColor = [UIColor clearColor];
