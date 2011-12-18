@@ -229,9 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				37FB64DF1496239700387490 /* setting.png */,
-				37FB65DA149D028500387490 /* facebook_32.png */,
-				37FB65DB149D028500387490 /* flickr_32.png */,
-				37FB65DC149D028500387490 /* twitter_32.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -317,6 +314,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		37F7431E149DA2BB002EEADD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				37FB65DA149D028500387490 /* facebook_32.png */,
+				37FB65DB149D028500387490 /* flickr_32.png */,
+				37FB65DC149D028500387490 /* twitter_32.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		37FB65121496415600387490 /* FBConnect */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +365,7 @@
 		37FB653F14970D9C00387490 /* PhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
+				37F7431E149DA2BB002EEADD /* Images */,
 				37FB65841498D51800387490 /* PhotoSubmitterAPIKey.h */,
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 				37FB65491497313500387490 /* PhotoSubmitterManager.h */,

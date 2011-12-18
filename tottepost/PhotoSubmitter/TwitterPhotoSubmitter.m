@@ -31,19 +31,27 @@
 }
 
 /*!
- * clear flickr access token key
+ * clear defaults, on twitter we will not store access token.
  */
 - (void)clearCredentials{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:PS_TWITTER_ENABLED];
 }
 
+#pragma mark -
+#pragma mark NSURLConnection delegates
+/*!
+ * did fail
+ */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
     [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     [self removePhotoForRequest:connection];
 }
 
+/*!
+ * did finished
+ */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
     [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
@@ -51,12 +59,22 @@
     
 }
 
+/*!
+ * progress
+ */
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
     CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
     NSString *hash = [self photoForRequest:connection];
     [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
+#pragma mark -
+#pragma mark util methods
+/*!
+ * start NSURLConnection
+ * Use NSURLConnection to track upload progress.
+ * And we must start connection on main thread otherwise it will not start.
+ */
 - (void)startConnectionWithParam:(NSMutableDictionary *)param{
     NSURLRequest *request = [param objectForKey:@"request"];
     NSString *imageHash = [param objectForKey:@"hash"];
@@ -129,7 +147,7 @@
 }
 
 /*!
- * login to flickr
+ * login to twitter
  */
 -(void)login{
 	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
@@ -167,7 +185,7 @@
 }
 
 /*!
- * logoff from flickr
+ * logoff from twitter
  */
 - (void)logout{  
     [self clearCredentials];
