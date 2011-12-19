@@ -11,6 +11,7 @@
 #import "FacebookPhotoSubmitter.h"
 #import "FlickrPhotoSubmitter.h"
 #import "TwitterPhotoSubmitter.h"
+#import "PhotoSubmitterOperation.h"
 
 /*!
  * photo submitter aggregation class
@@ -19,6 +20,7 @@
     @protected 
     __strong NSMutableDictionary *submitters_;
     __strong NSMutableArray *supportedTypes_;
+    __strong NSOperationQueue *operationQueue_;
 }
 @property (nonatomic, readonly) NSArray* supportedTypes;
 - (void) submitPhoto:(UIImage *)photo;

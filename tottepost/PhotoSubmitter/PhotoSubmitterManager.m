@@ -26,6 +26,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
                      [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
                      [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
                      [NSNumber numberWithInt: PhotoSubmitterTypeFlickr], nil];
+    operationQueue_ = [NSOperationQueue mainQueue];
     [self loadSubmitters];
 }
 @end
@@ -89,7 +90,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
-            [submitter submitPhoto:photo];
+            PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo comment: comment];
+            [operationQueue_ addOperation:operation];
         }
     }
 }

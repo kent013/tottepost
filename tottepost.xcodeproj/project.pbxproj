@@ -18,6 +18,9 @@
 		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
+		37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */; };
+		37F26D0D149F8AA1000172EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D0C149F8AA0000172EF /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37F26D0F149F8C27000172EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F26D0E149F8C27000172EF /* SystemConfiguration.framework */; };
 		37F3BE66149DCFE3001A0CF7 /* facebook_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE63149DCFE3001A0CF7 /* facebook_16.png */; };
 		37F3BE67149DCFE3001A0CF7 /* flickr_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE64149DCFE3001A0CF7 /* flickr_16.png */; };
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
@@ -99,6 +102,11 @@
 		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
+		37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterOperation.h; path = PhotoSubmitter/PhotoSubmitterOperation.h; sourceTree = "<group>"; };
+		37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterOperation.m; path = PhotoSubmitter/PhotoSubmitterOperation.m; sourceTree = "<group>"; };
+		37F26D0B149F8AA0000172EF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Libraries/Reachability/Reachability.h; sourceTree = "<group>"; };
+		37F26D0C149F8AA0000172EF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Libraries/Reachability/Reachability.m; sourceTree = "<group>"; };
+		37F26D0E149F8C27000172EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		37F3BE63149DCFE3001A0CF7 /* facebook_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_16.png; path = PhotoSubmitter/Images/facebook_16.png; sourceTree = "<group>"; };
 		37F3BE64149DCFE3001A0CF7 /* flickr_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_16.png; path = PhotoSubmitter/Images/flickr_16.png; sourceTree = "<group>"; };
 		37F3BE65149DCFE3001A0CF7 /* twitter_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_16.png; path = PhotoSubmitter/Images/twitter_16.png; sourceTree = "<group>"; };
@@ -173,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37F26D0F149F8C27000172EF /* SystemConfiguration.framework in Frameworks */,
 				37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */,
 				37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */,
 				37FB65CE149CB0ED00387490 /* libObjectiveFlickr.a in Frameworks */,
@@ -242,6 +251,7 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
+				37F26D0E149F8C27000172EF /* SystemConfiguration.framework */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
@@ -320,6 +330,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		37F26D0A149F8A90000172EF /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				37F26D0B149F8AA0000172EF /* Reachability.h */,
+				37F26D0C149F8AA0000172EF /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		37F7431E149DA2BB002EEADD /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +398,8 @@
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
 				37FB65491497313500387490 /* PhotoSubmitterManager.h */,
 				37FB654A1497313500387490 /* PhotoSubmitterManager.m */,
+				37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */,
+				37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */,
 				37FB65C9149C904D00387490 /* PhotoSubmitter.h */,
 				37FB65CA149C904D00387490 /* PhotoSubmitter.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
@@ -416,6 +437,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				37F26D0A149F8A90000172EF /* Reachability */,
 				37FB659E149C4F3200387490 /* RegexKitLite */,
 				37FB651D1496415700387490 /* JSON */,
 				37FB65121496415600387490 /* FBConnect */,
@@ -580,6 +602,11 @@
 				37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */,
 				37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */,
 				37FB658B149C4E6D00387490 /* UIImage+Digest.m in Sources */,
+				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
+				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
+				37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */,
+				37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */,
+				37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */,
 				37FB6599149C4F2A00387490 /* Facebook.m in Sources */,
 				37FB659B149C4F2A00387490 /* FBDialog.m in Sources */,
 				37FB659C149C4F2A00387490 /* FBLoginDialog.m in Sources */,
@@ -591,10 +618,7 @@
 				37FB65B2149C4F6800387490 /* SBJsonBase.m in Sources */,
 				37FB65B3149C4F6800387490 /* SBJsonParser.m in Sources */,
 				37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */,
-				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
-				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
-				37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */,
-				37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */,
+				37F26D0D149F8AA1000172EF /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

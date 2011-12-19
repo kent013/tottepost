@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "MainView.h"
+#import "Reachability.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -16,6 +17,7 @@
 - (void) setupInitialState: (CGRect) aFrame;
 - (void) didSettingButtonTapped: (id) sender;
 - (void) updateCoodinates;
+- (BOOL) checkForConnection;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -60,6 +62,23 @@
 - (void)updateCoodinates{
     CGRect frame = self.view.frame;
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - 80, 40, 80, frame.size.height - 80)];
+}
+
+//当該ホストに接続できるかどうか確認
+- (BOOL) checkForConnection
+{
+    Reachability* pathReach = [Reachability reachabilityWithHostName:@"www.facebook.com"];
+    switch([pathReach currentReachabilityStatus])
+    {
+        case NotReachable:
+            return NO;
+            break;
+        case ReachableViaWWAN:
+        case ReachableViaWiFi:
+            return YES;
+            break;
+    }
+    return NO;
 }
 @end
 
@@ -137,7 +156,12 @@
 
 //画像が選択された時に呼ばれるデリゲートメソッド
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
-    [[PhotoSubmitterManager getInstance] submitPhoto:image];
+    if([self checkForConnection]){
+        [[PhotoSubmitterManager getInstance] submitPhoto:image];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. We will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 
@@ -156,7 +180,13 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    [[PhotoSubmitterManager getInstance] submitPhoto:image];
+    
+    if([self checkForConnection]){
+        [[PhotoSubmitterManager getInstance] submitPhoto:image];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 /*!
@@ -232,4 +262,5 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
 
 - (void)viewDidShow:(UIView *)view{
 }
+
 @end
