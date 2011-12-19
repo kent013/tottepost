@@ -3,7 +3,7 @@
 //  iSticky
 //
 //  Created by ISHITOYA Kentaro on 10/08/26.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 cocotomo. All rights reserved.
 //
 
 #import "UIImage+Digest.h"
@@ -12,7 +12,7 @@
 
 @implementation UIImage (Digest)
 
-//MD5ダイジェストを計算する
+//calcurate MD5 digest
 - (NSString *)MD5DigestString
 {
     NSData* pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation(self)];

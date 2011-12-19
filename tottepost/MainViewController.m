@@ -7,8 +7,8 @@
 //
 
 #import "MainViewController.h"
-#import "MainView.h"
 #import "Reachability.h"
+#import "UIImage+AutoRotation.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -18,6 +18,7 @@
 - (void) didSettingButtonTapped: (id) sender;
 - (void) updateCoodinates;
 - (BOOL) checkForConnection;
+- (void) showStatusBar;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -25,34 +26,31 @@
  * Initialize view controller
  */
 - (void) setupInitialState: (CGRect) aFrame{
-    NSLog(@"width = %f",aFrame.size.width);
-    NSLog(@"height = %f",aFrame.size.height);
-    aFrame.origin.y = 20;
-    self.view = [[MainView alloc] initWithFrame:aFrame];
-    
-    // iPad か iPhone/iPod touch かの判定
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-        // iPad 時の処理
-    }else{
-        // iPhone/iPod touch の処理
-    }
-    
+    aFrame.origin.y = 0;
+    self.view.frame = aFrame;
     settingViewController_ = 
         [[SettingTableViewController alloc] init];
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    settingViewController_.delegate = self;
     
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero];
     
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
     [self updateCoodinates];
+    
+    device_ = [UIDevice currentDevice];
+    [device_ beginGeneratingDeviceOrientationNotifications];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(deviceRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 /*!
  * on setting button tapped, open setting view
  */
 - (void) didSettingButtonTapped:(id)sender{
+    [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
 }
 
@@ -64,7 +62,9 @@
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - 80, 40, 80, frame.size.height - 80)];
 }
 
-//当該ホストに接続できるかどうか確認
+/*!
+ * check for connection
+ */
 - (BOOL) checkForConnection
 {
     Reachability* pathReach = [Reachability reachabilityWithHostName:@"www.facebook.com"];
@@ -80,12 +80,31 @@
     }
     return NO;
 }
+
+/*!
+ * on camera button tapped
+ */
+- (void)clickPhoto:(UIBarButtonItem*)sender
+{
+    [imagePicker_ takePicture];
+}
+
+/*!
+ * show status
+ */
+- (void)showStatusBar
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
 @end
 
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation MainViewController
+/*!
+ * initializer
+ */
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super init];
@@ -95,20 +114,25 @@
     bool isCameraSupported = [UIImagePickerController isSourceTypeAvailable:
                               UIImagePickerControllerSourceTypeCamera];        
     if (isCameraSupported == false) {
-        // TODO: カメラがサポートしてないときの処理
-        NSLog(@"カメラがサポートされていません。");
+        NSLog(@"camera is not supported");
     }
     return self;
 }
 
-// モーダルビューとしてカメラ画面を呼び出す
+/*!
+ * create camera view
+ */
 - (void) createCameraController
 {
-    imagePickerOverlayView_ = [[UIView alloc] initWithFrame:self.view.frame];
+    CGRect f = self.view.frame;
+    f.size.height += f.origin.y;
+    f.origin.y = 0;
+    self.view.frame = f;
+    
     imagePicker_ = [[UIImagePickerController alloc] init];
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker_.cameraOverlayView = imagePickerOverlayView_;
+    //imagePicker_.cameraOverlayView = imagePickerOverlayView_;
     imagePicker_.showsCameraControls = NO;
     
     settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -119,14 +143,14 @@
     [settingButton_ setFrame:CGRectMake(10, 10, 32, 32)];
     [imagePicker_.view addSubview:settingButton_];
     
-    //ツールバー追加
+    //add tool bar
     CGRect toolbarRect = CGRectMake(0, self.view.frame.size.height - 55, self.view.frame.size.width, 55);
     UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:toolbarRect];
     toolbar.barStyle = UIBarStyleBlack;
     [imagePicker_.view addSubview:toolbar];
     [imagePicker_.view addSubview:progressTableViewController_.view];
     
-    // カメラボタン
+    //camera button
     cameraButton_ =
     [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
                                                  target:self
@@ -134,7 +158,7 @@
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
     
-    //カメラボタンを真ん中に寄せるためのスペース
+    //spacer for centalize camera button 
     UIBarButtonItem* fixedSpace = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                    target:nil
@@ -144,17 +168,11 @@
     [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, cameraButton_, nil]];
     
     [self.view addSubview:imagePicker_.view];
-    //イメージピッカーを前面に表示
-    //[self presentModalViewController:imagePicker_ animated:YES];    
 }
 
-//撮影ボタンを押したときに呼ばれるメソッド
-- (void)clickPhoto:(UIBarButtonItem*)sender
-{
-    [imagePicker_ takePicture];
-}
-
-//画像が選択された時に呼ばれるデリゲートメソッド
+/*!
+ * delegate when image picking finished
+ */
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
     if([self checkForConnection]){
         [[PhotoSubmitterManager getInstance] submitPhoto:image];
@@ -164,13 +182,11 @@
     }
 }
 
-
-//画像の保存完了時に呼ばれるメソッド
--(void)targetImage:(UIImage*)image
-didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
-    
+/*!
+ * image picker delegate
+ */
+-(void)targetImage:(UIImage*)image didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     if(error){
-        // 保存失敗時
     }else{
     }
 }
@@ -213,28 +229,32 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     [progressTableViewController_ updateProgressWithType:photoSubmitter.type forHash:imageHash progress:progress];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
+/*!
+ * did dismiss setting view
+ */
+- (void)didDismissSettingTableViewController{
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    CGRect f = self.view.frame;
+    f.size.height += 20;
+    f.origin.y = 0;
     
-    //回転検知関係の初期化
-    device_ = [UIDevice currentDevice];
-    [device_ beginGeneratingDeviceOrientationNotifications];
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(deviceRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
+    imagePicker_.view.frame = f;
+    self.view.frame = f;    
 }
 
-//デバイスが動いたときに呼ばれる
+/*!
+ * on device rotation
+ */
 -(void) deviceRotate
 {
-    NSLog(@"DEBUG");
     if(device_.orientation == UIDeviceOrientationPortrait ||
-       device_.orientation == UIDeviceOrientationPortraitUpsideDown) //縦向きの場合
+       device_.orientation == UIDeviceOrientationPortraitUpsideDown)
     {
         row = 0;
         //NSLog(@"ImageTab deviceRotate portrait");
     }
     else if(device_.orientation == UIDeviceOrientationLandscapeLeft ||
-            device_.orientation == UIDeviceOrientationLandscapeRight) //横向きの場合
+            device_.orientation == UIDeviceOrientationLandscapeRight)
     {
         row = 1;
         //NSLog(@"ImageTab deviceRotate landscape");
@@ -247,20 +267,10 @@ didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
     [self updateCoodinates];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
+/*!
+ * auto rotation
+ */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
     return YES;
 }
-
-- (void)viewDidShow:(UIView *)view{
-}
-
 @end

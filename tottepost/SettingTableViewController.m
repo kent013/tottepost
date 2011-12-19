@@ -134,6 +134,7 @@
  */
 - (void)settingDone:(id)sender{
     [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate didDismissSettingTableViewController];
 }
 
 /*!
@@ -173,6 +174,7 @@
 #pragma mark Public Implementations
 //-----------------------------------------------------------------------------
 @implementation SettingTableViewController
+@synthesize delegate;
 /*!
  * initialize with frame
  */

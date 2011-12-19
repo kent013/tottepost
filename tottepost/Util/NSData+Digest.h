@@ -3,7 +3,7 @@
 //  iSticky
 //
 //  Created by ISHITOYA Kentaro on 10/08/26.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 cocotomo. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

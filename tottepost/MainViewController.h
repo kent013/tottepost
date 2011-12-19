@@ -14,7 +14,7 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate>{
+@interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
@@ -22,7 +22,6 @@
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
     __strong UIButton *settingButton_;
-    __strong UIView *imagePickerOverlayView_;
     UIDevice* device_;
     int row;
     int prevRow;
@@ -30,6 +29,5 @@
 
 - (id) initWithFrame:(CGRect)frame;
 - (void) createCameraController;
-- (void) viewDidShow: (UIView *)view;
-
 @end
+

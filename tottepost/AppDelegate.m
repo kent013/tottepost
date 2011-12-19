@@ -19,7 +19,8 @@
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    CGRect frame = [[UIScreen mainScreen] bounds];
+    application.statusBarHidden = NO;
+    CGRect frame = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:frame];
     self.window.backgroundColor = [UIColor whiteColor];
     

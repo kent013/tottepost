@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376A8B31149FA18E00637B68 /* UIImage+AutoRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
@@ -26,7 +27,6 @@
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
 		37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7431C149D892E002EEADD /* UploadProgressEntity.m */; };
 		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
-		37FB64DD1496238600387490 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DA1496238600387490 /* MainView.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
 		37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingViewController.m */; };
@@ -86,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+AutoRotation.h"; path = "Util/UIImage+AutoRotation.h"; sourceTree = "<group>"; };
+		376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+AutoRotation.m"; path = "Util/UIImage+AutoRotation.m"; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,8 +116,6 @@
 		37F7431C149D892E002EEADD /* UploadProgressEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadProgressEntity.m; sourceTree = "<group>"; };
 		37FB64D51496237500387490 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
 		37FB64D61496237500387490 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
-		37FB64D91496238600387490 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
-		37FB64DA1496238600387490 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
@@ -209,8 +209,6 @@
 		3704D5AF1494CD5A00380D30 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				37FB64D91496238600387490 /* MainView.h */,
-				37FB64DA1496238600387490 /* MainView.m */,
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
 				37FB65611497AAD300387490 /* ProgressTableViewController.h */,
@@ -251,7 +249,6 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
-				37F26D0E149F8C27000172EF /* SystemConfiguration.framework */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
@@ -273,13 +270,14 @@
 			isa = PBXGroup;
 			children = (
 				37FB65D8149CDFBC00387490 /* Accounts.framework */,
-				37FB65CF149CB64A00387490 /* Twitter.framework */,
-				37FB65B5149C512A00387490 /* libicucore.dylib */,
 				37FB65771498C8A100387490 /* CFNetwork.framework */,
-				376E153C1494C47800A34E7D /* UIKit.framework */,
-				376E153E1494C47800A34E7D /* Foundation.framework */,
 				376E15401494C47800A34E7D /* CoreGraphics.framework */,
+				376E153E1494C47800A34E7D /* Foundation.framework */,
 				376E15541494C47800A34E7D /* SenTestingKit.framework */,
+				37F26D0E149F8C27000172EF /* SystemConfiguration.framework */,
+				37FB65CF149CB64A00387490 /* Twitter.framework */,
+				376E153C1494C47800A34E7D /* UIKit.framework */,
+				37FB65B5149C512A00387490 /* libicucore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -421,6 +419,8 @@
 				37FB6587149C4E6D00387490 /* NSData+Digest.m */,
 				37FB6588149C4E6D00387490 /* UIImage+Digest.h */,
 				37FB6589149C4E6D00387490 /* UIImage+Digest.m */,
+				376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */,
+				376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -593,7 +593,6 @@
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
 				37FB64D71496237500387490 /* SettingTableViewController.m in Sources */,
-				37FB64DD1496238600387490 /* MainView.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
 				37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
@@ -602,6 +601,7 @@
 				37FB657F1498CF0200387490 /* FlickrPhotoSubmitter.m in Sources */,
 				37FB658A149C4E6D00387490 /* NSData+Digest.m in Sources */,
 				37FB658B149C4E6D00387490 /* UIImage+Digest.m in Sources */,
+				376A8B31149FA18E00637B68 /* UIImage+AutoRotation.m in Sources */,
 				37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */,
 				37FB65CB149C904E00387490 /* PhotoSubmitter.m in Sources */,
 				37FB65D7149CD5BD00387490 /* TwitterPhotoSubmitter.m in Sources */,

@@ -10,6 +10,8 @@
 #import "FacebookSettingViewController.h"
 #import "PhotoSubmitterManager.h"
 
+@protocol SettingTableViewControllerDelegate;
+
 /*!
  * setting view controller
  */
@@ -19,4 +21,9 @@
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;
 }
+@property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;
+@end
+
+@protocol SettingTableViewControllerDelegate <NSObject>
+- (void) didDismissSettingTableViewController;
 @end
