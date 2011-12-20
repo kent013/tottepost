@@ -204,6 +204,7 @@
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker_.showsCameraControls = YES;
+    //[imagePicker_.view setAutoresizingMask:UIViewAnimationTransitionNone];
     
     [self.view addSubview:imagePicker_.view];
     [self.view addSubview:progressTableViewController_.view];
@@ -221,7 +222,7 @@
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     if([self checkForConnection]){
-        [[PhotoSubmitterManager getInstance] submitPhoto:image];
+        [[PhotoSubmitterManager getInstance] submitPhoto:image.UIImageAutoRotated];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -232,7 +233,7 @@
  * photo upload start
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    NSLog(@"%@ upload started", imageHash);
+    //NSLog(@"%@ upload started", imageHash);
     [progressTableViewController_ addProgressWithType:photoSubmitter.type
                                               forHash:imageHash];
 }
@@ -241,7 +242,7 @@
  * photo submitted
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
-    NSLog(@"%@ submitted.", imageHash);
+    //NSLog(@"%@ submitted.", imageHash);
     [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                  forHash:imageHash];
 }
@@ -250,7 +251,7 @@
  * photo upload progress changed
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
-    NSLog(@"%@, %f", imageHash, progress);
+    //NSLog(@"%@, %f", imageHash, progress);
     [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
                                                  forHash:imageHash progress:progress];
 }

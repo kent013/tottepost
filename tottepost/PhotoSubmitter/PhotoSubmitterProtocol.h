@@ -18,6 +18,7 @@ typedef enum {
 
 @protocol PhotoSubmitterAuthenticationDelegate;
 @protocol PhotoSubmitterPhotoDelegate;
+@protocol PhotoSubmitterOperationDelegate;
 
 /*!
  * protocol for submitter
@@ -31,6 +32,7 @@ typedef enum {
 @property (nonatomic, readonly) UIImage *smallIcon;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterPhotoDelegate> photoDelegate;
+@property (nonatomic, assign) id<PhotoSubmitterOperationDelegate> operationDelegate;
 - (void) login;
 - (void) logout;
 - (void) disable;
@@ -58,4 +60,11 @@ typedef enum {
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress;
+@end
+
+/*!
+ * protocol for operation
+ */
+@protocol PhotoSubmitterOperationDelegate <NSObject>
+- (void) photoSubmitterDidOperationFinished;
 @end

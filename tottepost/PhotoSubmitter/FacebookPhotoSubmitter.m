@@ -96,10 +96,15 @@
 	}
     NSString *hash = [self photoForRequest:request];
 	if ([result objectForKey:@"owner"]) {
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        });
 	} else {
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
+        });
 	}
+    [self.operationDelegate photoSubmitterDidOperationFinished];
     [self removePhotoForRequest:request];
 };
 
@@ -108,7 +113,10 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSString *hash = [self photoForRequest:request];
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    });
+    [self.operationDelegate photoSubmitterDidOperationFinished];
     [self removePhotoForRequest:request];
 };
 
@@ -128,6 +136,7 @@
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
 @synthesize photoDelegate;
+@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!

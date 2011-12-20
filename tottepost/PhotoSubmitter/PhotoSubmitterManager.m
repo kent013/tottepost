@@ -26,7 +26,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
                      [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
                      [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
                      [NSNumber numberWithInt: PhotoSubmitterTypeFlickr], nil];
-    operationQueue_ = [NSOperationQueue mainQueue];
+    operationQueue_ = [[NSOperationQueue alloc] init];
+    operationQueue_.maxConcurrentOperationCount = 6;
     [self loadSubmitters];
 }
 @end

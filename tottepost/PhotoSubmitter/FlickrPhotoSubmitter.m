@@ -72,9 +72,12 @@
 		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        });
         [self removeRequest:inRequest];
-        [self removePhotoForRequest:inRequest];        
+        [self removePhotoForRequest:inRequest];  
+        [self.operationDelegate photoSubmitterDidOperationFinished];      
     }
 }
 
@@ -84,9 +87,12 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
+        });
         [self removeRequest:inRequest];
-        [self removePhotoForRequest:inRequest];    
+        [self removePhotoForRequest:inRequest];   
+        [self.operationDelegate photoSubmitterDidOperationFinished]; 
     }else{
         NSLog(@"flickr error:%@", inError);
         [self clearCredentials];
@@ -135,6 +141,7 @@
 @synthesize flickr = flickr_;
 @synthesize authDelegate;
 @synthesize photoDelegate;
+@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!

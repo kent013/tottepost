@@ -18,6 +18,7 @@
 @interface TwitterPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) startConnection:(NSURLRequest *)request imageHash:(NSString *)imageHash;
 - (void) startConnectionWithParam:(NSMutableDictionary *)param;
 @end
 
@@ -45,7 +46,10 @@
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    });
+    [self.operationDelegate photoSubmitterDidOperationFinished];
     [self removePhotoForRequest:connection];
 }
 
@@ -54,7 +58,10 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+    });
+    [self.operationDelegate photoSubmitterDidOperationFinished];
     [self removePhotoForRequest:connection];
     
 }
@@ -78,14 +85,21 @@
 - (void)startConnectionWithParam:(NSMutableDictionary *)param{
     NSURLRequest *request = [param objectForKey:@"request"];
     NSString *imageHash = [param objectForKey:@"hash"];
+    [self startConnection:request imageHash:imageHash];
+}
 
+/*!
+ * start NSURLConnection
+ */
+- (void)startConnection:(NSURLRequest *)request imageHash:(NSString *)imageHash{
     NSURLConnection *connection = 
-      [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [[NSURLConnection alloc] initWithRequest:request delegate:self];
     
     if(connection){
         [self setPhotoHash:imageHash forRequest:connection];
         [self.photoDelegate photoSubmitter:self willStartUpload:imageHash];
     }
+    
 }
 @end
 
@@ -95,6 +109,7 @@
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
 @synthesize photoDelegate;
+@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -125,25 +140,22 @@
     if(comment == nil){
         comment = @"TottePost Photo";
     }
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-			if ([accountsArray count] > 0) {
-				ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-                NSURL *url = 
-                  [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
-                TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
-                                                      requestMethod:TWRequestMethodPOST];
-                [request setAccount:twitterAccount];
-                NSData *imageData = UIImagePNGRepresentation(photo);
-                [request addMultiPartData:imageData 
-                                 withName:@"media[]" type:@"multipart/form-data"];
-                [request addMultiPartData:[comment dataUsingEncoding:NSUTF8StringEncoding] 
-                                 withName:@"status" type:@"multipart/form-data"];
-                [self performSelectorOnMainThread:@selector(startConnectionWithParam:) withObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:request.signedURLRequest, @"request", photo.MD5DigestString, @"hash", nil] waitUntilDone:NO];
-			}
-        }
-	}];
+    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+    if ([accountsArray count] > 0) {
+        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+        NSURL *url = 
+        [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
+        TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
+                                              requestMethod:TWRequestMethodPOST];
+        [request setAccount:twitterAccount];
+        NSData *imageData = UIImagePNGRepresentation(photo);
+        [request addMultiPartData:imageData 
+                         withName:@"media[]" type:@"multipart/form-data"];
+        [request addMultiPartData:[comment dataUsingEncoding:NSUTF8StringEncoding] 
+                         withName:@"status" type:@"multipart/form-data"];
+        
+        [self startConnection:request.signedURLRequest imageHash:photo.MD5DigestString];
+    }
 }
 
 /*!

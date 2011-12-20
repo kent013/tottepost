@@ -25,6 +25,4 @@
     __strong Facebook *facebook_;
 }
 @property (nonatomic, readonly) PhotoSubmitterType type;
-@property (weak, nonatomic) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
-@property (weak, nonatomic) id<PhotoSubmitterPhotoDelegate> photoDelegate;
 @end

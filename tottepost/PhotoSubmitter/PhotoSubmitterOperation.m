@@ -11,9 +11,15 @@
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface PhotoSubmitterOperation(PrivateImplementation)
+- (void) finishOperation;
 @end
 
 @implementation PhotoSubmitterOperation(PrivateImplementation)
+- (void) finishOperation{
+    NSLog(@"finish op");
+    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting_"];
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished_"];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -31,6 +37,7 @@
     self = [super init];
     if(self){
         self.submitter = inSubmitter;
+        self.submitter.operationDelegate = self;
         self.photo = inPhoto;
         self.comment = inComment;
     }
@@ -38,9 +45,33 @@
 }
 
 /*!
+ */
+- (void)start{
+    [self.submitter submitPhoto:self.photo comment:self.comment];
+    NSLog(@"operation started");
+    while (![self isFinished] && ![self isCancelled]) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+    NSLog(@"operation ended");
+}
+
+- (void)photoSubmitterDidOperationFinished{
+    NSLog(@"del finish op");
+    [self performSelector:@selector(finishOperation) withObject:nil afterDelay:2];
+}
+
+- (BOOL)isConcurrent {
+    return YES;
+}
+- (BOOL)isExecuting {
+    return isExecuting_;
+}
+- (BOOL)isFinished {
+    return isFinished_;
+}
+/*!
  * operation main
  */
-- (void)main{
-    [self.submitter submitPhoto:self.photo comment:self.comment];
-}
+//- (void)main{
+//}
 @end
