@@ -16,9 +16,8 @@
 @interface MainViewController(PrivateImplementation)
 - (void) setupInitialState: (CGRect) aFrame;
 - (void) didSettingButtonTapped: (id) sender;
-- (void) updateCoodinates;
+- (void) updateCoordinates;
 - (BOOL) checkForConnection;
-- (void) showStatusBar;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -28,6 +27,9 @@
 - (void) setupInitialState: (CGRect) aFrame{
     aFrame.origin.y = 0;
     self.view.frame = aFrame;
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    
+    //setting view
     settingViewController_ = 
         [[SettingTableViewController alloc] init];
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
@@ -35,15 +37,38 @@
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     settingViewController_.delegate = self;
     
+    //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero];
     
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
-    [self updateCoodinates];
     
-    device_ = [UIDevice currentDevice];
-    [device_ beginGeneratingDeviceOrientationNotifications];
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(deviceRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
+    //setting button
+    settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 
+             forControlEvents:UIControlEventTouchUpInside];
+    [settingButton_ setImage:[UIImage imageNamed:@"setting.png"] 
+                    forState: UIControlStateNormal];
+    [settingButton_ setFrame:CGRectMake(10, 10, 32, 32)];
+    
+    //add tool bar
+    toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    toolbar_.barStyle = UIBarStyleBlack;
+    
+    //camera button
+    cameraButton_ =
+    [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                 target:self
+                                                 action:@selector(clickPhoto:)];
+    cameraButton_.style = UIBarButtonItemStyleBordered;
+    
+    
+    //spacer for centalize camera button 
+    flexSpace_ = [[UIBarButtonItem alloc]
+                  initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                  target:nil
+                  action:nil];
+    
+    [toolbar_ setItems:[NSArray arrayWithObjects:flexSpace_, cameraButton_, nil]];
 }
 
 /*!
@@ -55,11 +80,69 @@
 }
 
 /*!
+ * did rotate
+ */
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    imagePicker_.showsCameraControls = YES;
+    NSLog(@"did");
+}
+
+/*!
+ * will rotate
+ */
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSLog(@"will");
+    imagePicker_.showsCameraControls = NO;
+    if(toInterfaceOrientation == UIInterfaceOrientationPortrait ||
+       toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
+       toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+       toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+    {
+        orientation_ = toInterfaceOrientation;
+    }
+    
+    if(orientation_ == lastOrientation_)
+    {
+        return;
+    }
+    lastOrientation_ = orientation_;
+    [self updateCoordinates];
+}
+/*!
  * update control coodinates
  */
-- (void)updateCoodinates{
+- (void)updateCoordinates{ 
     CGRect frame = self.view.frame;
+    CGRect screen = [UIScreen mainScreen].bounds;
+    if(UIInterfaceOrientationIsLandscape(orientation_)){
+        frame = CGRectMake(0, 0, screen.size.height, screen.size.width);
+    }else if(UIInterfaceOrientationIsPortrait(orientation_)){
+        frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
+    }
+    //[self.view setBounds:frame];
+    //self.view.frame = frame;
+    self.view.frame = frame;
+    NSLog(@"screen bou = %@\n", NSStringFromCGRect([UIScreen mainScreen].bounds));
+    NSLog(@"     frame = %@\n", NSStringFromCGRect(frame));
+    NSLog(@"    bounds = %@\n", NSStringFromCGRect(self.view.bounds));
+    NSLog(@"view frame = %@\n", NSStringFromCGRect(self.view.frame));
+    NSLog(@"pick frame = %@\n", NSStringFromCGRect(imagePicker_.view.frame));
+    //overlayView_.frame = frame;
+    
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - 80, 40, 80, frame.size.height - 80)];
+    [toolbar_ setFrame:CGRectMake(0, frame.size.height - 55, frame.size.width, 55)];
+    flexSpace_.width = frame.size.width / 2 - 30;
+
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        CGRect bframe = settingButton_.frame;
+        if(UIInterfaceOrientationIsLandscape(orientation_)){
+            bframe.origin.x = frame.size.width - 10 - bframe.size.width;
+        }else{
+            bframe.origin.x = 10;
+        }
+        settingButton_.frame = bframe;
+    }
 }
 
 /*!
@@ -86,15 +169,8 @@
  */
 - (void)clickPhoto:(UIBarButtonItem*)sender
 {
+    imagePicker_.showsCameraControls = NO;
     [imagePicker_ takePicture];
-}
-
-/*!
- * show status
- */
-- (void)showStatusBar
-{
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 @end
 
@@ -122,79 +198,25 @@
 /*!
  * create camera view
  */
-- (void) createCameraController
-{
-    CGRect f = self.view.frame;
-    f.size.height += f.origin.y;
-    f.origin.y = 0;
-    self.view.frame = f;
-    
+- (void) createCameraController{
+    [UIApplication sharedApplication].statusBarHidden = YES;
     imagePicker_ = [[UIImagePickerController alloc] init];
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
-    //imagePicker_.cameraOverlayView = imagePickerOverlayView_;
-    imagePicker_.showsCameraControls = NO;
-    
-    settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 
-             forControlEvents:UIControlEventTouchUpInside];
-    [settingButton_ setImage:[UIImage imageNamed:@"setting.png"] 
-                    forState: UIControlStateNormal];
-    [settingButton_ setFrame:CGRectMake(10, 10, 32, 32)];
-    [imagePicker_.view addSubview:settingButton_];
-    
-    //add tool bar
-    CGRect toolbarRect = CGRectMake(0, self.view.frame.size.height - 55, self.view.frame.size.width, 55);
-    UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:toolbarRect];
-    toolbar.barStyle = UIBarStyleBlack;
-    [imagePicker_.view addSubview:toolbar];
-    [imagePicker_.view addSubview:progressTableViewController_.view];
-    
-    //camera button
-    cameraButton_ =
-    [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
-                                                 target:self
-                                                 action:@selector(clickPhoto:)];
-    cameraButton_.style = UIBarButtonItemStyleBordered;
-    
-    
-    //spacer for centalize camera button 
-    UIBarButtonItem* fixedSpace = [[UIBarButtonItem alloc]
-                                   initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                   target:nil
-                                   action:nil];
-    fixedSpace.width = self.view.frame.size.width/2 - 30;
-    
-    [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, cameraButton_, nil]];
+    imagePicker_.showsCameraControls = YES;
     
     [self.view addSubview:imagePicker_.view];
-}
-
-/*!
- * delegate when image picking finished
- */
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage*)image editingInfo:(NSDictionary*)editingInfo{
-    if([self checkForConnection]){
-        [[PhotoSubmitterManager getInstance] submitPhoto:image];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. We will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
-/*!
- * image picker delegate
- */
--(void)targetImage:(UIImage*)image didFinishSavingWithError:(NSError*)error contextInfo:(void*)context{
-    if(error){
-    }else{
-    }
+    [self.view addSubview:progressTableViewController_.view];
+    [self.view addSubview:settingButton_];
+    [self.view addSubview:toolbar_];
+    [self updateCoordinates];
 }
 
 /*! 
  * take photo
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    imagePicker_.showsCameraControls = YES;
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     if([self checkForConnection]){
@@ -234,37 +256,7 @@
  */
 - (void)didDismissSettingTableViewController{
     [UIApplication sharedApplication].statusBarHidden = YES;
-    CGRect f = self.view.frame;
-    f.size.height += 20;
-    f.origin.y = 0;
-    
-    imagePicker_.view.frame = f;
-    self.view.frame = f;    
-}
-
-/*!
- * on device rotation
- */
--(void) deviceRotate
-{
-    if(device_.orientation == UIDeviceOrientationPortrait ||
-       device_.orientation == UIDeviceOrientationPortraitUpsideDown)
-    {
-        row = 0;
-        //NSLog(@"ImageTab deviceRotate portrait");
-    }
-    else if(device_.orientation == UIDeviceOrientationLandscapeLeft ||
-            device_.orientation == UIDeviceOrientationLandscapeRight)
-    {
-        row = 1;
-        //NSLog(@"ImageTab deviceRotate landscape");
-    }
-    
-    if(row == prevRow)
-    {
-        return;
-    }
-    [self updateCoodinates];
+    [self updateCoordinates];
 }
 
 /*!

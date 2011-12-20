@@ -22,9 +22,10 @@
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
     __strong UIButton *settingButton_;
-    UIDevice* device_;
-    int row;
-    int prevRow;
+    __strong UIToolbar *toolbar_;
+    __strong UIBarButtonItem *flexSpace_;
+    UIInterfaceOrientation orientation_;
+    UIInterfaceOrientation lastOrientation_;
 }
 
 - (id) initWithFrame:(CGRect)frame;
