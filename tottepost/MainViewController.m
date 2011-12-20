@@ -10,6 +10,16 @@
 #import "Reachability.h"
 #import "UIImage+AutoRotation.h"
 
+#define MAINVIEW_STATUS_BAR_HEIGHT 20
+#define MAINVIEW_SETTING_BUTTON_PADDING 10
+#define MAINVIEW_SETTING_BUTTON_WIDTH 32
+#define MAINVIEW_CAMERA_BUTTON_WIDTH 30
+#define MAINVIEW_TOOLBAR_HEIGHT 55
+#define MAINVIEW_PROGRESS_HEIGHT 30
+#define MAINVIEW_PROGRESS_WIDTH 120
+#define MAINVIEW_PROGRESS_PADDING_X 10
+#define MAINVIEW_PROGRESS_PADDING_Y 50
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -38,7 +48,7 @@
     settingViewController_.delegate = self;
     
     //progress view
-    progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero];
+    progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
     
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
     
@@ -48,7 +58,7 @@
              forControlEvents:UIControlEventTouchUpInside];
     [settingButton_ setImage:[UIImage imageNamed:@"setting.png"] 
                     forState: UIControlStateNormal];
-    [settingButton_ setFrame:CGRectMake(10, 10, 32, 32)];
+    [settingButton_ setFrame:CGRectMake(MAINVIEW_SETTING_BUTTON_PADDING, MAINVIEW_SETTING_BUTTON_PADDING, MAINVIEW_SETTING_BUTTON_WIDTH, MAINVIEW_SETTING_BUTTON_WIDTH)];
     
     //add tool bar
     toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
@@ -84,7 +94,6 @@
  */
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     imagePicker_.showsCameraControls = YES;
-    NSLog(@"did");
 }
 
 /*!
@@ -92,7 +101,6 @@
  */
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    NSLog(@"will");
     imagePicker_.showsCameraControls = NO;
     if(toInterfaceOrientation == UIInterfaceOrientationPortrait ||
        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
@@ -120,26 +128,17 @@
     }else if(UIInterfaceOrientationIsPortrait(orientation_)){
         frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
     }
-    //[self.view setBounds:frame];
-    //self.view.frame = frame;
-    self.view.frame = frame;
-    NSLog(@"screen bou = %@\n", NSStringFromCGRect([UIScreen mainScreen].bounds));
-    NSLog(@"     frame = %@\n", NSStringFromCGRect(frame));
-    NSLog(@"    bounds = %@\n", NSStringFromCGRect(self.view.bounds));
-    NSLog(@"view frame = %@\n", NSStringFromCGRect(self.view.frame));
-    NSLog(@"pick frame = %@\n", NSStringFromCGRect(imagePicker_.view.frame));
-    //overlayView_.frame = frame;
     
-    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - 80, 40, 80, frame.size.height - 80)];
-    [toolbar_ setFrame:CGRectMake(0, frame.size.height - 55, frame.size.width, 55)];
-    flexSpace_.width = frame.size.width / 2 - 30;
+    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_TOOLBAR_HEIGHT)];
+    [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
+    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGRect bframe = settingButton_.frame;
         if(UIInterfaceOrientationIsLandscape(orientation_)){
-            bframe.origin.x = frame.size.width - 10 - bframe.size.width;
+            bframe.origin.x = frame.size.width - MAINVIEW_SETTING_BUTTON_PADDING - bframe.size.width;
         }else{
-            bframe.origin.x = 10;
+            bframe.origin.x = MAINVIEW_SETTING_BUTTON_PADDING;
         }
         settingButton_.frame = bframe;
     }
@@ -170,6 +169,7 @@
 - (void)clickPhoto:(UIBarButtonItem*)sender
 {
     imagePicker_.showsCameraControls = NO;
+    cameraButton_.enabled = NO;
     [imagePicker_ takePicture];
 }
 @end
@@ -216,6 +216,7 @@
  * take photo
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     
@@ -232,7 +233,8 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     NSLog(@"%@ upload started", imageHash);
-    [progressTableViewController_ addProgressWithType:photoSubmitter.type forHash:imageHash];
+    [progressTableViewController_ addProgressWithType:photoSubmitter.type
+                                              forHash:imageHash];
 }
 
 /*!
@@ -240,7 +242,8 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     NSLog(@"%@ submitted.", imageHash);
-    [progressTableViewController_ removeProgressWithType:photoSubmitter.type forHash:imageHash];
+    [progressTableViewController_ removeProgressWithType:photoSubmitter.type
+                                                 forHash:imageHash];
 }
 
 /*!
@@ -248,7 +251,8 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     NSLog(@"%@, %f", imageHash, progress);
-    [progressTableViewController_ updateProgressWithType:photoSubmitter.type forHash:imageHash progress:progress];
+    [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
+                                                 forHash:imageHash progress:progress];
 }
 
 /*!
@@ -256,6 +260,13 @@
  */
 - (void)didDismissSettingTableViewController{
     [UIApplication sharedApplication].statusBarHidden = YES;
+    //for iphone heck
+    if(self.view.frame.origin.y == MAINVIEW_STATUS_BAR_HEIGHT){
+        CGRect frame = self.view.frame;
+        frame.origin.y = 0;
+        frame.size.height += MAINVIEW_STATUS_BAR_HEIGHT;
+        [self.view setFrame:frame];
+    }
     [self updateCoordinates];
 }
 

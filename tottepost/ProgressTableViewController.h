@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "UploadProgressEntity.h"
+#import "ProgressTableViewCell.h"
 
 @interface ProgressTableViewController : UITableViewController{
     __strong NSMutableArray *progresses_;
     __strong NSMutableDictionary *cells_;
 }
 
-- (id) initWithFrame:(CGRect)frame;
+@property (nonatomic, assign) CGSize progressSize;
+
+- (id) initWithFrame:(CGRect)frame andProgressSize:(CGSize)size;
 - (void) updateWithFrame:(CGRect)frame;
 - (void) update;
 - (void) addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash;

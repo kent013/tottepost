@@ -24,7 +24,6 @@
 @synthesize progress;
 @synthesize type;
 @synthesize photoHash;
-@synthesize progressBar;
 
 /*!
  * initialize
@@ -44,9 +43,6 @@
  */
 - (void)setProgress:(CGFloat)inProgress{
     progress = inProgress;
-    if(progressBar){
-        progressBar.progress = inProgress;
-    }
 }
 
 /*!

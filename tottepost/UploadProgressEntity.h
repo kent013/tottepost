@@ -15,7 +15,6 @@
 @property (nonatomic, readonly) id<PhotoSubmitterProtocol> submitter;
 @property (nonatomic, readonly) NSString *progressHash;
 @property (strong, nonatomic) NSString *photoHash;
-@property (strong, nonatomic) UIProgressView *progressBar;
 
 - (id)initWithSubmitterType:(PhotoSubmitterType)type photoHash:(NSString *)photoHash;
 + (NSString *) generateProgressHash:(PhotoSubmitterType)type hash:(NSString *)hash;

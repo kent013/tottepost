@@ -29,9 +29,10 @@
  */
 - (void)setupInitialState:(CGRect)frame{
     [self.tableView setFrame:frame];
+    [self.view setAutoresizingMask:UIViewAutoresizingNone];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.separatorColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.userInteractionEnabled = NO;
     
     progresses_ = [[NSMutableArray alloc] init];
@@ -57,24 +58,23 @@
 }
 
 /*!
+ * get height
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return self.progressSize.height + 5;
+}
+
+/*!
  * create cell
  */
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     UploadProgressEntity *e = [progresses_ objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [cells_ objectForKey:e.progressHash];
+    ProgressTableViewCell *cell = [cells_ objectForKey:e.progressHash];
     if(cell){
         return cell;
     }
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    cell.imageView.image = e.submitter.smallIcon;
-    UIProgressView *p = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    p.frame = CGRectMake(40, 10, 70, 10);
-    p.backgroundColor = [UIColor clearColor];
-    p.progressTintColor = [UIColor colorWithRed:0 green:0 blue:0.8 alpha:0.5];
-    p.trackTintColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-    e.progressBar = p;
-    [cell.contentView addSubview:p];
+    cell = [[ProgressTableViewCell alloc] initWithSubmitter:e.submitter andSize:self.progressSize];
     [cells_ setObject:cell forKey:e.progressHash];
     return cell;
 }
@@ -83,7 +83,8 @@
  * set color
  */
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
 }
 
 /*!
@@ -92,6 +93,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
+
 
 
 #pragma mark -
@@ -114,11 +116,8 @@
  * show text
  */
 - (void) showText:(UploadProgressEntity *)entity text:(NSString *)text{
-    [entity.progressBar removeFromSuperview];
-    UITableViewCell *cell = [cells_ objectForKey:entity.progressHash];
-    cell.textLabel.text = text;
-    cell.textLabel.textColor = [UIColor blackColor];
-    cell.textLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:10.0];
+    ProgressTableViewCell *cell = [cells_ objectForKey:entity.progressHash];
+    [cell showText:text];
     int index = [self indexForProgress:entity];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -156,12 +155,14 @@
 #pragma mark Public Implementations
 //-----------------------------------------------------------------------------
 @implementation ProgressTableViewController
+@synthesize progressSize;
 /*!
  * initialize with frame
  */
-- (id) initWithFrame:(CGRect)frame{
-    self = [super initWithStyle:UITableViewStylePlain];
+- (id) initWithFrame:(CGRect)frame andProgressSize:(CGSize)size{
+    self = [super init];
     if(self){
+        self.progressSize = size;
         [self setupInitialState:frame];
     }
     return self;
@@ -171,14 +172,14 @@
  * update
  */
 -(void)update{
-    [self updateWithFrame:self.tableView.frame];
-}
+    [self updateWithFrame:self.view.frame];
+}   
 
 /*!
  * update frame
  */
 -(void)updateWithFrame:(CGRect)frame{
-    [self.tableView setFrame:frame];
+    [self.view setFrame:frame];
 }
 
 #pragma mark -
@@ -198,6 +199,9 @@
 - (void)updateProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash progress:(CGFloat)progress{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
     entity.progress = progress;
+    
+    ProgressTableViewCell *cell = [cells_ objectForKey:entity.progressHash];
+    cell.progressView.progress = progress;
 }
 
 /*!
@@ -216,13 +220,6 @@
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
     [self showText:entity text:message];
     [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:TOTTEPOST_PROGRESS_REMOVE_DELAY];
-}
-
-#pragma mark -
-#pragma mark UIViewController methods
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 @end
 
