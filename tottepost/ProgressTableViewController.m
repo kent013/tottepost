@@ -61,7 +61,7 @@
  * get height
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.progressSize.height + 5;
+    return self.progressSize.height;
 }
 
 /*!
@@ -83,7 +83,7 @@
  * set color
  */
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.2];
     cell.textLabel.backgroundColor = [UIColor clearColor];
 }
 

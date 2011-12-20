@@ -19,12 +19,11 @@
 @implementation ProgressTableViewCell(PrivateImplementation)
 - (void)setupInitialState:(id<PhotoSubmitterProtocol>)submitter andSize:(CGSize)size{
     
-    self.contentView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.2];
-    [self.contentView.layer setCornerRadius:5.0];
-    [self.contentView setClipsToBounds:YES];
+    [self.layer setCornerRadius:5.0];
+    [self setClipsToBounds:YES];
     
-    [self.contentView.layer setBorderColor:[[UIColor colorWithWhite:0.8 alpha:0.4] CGColor]];
-    [self.contentView.layer setBorderWidth:1.0];
+    [self.layer setBorderColor:[[UIColor colorWithWhite:0.8 alpha:0.4] CGColor]];
+    [self.layer setBorderWidth:1.0];
     
     self.imageView.image = submitter.smallIcon;
     progressView_ = [[FBProgressView alloc] init];
