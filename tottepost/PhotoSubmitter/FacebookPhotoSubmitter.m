@@ -96,13 +96,9 @@
 	}
     NSString *hash = [self photoForRequest:request];
 	if ([result objectForKey:@"owner"]) {
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        //});
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
 	} else {
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
-        //});
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
 	}
     
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
@@ -115,9 +111,7 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSString *hash = [self photoForRequest:request];
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    //});
+    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:request];

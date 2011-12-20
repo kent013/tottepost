@@ -99,10 +99,4 @@
 - (void)photoSubmitterDidOperationFinished{
     [self finishOperation];
 }
-
-/*!
- * operation main
- */
-//- (void)main{
-//}
 @end

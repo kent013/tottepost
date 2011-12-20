@@ -22,7 +22,10 @@
     __strong NSMutableArray *supportedTypes_;
     __strong NSOperationQueue *operationQueue_;
 }
+
 @property (nonatomic, readonly) NSArray* supportedTypes;
+@property (nonatomic, assign) BOOL submitPhotoWithOperations;
+
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
 

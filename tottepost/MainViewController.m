@@ -39,6 +39,10 @@
     self.view.frame = aFrame;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
+    //photo submitter setting
+    [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
+    [PhotoSubmitterManager getInstance].submitPhotoWithOperations = YES;
+    
     //setting view
     settingViewController_ = 
         [[SettingTableViewController alloc] init];
@@ -49,9 +53,7 @@
     
     //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
-    
-    [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
-    
+        
     //setting button
     settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 

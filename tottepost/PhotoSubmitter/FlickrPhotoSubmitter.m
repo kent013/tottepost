@@ -72,9 +72,7 @@
 		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        //});
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
         id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished];
         [self clearRequest:inRequest];
@@ -87,9 +85,7 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
-        //});
+        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
         id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished];   
         [self clearRequest:inRequest];
@@ -112,7 +108,6 @@
  * flickr delegate, request oauth
  */
 -(void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didObtainOAuthRequestToken:(NSString *)inRequestToken secret:(NSString *)inSecret{
-    // these two lines are important
     flickr_.OAuthToken = inRequestToken;
     flickr_.OAuthTokenSecret = inSecret;
     

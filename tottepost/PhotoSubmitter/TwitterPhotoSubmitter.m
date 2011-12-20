@@ -44,9 +44,7 @@
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    //});
+    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:connection];
@@ -58,9 +56,7 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    //});
+    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:connection];

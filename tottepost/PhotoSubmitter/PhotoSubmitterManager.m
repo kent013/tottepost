@@ -28,6 +28,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
                      [NSNumber numberWithInt: PhotoSubmitterTypeFlickr], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
+    self.submitPhotoWithOperations = NO;
     [self loadSubmitters];
 }
 @end
@@ -38,6 +39,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
 
 @implementation PhotoSubmitterManager
 @synthesize supportedTypes = supportedTypes_;
+@synthesize submitPhotoWithOperations;
 
 /*!
  * initializer
@@ -91,8 +93,12 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
-            PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo comment: comment];
-            [operationQueue_ addOperation:operation];
+            if(self.submitPhotoWithOperations){
+                PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo comment: comment];
+                [operationQueue_ addOperation:operation];
+            }else{
+                [submitter submitPhoto:photo comment:comment];
+            }
         }
     }
 }
@@ -151,6 +157,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
     }
     return TottePostPhotoSubmitter;
 }
+
 /*!
  * get submitter
  */
