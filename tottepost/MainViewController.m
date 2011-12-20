@@ -95,7 +95,7 @@
  * did rotate
  */
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    imagePicker_.showsCameraControls = YES;
+    //imagePicker_.showsCameraControls = YES;
 }
 
 /*!
@@ -103,7 +103,7 @@
  */
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    imagePicker_.showsCameraControls = NO;
+    //imagePicker_.showsCameraControls = NO;
     if(toInterfaceOrientation == UIInterfaceOrientationPortrait ||
        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
        toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
@@ -119,6 +119,7 @@
     lastOrientation_ = orientation_;
     [self updateCoordinates];
 }
+
 /*!
  * update control coodinates
  */
@@ -136,8 +137,16 @@
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        CGAffineTransform transform = CGAffineTransformIdentity;
+        if(orientation_ == UIInterfaceOrientationPortraitUpsideDown){
+            transform = CGAffineTransformMakeRotation(M_PI);
+        }else if(orientation_ == UIInterfaceOrientationPortrait){
+            transform = CGAffineTransformMakeRotation(0);
+        }
+        [imagePicker_ setCameraViewTransform:transform];
+        
         CGRect bframe = settingButton_.frame;
-        if(UIInterfaceOrientationIsLandscape(orientation_)){
+        if(UIInterfaceOrientationIsLandscape(orientation_)){  
             bframe.origin.x = frame.size.width - MAINVIEW_SETTING_BUTTON_PADDING - bframe.size.width;
         }else{
             bframe.origin.x = MAINVIEW_SETTING_BUTTON_PADDING;
@@ -206,7 +215,7 @@
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker_.showsCameraControls = YES;
-    //[imagePicker_.view setAutoresizingMask:UIViewAnimationTransitionNone];
+    //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone];
     
     [self.view addSubview:imagePicker_.view];
     [self.view addSubview:progressTableViewController_.view];
@@ -280,6 +289,13 @@
  * auto rotation
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+            return YES;
+        }
+        return NO;
+    }
     return YES;
 }
 @end
