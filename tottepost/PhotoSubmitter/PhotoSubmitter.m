@@ -31,6 +31,7 @@
     if(self){
         photos_ = [[NSMutableDictionary alloc] init];
         requests_ = [[NSMutableDictionary alloc] init];
+        operations_ = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -47,6 +48,29 @@
  */
 - (void)removeRequest:(NSObject *)request{
     [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
+}
+
+/*!
+ * set operation
+ */
+- (void)setOperation:(id<PhotoSubmitterOperationDelegate>)operation forRequest:(NSObject *)request{
+    if(operation != nil){
+        [operations_ setObject:operation forKey:[NSNumber numberWithInt:request.hash]];
+    }
+}
+
+/*!
+ * remove operation
+ */
+- (void)removeOperationForRequest:(NSObject *)request{
+    [operations_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
+}
+
+/*!
+ * operation for request
+ */
+- (id<PhotoSubmitterOperationDelegate>)operationForRequest:(NSObject *)request{
+    return [operations_ objectForKey:[NSNumber numberWithInt:request.hash]];
 }
 
 /*!
@@ -69,5 +93,42 @@
  */
 - (NSString *)photoForRequest:(NSObject *)request{
     return [photos_ objectForKey:[NSNumber numberWithInt:request.hash]];
+}
+
+/*!
+ * clear request data
+ */
+- (void)clearRequest:(NSObject *)request{
+    [self removeRequest:request];
+    [self removeOperationForRequest:request];
+    [self removePhotoForRequest:request];
+}
+
+/*!
+ * submit photo
+ */
+- (void)submitPhoto:(UIImage *)photo{
+    [self submitPhoto:photo comment:nil andDelegate:nil];
+}
+
+/*!
+ * submit photo with comment
+ */
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+    [self submitPhoto:photo comment:comment andDelegate:nil];
+}
+
+/*!
+ * submit photo with operation
+ */
+- (void)submitPhoto:(UIImage *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    return [self submitPhoto:photo comment:nil andDelegate:delegate];
+}
+
+/*!
+ * submit photo with comment and operation
+ */
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    NSLog(@"Subclasses must implement this method, %@", __PRETTY_FUNCTION__);
 }
 @end

@@ -243,8 +243,10 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
+    dispatch_async(dispatch_get_main_queue(), ^{
     [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                  forHash:imageHash];
+    });
 }
 
 /*!
@@ -252,6 +254,7 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //NSLog(@"%@, %f", imageHash, progress);
+    
     [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
                                                  forHash:imageHash progress:progress];
 }

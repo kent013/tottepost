@@ -13,8 +13,8 @@
  * NSOperation subclass for submitting photo
  */
 @interface PhotoSubmitterOperation : NSOperation<PhotoSubmitterOperationDelegate>{
-    BOOL isExecuting_;
-    BOOL isFinished_;
+    BOOL isExecuting;
+    BOOL isFinished;
 }
 @property (strong, nonatomic) id<PhotoSubmitterProtocol> submitter;
 @property (strong, nonatomic) UIImage *photo;

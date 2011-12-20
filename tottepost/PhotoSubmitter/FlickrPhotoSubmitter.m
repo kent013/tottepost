@@ -72,12 +72,12 @@
 		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //dispatch_async(dispatch_get_main_queue(), ^{
             [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        });
-        [self removeRequest:inRequest];
-        [self removePhotoForRequest:inRequest];  
-        [self.operationDelegate photoSubmitterDidOperationFinished];      
+        //});
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
+        [operationDelegate photoSubmitterDidOperationFinished];
+        [self clearRequest:inRequest];
     }
 }
 
@@ -87,12 +87,12 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //dispatch_async(dispatch_get_main_queue(), ^{
             [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
-        });
-        [self removeRequest:inRequest];
-        [self removePhotoForRequest:inRequest];   
-        [self.operationDelegate photoSubmitterDidOperationFinished]; 
+        //});
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
+        [operationDelegate photoSubmitterDidOperationFinished];   
+        [self clearRequest:inRequest];
     }else{
         NSLog(@"flickr error:%@", inError);
         [self clearCredentials];
@@ -141,7 +141,6 @@
 @synthesize flickr = flickr_;
 @synthesize authDelegate;
 @synthesize photoDelegate;
-@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -156,16 +155,9 @@
 }
 
 /*!
- * submit photo
- */
-- (void)submitPhoto:(UIImage *)photo{
-    return [self submitPhoto:photo comment:nil];
-}
-
-/*!
  * submit photo with comment
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
@@ -176,6 +168,7 @@
 	
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
+    [self setOperation:delegate forRequest:request];
     [self.photoDelegate photoSubmitter:self willStartUpload:hash];
 }
 

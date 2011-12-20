@@ -96,16 +96,18 @@
 	}
     NSString *hash = [self photoForRequest:request];
 	if ([result objectForKey:@"owner"]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //dispatch_async(dispatch_get_main_queue(), ^{
             [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        });
+        //});
 	} else {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //dispatch_async(dispatch_get_main_queue(), ^{
             [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
-        });
+        //});
 	}
-    [self.operationDelegate photoSubmitterDidOperationFinished];
-    [self removePhotoForRequest:request];
+    
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
+    [operationDelegate photoSubmitterDidOperationFinished];
+    [self clearRequest:request];
 };
 
 /*!
@@ -113,11 +115,12 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSString *hash = [self photoForRequest:request];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    //dispatch_async(dispatch_get_main_queue(), ^{
         [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    });
-    [self.operationDelegate photoSubmitterDidOperationFinished];
-    [self removePhotoForRequest:request];
+    //});
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
+    [operationDelegate photoSubmitterDidOperationFinished];
+    [self clearRequest:request];
 };
 
 /*!
@@ -136,7 +139,6 @@
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
 @synthesize photoDelegate;
-@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -151,16 +153,9 @@
 }
 
 /*!
- * submit photo
- */
-- (void)submitPhoto:(UIImage *)photo{
-    return [self submitPhoto:photo comment:nil];
-}
-
-/*!
  * submit photo with comment
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     NSMutableDictionary *params = 
       [NSMutableDictionary dictionaryWithObjectsAndKeys: 
        photo, @"picture", 
@@ -173,6 +168,7 @@
                            andDelegate:self];
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
+    [self setOperation:delegate forRequest:request];
     [self.photoDelegate photoSubmitter:self willStartUpload:hash];
 }
 

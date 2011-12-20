@@ -18,8 +18,6 @@
 @interface TwitterPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
-- (void) startConnection:(NSURLRequest *)request imageHash:(NSString *)imageHash;
-- (void) startConnectionWithParam:(NSMutableDictionary *)param;
 @end
 
 @implementation TwitterPhotoSubmitter(PrivateImplementation)
@@ -46,11 +44,13 @@
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    //dispatch_async(dispatch_get_main_queue(), ^{
         [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    });
-    [self.operationDelegate photoSubmitterDidOperationFinished];
-    [self removePhotoForRequest:connection];
+    //});
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationFinished];
+    [self clearRequest:connection];
+
 }
 
 /*!
@@ -58,11 +58,12 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    //dispatch_async(dispatch_get_main_queue(), ^{
         [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    });
-    [self.operationDelegate photoSubmitterDidOperationFinished];
-    [self removePhotoForRequest:connection];
+    //});
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationFinished];
+    [self clearRequest:connection];
     
 }
 
@@ -74,33 +75,6 @@
     NSString *hash = [self photoForRequest:connection];
     [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
 }
-
-#pragma mark -
-#pragma mark util methods
-/*!
- * start NSURLConnection
- * Use NSURLConnection to track upload progress.
- * And we must start connection on main thread otherwise it will not start.
- */
-- (void)startConnectionWithParam:(NSMutableDictionary *)param{
-    NSURLRequest *request = [param objectForKey:@"request"];
-    NSString *imageHash = [param objectForKey:@"hash"];
-    [self startConnection:request imageHash:imageHash];
-}
-
-/*!
- * start NSURLConnection
- */
-- (void)startConnection:(NSURLRequest *)request imageHash:(NSString *)imageHash{
-    NSURLConnection *connection = 
-    [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    if(connection){
-        [self setPhotoHash:imageHash forRequest:connection];
-        [self.photoDelegate photoSubmitter:self willStartUpload:imageHash];
-    }
-    
-}
 @end
 
 //-----------------------------------------------------------------------------
@@ -109,7 +83,6 @@
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
 @synthesize photoDelegate;
-@synthesize operationDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -124,16 +97,9 @@
 }
 
 /*!
- * submit photo
- */
-- (void)submitPhoto:(UIImage *)photo{
-    return [self submitPhoto:photo comment:nil];
-}
-
-/*!
  * submit photo with comment
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
 	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	
@@ -154,7 +120,16 @@
         [request addMultiPartData:[comment dataUsingEncoding:NSUTF8StringEncoding] 
                          withName:@"status" type:@"multipart/form-data"];
         
-        [self startConnection:request.signedURLRequest imageHash:photo.MD5DigestString];
+        NSURLConnection *connection = 
+          [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
+        NSString *imageHash = photo.MD5DigestString;
+        
+        if(connection){
+            [self setPhotoHash:imageHash forRequest:connection];
+            [self setOperation:delegate forRequest:connection];
+            [self.photoDelegate photoSubmitter:self willStartUpload:imageHash];
+        }
+
     }
 }
 

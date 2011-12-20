@@ -15,10 +15,59 @@
 @end
 
 @implementation PhotoSubmitterOperation(PrivateImplementation)
+#pragma mark -
+#pragma mark NSOperation methods
+/*!
+ * is concurrent
+ */
+- (BOOL)isConcurrent {
+    return YES;
+}
+
+/*!
+ * return isExecuting
+ */
+- (BOOL)isExecuting {
+    return isExecuting;
+}
+
+/*!
+ * return isFinished
+ */
+- (BOOL)isFinished {
+    return isFinished;
+}
+/*!
+ * KVO key setting
+ */
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString*)key {
+    if ([key isEqualToString:@"isExecuting"] || 
+        [key isEqualToString:@"isFinished"]) {
+        return YES;
+    }
+    return [super automaticallyNotifiesObserversForKey:key];
+}
+
+/*!
+ * start operation
+ */
+- (void)start{    
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
+    [self.submitter submitPhoto:self.photo comment:self.comment andDelegate:self];
+    do {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate distantFuture]];
+    } while (isExecuting);
+}
+
+#pragma mark -
+#pragma mark util methods
+/*!
+ * finish operation
+ */
 - (void) finishOperation{
-    NSLog(@"finish op");
-    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting_"];
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished_"];
+    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
 }
 @end
 
@@ -29,6 +78,7 @@
 @synthesize submitter;
 @synthesize photo;
 @synthesize comment;
+
 /*!
  * initialize with data
  */
@@ -37,7 +87,6 @@
     self = [super init];
     if(self){
         self.submitter = inSubmitter;
-        self.submitter.operationDelegate = self;
         self.photo = inPhoto;
         self.comment = inComment;
     }
@@ -45,30 +94,12 @@
 }
 
 /*!
+ * submitter operation delegate
  */
-- (void)start{
-    [self.submitter submitPhoto:self.photo comment:self.comment];
-    NSLog(@"operation started");
-    while (![self isFinished] && ![self isCancelled]) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    }
-    NSLog(@"operation ended");
-}
-
 - (void)photoSubmitterDidOperationFinished{
-    NSLog(@"del finish op");
-    [self performSelector:@selector(finishOperation) withObject:nil afterDelay:2];
+    [self finishOperation];
 }
 
-- (BOOL)isConcurrent {
-    return YES;
-}
-- (BOOL)isExecuting {
-    return isExecuting_;
-}
-- (BOOL)isFinished {
-    return isFinished_;
-}
 /*!
  * operation main
  */

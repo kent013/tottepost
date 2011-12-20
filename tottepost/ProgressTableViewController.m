@@ -107,7 +107,6 @@
     [cells_ removeObjectForKey:entity.progressHash];
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationTop];
-    NSLog(@"remove");
 }
 
 #pragma mark -
