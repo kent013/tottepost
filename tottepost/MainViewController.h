@@ -23,6 +23,7 @@
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
     __strong UIBarButtonItem* postButton_;
+    __strong UIBarButtonItem* postCancelButton_;
     __strong UIToolbar *toolbar_;
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;

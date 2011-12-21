@@ -32,9 +32,12 @@
 - (void) setupInitialState: (CGRect)aFrame;
 - (void) didSettingButtonTapped: (id)sender;
 - (void) didPostButtonTapped: (id)sender;
+- (void) didPostCancelButtonTapped: (id)sender;
+- (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
 - (BOOL) checkForConnection;
 - (void) previewPhoto:(UIImage *)photo;
+- (void) closePreview;
 - (void) postPhoto:(UIImage *)photo comment:(NSString *)comment;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 @end
@@ -84,7 +87,7 @@
     cameraButton_ =
     [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
                                                  target:self
-                                                 action:@selector(clickPhoto:)];
+                                                 action:@selector(didCameraButtonTapped:)];
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
     //setting button
@@ -92,6 +95,8 @@
     
     //post button
     postButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
+    //cancel button
+    postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
     
     //spacer for centalize camera button 
     flexSpace_ = [[UIBarButtonItem alloc]
@@ -113,16 +118,6 @@
 - (void) didSettingButtonTapped:(id)sender{
     [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
-}
-
-/*!
- * on post button tapped
- */
-- (void) didPostButtonTapped:(id)sender{
-    [self postPhoto:previewImageView_.image comment:commentTextView_.text];
-    [previewImageView_ removeFromSuperview];
-    [commentTextView_ removeFromSuperview];
-    [self changeCenterButtonTo:cameraButton_];
 }
 
 /*!
@@ -186,6 +181,8 @@
     }
 }
 
+#pragma mark -
+#pragma mark photo methods
 /*!
  * check for connection
  */
@@ -208,38 +205,11 @@
 /*!
  * on camera button tapped
  */
-- (void)clickPhoto:(UIBarButtonItem*)sender
+- (void)didCameraButtonTapped:(id)sender
 {
     imagePicker_.showsCameraControls = NO;
     cameraButton_.enabled = NO;
     [imagePicker_ takePicture];
-}
-
-/*!
- * preview photo
- */
-- (void)previewPhoto:(UIImage *)photo{
-    previewImageView_.image = photo;
-    [self.view addSubview:previewImageView_];
-    [self.view addSubview:commentTextView_];
-    [self.view bringSubviewToFront:toolbar_];
-
-    [self changeCenterButtonTo:postButton_];
-}
-
-/*!
- * toggle camera button <-> post button
- */
-- (void)changeCenterButtonTo:(UIBarButtonItem *)toButton{
-    UIBarButtonItem *fromButton = cameraButton_;
-    if(toButton == cameraButton_){
-        fromButton = postButton_;
-    }
-    NSMutableArray *items = [NSMutableArray arrayWithArray: toolbar_.items];
-    int index = [items indexOfObject: fromButton];
-    [items removeObjectAtIndex:index];
-    [items insertObject:toButton atIndex:index];
-    [toolbar_ setItems: items animated:YES];    
 }
 
 /*!
@@ -252,6 +222,108 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+}
+
+#pragma mark -
+#pragma mark preview methods
+/*!
+ * on post button tapped
+ */
+- (void) didPostButtonTapped:(id)sender{
+    NSString *comment = nil;
+    if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
+        comment = commentTextView_.text;
+    }
+    [self postPhoto:previewImageView_.image comment:comment];
+    [self closePreview];
+}
+
+/*!
+ * on post cancel button tapped
+ */
+- (void) didPostCancelButtonTapped:(id)sender{
+    [self closePreview];
+}
+
+/*!
+ * close preview
+ */
+- (void)closePreview{
+    [previewImageView_ removeFromSuperview];
+    [commentTextView_ removeFromSuperview];
+    [self changeCenterButtonTo:cameraButton_];
+    commentTextView_.text = @"";
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];    
+}
+
+/*!
+ * preview photo
+ */
+- (void)previewPhoto:(UIImage *)photo{
+    previewImageView_.image = photo;
+    [self.view addSubview:previewImageView_];
+    [self.view addSubview:commentTextView_];
+    [self.view bringSubviewToFront:toolbar_];
+
+    [self changeCenterButtonTo:postButton_];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+/*!
+ * toggle camera button <-> post button
+ */
+- (void)changeCenterButtonTo:(UIBarButtonItem *)toButton{
+    NSMutableArray *items = [NSMutableArray arrayWithArray: toolbar_.items];
+    if(toButton == cameraButton_){
+        int index = [items indexOfObject:postButton_];
+        flexSpace_.width += 30;
+        [items removeObject:postButton_];
+        [items removeObject:postCancelButton_];
+        [items insertObject:toButton atIndex:index];
+    }else{
+        int index = [items indexOfObject:cameraButton_];
+        flexSpace_.width -= 30;
+        [items removeObject:cameraButton_];
+        [items insertObject:postCancelButton_ atIndex:index];
+        [items insertObject:toButton atIndex:index];
+    }
+    [toolbar_ setItems: items animated:YES];    
+}
+
+#pragma mark -
+#pragma mark keyboard delegate
+/*!
+ * keyboard shown
+ */
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    CGRect tKeyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    tKeyboardRect = [self.view convertRect:tKeyboardRect fromView:nil];
+
+    NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGRect frame = commentTextView_.frame;
+    frame.origin.y = tKeyboardRect.origin.y - commentTextView_.frame.size.height - MAINVIEW_PADDING_Y;
+    
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    commentTextView_.frame = frame;
+    [UIView commitAnimations];
+}
+
+/*!
+ * keyboard hidden
+ */
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect frame = commentTextView_.frame;    
+    frame.origin.y = toolbar_.frame.origin.y - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    commentTextView_.frame = frame;
+    [UIView commitAnimations];
 }
 @end
 
