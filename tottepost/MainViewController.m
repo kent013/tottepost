@@ -106,7 +106,7 @@
  * did rotate
  */
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    //imagePicker_.showsCameraControls = YES;
+    imagePicker_.showsCameraControls = YES;
 }
 
 /*!
@@ -114,7 +114,7 @@
  */
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    //imagePicker_.showsCameraControls = NO;
+    imagePicker_.showsCameraControls = NO;
     if(toInterfaceOrientation == UIInterfaceOrientationPortrait ||
        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
        toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
