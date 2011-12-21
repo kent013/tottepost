@@ -11,19 +11,7 @@
 #import "Reachability.h"
 #import "UIImage+AutoRotation.h"
 #import "TottePostSettings.h"
-
-#define MAINVIEW_STATUS_BAR_HEIGHT 20.0
-#define MAINVIEW_SETTING_BUTTON_PADDING 10.0
-#define MAINVIEW_SETTING_BUTTON_WIDTH 32.0
-#define MAINVIEW_CAMERA_BUTTON_WIDTH 30.0
-#define MAINVIEW_TOOLBAR_HEIGHT 55.0
-#define MAINVIEW_PROGRESS_HEIGHT 30.0
-#define MAINVIEW_PROGRESS_WIDTH 120.0
-#define MAINVIEW_PROGRESS_PADDING_X 10.0
-#define MAINVIEW_PROGRESS_PADDING_Y 50.0
-#define MAINVIEW_PADDING_Y 10.0
-#define MAINVIEW_COMMENT_VIEW_WIDTH 200.0
-#define MAINVIEW_COMMENT_VIEW_HEIGHT 80
+#import "MainViewControllerConstants.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -66,17 +54,7 @@
     settingViewController_.delegate = self;
     
     //preview image view
-    previewImageView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
-    
-    //comment text view
-    commentTextView_ = [[UITextView alloc] initWithFrame:CGRectZero];
-    commentTextView_.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.6];
-    [commentTextView_.layer setCornerRadius:5.0];
-    [commentTextView_ setClipsToBounds:YES];
-    
-    [commentTextView_.layer setBorderColor:[[UIColor colorWithWhite:0.8 alpha:0.8] CGColor]];
-    [commentTextView_.layer setBorderWidth:1.0];
-    
+    previewImageView_ = [[PreviewPhotoView alloc] initWithFrame:CGRectZero];
     
     //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
@@ -165,12 +143,10 @@
         frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
     }
     
-    previewImageView_.frame = frame;
+    [previewImageView_ updateWithFrame:frame];
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2))];
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
-    
-    commentTextView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH) / 2, toolbar_.frame.origin.y - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH, MAINVIEW_COMMENT_VIEW_HEIGHT);
     CGRect ptframe = progressTableViewController_.view.frame;
     [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
 
@@ -234,11 +210,7 @@
  * on post button tapped
  */
 - (void) didPostButtonTapped:(id)sender{
-    NSString *comment = nil;
-    if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
-        comment = commentTextView_.text;
-    }
-    [self postPhoto:previewImageView_.image comment:comment];
+    [self postPhoto:previewImageView_.photo comment:previewImageView_.comment];
     [self closePreview];
 }
 
@@ -253,27 +225,19 @@
  * close preview
  */
 - (void)closePreview{
-    [previewImageView_ removeFromSuperview];
-    [commentTextView_ removeFromSuperview];
+    [previewImageView_ dissmiss];
     [self changeCenterButtonTo:cameraButton_];
-    commentTextView_.text = @"";
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];    
 }
 
 /*!
  * preview photo
  */
 - (void)previewPhoto:(UIImage *)photo{
-    previewImageView_.image = photo;
     [self.view addSubview:previewImageView_];
-    [self.view addSubview:commentTextView_];
+    [previewImageView_ presentWithPhoto:photo];
+    
     [self.view bringSubviewToFront:toolbar_];
-
     [self changeCenterButtonTo:postButton_];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 /*!
@@ -295,39 +259,6 @@
         [items insertObject:toButton atIndex:index];
     }
     [toolbar_ setItems: items animated:YES];    
-}
-
-#pragma mark -
-#pragma mark keyboard delegate
-/*!
- * keyboard shown
- */
-- (void)keyboardWillShow:(NSNotification *)aNotification {
-    CGRect tKeyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    tKeyboardRect = [self.view convertRect:tKeyboardRect fromView:nil];
-
-    NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    CGRect frame = commentTextView_.frame;
-    frame.origin.y = tKeyboardRect.origin.y - commentTextView_.frame.size.height - MAINVIEW_PADDING_Y;
-    
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    commentTextView_.frame = frame;
-    [UIView commitAnimations];
-}
-
-/*!
- * keyboard hidden
- */
-- (void)keyboardWillHide:(NSNotification *)aNotification {
-    NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGRect frame = commentTextView_.frame;    
-    frame.origin.y = toolbar_.frame.origin.y - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    commentTextView_.frame = frame;
-    [UIView commitAnimations];
 }
 @end
 

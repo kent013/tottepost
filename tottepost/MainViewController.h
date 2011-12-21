@@ -11,6 +11,7 @@
 #import "Facebook.h"
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
+#import "PreviewPhotoView.h"
 
 /*!
  * Main view controller
@@ -28,8 +29,7 @@
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
     __strong ProgressSummaryView *progressSummaryView_;
-    __strong UIImageView *previewImageView_;
-    __strong UITextView *commentTextView_;
+    __strong PreviewPhotoView *previewImageView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
 }

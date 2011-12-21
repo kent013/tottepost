@@ -13,6 +13,7 @@
 		376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B3914A0617400637B68 /* FBProgressView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5314A2068B00637B68 /* ProgressSummaryView.m */; };
 		376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5614A227F900637B68 /* TottePostSettings.m */; };
+		376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5C14A247A300637B68 /* PreviewPhotoView.m */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
@@ -102,6 +103,9 @@
 		376A8D5314A2068B00637B68 /* ProgressSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSummaryView.m; sourceTree = "<group>"; };
 		376A8D5514A227F900637B68 /* TottePostSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TottePostSettings.h; sourceTree = "<group>"; };
 		376A8D5614A227F900637B68 /* TottePostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TottePostSettings.m; sourceTree = "<group>"; };
+		376A8D5B14A247A200637B68 /* PreviewPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PreviewPhotoView.h; sourceTree = "<group>"; };
+		376A8D5C14A247A300637B68 /* PreviewPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewPhotoView.m; sourceTree = "<group>"; };
+		376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerConstants.h; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -224,6 +228,7 @@
 		3704D5AF1494CD5A00380D30 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */,
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
 				37FB65611497AAD300387490 /* ProgressTableViewController.h */,
@@ -234,6 +239,8 @@
 				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
 				376A8D5214A2068A00637B68 /* ProgressSummaryView.h */,
 				376A8D5314A2068B00637B68 /* ProgressSummaryView.m */,
+				376A8D5B14A247A200637B68 /* PreviewPhotoView.h */,
+				376A8D5C14A247A300637B68 /* PreviewPhotoView.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -655,6 +662,7 @@
 				376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */,
 				376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */,
 				376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */,
+				376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
