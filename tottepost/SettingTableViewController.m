@@ -7,9 +7,12 @@
 //
 
 #import "SettingTableViewController.h"
+#import "TottePostSettings.h"
 
 #define SV_SECTION_GENERAL  0
 #define SV_SECTION_ACCOUNTS 1
+
+#define SV_GENERAL_IMMEDIATE 0
 
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
@@ -21,10 +24,13 @@
 @interface SettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
 - (void) settingDone:(id)sender;
+- (UITableViewCell *) createGeneralSettingCell:(int)tag;
 - (UITableViewCell *) createSocialAppButtonWithTag:(int)tag;
 - (void) didSocialAppSwitchChanged:(id)sender;
+- (void) didGeneralSwitchChanged:(id)sender;
 - (PhotoSubmitterType) indexToSubmitterType:(int) index;
 - (int) submitterTypeToIndex:(PhotoSubmitterType) type;
+- (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on;
 @end
 
 #pragma mark -
@@ -76,16 +82,43 @@
 }
 
 /*!
+ * footer for section
+ */
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    switch (section) {
+        case SV_SECTION_GENERAL : break;
+        case SV_SECTION_ACCOUNTS: return @"Tap account name to enter details."; break;
+    }
+    return nil;    
+}
+
+/*!
  * create cell
  */
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     UITableViewCell *cell;
     if(indexPath.section == SV_SECTION_GENERAL){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        cell.textLabel.text = @"moge";
+        cell = [self createGeneralSettingCell:indexPath.row];
     }else if(indexPath.section == SV_SECTION_ACCOUNTS){
         cell = [self createSocialAppButtonWithTag:indexPath.row];
+    }
+    return cell;
+}
+
+/*!
+ * create general setting cell
+ */
+- (UITableViewCell *)createGeneralSettingCell:(int)tag{
+    TottePostSettings *settings = [TottePostSettings getInstance];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    switch (tag) {
+        case SV_GENERAL_IMMEDIATE:
+            cell.textLabel.text = @"Immediate post";
+            UISwitch *s = [self createSwitchWithTag:tag on:settings.immediatePostEnabled];
+            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            [cell.contentView addSubview:s];
+            break;
     }
     return cell;
 }
@@ -100,12 +133,10 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     cell.imageView.image = submitter.icon;
     cell.textLabel.text = submitter.name;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 180, 8, 100, 30)];
+    UISwitch *s = [self createSwitchWithTag:tag on:NO];
     [s addTarget:self action:@selector(didSocialAppSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     [cell.contentView addSubview:s];
-    s.tag = tag;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     if([submitter isLogined]){
         [s setOn:YES animated:YES];
@@ -149,6 +180,29 @@
     }else{
         [submitter disable];
     }
+}
+
+/*!
+ * if social app switch changed
+ */
+- (void)didGeneralSwitchChanged:(id)sender{
+    TottePostSettings *settings = [TottePostSettings getInstance];
+    UISwitch *s = (UISwitch *)sender;
+    switch(s.tag){
+        case SV_GENERAL_IMMEDIATE: 
+            settings.immediatePostEnabled = s.on; 
+            break;
+    }
+}
+
+/*!
+ * create switch with tag
+ */
+- (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on{
+    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 150, 8, 100, 30)];
+    s.tag = tag;
+    s.on = on;
+    return s;
 }
 
 #pragma mark -

@@ -22,9 +22,9 @@
     __strong UINavigationController *settingNavigationController_;
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
-    __strong UIButton *settingButton_;
     __strong UIToolbar *toolbar_;
     __strong UIBarButtonItem *flexSpace_;
+    __strong UIBarButtonItem *settingButton_;
     __strong ProgressSummaryView *progressSummaryView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;

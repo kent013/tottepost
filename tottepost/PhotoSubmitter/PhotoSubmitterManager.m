@@ -10,7 +10,7 @@
 /*!
  * singleton instance
  */
-static PhotoSubmitterManager* TottePostPhotoSubmitter;
+static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -173,10 +173,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
  * singleton method
  */
 + (PhotoSubmitterManager *)getInstance{
-    if(TottePostPhotoSubmitter == nil){
-        TottePostPhotoSubmitter = [[PhotoSubmitterManager alloc]init];
+    if(TottePostPhotoSubmitterSingletonInstance == nil){
+        TottePostPhotoSubmitterSingletonInstance = [[PhotoSubmitterManager alloc]init];
     }
-    return TottePostPhotoSubmitter;
+    return TottePostPhotoSubmitterSingletonInstance;
 }
 
 /*!

@@ -54,14 +54,6 @@
     
     //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
-        
-    //setting button
-    settingButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingButton_ addTarget:self action:@selector(didSettingButtonTapped:) 
-             forControlEvents:UIControlEventTouchUpInside];
-    [settingButton_ setImage:[UIImage imageNamed:@"setting.png"] 
-                    forState: UIControlStateNormal];
-    [settingButton_ setFrame:CGRectMake(MAINVIEW_SETTING_BUTTON_PADDING, MAINVIEW_SETTING_BUTTON_PADDING, MAINVIEW_SETTING_BUTTON_WIDTH, MAINVIEW_SETTING_BUTTON_WIDTH)];
     
     //add tool bar
     toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
@@ -74,14 +66,18 @@
                                                  action:@selector(clickPhoto:)];
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
+    //setting button
+    settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
+    
     
     //spacer for centalize camera button 
     flexSpace_ = [[UIBarButtonItem alloc]
                   initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                   target:nil
                   action:nil];
-    
-    [toolbar_ setItems:[NSArray arrayWithObjects:flexSpace_, cameraButton_, nil]];
+    UIBarButtonItem* spacer =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolbar_ setItems:[NSArray arrayWithObjects:flexSpace_, cameraButton_, spacer, settingButton_, nil]];
     
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
@@ -152,14 +148,6 @@
             transform = CGAffineTransformMakeRotation(0);
         }
         [imagePicker_ setCameraViewTransform:transform];
-        
-        CGRect bframe = settingButton_.frame;
-        if(UIInterfaceOrientationIsLandscape(orientation_)){  
-            bframe.origin.x = frame.size.width - MAINVIEW_SETTING_BUTTON_PADDING - bframe.size.width;
-        }else{
-            bframe.origin.x = MAINVIEW_SETTING_BUTTON_PADDING;
-        }
-        settingButton_.frame = bframe;
     }
 }
 
@@ -227,7 +215,6 @@
     
     [self.view addSubview:imagePicker_.view];
     [self.view addSubview:progressTableViewController_.view];
-    [self.view addSubview:settingButton_];
     [self.view addSubview:toolbar_];
     [self.view addSubview:progressSummaryView_];
     [self updateCoordinates];
