@@ -11,6 +11,7 @@
 		376A8B3414A05BB100637B68 /* ProgressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B3314A05BB100637B68 /* ProgressTableViewCell.m */; };
 		376A8B3614A05F8100637B68 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376A8B3514A05F8000637B68 /* QuartzCore.framework */; };
 		376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B3914A0617400637B68 /* FBProgressView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5314A2068B00637B68 /* ProgressSummaryView.m */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E15401494C47800A34E7D /* CoreGraphics.framework */; };
@@ -96,6 +97,8 @@
 		376A8B3514A05F8000637B68 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		376A8B3814A0617400637B68 /* FBProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBProgressView.h; path = Libraries/FBProgressView/FBProgressView.h; sourceTree = "<group>"; };
 		376A8B3914A0617400637B68 /* FBProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBProgressView.m; path = Libraries/FBProgressView/FBProgressView.m; sourceTree = "<group>"; };
+		376A8D5214A2068A00637B68 /* ProgressSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSummaryView.h; sourceTree = "<group>"; };
+		376A8D5314A2068B00637B68 /* ProgressSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSummaryView.m; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E153C1494C47800A34E7D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		376E153E1494C47800A34E7D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -226,6 +229,8 @@
 				376A8B3314A05BB100637B68 /* ProgressTableViewCell.m */,
 				37F7431B149D892E002EEADD /* UploadProgressEntity.h */,
 				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
+				376A8D5214A2068A00637B68 /* ProgressSummaryView.h */,
+				376A8D5314A2068B00637B68 /* ProgressSummaryView.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				37FB65B4149C4F6800387490 /* SBJsonWriter.m in Sources */,
 				37F26D0D149F8AA1000172EF /* Reachability.m in Sources */,
 				376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */,
+				376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

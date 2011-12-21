@@ -10,15 +10,16 @@
 #import "Reachability.h"
 #import "UIImage+AutoRotation.h"
 
-#define MAINVIEW_STATUS_BAR_HEIGHT 20
-#define MAINVIEW_SETTING_BUTTON_PADDING 10
-#define MAINVIEW_SETTING_BUTTON_WIDTH 32
-#define MAINVIEW_CAMERA_BUTTON_WIDTH 30
-#define MAINVIEW_TOOLBAR_HEIGHT 55
-#define MAINVIEW_PROGRESS_HEIGHT 30
-#define MAINVIEW_PROGRESS_WIDTH 120
-#define MAINVIEW_PROGRESS_PADDING_X 10
-#define MAINVIEW_PROGRESS_PADDING_Y 50
+#define MAINVIEW_STATUS_BAR_HEIGHT 20.0
+#define MAINVIEW_SETTING_BUTTON_PADDING 10.0
+#define MAINVIEW_SETTING_BUTTON_WIDTH 32.0
+#define MAINVIEW_CAMERA_BUTTON_WIDTH 30.0
+#define MAINVIEW_TOOLBAR_HEIGHT 55.0
+#define MAINVIEW_PROGRESS_HEIGHT 30.0
+#define MAINVIEW_PROGRESS_WIDTH 120.0
+#define MAINVIEW_PROGRESS_PADDING_X 10.0
+#define MAINVIEW_PROGRESS_PADDING_Y 50.0
+#define MAINVIEW_PADDING_Y 10.0
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -81,6 +82,10 @@
                   action:nil];
     
     [toolbar_ setItems:[NSArray arrayWithObjects:flexSpace_, cameraButton_, nil]];
+    
+    //progress summary
+    progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
+    [[PhotoSubmitterManager getInstance] setPhotoDelegate:progressSummaryView_];
 }
 
 /*!
@@ -132,9 +137,12 @@
         frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
     }
     
-    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_TOOLBAR_HEIGHT)];
+    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2))];
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
+
+    CGRect ptframe = progressTableViewController_.view.frame;
+    [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGAffineTransform transform = CGAffineTransformIdentity;
@@ -221,6 +229,7 @@
     [self.view addSubview:progressTableViewController_.view];
     [self.view addSubview:settingButton_];
     [self.view addSubview:toolbar_];
+    [self.view addSubview:progressSummaryView_];
     [self updateCoordinates];
 }
 

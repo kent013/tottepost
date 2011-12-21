@@ -25,6 +25,8 @@
 
 @property (nonatomic, readonly) NSArray* supportedTypes;
 @property (nonatomic, assign) BOOL submitPhotoWithOperations;
+@property (nonatomic, readonly) int enabledSubmitterCount;
+@property (nonatomic, readonly) int uploadOperationCount;
 
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;

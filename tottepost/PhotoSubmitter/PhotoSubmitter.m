@@ -31,11 +31,14 @@
     if(self){
         photos_ = [[NSMutableDictionary alloc] init];
         requests_ = [[NSMutableDictionary alloc] init];
-        operations_ = [[NSMutableDictionary alloc] init];
+        operationDelegates_ = [[NSMutableDictionary alloc] init];
+        photoDelegates_ = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
+#pragma mark -
+#pragma mark request methods
 /*!
  * add request
  */
@@ -50,29 +53,76 @@
     [requests_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
 }
 
+#pragma mark -
+#pragma mark photo delegate methods
+/*!
+ * add request
+ */
+- (void)addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate{
+    [photoDelegates_ addObject:photoDelegate];
+}
+
+/*!
+ * remove request
+ */
+- (void)removePhotoDelegate: (id<PhotoSubmitterPhotoDelegate>)photoDelegate{
+    [photoDelegates_ removeObject:photoDelegate];
+}
+
+/*!
+ * call will start upload delegate method
+ */
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+    for(id<PhotoSubmitterPhotoDelegate> delegate in photoDelegates_){
+        [delegate photoSubmitter:photoSubmitter willStartUpload:imageHash];
+    }
+}
+
+/*!
+ * call did submitted delegate method
+ */
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
+    for(id<PhotoSubmitterPhotoDelegate> delegate in photoDelegates_){
+        [delegate photoSubmitter:photoSubmitter didSubmitted:imageHash suceeded:suceeded message:message];
+    }
+}
+
+/*!
+ * call did progress changed delegate method
+ */
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+    for(id<PhotoSubmitterPhotoDelegate> delegate in photoDelegates_){
+        [delegate photoSubmitter:photoSubmitter didProgressChanged:imageHash progress:progress];
+    }    
+}
+
+#pragma mark -
+#pragma mark operation delegates
 /*!
  * set operation
  */
-- (void)setOperation:(id<PhotoSubmitterOperationDelegate>)operation forRequest:(NSObject *)request{
+- (void)setOperationDelegate:(id<PhotoSubmitterOperationDelegate>)operation forRequest:(NSObject *)request{
     if(operation != nil){
-        [operations_ setObject:operation forKey:[NSNumber numberWithInt:request.hash]];
+        [operationDelegates_ setObject:operation forKey:[NSNumber numberWithInt:request.hash]];
     }
 }
 
 /*!
  * remove operation
  */
-- (void)removeOperationForRequest:(NSObject *)request{
-    [operations_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
+- (void)removeOperationDelegateForRequest:(NSObject *)request{
+    [operationDelegates_ removeObjectForKey:[NSNumber numberWithInt:request.hash]];
 }
 
 /*!
  * operation for request
  */
-- (id<PhotoSubmitterOperationDelegate>)operationForRequest:(NSObject *)request{
-    return [operations_ objectForKey:[NSNumber numberWithInt:request.hash]];
+- (id<PhotoSubmitterOperationDelegate>)operationDelegateForRequest:(NSObject *)request{
+    return [operationDelegates_ objectForKey:[NSNumber numberWithInt:request.hash]];
 }
 
+#pragma mark -
+#pragma mark photo hash methods
 /*!
  * set photo hash
  */
@@ -95,15 +145,19 @@
     return [photos_ objectForKey:[NSNumber numberWithInt:request.hash]];
 }
 
+#pragma mark -
+#pragma mark util methods
 /*!
  * clear request data
  */
 - (void)clearRequest:(NSObject *)request{
     [self removeRequest:request];
-    [self removeOperationForRequest:request];
+    [self removeOperationDelegateForRequest:request];
     [self removePhotoForRequest:request];
 }
 
+#pragma mark -
+#pragma mark submit photo methods
 /*!
  * submit photo
  */

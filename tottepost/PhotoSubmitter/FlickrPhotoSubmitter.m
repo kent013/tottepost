@@ -72,8 +72,8 @@
 		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished];
         [self clearRequest:inRequest];
     }
@@ -85,8 +85,8 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:inRequest];
+        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished];   
         [self clearRequest:inRequest];
     }else{
@@ -101,7 +101,7 @@
  */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest imageUploadSentBytes:(NSUInteger)inSentBytes totalBytes:(NSUInteger)inTotalBytes{
     NSString * hash = [self photoForRequest:inRequest];
-    [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:inSentBytes / (float)inTotalBytes];
+    [self photoSubmitter:self didProgressChanged:hash progress:inSentBytes / (float)inTotalBytes];
 }
 
 /*!
@@ -135,7 +135,6 @@
 @implementation FlickrPhotoSubmitter
 @synthesize flickr = flickr_;
 @synthesize authDelegate;
-@synthesize photoDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -163,8 +162,8 @@
 	
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
-    [self setOperation:delegate forRequest:request];
-    [self.photoDelegate photoSubmitter:self willStartUpload:hash];
+    [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:hash];
 }
 
 /*!
@@ -203,7 +202,7 @@
  * check is logined
  */
 - (BOOL)isLogined{
-    if([FlickrPhotoSubmitter isEnabled] == false){
+    if(self.isEnabled == false){
         return NO;
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -211,6 +210,13 @@
         return YES;
     }
     return NO;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
+    return [FlickrPhotoSubmitter isEnabled];
 }
 
 /*!

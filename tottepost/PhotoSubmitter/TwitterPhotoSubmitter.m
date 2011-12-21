@@ -44,8 +44,8 @@
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
+    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:connection];
 
@@ -56,8 +56,8 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:connection];
+    [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:connection];
     
@@ -69,7 +69,7 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
     CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
     NSString *hash = [self photoForRequest:connection];
-    [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 @end
 
@@ -78,7 +78,6 @@
 //-----------------------------------------------------------------------------
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
-@synthesize photoDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -122,8 +121,8 @@
         
         if(connection){
             [self setPhotoHash:imageHash forRequest:connection];
-            [self setOperation:delegate forRequest:connection];
-            [self.photoDelegate photoSubmitter:self willStartUpload:imageHash];
+            [self setOperationDelegate:delegate forRequest:connection];
+            [self photoSubmitter:self willStartUpload:imageHash];
         }
 
     }
@@ -187,6 +186,13 @@
  * check is logined
  */
 - (BOOL)isLogined{
+    return self.isEnabled;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
     return [TwitterPhotoSubmitter isEnabled];
 }
 

@@ -96,12 +96,12 @@
 	}
     NSString *hash = [self photoForRequest:request];
 	if ([result objectForKey:@"owner"]) {
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
 	} else {
-        [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
+        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
 	}
     
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:request];
 };
@@ -111,8 +111,8 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSString *hash = [self photoForRequest:request];
-    [self.photoDelegate photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationForRequest:request];
+    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
     [operationDelegate photoSubmitterDidOperationFinished];
     [self clearRequest:request];
 };
@@ -123,7 +123,7 @@
 - (void)request:(FBRequest *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
     CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
     NSString *hash = [self photoForRequest:request];
-    [self.photoDelegate photoSubmitter:self didProgressChanged:hash progress:progress];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 @end
 
@@ -132,7 +132,6 @@
 //-----------------------------------------------------------------------------
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
-@synthesize photoDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -162,8 +161,8 @@
                            andDelegate:self];
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
-    [self setOperation:delegate forRequest:request];
-    [self.photoDelegate photoSubmitter:self willStartUpload:hash];
+    [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:hash];
 }
 
 /*!
@@ -202,7 +201,7 @@
  * check is logined
  */
 - (BOOL)isLogined{
-    if([FacebookPhotoSubmitter isEnabled] == false){
+    if(self.isEnabled == false){
         return NO;
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -210,6 +209,13 @@
         return YES;
     }
     return NO;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
+    return [FacebookPhotoSubmitter isEnabled];
 }
 
 /*!

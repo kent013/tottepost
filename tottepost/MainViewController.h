@@ -10,6 +10,7 @@
 #import "SettingTableViewController.h"
 #import "Facebook.h"
 #import "ProgressTableViewController.h"
+#import "ProgressSummaryView.h"
 
 /*!
  * Main view controller
@@ -24,6 +25,7 @@
     __strong UIButton *settingButton_;
     __strong UIToolbar *toolbar_;
     __strong UIBarButtonItem *flexSpace_;
+    __strong ProgressSummaryView *progressSummaryView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
 }

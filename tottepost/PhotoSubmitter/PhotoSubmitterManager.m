@@ -119,7 +119,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
 - (void)setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)delegate{
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
-        submitter.photoDelegate = delegate;
+        [submitter addPhotoDelegate: delegate];
     }
 }
 
@@ -144,6 +144,27 @@ static PhotoSubmitterManager* TottePostPhotoSubmitter;
         }
     }
     return NO; 
+}
+
+/*!
+ * get uploadOperationCount
+ */
+- (int)uploadOperationCount{
+    return operationQueue_.operationCount;
+}
+
+/*!
+ * get number of enabled Submitters
+ */
+- (int)enabledSubmitterCount{
+    int i = 0;
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        if(submitter.isEnabled){
+            i++;
+        }
+    }
+    return i;
 }
 
 #pragma mark -
