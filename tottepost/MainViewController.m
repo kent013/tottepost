@@ -43,6 +43,8 @@
 @end
 
 @implementation MainViewController(PrivateImplementation)
+#pragma mark -
+#pragma mark private methods
 /*!
  * Initialize view controller
  */
@@ -120,6 +122,8 @@
     [self presentModalViewController:settingNavigationController_ animated:YES];
 }
 
+#pragma mark -
+#pragma mark coordinates
 /*!
  * did rotate
  */
@@ -279,13 +283,13 @@
     NSMutableArray *items = [NSMutableArray arrayWithArray: toolbar_.items];
     if(toButton == cameraButton_){
         int index = [items indexOfObject:postButton_];
-        flexSpace_.width += 30;
+        flexSpace_.width += MAINVIEW_CAMERA_BUTTON_WIDTH;
         [items removeObject:postButton_];
         [items removeObject:postCancelButton_];
         [items insertObject:toButton atIndex:index];
     }else{
         int index = [items indexOfObject:cameraButton_];
-        flexSpace_.width -= 30;
+        flexSpace_.width -= MAINVIEW_CAMERA_BUTTON_WIDTH;
         [items removeObject:cameraButton_];
         [items insertObject:postCancelButton_ atIndex:index];
         [items insertObject:toButton atIndex:index];
@@ -331,6 +335,8 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation MainViewController
+#pragma mark -
+#pragma mark public methods
 /*!
  * initializer
  */
@@ -366,6 +372,8 @@
     [self updateCoordinates];
 }
 
+#pragma mark -
+#pragma mark Image Picker delegate
 /*! 
  * take photo
  */
@@ -381,6 +389,8 @@
     }
 }
 
+#pragma mark -
+#pragma mark PhotoSubmitter delegate
 /*!
  * photo upload start
  */
@@ -411,6 +421,8 @@
                                                  forHash:imageHash progress:progress];
 }
 
+#pragma mark -
+#pragma mark SettingView delegate
 /*!
  * did dismiss setting view
  */
@@ -426,6 +438,8 @@
     [self updateCoordinates];
 }
 
+#pragma mark -
+#pragma mark UIView delegate
 /*!
  * auto rotation
  */
