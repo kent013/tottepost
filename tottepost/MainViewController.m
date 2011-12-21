@@ -6,9 +6,11 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
 #import "Reachability.h"
 #import "UIImage+AutoRotation.h"
+#import "TottePostSettings.h"
 
 #define MAINVIEW_STATUS_BAR_HEIGHT 20.0
 #define MAINVIEW_SETTING_BUTTON_PADDING 10.0
@@ -20,15 +22,21 @@
 #define MAINVIEW_PROGRESS_PADDING_X 10.0
 #define MAINVIEW_PROGRESS_PADDING_Y 50.0
 #define MAINVIEW_PADDING_Y 10.0
+#define MAINVIEW_COMMENT_VIEW_WIDTH 200.0
+#define MAINVIEW_COMMENT_VIEW_HEIGHT 80
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface MainViewController(PrivateImplementation)
-- (void) setupInitialState: (CGRect) aFrame;
-- (void) didSettingButtonTapped: (id) sender;
+- (void) setupInitialState: (CGRect)aFrame;
+- (void) didSettingButtonTapped: (id)sender;
+- (void) didPostButtonTapped: (id)sender;
 - (void) updateCoordinates;
 - (BOOL) checkForConnection;
+- (void) previewPhoto:(UIImage *)photo;
+- (void) postPhoto:(UIImage *)photo comment:(NSString *)comment;
+- (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -52,6 +60,19 @@
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     settingViewController_.delegate = self;
     
+    //preview image view
+    previewImageView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
+    
+    //comment text view
+    commentTextView_ = [[UITextView alloc] initWithFrame:CGRectZero];
+    commentTextView_.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.6];
+    [commentTextView_.layer setCornerRadius:5.0];
+    [commentTextView_ setClipsToBounds:YES];
+    
+    [commentTextView_.layer setBorderColor:[[UIColor colorWithWhite:0.8 alpha:0.8] CGColor]];
+    [commentTextView_.layer setBorderWidth:1.0];
+    
+    
     //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
     
@@ -69,6 +90,8 @@
     //setting button
     settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
     
+    //post button
+    postButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
     
     //spacer for centalize camera button 
     flexSpace_ = [[UIBarButtonItem alloc]
@@ -90,6 +113,16 @@
 - (void) didSettingButtonTapped:(id)sender{
     [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
+}
+
+/*!
+ * on post button tapped
+ */
+- (void) didPostButtonTapped:(id)sender{
+    [self postPhoto:previewImageView_.image comment:commentTextView_.text];
+    [previewImageView_ removeFromSuperview];
+    [commentTextView_ removeFromSuperview];
+    [self changeCenterButtonTo:cameraButton_];
 }
 
 /*!
@@ -133,10 +166,12 @@
         frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
     }
     
+    previewImageView_.frame = frame;
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2))];
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
-
+    
+    commentTextView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH) / 2, toolbar_.frame.origin.y - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH, MAINVIEW_COMMENT_VIEW_HEIGHT);
     CGRect ptframe = progressTableViewController_.view.frame;
     [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
 
@@ -178,6 +213,45 @@
     imagePicker_.showsCameraControls = NO;
     cameraButton_.enabled = NO;
     [imagePicker_ takePicture];
+}
+
+/*!
+ * preview photo
+ */
+- (void)previewPhoto:(UIImage *)photo{
+    previewImageView_.image = photo;
+    [self.view addSubview:previewImageView_];
+    [self.view addSubview:commentTextView_];
+    [self.view bringSubviewToFront:toolbar_];
+
+    [self changeCenterButtonTo:postButton_];
+}
+
+/*!
+ * toggle camera button <-> post button
+ */
+- (void)changeCenterButtonTo:(UIBarButtonItem *)toButton{
+    UIBarButtonItem *fromButton = cameraButton_;
+    if(toButton == cameraButton_){
+        fromButton = postButton_;
+    }
+    NSMutableArray *items = [NSMutableArray arrayWithArray: toolbar_.items];
+    int index = [items indexOfObject: fromButton];
+    [items removeObjectAtIndex:index];
+    [items insertObject:toButton atIndex:index];
+    [toolbar_ setItems: items animated:YES];    
+}
+
+/*!
+ * post photo
+ */
+- (void)postPhoto:(UIImage *)photo comment:(NSString *)comment{
+    if([self checkForConnection]){
+        [[PhotoSubmitterManager getInstance] submitPhoto:photo.UIImageAutoRotated];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 @end
 
@@ -227,12 +301,11 @@
     cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    if([self checkForConnection]){
-        [[PhotoSubmitterManager getInstance] submitPhoto:image.UIImageAutoRotated];
+    image = image.UIImageAutoRotated;
+    if([TottePostSettings getInstance].immediatePostEnabled){
+        [self postPhoto:image comment:nil];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        [self previewPhoto:image];
     }
 }
 

@@ -18,7 +18,6 @@
 
 @implementation ProgressTableViewCell(PrivateImplementation)
 - (void)setupInitialState:(id<PhotoSubmitterProtocol>)submitter andSize:(CGSize)size{
-    
     [self.layer setCornerRadius:5.0];
     [self setClipsToBounds:YES];
     

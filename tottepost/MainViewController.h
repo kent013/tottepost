@@ -22,10 +22,13 @@
     __strong UINavigationController *settingNavigationController_;
     __strong UIImagePickerController* imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
+    __strong UIBarButtonItem* postButton_;
     __strong UIToolbar *toolbar_;
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
     __strong ProgressSummaryView *progressSummaryView_;
+    __strong UIImageView *previewImageView_;
+    __strong UITextView *commentTextView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
 }
