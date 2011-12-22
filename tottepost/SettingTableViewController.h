@@ -10,6 +10,7 @@
 #import "FacebookSettingTableViewController.h"
 #import "TwitterSettingTableViewController.h"
 #import "FlickrSettingTableViewController.h"
+#import "DropboxSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
 
 @protocol SettingTableViewControllerDelegate;
@@ -22,6 +23,7 @@
     __strong FacebookSettingTableViewController *facebookSettingViewController_;
     __strong TwitterSettingTableViewController *twitterSettingViewController_;
     __strong FlickrSettingTableViewController *flickrSettingViewController_;
+    __strong DropboxSettingTableViewController *dropboxSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;
 }

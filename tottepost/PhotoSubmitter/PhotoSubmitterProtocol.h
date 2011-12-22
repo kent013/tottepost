@@ -14,7 +14,8 @@
 typedef enum {
     PhotoSubmitterTypeFacebook,
     PhotoSubmitterTypeTwitter,
-    PhotoSubmitterTypeFlickr
+    PhotoSubmitterTypeFlickr,
+    PhotoSubmitterTypeDropbox
 } PhotoSubmitterType;
 
 @protocol PhotoSubmitterAuthenticationDelegate;

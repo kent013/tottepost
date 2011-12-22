@@ -17,6 +17,7 @@
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
+#define SV_ACCOUNTS_DROPBOX 3
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -47,6 +48,7 @@
     facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
     twitterSettingViewController_ = [[TwitterSettingTableViewController alloc] init];
     flickrSettingViewController_ = [[FlickrSettingTableViewController alloc] init];
+    dropboxSettingViewController_ = [[DropboxSettingTableViewController alloc] init];
     
     [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
 }
@@ -68,7 +70,7 @@
 {
     switch (section) {
         case SV_SECTION_GENERAL: return 1;
-        case SV_SECTION_ACCOUNTS: return 3;
+        case SV_SECTION_ACCOUNTS: return 4;
     }
     return 0;
 }
@@ -168,6 +170,11 @@
             case SV_ACCOUNTS_FLICKR: 
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr].isEnabled){
                     [self.navigationController pushViewController:flickrSettingViewController_ animated:YES]; 
+                }
+                break;
+            case SV_ACCOUNTS_DROPBOX: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox].isEnabled){
+                    [self.navigationController pushViewController:dropboxSettingViewController_ animated:YES]; 
                 }
                 break;
         }

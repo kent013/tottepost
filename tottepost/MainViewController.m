@@ -326,7 +326,7 @@
  * photo upload start
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    //NSLog(@"%@ upload started", imageHash);
+    NSLog(@"%@ upload started", imageHash);
     [progressTableViewController_ addProgressWithType:photoSubmitter.type
                                               forHash:imageHash];
 }
@@ -335,7 +335,7 @@
  * photo submitted
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
-    //NSLog(@"%@ submitted.", imageHash);
+    NSLog(@"%@ submitted.", imageHash);
     dispatch_async(dispatch_get_main_queue(), ^{
     [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                  forHash:imageHash];
@@ -346,7 +346,7 @@
  * photo upload progress changed
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
-    //NSLog(@"%@, %f", imageHash, progress);
+    NSLog(@"%@, %f", imageHash, progress);
     
     [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
                                                  forHash:imageHash progress:progress];

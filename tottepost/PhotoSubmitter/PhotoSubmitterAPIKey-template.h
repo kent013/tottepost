@@ -16,3 +16,10 @@
  */
 #define PHOTO_SUBMITTER_FLICKR_API_KEY    @""
 #define PHOTO_SUBMITTER_FLICKR_API_SECRET @""
+
+
+/*!
+ * api key and secret for dropbox
+ */
+#define PHOTO_SUBMITTER_DROPBOX_API_KEY    @""
+#define PHOTO_SUBMITTER_DROPBOX_API_SECRET @""

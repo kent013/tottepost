@@ -12,8 +12,6 @@
 #import "PhotoSubmitterProtocol.h"
 #import "PhotoSubmitter.h"
 
-@protocol FacebookPhotoSubmitterDelegate;
-
 /*!
  * photo submitter for facebook.
  * get instance with using 
@@ -24,5 +22,4 @@
 @interface FacebookPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
     __strong Facebook *facebook_;
 }
-@property (nonatomic, readonly) PhotoSubmitterType type;
 @end

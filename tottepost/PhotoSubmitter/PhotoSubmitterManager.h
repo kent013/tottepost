@@ -11,6 +11,7 @@
 #import "FacebookPhotoSubmitter.h"
 #import "FlickrPhotoSubmitter.h"
 #import "TwitterPhotoSubmitter.h"
+#import "DropboxPhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
 
 /*!
