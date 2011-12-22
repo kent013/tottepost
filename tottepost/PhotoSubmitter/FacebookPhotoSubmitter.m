@@ -14,6 +14,7 @@
 #define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
 #define PS_FACEBOOK_AUTH_TOKEN @"FBAccessTokenKey"
 #define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"FBExpirationDateKey"
+#define PS_FACEBOOK_SETTING_USERNAME @"FBUsername"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -21,6 +22,7 @@
 @interface FacebookPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) getUserInfomation;
 @end
 
 @implementation FacebookPhotoSubmitter(PrivateImplementation)
@@ -31,11 +33,10 @@
  */
 -(void)setupInitialState{
     facebook_ = [[Facebook alloc] initWithAppId:PHOTO_SUBMITTER_FACEBOOK_API_ID andDelegate:self];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN] 
-        && [defaults objectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE]) {
-        facebook_.accessToken = [defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN];
-        facebook_.expirationDate = [defaults objectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
+    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN] 
+        && [self settingExistsForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE]) {
+        facebook_.accessToken = [self settingForKey:PS_FACEBOOK_AUTH_TOKEN];
+        facebook_.expirationDate = [self settingForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
     }
 }
 
@@ -43,12 +44,18 @@
  * clear facebook access token key
  */
 - (void)clearCredentials{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN]) {
-        [defaults removeObjectForKey:PS_FACEBOOK_AUTH_TOKEN];
-        [defaults removeObjectForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-        [defaults synchronize];
+    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
+        [self removeSettingForKey:PS_FACEBOOK_AUTH_TOKEN];
+        [self removeSettingForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
     } 
+    [self disable];
+}
+
+/*!
+ * get user information
+ */
+- (void)getUserInfomation{
+    [facebook_ requestWithGraphPath:@"me" andDelegate:self];
 }
 
 #pragma mark -
@@ -57,12 +64,12 @@
  * facebook delegate, did login suceeded
  */
 - (void)fbDidLogin {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
-    [defaults setObject:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-    [defaults setObject:@"enabled" forKey:PS_FACEBOOK_ENABLED];
-    [defaults synchronize];
+    [self setSetting:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
+    [self setSetting:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
+    [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
     [self.authDelegate photoSubmitter:self didLogin:self.type];
+    
+    [self getUserInfomation];
 }
 
 /*!
@@ -94,16 +101,21 @@
 	if ([result isKindOfClass:[NSArray class]]) {
 		result = [result objectAtIndex:0];
 	}
-    NSString *hash = [self photoForRequest:request];
-	if ([result objectForKey:@"owner"]) {
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-	} else {
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
-	}
+    if([request.url isMatchedByRegex:@"me$"]){
+        self.username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];
+        NSLog(@"%@", self.username);
+    }else if([request.url isMatchedByRegex:@"photos$"]){
+        NSString *hash = [self photoForRequest:request];
+        if ([result objectForKey:@"owner"]) {
+            [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        } else {
+            [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
+        }
     
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationFinished];
-    [self clearRequest:request];
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+        [operationDelegate photoSubmitterDidOperationFinished];
+        [self clearRequest:request];
+    }
 };
 
 /*!
@@ -133,7 +145,7 @@
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
 #pragma mark -
-#pragma mark public implementations
+#pragma mark public PhotoSubmitter Protocol implementations
 /*!
  * initialize
  */
@@ -151,14 +163,15 @@
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     NSMutableDictionary *params = 
       [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-       photo, @"picture", 
-       comment, @"caption",
+       photo, @"source", 
+       comment, @"name",
        nil];
-    FBRequest *request =
+    FBRequest *request = [facebook_ requestWithGraphPath:@"me/photos" andParams:params andHttpMethod:@"POST" andDelegate:self];
+    /*FBRequest *request =
       [facebook_ requestWithMethodName:@"photos.upload"
                              andParams:params
                          andHttpMethod:@"POST"
-                           andDelegate:self];
+                           andDelegate:self];*/
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
@@ -171,11 +184,10 @@
 -(void)login{
     if (![facebook_ isSessionValid]) {
         NSArray *permissions = 
-        [NSArray arrayWithObjects:@"publish_stream", @"offline_access", nil];
+        [NSArray arrayWithObjects:@"publish_stream", @"user_photos", @"offline_access", nil];
         [facebook_ authorize:permissions];
     }else{
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@"enabled" forKey:PS_FACEBOOK_ENABLED];
+        [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
     }
 }
@@ -192,8 +204,7 @@
  * disable
  */
 - (void)disable{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:PS_FACEBOOK_ENABLED];
+    [self removeSettingForKey:PS_FACEBOOK_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -204,8 +215,7 @@
     if(self.isEnabled == false){
         return NO;
     }
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FACEBOOK_AUTH_TOKEN]) {
+    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
         return YES;
     }
     return NO;
@@ -229,7 +239,7 @@
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+://authorize/"]){
+    if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+"]){
         return YES;
     }
     return NO;
@@ -264,6 +274,21 @@
 }
 
 /*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_FACEBOOK_SETTING_USERNAME];
+}
+
+/*!
+ * save username
+ */
+- (void)setUsername:(NSString *)username{
+    [self setSetting:username forKey:PS_FACEBOOK_SETTING_USERNAME];
+}
+
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{
@@ -273,4 +298,7 @@
     }
     return NO;
 }
+
+#pragma mark -
+#pragma mark Facebook information methods
 @end

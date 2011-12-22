@@ -33,8 +33,7 @@
  * clear defaults, on twitter we will not store access token.
  */
 - (void)clearCredentials{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:PS_TWITTER_ENABLED];
+    [self removeSettingForKey:PS_TWITTER_ENABLED];
 }
 
 #pragma mark -
@@ -138,8 +137,7 @@
         if(granted) {
             NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
 			if ([accountsArray count] > 0){
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:@"enabled" forKey:PS_TWITTER_ENABLED];                
+                [self setSetting:@"enabled" forKey:PS_TWITTER_ENABLED];                
                 [self.authDelegate photoSubmitter:self didLogin:self.type];
             }else{
                 UIAlertView* alert = 
@@ -171,14 +169,14 @@
  */
 - (void)logout{  
     [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
  * disable
  */
 - (void)disable{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:PS_TWITTER_ENABLED];
+    [self removeSettingForKey:PS_TWITTER_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -236,6 +234,28 @@
  */
 - (UIImage *)smallIcon{
     return [UIImage imageNamed:@"twitter_16.png"];
+}
+
+/*!
+ * get username
+ */
+- (NSString *)username{
+	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+	
+    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+    if ([accountsArray count] > 0) {
+        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+        return twitterAccount.username;
+    }
+    return nil;
+}
+
+/*!
+ * save username
+ */
+- (void)setUsername:(NSString *)username{
+    // do nothing
 }
 
 /*!

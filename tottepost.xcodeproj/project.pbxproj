@@ -31,11 +31,13 @@
 		37F3BE66149DCFE3001A0CF7 /* facebook_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE63149DCFE3001A0CF7 /* facebook_16.png */; };
 		37F3BE67149DCFE3001A0CF7 /* flickr_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE64149DCFE3001A0CF7 /* flickr_16.png */; };
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
+		37F589E014A313E0005C7700 /* TwitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */; };
+		37F589E314A313F8005C7700 /* FlickrSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */; };
 		37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7431C149D892E002EEADD /* UploadProgressEntity.m */; };
 		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
-		37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingViewController.m */; };
+		37FB64E91496384800387490 /* FacebookSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingTableViewController.m */; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
@@ -130,6 +132,10 @@
 		37F3BE63149DCFE3001A0CF7 /* facebook_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_16.png; path = PhotoSubmitter/Images/facebook_16.png; sourceTree = "<group>"; };
 		37F3BE64149DCFE3001A0CF7 /* flickr_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_16.png; path = PhotoSubmitter/Images/flickr_16.png; sourceTree = "<group>"; };
 		37F3BE65149DCFE3001A0CF7 /* twitter_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_16.png; path = PhotoSubmitter/Images/twitter_16.png; sourceTree = "<group>"; };
+		37F589DE14A313E0005C7700 /* TwitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TwitterSettingTableViewController.h; sourceTree = "<group>"; };
+		37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterSettingTableViewController.m; sourceTree = "<group>"; };
+		37F589E114A313F8005C7700 /* FlickrSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrSettingTableViewController.h; sourceTree = "<group>"; };
+		37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrSettingTableViewController.m; sourceTree = "<group>"; };
 		37F7431B149D892E002EEADD /* UploadProgressEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadProgressEntity.h; sourceTree = "<group>"; };
 		37F7431C149D892E002EEADD /* UploadProgressEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadProgressEntity.m; sourceTree = "<group>"; };
 		37FB64D51496237500387490 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
@@ -137,8 +143,8 @@
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
-		37FB64E71496384800387490 /* FacebookSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookSettingViewController.h; sourceTree = "<group>"; };
-		37FB64E81496384800387490 /* FacebookSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingViewController.m; sourceTree = "<group>"; };
+		37FB64E71496384800387490 /* FacebookSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = FacebookSettingTableViewController.h; sourceTree = "<group>"; };
+		37FB64E81496384800387490 /* FacebookSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingTableViewController.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65491497313500387490 /* PhotoSubmitterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterManager.h; path = PhotoSubmitter/PhotoSubmitterManager.h; sourceTree = "<group>"; };
@@ -248,10 +254,11 @@
 		3704D5B01494CD7E00380D30 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				37F589DB14A2F741005C7700 /* Facebook */,
+				37F589DD14A313B9005C7700 /* Twitter */,
+				37F589DC14A313A2005C7700 /* Flickr */,
 				37FB64D51496237500387490 /* SettingTableViewController.h */,
 				37FB64D61496237500387490 /* SettingTableViewController.m */,
-				37FB64E71496384800387490 /* FacebookSettingViewController.h */,
-				37FB64E81496384800387490 /* FacebookSettingViewController.m */,
 				376A8D5514A227F900637B68 /* TottePostSettings.h */,
 				376A8D5614A227F900637B68 /* TottePostSettings.m */,
 			);
@@ -373,6 +380,33 @@
 				37F26D0C149F8AA0000172EF /* Reachability.m */,
 			);
 			name = Reachability;
+			sourceTree = "<group>";
+		};
+		37F589DB14A2F741005C7700 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				37FB64E71496384800387490 /* FacebookSettingTableViewController.h */,
+				37FB64E81496384800387490 /* FacebookSettingTableViewController.m */,
+			);
+			name = Facebook;
+			sourceTree = "<group>";
+		};
+		37F589DC14A313A2005C7700 /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				37F589E114A313F8005C7700 /* FlickrSettingTableViewController.h */,
+				37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */,
+			);
+			name = Flickr;
+			sourceTree = "<group>";
+		};
+		37F589DD14A313B9005C7700 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				37F589DE14A313E0005C7700 /* TwitterSettingTableViewController.h */,
+				37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */,
+			);
+			name = Twitter;
 			sourceTree = "<group>";
 		};
 		37F7431E149DA2BB002EEADD /* Images */ = {
@@ -633,7 +667,7 @@
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
 				37FB64D71496237500387490 /* SettingTableViewController.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
-				37FB64E91496384800387490 /* FacebookSettingViewController.m in Sources */,
+				37FB64E91496384800387490 /* FacebookSettingTableViewController.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
 				37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */,
 				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
@@ -663,6 +697,8 @@
 				376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */,
 				376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */,
 				376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */,
+				37F589E014A313E0005C7700 /* TwitterSettingTableViewController.m in Sources */,
+				37F589E314A313F8005C7700 /* FlickrSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 
-@protocol FacebookSettingViewControllerDelegate;
-
-@interface FacebookSettingViewController : UIViewController{
+@interface FacebookSettingTableViewController : UITableViewController{
 }
 @end

@@ -44,6 +44,9 @@
     switches_ = [[NSMutableDictionary alloc] init];
     
     accountTypes_ = [PhotoSubmitterManager getInstance].supportedTypes;
+    facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
+    twitterSettingViewController_ = [[TwitterSettingTableViewController alloc] init];
+    flickrSettingViewController_ = [[FlickrSettingTableViewController alloc] init];
     
     [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
 }
@@ -152,7 +155,21 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == SV_SECTION_ACCOUNTS){
         switch (indexPath.row) {
-            case SV_ACCOUNTS_FACEBOOK: [self.navigationController pushViewController:facebookSettingViewController_ animated:YES]; break;
+            case SV_ACCOUNTS_FACEBOOK: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].isEnabled){
+                    [self.navigationController pushViewController:facebookSettingViewController_ animated:YES]; 
+                }
+                break;
+            case SV_ACCOUNTS_TWITTER: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeTwitter].isEnabled){
+                    [self.navigationController pushViewController:twitterSettingViewController_ animated:YES]; 
+                }
+                break;
+            case SV_ACCOUNTS_FLICKR: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr].isEnabled){
+                    [self.navigationController pushViewController:flickrSettingViewController_ animated:YES]; 
+                }
+                break;
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];

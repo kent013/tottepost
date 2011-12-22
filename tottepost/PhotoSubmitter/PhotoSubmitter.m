@@ -185,4 +185,36 @@
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     NSLog(@"Subclasses must implement this method, %@", __PRETTY_FUNCTION__);
 }
+
+/*!
+ * write setting to user defaults
+ */
+- (void)setSetting:(id)value forKey:(NSString *)key{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:value forKey:key];
+    [defaults synchronize];
+}
+
+/*!
+ * read setting from user defaults
+ */
+- (id)settingForKey:(NSString *)key{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults valueForKey:key];
+}
+
+/*!
+ * remove setting from user defaults
+ */
+- (void)removeSettingForKey:(NSString *)key{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:key];
+}
+
+/*!
+ * setting exists
+ */
+- (BOOL)settingExistsForKey:(NSString *)key{
+    return [self settingForKey:key] != nil;
+}
 @end

@@ -22,6 +22,7 @@
 #define PS_FLICKR_API_GET_TOKEN @"get_token"
 #define PS_FLICKR_API_UPLOAD_IMAGE @"upload_image"
 
+#define PS_FLICKR_SETTING_USERNAME @"FlickrUserName"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -40,9 +41,8 @@
 -(void)setupInitialState{
     flickr_ = [[OFFlickrAPIContext alloc] initWithAPIKey:PHOTO_SUBMITTER_FLICKR_API_KEY sharedSecret:PHOTO_SUBMITTER_FLICKR_API_SECRET];        
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *authToken = [defaults objectForKey:PS_FLICKR_AUTH_TOKEN];
-    NSString *authTokenSecret = [defaults objectForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
+    NSString *authToken = [self settingForKey:PS_FLICKR_AUTH_TOKEN];
+    NSString *authTokenSecret = [self settingForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
     
     if (([authToken length] > 0) && ([authTokenSecret length] > 0)) {
         flickr_.OAuthToken = authToken;
@@ -56,10 +56,9 @@
 - (void)clearCredentials{
     flickr_.OAuthToken = nil;
     flickr_.OAuthTokenSecret = nil;  
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN];
-    [defaults removeObjectForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
-    [defaults removeObjectForKey:PS_FLICKR_ENABLED];
+    [self removeSettingForKey:PS_FLICKR_AUTH_TOKEN];
+    [self removeSettingForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
+    [self removeSettingForKey:PS_FLICKR_ENABLED];
 }
 
 #pragma mark -
@@ -69,7 +68,7 @@
  */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary{
     if ([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_CHECK_TOKEN]) {
-		NSLog(@"%@", [inResponseDictionary valueForKeyPath:@"user.username._text"]);
+        self.username = [inResponseDictionary valueForKeyPath:@"user.username._text"];
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
@@ -121,10 +120,12 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didObtainOAuthAccessToken:(NSString *)inAccessToken secret:(NSString *)inSecret userFullName:(NSString *)inFullName userName:(NSString *)inUserName userNSID:(NSString *)inNSID{
     flickr_.OAuthToken = inAccessToken;
     flickr_.OAuthTokenSecret = inSecret;  
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:flickr_.OAuthToken forKey:PS_FLICKR_AUTH_TOKEN];
-    [defaults setObject:flickr_.OAuthTokenSecret forKey:PS_FLICKR_AUTH_TOKEN_SECRET];
-    [defaults setObject:@"enabled" forKey:PS_FLICKR_ENABLED];
+    [self setSetting:flickr_.OAuthToken forKey:PS_FLICKR_AUTH_TOKEN];
+    [self setSetting:flickr_.OAuthTokenSecret forKey:PS_FLICKR_AUTH_TOKEN_SECRET];
+    [self setSetting:@"enabled" forKey:PS_FLICKR_ENABLED];
+    
+    authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
+    [authRequest_ callAPIMethodWithGET:@"flickr.test.login" arguments:nil];
     
 }
 @end
@@ -170,9 +171,8 @@
  * login to flickr
  */
 -(void)login{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]){
-        [defaults setObject:@"enabled" forKey:PS_FLICKR_ENABLED];
+    if([self settingExistsForKey:PS_FLICKR_AUTH_TOKEN]){
+        [self setSetting:@"enabled" forKey:PS_FLICKR_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         return;
     }
@@ -187,14 +187,14 @@
  */
 - (void)logout{  
     [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
  * disable
  */
 - (void)disable{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:PS_FLICKR_ENABLED];
+    [self removeSettingForKey:PS_FLICKR_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -205,8 +205,7 @@
     if(self.isEnabled == false){
         return NO;
     }
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FLICKR_AUTH_TOKEN]) {
+    if ([self settingForKey:PS_FLICKR_AUTH_TOKEN]) {
         return YES;
     }
     return NO;
@@ -275,6 +274,20 @@
  */
 - (UIImage *)smallIcon{
     return [UIImage imageNamed:@"flickr_16.png"];
+}
+
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_FLICKR_SETTING_USERNAME];
+}
+
+/*!
+ * save username
+ */
+- (void)setUsername:(NSString *)username{
+    [self setSetting:username forKey:PS_FLICKR_SETTING_USERNAME];
 }
 
 /*!

@@ -59,4 +59,10 @@
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
 - (void) submitPhoto:(UIImage *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+
+//write setting methods
+- (void)setSetting:(id)value forKey:(NSString *)key;
+- (id)settingForKey:(NSString *)key;
+- (void) removeSettingForKey: (NSString *)key;
+- (BOOL) settingExistsForKey: (NSString *)key;
 @end
