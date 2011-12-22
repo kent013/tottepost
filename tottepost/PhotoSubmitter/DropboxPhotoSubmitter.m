@@ -30,6 +30,7 @@
 @interface DropboxPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) cleanupCache;
 @end
 
 @implementation DropboxPhotoSubmitter(PrivateImplementation)
@@ -43,6 +44,24 @@
     [[DBSession alloc] initWithAppKey:PHOTO_SUBMITTER_DROPBOX_API_KEY appSecret:PHOTO_SUBMITTER_DROPBOX_API_SECRET root:kDBRootAppFolder];
     dbSession.delegate = self;
     [DBSession setSharedSession:dbSession];
+    
+    [self cleanupCache];
+}
+
+/*!
+ * clean up cache
+ */
+- (void)cleanupCache{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
+    NSDirectoryEnumerator *enumerator = [manager enumeratorAtPath:dir];
+    NSString *file = nil;
+    while(file = [enumerator nextObject]){
+        if([[file pathExtension] isEqualToString:@"jpg"]){
+            NSString *fullpath = [dir stringByAppendingString:file];
+            [manager removeItemAtPath:fullpath error:nil];
+        }
+    }
 }
 
 /*!
@@ -64,18 +83,19 @@
     
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
     [operationDelegate photoSubmitterDidOperationFinished];
-    [self clearRequest:client];
+    
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
 
 /*!
  * Dropbox delegate, upload failed
  */
-- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error{
+- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:client];
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
     [operationDelegate photoSubmitterDidOperationFinished];
-    [self clearRequest:client];    
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
 
 /*!
@@ -117,7 +137,7 @@
     NSData *image = UIImageJPEGRepresentation(photo, 1.0);
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat  = @"yyyyMMddHHmmss";
+    df.dateFormat  = @"yyyyMMddHHmmssSSSS";
     NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:[NSDate date]]];
     NSString *path = [dir stringByAppendingString:filename];

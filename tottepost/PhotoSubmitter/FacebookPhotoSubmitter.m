@@ -190,7 +190,6 @@
     if(self.targetAlbum != nil){
         path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
     }
-    NSLog(@"path: %@", path);
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
