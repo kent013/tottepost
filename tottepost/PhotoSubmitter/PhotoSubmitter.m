@@ -202,6 +202,27 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults valueForKey:key];
 }
+/*!
+ * write complex setting to user defaults
+ */
+- (void)setComplexSetting:(id)value forKey:(NSString *)key{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+    [defaults setValue:data forKey:key];
+    [defaults synchronize];
+}
+
+/*!
+ * read complex setting from user defaults
+ */
+- (id)complexSettingForKey:(NSString *)key{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults valueForKey:key];
+    if(data == nil){
+        return nil;
+    }
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
 
 /*!
  * remove setting from user defaults

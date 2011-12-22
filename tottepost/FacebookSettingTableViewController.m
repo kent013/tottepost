@@ -8,9 +8,14 @@
 
 #import "FacebookSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
+#import "PhotoSubmitterAlbumEntity.h"
+#import "RegexKitLite.h"
+
 #define FSV_SECTION_ACCOUNT 0
+#define FSV_SECTION_ALBUMS 1
 #define FSV_ROW_ACCOUNT_NAME 0
 #define FSV_ROW_ACCOUNT_LOGOUT 1
+#define TOTTEPOST_DEFAULT_ALBUM_NAME @"tottepost"
 
 #define FSV_BUTTON_TYPE 102
 //-----------------------------------------------------------------------------
@@ -53,6 +58,14 @@
     return self;
 }
 
+/*!
+ * albums
+ */
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
+    [submitter updateAlbumListWithDelegate:self];
+}
 
 #pragma mark -
 #pragma mark tableview methods
@@ -71,6 +84,7 @@
 {
     switch (section) {
         case FSV_SECTION_ACCOUNT: return 2;
+        case FSV_SECTION_ALBUMS: return [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].albumList.count;
     }
     return 0;
 }
@@ -80,7 +94,8 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case FSV_SECTION_ACCOUNT : return @"Facebook Account"; break;
+        case FSV_SECTION_ACCOUNT: return @"Facebook Account"; break;
+        case FSV_SECTION_ALBUMS : return @"Album Selection"; break;
     }
     return nil;
 }
@@ -89,7 +104,10 @@
  * footer for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    return nil;    
+    switch (section){
+        case FSV_SECTION_ALBUMS: return @"Selected album will be target of tottepost.\n If you want to add albums, please do so on the facebook.";
+    }
+    return nil;
 }
 
 /*!
@@ -120,7 +138,12 @@
             [button addTarget:self action:@selector(didLogoutButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:button];
         }
-        
+    }else if(indexPath.section == FSV_SECTION_ALBUMS){
+        PhotoSubmitterAlbumEntity *album = [submitter.albumList objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
+        if([album.albumId isEqualToString: submitter.targetAlbum.albumId]){
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
     }
     return cell;
 }
@@ -130,6 +153,31 @@
  * on row selected
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == FSV_SECTION_ALBUMS){
+        id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        if(selectedAlbumIndex_ != indexPath.row){
+            cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedAlbumIndex_ inSection:FSV_SECTION_ALBUMS]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        submitter.targetAlbum = [submitter.albumList objectAtIndex:indexPath.row];
+        selectedAlbumIndex_ = indexPath.row;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterAlbumDelegate methods
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated:(NSMutableArray *)albums{
+    if(photoSubmitter.targetAlbum == nil){
+        for(PhotoSubmitterAlbumEntity *album in albums){
+            if([album.name isMatchedByRegex:TOTTEPOST_DEFAULT_ALBUM_NAME options:RKLCaseless inRange:NSMakeRange(0, album.name.length) error:nil]){
+                photoSubmitter.targetAlbum = album;
+                break;
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 @end

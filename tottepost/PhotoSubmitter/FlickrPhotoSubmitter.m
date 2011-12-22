@@ -68,7 +68,8 @@
  */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary{
     if ([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_CHECK_TOKEN]) {
-        self.username = [inResponseDictionary valueForKeyPath:@"user.username._text"];
+        NSString *username = [inResponseDictionary valueForKeyPath:@"user.username._text"];
+        [self setSetting:username forKey:PS_FLICKR_SETTING_USERNAME];
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
@@ -134,8 +135,8 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation FlickrPhotoSubmitter
-@synthesize flickr = flickr_;
 @synthesize authDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -284,10 +285,31 @@
 }
 
 /*!
- * save username
+ * albumlist
  */
-- (void)setUsername:(NSString *)username{
-    [self setSetting:username forKey:PS_FLICKR_SETTING_USERNAME];
+- (NSArray *)albumList{
+    return nil;
+}
+
+/*!
+ * update album list
+ */
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing
+}
+
+/*!
+ * selected album
+ */
+- (PhotoSubmitterAlbumEntity *)targetAlbum{
+    return nil;
+}
+
+/*!
+ * save selected album
+ */
+- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    //do nothing
 }
 
 /*!

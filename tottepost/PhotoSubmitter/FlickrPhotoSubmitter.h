@@ -22,6 +22,5 @@
     __strong OFFlickrAPIContext *flickr_;
     __strong OFFlickrAPIRequest *authRequest_;
 }
-@property (nonatomic, readonly) OFFlickrAPIContext* flickr;
 @property (nonatomic, readonly) PhotoSubmitterType type;
 @end

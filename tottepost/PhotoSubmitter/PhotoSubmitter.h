@@ -65,4 +65,6 @@
 - (id)settingForKey:(NSString *)key;
 - (void) removeSettingForKey: (NSString *)key;
 - (BOOL) settingExistsForKey: (NSString *)key;
+- (void)setComplexSetting:(id)value forKey:(NSString *)key;
+- (id)complexSettingForKey:(NSString *)key;
 @end

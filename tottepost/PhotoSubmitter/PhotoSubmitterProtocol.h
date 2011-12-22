@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PhotoSubmitterAlbumEntity.h"
 /*!
  * Submitter Types
  */
@@ -19,6 +20,7 @@ typedef enum {
 @protocol PhotoSubmitterAuthenticationDelegate;
 @protocol PhotoSubmitterPhotoDelegate;
 @protocol PhotoSubmitterOperationDelegate;
+@protocol PhotoSubmitterAlbumDelegate;
 
 /*!
  * protocol for submitter
@@ -31,8 +33,11 @@ typedef enum {
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) UIImage *icon;
 @property (nonatomic, readonly) UIImage *smallIcon;
-@property (nonatomic, assign) NSString *username;
+@property (nonatomic, readonly) NSString *username;
+@property (nonatomic, readonly) NSArray *albumList;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
+@property (nonatomic, assign) id<PhotoSubmitterAlbumDelegate> albumDelegate;
+@property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;
 - (void) login;
 - (void) logout;
 - (void) disable;
@@ -44,6 +49,9 @@ typedef enum {
 - (BOOL) didOpenURL:(NSURL *)url;
 - (void) addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate;
 - (void) removePhotoDelegate: (id<PhotoSubmitterPhotoDelegate>)photoDelegate;
+
+- (void) updateAlbumListWithDelegate: (id<PhotoSubmitterAlbumDelegate>) delegate;
+
 + (BOOL) isEnabled;
 @end
 
@@ -71,4 +79,11 @@ typedef enum {
  */
 @protocol PhotoSubmitterOperationDelegate <NSObject>
 - (void) photoSubmitterDidOperationFinished;
+@end
+
+/*!
+ * protocol for album
+ */
+@protocol PhotoSubmitterAlbumDelegate <NSObject>
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated: (NSMutableArray *)albums;
 @end

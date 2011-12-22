@@ -25,6 +25,4 @@
     __strong Facebook *facebook_;
 }
 @property (nonatomic, readonly) PhotoSubmitterType type;
-@property (nonatomic, assign) NSString* albumName;
-@property (nonatomic, assign) int albumId;
 @end

@@ -10,11 +10,14 @@
 #import "FacebookPhotoSubmitter.h"
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
+#import "PhotoSubmitterAlbumEntity.h"
 
 #define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
 #define PS_FACEBOOK_AUTH_TOKEN @"FBAccessTokenKey"
 #define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"FBExpirationDateKey"
 #define PS_FACEBOOK_SETTING_USERNAME @"FBUsername"
+#define PS_FACEBOOK_SETTING_ALBUMS @"FBAlbums"
+#define PS_FACEBOOK_SETTING_TARGET_ALBUM @"FBTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -47,6 +50,9 @@
     if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
         [self removeSettingForKey:PS_FACEBOOK_AUTH_TOKEN];
         [self removeSettingForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
+        [self removeSettingForKey:PS_FACEBOOK_SETTING_USERNAME];
+        [self removeSettingForKey:PS_FACEBOOK_SETTING_ALBUMS];
+        [self removeSettingForKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
     } 
     [self disable];
 }
@@ -98,13 +104,16 @@
  * facebook request delegate, did load
  */
 - (void)request:(FBRequest *)request didLoad:(id)result {
-	if ([result isKindOfClass:[NSArray class]]) {
-		result = [result objectAtIndex:0];
-	}
     if([request.url isMatchedByRegex:@"me$"]){
-        self.username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];
-        NSLog(@"%@", self.username);
+        if ([result isKindOfClass:[NSArray class]]) {
+            result = [result objectAtIndex:0];
+        }
+        NSString *username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];        
+        [self setSetting:username forKey:PS_FACEBOOK_SETTING_USERNAME];
     }else if([request.url isMatchedByRegex:@"photos$"]){
+        if ([result isKindOfClass:[NSArray class]]) {
+            result = [result objectAtIndex:0];
+        }
         NSString *hash = [self photoForRequest:request];
         if ([result objectForKey:@"owner"]) {
             [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
@@ -115,6 +124,16 @@
         id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
         [operationDelegate photoSubmitterDidOperationFinished];
         [self clearRequest:request];
+    }else if([request.url isMatchedByRegex:@"albums$"]){
+        NSArray *as = [result objectForKey:@"data"];
+        NSMutableArray *albums = [[NSMutableArray alloc] init];
+        for(NSDictionary *a in as){
+            PhotoSubmitterAlbumEntity *album = 
+            [[PhotoSubmitterAlbumEntity alloc] initWithId:[a objectForKey:@"id"] name:[a objectForKey:@"name"] privacy:[a objectForKey:@"privacy"]];
+            [albums addObject:album];
+        }
+        [self setComplexSetting:albums forKey:PS_FACEBOOK_SETTING_ALBUMS];
+        [self.albumDelegate photoSubmitter:self didAlbumUpdated:albums];
     }
 };
 
@@ -144,6 +163,7 @@
 //-----------------------------------------------------------------------------
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public PhotoSubmitter Protocol implementations
 /*!
@@ -166,12 +186,12 @@
        photo, @"source", 
        comment, @"name",
        nil];
-    FBRequest *request = [facebook_ requestWithGraphPath:@"me/photos" andParams:params andHttpMethod:@"POST" andDelegate:self];
-    /*FBRequest *request =
-      [facebook_ requestWithMethodName:@"photos.upload"
-                             andParams:params
-                         andHttpMethod:@"POST"
-                           andDelegate:self];*/
+    NSString *path = @"me/photos";
+    if(self.targetAlbum != nil){
+        path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
+    }
+    NSLog(@"path: %@", path);
+    FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
@@ -281,12 +301,33 @@
 }
 
 /*!
- * save username
+ * album list
  */
-- (void)setUsername:(NSString *)username{
-    [self setSetting:username forKey:PS_FACEBOOK_SETTING_USERNAME];
+- (NSArray *)albumList{
+    return [self complexSettingForKey:PS_FACEBOOK_SETTING_ALBUMS];
 }
 
+/*!
+ * update album list
+ */
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    self.albumDelegate = delegate;
+    [facebook_ requestWithGraphPath:@"me/albums" andDelegate:self];
+}
+
+/*!
+ * selected album
+ */
+- (PhotoSubmitterAlbumEntity *)targetAlbum{
+    return [self complexSettingForKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
+}
+
+/*!
+ * save selected album
+ */
+- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    [self setComplexSetting:targetAlbum forKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
+}
 
 /*!
  * isEnabled

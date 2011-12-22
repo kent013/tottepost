@@ -77,6 +77,7 @@
 //-----------------------------------------------------------------------------
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -252,10 +253,31 @@
 }
 
 /*!
- * save username
+ * albumlist
  */
-- (void)setUsername:(NSString *)username{
-    // do nothing
+- (NSArray *)albumList{
+    return nil;
+}
+
+/*!
+ * update album list
+ */
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing
+}
+
+/*!
+ * selected album
+ */
+- (PhotoSubmitterAlbumEntity *)targetAlbum{
+    return nil;
+}
+
+/*!
+ * save selected album
+ */
+- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    //do nothing
 }
 
 /*!
