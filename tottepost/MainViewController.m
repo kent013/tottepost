@@ -197,7 +197,7 @@
  */
 - (void)postPhoto:(UIImage *)photo comment:(NSString *)comment{
     if([self checkForConnection]){
-        [[PhotoSubmitterManager getInstance] submitPhoto:photo.UIImageAutoRotated];
+        [[PhotoSubmitterManager getInstance] submitPhoto:photo.UIImageAutoRotated comment:comment];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];

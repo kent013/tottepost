@@ -103,7 +103,7 @@
 		376A8D5314A2068B00637B68 /* ProgressSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSummaryView.m; sourceTree = "<group>"; };
 		376A8D5514A227F900637B68 /* TottePostSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TottePostSettings.h; sourceTree = "<group>"; };
 		376A8D5614A227F900637B68 /* TottePostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TottePostSettings.m; sourceTree = "<group>"; };
-		376A8D5B14A247A200637B68 /* PreviewPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PreviewPhotoView.h; sourceTree = "<group>"; };
+		376A8D5B14A247A200637B68 /* PreviewPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewPhotoView.h; sourceTree = "<group>"; };
 		376A8D5C14A247A300637B68 /* PreviewPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewPhotoView.m; sourceTree = "<group>"; };
 		376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerConstants.h; sourceTree = "<group>"; };
 		376E15381494C47800A34E7D /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,12 +235,12 @@
 				37FB65621497AAD300387490 /* ProgressTableViewController.m */,
 				376A8B3214A05BB100637B68 /* ProgressTableViewCell.h */,
 				376A8B3314A05BB100637B68 /* ProgressTableViewCell.m */,
-				37F7431B149D892E002EEADD /* UploadProgressEntity.h */,
-				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
 				376A8D5214A2068A00637B68 /* ProgressSummaryView.h */,
 				376A8D5314A2068B00637B68 /* ProgressSummaryView.m */,
 				376A8D5B14A247A200637B68 /* PreviewPhotoView.h */,
 				376A8D5C14A247A300637B68 /* PreviewPhotoView.m */,
+				37F7431B149D892E002EEADD /* UploadProgressEntity.h */,
+				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
