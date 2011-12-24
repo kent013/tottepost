@@ -15,7 +15,8 @@ typedef enum {
     PhotoSubmitterTypeFacebook,
     PhotoSubmitterTypeTwitter,
     PhotoSubmitterTypeFlickr,
-    PhotoSubmitterTypeDropbox
+    PhotoSubmitterTypeDropbox,
+    PhotoSubmitterTypeFile,
 } PhotoSubmitterType;
 
 @protocol PhotoSubmitterAuthenticationDelegate;
@@ -36,6 +37,7 @@ typedef enum {
 @property (nonatomic, readonly) UIImage *smallIcon;
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSArray *albumList;
+@property (nonatomic, readonly) BOOL isConcurrent;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterAlbumDelegate> albumDelegate;
 @property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;

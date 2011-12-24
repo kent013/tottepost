@@ -26,7 +26,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
                        [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
                        [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
                        [NSNumber numberWithInt: PhotoSubmitterTypeFlickr],
-                       [NSNumber numberWithInt: PhotoSubmitterTypeDropbox], nil];
+                       [NSNumber numberWithInt: PhotoSubmitterTypeDropbox],
+                       [NSNumber numberWithInt: PhotoSubmitterTypeFile], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
@@ -73,6 +74,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             break;
         case PhotoSubmitterTypeDropbox:
             submitter = [[DropboxPhotoSubmitter alloc] init];
+            break;
+        case PhotoSubmitterTypeFile:
+            submitter = [[FilePhotoSubmitter alloc] init];
             break;
         default:
             break;

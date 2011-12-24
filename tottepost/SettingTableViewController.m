@@ -18,6 +18,7 @@
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
 #define SV_ACCOUNTS_DROPBOX 3
+#define SV_ACCOUNTS_FILE 4
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -70,7 +71,7 @@
 {
     switch (section) {
         case SV_SECTION_GENERAL: return 1;
-        case SV_SECTION_ACCOUNTS: return 4;
+        case SV_SECTION_ACCOUNTS: return 5;
     }
     return 0;
 }

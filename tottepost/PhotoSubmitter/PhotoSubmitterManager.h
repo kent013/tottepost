@@ -13,6 +13,7 @@
 #import "TwitterPhotoSubmitter.h"
 #import "DropboxPhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
+#import "FilePhotoSubmitter.h"
 
 /*!
  * photo submitter aggregation class

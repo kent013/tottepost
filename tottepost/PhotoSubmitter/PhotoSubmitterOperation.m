@@ -21,7 +21,7 @@
  * is concurrent
  */
 - (BOOL)isConcurrent {
-    return YES;
+    return self.submitter.isConcurrent;
 }
 
 /*!
@@ -51,7 +51,13 @@
 /*!
  * start operation
  */
-- (void)start{    
+- (void)start{        
+    if (self.submitter.isConcurrent == NO && [NSThread isMainThread] == NO)
+    {
+        [self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
+        return;
+    }
+
     [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
     [self.submitter submitPhoto:self.photo comment:self.comment andDelegate:self];
     do {

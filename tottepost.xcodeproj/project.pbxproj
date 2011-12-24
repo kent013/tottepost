@@ -32,6 +32,7 @@
 		37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */; };
 		37F26D0D149F8AA1000172EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D0C149F8AA0000172EF /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37F26D0F149F8C27000172EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F26D0E149F8C27000172EF /* SystemConfiguration.framework */; };
+		37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */; };
 		37F3BE66149DCFE3001A0CF7 /* facebook_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE63149DCFE3001A0CF7 /* facebook_16.png */; };
 		37F3BE67149DCFE3001A0CF7 /* flickr_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE64149DCFE3001A0CF7 /* flickr_16.png */; };
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
@@ -149,6 +150,8 @@
 		37F26D0B149F8AA0000172EF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Libraries/Reachability/Reachability.h; sourceTree = "<group>"; };
 		37F26D0C149F8AA0000172EF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Libraries/Reachability/Reachability.m; sourceTree = "<group>"; };
 		37F26D0E149F8C27000172EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilePhotoSubmitter.h; path = PhotoSubmitter/FilePhotoSubmitter.h; sourceTree = "<group>"; };
+		37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilePhotoSubmitter.m; path = PhotoSubmitter/FilePhotoSubmitter.m; sourceTree = "<group>"; };
 		37F3BE63149DCFE3001A0CF7 /* facebook_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_16.png; path = PhotoSubmitter/Images/facebook_16.png; sourceTree = "<group>"; };
 		37F3BE64149DCFE3001A0CF7 /* flickr_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_16.png; path = PhotoSubmitter/Images/flickr_16.png; sourceTree = "<group>"; };
 		37F3BE65149DCFE3001A0CF7 /* twitter_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_16.png; path = PhotoSubmitter/Images/twitter_16.png; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 				37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */,
 				3751175214A3672E001909AB /* DropboxPhotoSubmitter.h */,
 				3751175314A3672E001909AB /* DropboxPhotoSubmitter.m */,
+				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
+				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 				37F589EB14A3290F005C7700 /* PhotoSubmitterAlbumEntity.h */,
 				37F589EC14A32910005C7700 /* PhotoSubmitterAlbumEntity.m */,
 			);
@@ -716,6 +721,7 @@
 				37F58A1614A35D85005C7700 /* SBJsonWriter.m in Sources */,
 				3751175414A3672E001909AB /* DropboxPhotoSubmitter.m in Sources */,
 				3751175B14A36CCD001909AB /* DropboxSettingTableViewController.m in Sources */,
+				37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

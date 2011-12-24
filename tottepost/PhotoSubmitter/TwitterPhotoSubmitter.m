@@ -281,6 +281,13 @@
 }
 
 /*!
+ * invoke method as concurrent?
+ */
+- (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{
