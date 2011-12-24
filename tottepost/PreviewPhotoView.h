@@ -10,7 +10,7 @@
 
 @protocol PreviewPhotoViewDelegate;
 
-@interface PreviewPhotoView : UIView{
+@interface PreviewPhotoView : UIView<UITextViewDelegate>{
     __strong UITextView *commentTextView_;
     __strong UIView *commentBackgroundView_;
     __strong UIImageView *imageView_;

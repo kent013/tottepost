@@ -16,6 +16,7 @@
 @interface PreviewPhotoView(PrivateImplementation)
 - (void) setupInitialState:(CGRect)frame;
 - (void) updateCoordinates:(CGRect)frame;
+- (void) didImageViewTapped:(id)sender;
 @end
 
 @implementation PreviewPhotoView(PrivateImplementation)
@@ -31,11 +32,18 @@
     //comment text view
     commentTextView_ = [[UITextView alloc] initWithFrame:CGRectZero];
     commentTextView_.backgroundColor = [UIColor clearColor];
+    commentTextView_.delegate = self;
+    commentTextView_.returnKeyType = UIReturnKeyDone;
     
     [commentBackgroundView_ addSubview: commentTextView_];
     [self addSubview:imageView_];
     [self addSubview:commentBackgroundView_];
     [self updateCoordinates:frame];
+    
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] init];
+    [recognizer addTarget:self action:@selector(didImageViewTapped:)];
+    recognizer.numberOfTapsRequired = 1;
+    [imageView_ addGestureRecognizer:recognizer];
 }
 
 #pragma mark -
@@ -84,6 +92,14 @@
     commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH - 10, MAINVIEW_COMMENT_VIEW_HEIGHT - 20);
     
 }
+
+/*!
+ * did image view tapped
+ */
+- (void) didImageViewTapped:(id)sender{
+	[commentTextView_ resignFirstResponder];   
+}
+
 @end
 
 //-----------------------------------------------------------------------------
@@ -138,6 +154,19 @@
     }
     return comment;
 }
+
+/*!
+ * text field delegate
+ */
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+	
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+	return YES;
+}
+
 
 /*!
  * photo
