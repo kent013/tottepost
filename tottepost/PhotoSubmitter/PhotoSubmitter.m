@@ -6,8 +6,12 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
+#import <ImageIO/ImageIO.h>
 #import "PhotoSubmitter.h"
+#import "PhotoSubmitterManager.h"
 #import "UIImage+Digest.h"
+#import "UIImage+GeoTagging.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -156,6 +160,16 @@
     [self removePhotoForRequest:request];
 }
 
+
+/*!
+ * preprocess photo
+ */
+- (UIImage *) photoPreprocess:(UIImage *)photo{
+    if([PhotoSubmitterManager getInstance].enableGeoTagging){
+        photo = [UIImage imageWithData:[photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location]];
+    }
+    return photo;
+}
 #pragma mark -
 #pragma mark submit photo methods
 /*!
@@ -183,7 +197,7 @@
  * submit photo with comment and operation
  */
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    NSLog(@"Subclasses must implement this method, %@", __PRETTY_FUNCTION__);
+    NSLog(@"Subclasses must implement this method, %@", __PRETTY_FUNCTION__);    
 }
 
 /*!
@@ -238,4 +252,6 @@
 - (BOOL)settingExistsForKey:(NSString *)key{
     return [self settingForKey:key] != nil;
 }
+
+
 @end

@@ -14,6 +14,7 @@
 static TottePostSettings* TottePostSettingsSingletonInstance;
 
 #define TPS_KEY_IMMEDIATE_POST_ENABLED @"immediatePostEnabled"
+#define TPS_KEY_GPS_ENABLED @"gpsEnabled"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -64,6 +65,24 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  */
 - (void)setImmediatePostEnabled:(BOOL)immediatePostEnabled{
     [self writeSetting:TPS_KEY_IMMEDIATE_POST_ENABLED value:[NSNumber numberWithBool:immediatePostEnabled]];
+}
+
+/*!
+  * get gps enabled
+  */
+- (BOOL)gpsEnabled{
+    NSNumber *value = (NSNumber *)[self readSetting:TPS_KEY_GPS_ENABLED];
+    if(value == nil){
+        return NO;
+    }
+    return [value boolValue];
+}
+
+/*!
+ * set immediate post enabled
+ */
+- (void)setGpsEnabled:(BOOL)gpsEnabled{
+    [self writeSetting:TPS_KEY_GPS_ENABLED value:[NSNumber numberWithBool:gpsEnabled]];
 }
 
 #pragma mark -

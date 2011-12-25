@@ -16,5 +16,4 @@
  */
 @interface FilePhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
 }
-- (void) image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end

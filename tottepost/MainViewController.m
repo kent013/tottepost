@@ -90,6 +90,8 @@
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:progressSummaryView_];
+    [PhotoSubmitterManager getInstance].enableGeoTagging = 
+      [TottePostSettings getInstance].gpsEnabled;
 }
 
 /*!

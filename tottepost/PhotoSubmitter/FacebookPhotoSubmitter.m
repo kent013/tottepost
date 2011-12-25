@@ -11,6 +11,8 @@
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 #import "PhotoSubmitterAlbumEntity.h"
+#import "PhotoSubmitterManager.h"
+#import "UIImage+GeoTagging.h"
 
 #define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
 #define PS_FACEBOOK_AUTH_TOKEN @"FBAccessTokenKey"
@@ -181,6 +183,7 @@
  * submit photo with comment
  */
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    photo = [self photoPreprocess:photo];
     NSMutableDictionary *params = 
       [NSMutableDictionary dictionaryWithObjectsAndKeys: 
        photo, @"source", 

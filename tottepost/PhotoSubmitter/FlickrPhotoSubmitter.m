@@ -10,6 +10,8 @@
 #import "FlickrPhotoSubmitter.h"
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
+#import "UIImage+GeoTagging.h"
+#import "PhotoSubmitterManager.h"
 
 #define PS_FLICKR_ENABLED @"PSFlickrEnabled"
 
@@ -158,9 +160,14 @@
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
     [self addRequest:request];
-    
-    NSData *JPEGData = UIImageJPEGRepresentation(photo, 1.0);
-    [request uploadImageStream:[NSInputStream inputStreamWithData:JPEGData] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", comment, @"title", nil]];
+   
+    NSData *image = nil;
+    if([PhotoSubmitterManager getInstance].enableGeoTagging){
+        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+    }else{
+        image = UIImageJPEGRepresentation(photo, 1.0);
+    }
+    [request uploadImageStream:[NSInputStream inputStreamWithData:image] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", comment, @"title", nil]];
 	
     NSString *hash = photo.MD5DigestString;
     [self setPhotoHash:hash forRequest:request];

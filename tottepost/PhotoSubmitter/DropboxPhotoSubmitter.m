@@ -12,6 +12,8 @@
 #import "DropboxPhotoSubmitter.h"
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
+#import "PhotoSubmitterManager.h"
+#import "UIImage+GeoTagging.h"
 
 #define PS_DROPBOX_ENABLED @"PSDropboxEnabled"
 
@@ -134,7 +136,13 @@
     DBRestClient *restClient = 
     [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     restClient.delegate = self;
-    NSData *image = UIImageJPEGRepresentation(photo, 1.0);
+
+    NSData *image = nil;
+    if([PhotoSubmitterManager getInstance].enableGeoTagging){
+        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+    }else{
+        image = UIImageJPEGRepresentation(photo, 1.0);
+    }
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat  = @"yyyyMMddHHmmssSSSS";

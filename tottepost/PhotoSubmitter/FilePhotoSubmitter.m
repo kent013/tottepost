@@ -3,12 +3,16 @@
 //  tottepost
 //
 //  Created by ISHITOYA Kentaro on 11/12/24.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
 #import "UIImage+Digest.h"
+#import "PhotoSubmitterManager.h"
+#import "UIImage+GeoTagging.h"
 
 #define PS_FILE_ENABLED @"PSFileEnabled"
 
@@ -60,13 +64,37 @@
  * submit photo with comment
  */
 - (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *hash = photo.MD5DigestString;
-        UIImageWriteToSavedPhotosAlbum(photo, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void*)hash);	
-        [self photoSubmitter:self willStartUpload:hash];
-        [self photoSubmitter:self didProgressChanged:hash progress:0.25];
-        [self setOperationDelegate:delegate forRequest:hash];
-    //});
+    NSData *imageData = nil;
+    if([PhotoSubmitterManager getInstance].enableGeoTagging){
+        imageData = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+    }else{
+        imageData = UIImageJPEGRepresentation(photo, 1.0);
+    }
+
+    NSString *hash = photo.MD5DigestString;
+    CGImageSourceRef cgImage = 
+        CGImageSourceCreateWithData((__bridge CFDataRef)imageData, nil); 
+    NSDictionary *metadata = 
+        (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cgImage, 0, nil);
+    CFRelease(cgImage);
+    ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
+    [lib writeImageToSavedPhotosAlbum:photo.CGImage
+                             metadata:metadata
+                      completionBlock:^(NSURL* url, NSError* error){
+                          [self photoSubmitter:self didProgressChanged:hash progress:0.75];
+                          if(error == nil){
+                              [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+                          }else{
+                              [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+                          }
+                          id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
+                          [operationDelegate photoSubmitterDidOperationFinished];
+                          [self clearRequest:hash];
+                      }];
+    
+    [self photoSubmitter:self willStartUpload:hash];
+    [self photoSubmitter:self didProgressChanged:hash progress:0.25];
+    [self setOperationDelegate:delegate forRequest:hash];
 }
 
 /*!
@@ -198,23 +226,5 @@
         return YES;
     }
     return NO;
-}
-
-/*!
- * saving handler
- */
-- (void) image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    
-    NSString *hash = (__bridge NSString *)contextInfo;
-    [self photoSubmitter:self didProgressChanged:hash progress:0.75];
-    if(error == nil){
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    }else{
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    }
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
-    [operationDelegate photoSubmitterDidOperationFinished];
-    [self clearRequest:hash];
 }
 @end

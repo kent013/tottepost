@@ -42,6 +42,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @implementation PhotoSubmitterManager
 @synthesize supportedTypes = supportedTypes_;
 @synthesize submitPhotoWithOperations;
+@synthesize location = location_;
 
 /*!
  * initializer
@@ -173,6 +174,43 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         }
     }
     return i;
+}
+
+/*!
+ * geo tagging enabled
+ */
+- (BOOL)enableGeoTagging{
+    return geoTaggingEnabled_; 
+}
+
+/*!
+ * set enable geo tagging
+ */
+- (void)setEnableGeoTagging:(BOOL)enableGeoTagging{
+    if(locationManager_ == nil){
+        locationManager_ = [[CLLocationManager alloc] init];
+        locationManager_.delegate = self;
+        locationManager_.desiredAccuracy = kCLLocationAccuracyBest;
+        locationManager_.distanceFilter = kCLDistanceFilterNone; 
+        if(enableGeoTagging){
+            [locationManager_ startUpdatingLocation];
+        }
+    }else if(enableGeoTagging != geoTaggingEnabled_){
+        if(enableGeoTagging){
+            [locationManager_ startUpdatingLocation];
+        }else{
+            [locationManager_ stopUpdatingLocation];
+        }
+    }
+    geoTaggingEnabled_ = enableGeoTagging;
+}
+
+/*!
+ * location did changed
+ */
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    location_ = newLocation;
+    //NSLog(@"%@, %@", location_.coordinate.longitude, location_.coordinate.latitude);
 }
 
 #pragma mark -

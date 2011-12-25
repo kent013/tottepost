@@ -13,6 +13,7 @@
 #define SV_SECTION_ACCOUNTS 1
 
 #define SV_GENERAL_IMMEDIATE 0
+#define SV_GENERAL_GPS 1
 
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
@@ -70,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case SV_SECTION_GENERAL: return 1;
+        case SV_SECTION_GENERAL: return 2;
         case SV_SECTION_ACCOUNTS: return 5;
     }
     return 0;
@@ -118,10 +119,17 @@
 - (UITableViewCell *)createGeneralSettingCell:(int)tag{
     TottePostSettings *settings = [TottePostSettings getInstance];
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    UISwitch *s = nil;
     switch (tag) {
         case SV_GENERAL_IMMEDIATE:
             cell.textLabel.text = @"Immediate post";
-            UISwitch *s = [self createSwitchWithTag:tag on:settings.immediatePostEnabled];
+            s = [self createSwitchWithTag:tag on:settings.immediatePostEnabled];
+            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            [cell.contentView addSubview:s];
+            break;
+        case SV_GENERAL_GPS:
+            cell.textLabel.text = @"GPS tagging";
+            UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [cell.contentView addSubview:s];
             break;
@@ -216,6 +224,10 @@
     switch(s.tag){
         case SV_GENERAL_IMMEDIATE: 
             settings.immediatePostEnabled = s.on; 
+            break;
+        case SV_GENERAL_GPS:
+            settings.gpsEnabled = s.on;
+            [PhotoSubmitterManager getInstance].enableGeoTagging = s.on;
             break;
     }
 }

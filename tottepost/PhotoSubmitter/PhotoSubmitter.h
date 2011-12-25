@@ -53,6 +53,7 @@
 
 //util
 - (void) clearRequest: (NSObject *)request;
+- (UIImage *) photoPreprocess:(UIImage *)photo;
 
 //submit photo
 - (void) submitPhoto:(UIImage *)photo;

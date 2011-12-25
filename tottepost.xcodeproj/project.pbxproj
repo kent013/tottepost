@@ -29,12 +29,16 @@
 		376E15571494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
+		37F0D26C14A710F900680F8A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0D26B14A710F900680F8A /* ImageIO.framework */; };
+		37F0D26F14A7701900680F8A /* UIImage+GeoTagging.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */; };
+		37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0D27014A771A400680F8A /* AssetsLibrary.framework */; };
 		37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */; };
 		37F26D0D149F8AA1000172EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D0C149F8AA0000172EF /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37F26D0F149F8C27000172EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F26D0E149F8C27000172EF /* SystemConfiguration.framework */; };
 		37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */; };
 		37F3632B14A58D6300C1BB2B /* file_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3632914A58D6300C1BB2B /* file_16.png */; };
 		37F3632C14A58D6300C1BB2B /* file_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3632A14A58D6300C1BB2B /* file_32.png */; };
+		37F3633114A5957A00C1BB2B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F3633014A5957A00C1BB2B /* CoreLocation.framework */; };
 		37F3BE66149DCFE3001A0CF7 /* facebook_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE63149DCFE3001A0CF7 /* facebook_16.png */; };
 		37F3BE67149DCFE3001A0CF7 /* flickr_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE64149DCFE3001A0CF7 /* flickr_16.png */; };
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
@@ -147,6 +151,10 @@
 		376E155E1494C47800A34E7D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
+		37F0D26B14A710F900680F8A /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		37F0D26D14A7701900680F8A /* UIImage+GeoTagging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+GeoTagging.h"; path = "Util/UIImage+GeoTagging.h"; sourceTree = "<group>"; };
+		37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GeoTagging.m"; path = "Util/UIImage+GeoTagging.m"; sourceTree = "<group>"; };
+		37F0D27014A771A400680F8A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterOperation.h; path = PhotoSubmitter/PhotoSubmitterOperation.h; sourceTree = "<group>"; };
 		37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterOperation.m; path = PhotoSubmitter/PhotoSubmitterOperation.m; sourceTree = "<group>"; };
 		37F26D0B149F8AA0000172EF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Libraries/Reachability/Reachability.h; sourceTree = "<group>"; };
@@ -156,6 +164,7 @@
 		37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilePhotoSubmitter.m; path = PhotoSubmitter/FilePhotoSubmitter.m; sourceTree = "<group>"; };
 		37F3632914A58D6300C1BB2B /* file_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = file_16.png; path = PhotoSubmitter/Images/file_16.png; sourceTree = "<group>"; };
 		37F3632A14A58D6300C1BB2B /* file_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = file_32.png; path = PhotoSubmitter/Images/file_32.png; sourceTree = "<group>"; };
+		37F3633014A5957A00C1BB2B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		37F3BE63149DCFE3001A0CF7 /* facebook_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_16.png; path = PhotoSubmitter/Images/facebook_16.png; sourceTree = "<group>"; };
 		37F3BE64149DCFE3001A0CF7 /* flickr_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_16.png; path = PhotoSubmitter/Images/flickr_16.png; sourceTree = "<group>"; };
 		37F3BE65149DCFE3001A0CF7 /* twitter_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_16.png; path = PhotoSubmitter/Images/twitter_16.png; sourceTree = "<group>"; };
@@ -236,6 +245,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */,
+				37F0D26C14A710F900680F8A /* ImageIO.framework in Frameworks */,
+				37F3633114A5957A00C1BB2B /* CoreLocation.framework in Frameworks */,
 				37F58A1D14A3633A005C7700 /* Security.framework in Frameworks */,
 				37F589FF14A35C1E005C7700 /* libObjectiveFlickr.a in Frameworks */,
 				376A8B3614A05F8100637B68 /* QuartzCore.framework in Frameworks */,
@@ -351,10 +363,13 @@
 			isa = PBXGroup;
 			children = (
 				37FB65D8149CDFBC00387490 /* Accounts.framework */,
+				37F0D27014A771A400680F8A /* AssetsLibrary.framework */,
 				37FB65771498C8A100387490 /* CFNetwork.framework */,
 				376E15401494C47800A34E7D /* CoreGraphics.framework */,
+				37F3633014A5957A00C1BB2B /* CoreLocation.framework */,
 				37F58A1A14A361FE005C7700 /* DropboxSDK.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
+				37F0D26B14A710F900680F8A /* ImageIO.framework */,
 				376A8B3514A05F8000637B68 /* QuartzCore.framework */,
 				37F58A1C14A3633A005C7700 /* Security.framework */,
 				376E15541494C47800A34E7D /* SenTestingKit.framework */,
@@ -524,6 +539,8 @@
 				37FB6589149C4E6D00387490 /* UIImage+Digest.m */,
 				376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */,
 				376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */,
+				37F0D26D14A7701900680F8A /* UIImage+GeoTagging.h */,
+				37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -730,6 +747,7 @@
 				3751175414A3672E001909AB /* DropboxPhotoSubmitter.m in Sources */,
 				3751175B14A36CCD001909AB /* DropboxSettingTableViewController.m in Sources */,
 				37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */,
+				37F0D26F14A7701900680F8A /* UIImage+GeoTagging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

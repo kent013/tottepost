@@ -11,5 +11,6 @@
 @interface TottePostSettings : NSObject{
 }
 @property (nonatomic, assign) BOOL immediatePostEnabled;
+@property (nonatomic, assign) BOOL gpsEnabled;
 + (TottePostSettings *)getInstance;
 @end
