@@ -5,8 +5,8 @@ This iphone/ipad application is camera application, forcused on minimum operatio
 
 LICENSE
 ------------------------------------
-Copyright (c) 2011-2012, ISHITOYA Kentaro.  
-Copyright (c) 2011-2012, WATANABE Ken.  
+Copyright (c) 2011, ISHITOYA Kentaro.  
+Copyright (c) 2011, WATANABE Ken.  
 
 New BSD License. See LICENSE file.
 
