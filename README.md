@@ -1,7 +1,7 @@
-Simple Camera Application For iPhone
-====================================
+Simple Camera Application for iOS
+=========================================
 
-This iphone/ipad application project is camera application, forcused on minimum operation to take photo and post it to social apps.
+This iphone/ipad application is camera application, forcused on minimum operation to take photo and post it to social apps.
 
 LICENSE
 ------------------------------------
