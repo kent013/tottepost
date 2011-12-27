@@ -144,6 +144,7 @@
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSString *hash = [self photoForRequest:request];
+    NSLog(@"%@", error.description);
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
     [operationDelegate photoSubmitterDidOperationFinished];
@@ -206,7 +207,7 @@
 -(void)login{
     if (![facebook_ isSessionValid]) {
         NSArray *permissions = 
-        [NSArray arrayWithObjects:@"publish_stream", @"user_photos", @"offline_access", nil];
+        [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
         [facebook_ authorize:permissions];
     }else{
         [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
