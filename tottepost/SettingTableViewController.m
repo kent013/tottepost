@@ -13,7 +13,7 @@
 #define SV_SECTION_GENERAL  0
 #define SV_SECTION_ACCOUNTS 1
 
-#define SV_GENERAL_IMMEDIATE 0
+#define SV_GENERAL_COMMENT 0
 #define SV_GENERAL_GPS 1
 
 #define SV_ACCOUNTS_FACEBOOK 0
@@ -122,9 +122,9 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     UISwitch *s = nil;
     switch (tag) {
-        case SV_GENERAL_IMMEDIATE:
+        case SV_GENERAL_COMMENT:
             cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
-            s = [self createSwitchWithTag:tag on:settings.immediatePostEnabled];
+            s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [cell.contentView addSubview:s];
             break;
@@ -223,8 +223,8 @@
     TottePostSettings *settings = [TottePostSettings getInstance];
     UISwitch *s = (UISwitch *)sender;
     switch(s.tag){
-        case SV_GENERAL_IMMEDIATE: 
-            settings.immediatePostEnabled = s.on; 
+        case SV_GENERAL_COMMENT: 
+            settings.commentPostEnabled = s.on; 
             break;
         case SV_GENERAL_GPS:
             settings.gpsEnabled = s.on;

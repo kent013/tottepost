@@ -13,7 +13,7 @@
  */
 static TottePostSettings* TottePostSettingsSingletonInstance;
 
-#define TPS_KEY_IMMEDIATE_POST_ENABLED @"immediatePostEnabled"
+#define TPS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
 #define TPS_KEY_GPS_ENABLED @"gpsEnabled"
 
 //-----------------------------------------------------------------------------
@@ -50,10 +50,10 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 #pragma mark -
 #pragma mark values
 /*!
- * get immediate post enabled
+ * get comment post enabled
  */
-- (BOOL)immediatePostEnabled{
-    NSNumber *value = (NSNumber *)[self readSetting:TPS_KEY_IMMEDIATE_POST_ENABLED];
+- (BOOL)commentPostEnabled{
+    NSNumber *value = (NSNumber *)[self readSetting:TPS_KEY_COMMENT_POST_ENABLED];
     if(value == nil){
         return NO;
     }
@@ -61,10 +61,10 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 }
 
 /*!
- * set immediate post enabled
+ * set comment post enabled
  */
-- (void)setImmediatePostEnabled:(BOOL)immediatePostEnabled{
-    [self writeSetting:TPS_KEY_IMMEDIATE_POST_ENABLED value:[NSNumber numberWithBool:immediatePostEnabled]];
+- (void)setCommentPostEnabled:(BOOL)commentPostEnabled{
+    [self writeSetting:TPS_KEY_COMMENT_POST_ENABLED value:[NSNumber numberWithBool:commentPostEnabled]];
 }
 
 /*!
@@ -79,7 +79,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 }
 
 /*!
- * set immediate post enabled
+ * set comment post enabled
  */
 - (void)setGpsEnabled:(BOOL)gpsEnabled{
     [self writeSetting:TPS_KEY_GPS_ENABLED value:[NSNumber numberWithBool:gpsEnabled]];

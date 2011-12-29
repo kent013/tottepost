@@ -316,10 +316,10 @@
     imagePicker_.showsCameraControls = YES;
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     image = image.UIImageAutoRotated;
-    if([TottePostSettings getInstance].immediatePostEnabled){
-        [self postPhoto:image comment:nil];
-    }else{
+    if([TottePostSettings getInstance].commentPostEnabled){
         [self previewPhoto:image];
+    }else{
+        [self postPhoto:image comment:nil];
     }
 }
 
