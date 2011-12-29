@@ -8,6 +8,7 @@
 
 #import "SettingTableViewController.h"
 #import "TottePostSettings.h"
+#import "TTLang.h"
 
 #define SV_SECTION_GENERAL  0
 #define SV_SECTION_ACCOUNTS 1
@@ -82,8 +83,8 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case SV_SECTION_GENERAL : return @"General"; break;
-        case SV_SECTION_ACCOUNTS: return @"Accounts"; break;
+        case SV_SECTION_GENERAL : return [TTLang lstr:@"Settings_Section_General"]; break;
+        case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts"]; break;
     }
     return nil;
 }
@@ -94,7 +95,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     switch (section) {
         case SV_SECTION_GENERAL : break;
-        case SV_SECTION_ACCOUNTS: return @"Tap account name to enter details."; break;
+        case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts_Footer"]; break;
     }
     return nil;    
 }
@@ -122,13 +123,13 @@
     UISwitch *s = nil;
     switch (tag) {
         case SV_GENERAL_IMMEDIATE:
-            cell.textLabel.text = @"Immediate post";
+            cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
             s = [self createSwitchWithTag:tag on:settings.immediatePostEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [cell.contentView addSubview:s];
             break;
         case SV_GENERAL_GPS:
-            cell.textLabel.text = @"GPS tagging";
+            cell.textLabel.text = [TTLang lstr:@"Settings_Row_GPSTagging"];
             UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             [cell.contentView addSubview:s];
@@ -302,7 +303,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingDone:)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-    [self setTitle:@"Settings"];
+    [self setTitle:[TTLang lstr:@"Settings_Title"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
