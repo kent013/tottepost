@@ -102,7 +102,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
-            if(self.submitPhotoWithOperations){
+            if(self.submitPhotoWithOperations && submitter.isConcurrent){
                 PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo comment: comment];
                 [operationQueue_ addOperation:operation];
             }else{

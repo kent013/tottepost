@@ -33,15 +33,27 @@ New BSD License. See LICENSE file.
 
  * [json-framework](https://github.com/stig/json-framework/)
  
-    Copyright (C) 2007-2011 Stig Brautaset. All rights reserved.  
+    Copyright (c) 2007-2011 Stig Brautaset. All rights reserved.  
     Json-framework is licensed under BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/bsd-license.php](http://www.opensource.org/licenses/bsd-license.php)
 
  * [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
  
-    Copyright c 2008-2010, John Engelhart.  
+    Copyright (c) 2008-2010, John Engelhart.  
     RegexKitLite is licensed under BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/bsd-license.php](http://www.opensource.org/licenses/bsd-license.php)
 
  * [Reachability](http://developer.apple.com/library/ios/#samplecode/Reachability/Introduction/Intro.html)
 
-    Copyright (C) 2010 Apple Inc. All Rights Reserved.  
+    Copyright (c) 2010 Apple Inc. All Rights Reserved.  
     See [http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html](http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html) for more detail.
+    
+Third party icons
+-----------------
+ * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)
+   
+    Copyright (c) 2007-2011 ~pierocksmysocks. All Rights Reserved.
+
+ * [Social Bookmarks Icon Set](http://www.yootheme.com/icons/freebies)
+ 
+    This icon set is licensed under the YOOtheme GmbH.   
+    See YOOtheme, [http://www.yootheme.com/icons](http://www.yootheme.com/icons) for more detail.
+  

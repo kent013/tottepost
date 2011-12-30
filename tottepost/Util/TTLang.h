@@ -1,0 +1,16 @@
+//
+//  TTLang.h
+//  tottepost
+//
+//  Created by Kentaro ISHITOYA on 11/12/29.
+//  Copyright (c) 2011 cocotomo. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface TTLang : NSObject
+/*!
+ * get localized string
+ */
++ (NSString *)lstr:(NSString *)key;
+@end

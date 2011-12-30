@@ -12,6 +12,7 @@
 #import "UIImage+AutoRotation.h"
 #import "TottePostSettings.h"
 #import "MainViewControllerConstants.h"
+#import "TTLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -80,10 +81,10 @@
     settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
     
     //post button
-    postButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
+    postButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang lstr:@"Main_Post"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
 
     //cancel button
-    postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
+    postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang lstr:@"Main_Cancel"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
     
     //spacer for centalize camera button 
     flexSpace_ = [[UIBarButtonItem alloc]
@@ -234,7 +235,7 @@
     if([self checkForConnection]){
         [[PhotoSubmitterManager getInstance] submitPhoto:photo.UIImageAutoRotated comment:comment];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There is no network connection. \nWe will cancel upload." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoNetwork"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
 }
@@ -372,7 +373,7 @@
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
     dispatch_async(dispatch_get_main_queue(), ^{
-    [progressTableViewController_ removeProgressWithType:photoSubmitter.type
+        [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                  forHash:imageHash];
     });
 }

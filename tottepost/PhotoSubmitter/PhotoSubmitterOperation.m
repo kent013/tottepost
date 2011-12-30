@@ -64,6 +64,7 @@
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                  beforeDate:[NSDate distantFuture]];
     } while (isExecuting);
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
 }
 
 #pragma mark -
@@ -73,7 +74,6 @@
  */
 - (void) finishOperation{
     [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
 }
 @end
 

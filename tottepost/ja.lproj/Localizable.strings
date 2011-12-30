@@ -1,0 +1,29 @@
+/*
+//  localizable.strings
+//  tottepost lang file
+//
+//  Created by ISHITOYA Kentaro on 11/12/11.
+//  Copyright (c) 2011 cocotomo. All rights reserved.
+*/
+
+"Alert_Error" = "エラー";
+"Alert_NoNetwork" = "ネットワークに接続していません。\nアップロードをキャンセルします。";
+
+"Main_Post" = "投稿";
+"Main_Cancel" = "キャンセル";
+
+"Settings_Title" = "設定";
+"Settings_Section_General" = "一般";
+"Settings_Section_Accounts" = "アカウント";
+"Settings_Section_Accounts_Footer" = "サービス名をタップすると\n詳細画面へ移動します。";
+"Settings_Row_Comment" = "コメント";
+"Settings_Row_GPSTagging" = "位置情報";
+"Detail_Section_Account" = "アカウント";
+"Detail_Section_Album" = "アルバム選択";
+"Facebook_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを追加したい場合にはfacebookで行ってください。";
+"Detail_Row_AccountName" = "アカウント名";
+"Detail_Row_Logout" = "ログアウト";
+"Detail_Row_LogoutButtonTitle" = "ログアウト";
+
+"Progress_Completed" = "アップロード完了";
+"Progress_Summary" = "%d ops to %d apps";
