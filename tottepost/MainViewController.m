@@ -70,11 +70,18 @@
                                                  action:@selector(didCameraButtonTapped:)];
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
+    //comment button
+    commentButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"comment.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didCommentButtonTapped:)];
+    
+    //gps button
+    gpsButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gps.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didGpsButtonTapped:)];
+    
     //setting button
     settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
     
     //post button
     postButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
+
     //cancel button
     postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
     
@@ -85,7 +92,7 @@
                   action:nil];
     UIBarButtonItem* spacer =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [toolbar_ setItems:[NSArray arrayWithObjects:flexSpace_, cameraButton_, spacer, settingButton_, nil]];
+    [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,gpsButton_,flexSpace_, cameraButton_, spacer, settingButton_, nil]];
     
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
@@ -100,6 +107,22 @@
 - (void) didSettingButtonTapped:(id)sender{
     [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
+}
+
+/*!
+ * on comment button tapped, switch toggle comment post
+ */
+- (void) didCommentButtonTapped:(id)sender{
+    [TottePostSettings getInstance].commentPostEnabled = ![TottePostSettings getInstance].commentPostEnabled;
+    [self updateCoordinates];
+}
+
+/*!
+ * on gps button tapped, toggle gps tagging post
+ */
+- (void) didGpsButtonTapped:(id)sender{
+    [TottePostSettings getInstance].gpsEnabled = ![TottePostSettings getInstance].gpsEnabled;
+    [self updateCoordinates];
 }
 
 #pragma mark -
@@ -148,7 +171,7 @@
     [previewImageView_ updateWithFrame:frame];
     [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2))];
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
-    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH;
+    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH *3 - MAINVIEW_COMMENT_BUTTON_PADDING; 
     CGRect ptframe = progressTableViewController_.view.frame;
     [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
 
@@ -161,6 +184,16 @@
         }
         [imagePicker_ setCameraViewTransform:transform];
     }
+    
+    if([TottePostSettings getInstance].commentPostEnabled)
+        commentButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
+    else
+        commentButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+
+    if([TottePostSettings getInstance].gpsEnabled)
+        gpsButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
+    else
+        gpsButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
 }
 
 #pragma mark -
@@ -296,7 +329,7 @@
     imagePicker_.delegate = self;
     imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker_.showsCameraControls = YES;
-    //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone];
+    //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone];    
     
     [self.view addSubview:imagePicker_.view];
     [self.view addSubview:progressTableViewController_.view];
@@ -315,10 +348,10 @@
     imagePicker_.showsCameraControls = YES;
     UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     image = image.UIImageAutoRotated;
-    if([TottePostSettings getInstance].immediatePostEnabled){
-        [self postPhoto:image comment:nil];
-    }else{
+    if([TottePostSettings getInstance].commentPostEnabled){
         [self previewPhoto:image];
+    }else{
+        [self postPhoto:image comment:nil];
     }
 }
 

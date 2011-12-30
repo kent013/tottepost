@@ -28,6 +28,8 @@
     __strong UIToolbar *toolbar_;
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
+    __strong UIBarButtonItem *commentButton_;
+    __strong UIBarButtonItem *gpsButton_;
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
     UIInterfaceOrientation orientation_;

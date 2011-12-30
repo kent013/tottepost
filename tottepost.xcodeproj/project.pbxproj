@@ -81,6 +81,8 @@
 		37FB65DD149D028500387490 /* facebook_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DA149D028500387490 /* facebook_32.png */; };
 		37FB65DE149D028500387490 /* flickr_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DB149D028500387490 /* flickr_32.png */; };
 		37FB65DF149D028500387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DC149D028500387490 /* twitter_32.png */; };
+		EAA795DE14AD2FEA001F21C1 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA795DD14AD2FEA001F21C1 /* comment.png */; };
+		EAA795E014AD41D9001F21C1 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA795DF14AD41D9001F21C1 /* gps.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,6 +240,8 @@
 		37FB65DA149D028500387490 /* facebook_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_32.png; path = PhotoSubmitter/Images/facebook_32.png; sourceTree = "<group>"; };
 		37FB65DB149D028500387490 /* flickr_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_32.png; path = PhotoSubmitter/Images/flickr_32.png; sourceTree = "<group>"; };
 		37FB65DC149D028500387490 /* twitter_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_32.png; path = PhotoSubmitter/Images/twitter_32.png; sourceTree = "<group>"; };
+		EAA795DD14AD2FEA001F21C1 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
+		EAA795DF14AD41D9001F21C1 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gps.png; path = Resources/Images/gps.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,8 +287,8 @@
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
 				37FB65611497AAD300387490 /* ProgressTableViewController.h */,
-				37FB65621497AAD300387490 /* ProgressTableViewController.m */,
 				376A8B3214A05BB100637B68 /* ProgressTableViewCell.h */,
+				37FB65621497AAD300387490 /* ProgressTableViewController.m */,
 				376A8B3314A05BB100637B68 /* ProgressTableViewCell.m */,
 				376A8D5214A2068A00637B68 /* ProgressSummaryView.h */,
 				376A8D5314A2068B00637B68 /* ProgressSummaryView.m */,
@@ -326,6 +330,8 @@
 		3704D5B51494DAE100380D30 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				EAA795DF14AD41D9001F21C1 /* gps.png */,
+				EAA795DD14AD2FEA001F21C1 /* comment.png */,
 				37FB64DF1496239700387490 /* setting.png */,
 			);
 			name = Images;
@@ -673,6 +679,8 @@
 				3751175F14A37735001909AB /* dropbox_32.png in Resources */,
 				37F3632B14A58D6300C1BB2B /* file_16.png in Resources */,
 				37F3632C14A58D6300C1BB2B /* file_32.png in Resources */,
+				EAA795DE14AD2FEA001F21C1 /* comment.png in Resources */,
+				EAA795E014AD41D9001F21C1 /* gps.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
