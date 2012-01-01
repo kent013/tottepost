@@ -13,7 +13,7 @@
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+GeoTagging.h"
+#import "UIImage+EXIF.h"
 
 #define PS_DROPBOX_ENABLED @"PSDropboxEnabled"
 
@@ -139,7 +139,7 @@
 
     NSData *image = nil;
     if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
     }else{
         image = UIImageJPEGRepresentation(photo, 1.0);
     }

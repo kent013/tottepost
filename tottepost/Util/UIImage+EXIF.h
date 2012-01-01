@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface UIImage (GeoTagging)
--(NSData *) geoTaggedDataWithLocation:(CLLocation *)location;
+@interface UIImage (EXIF)
+-(NSData *) geoTaggedDataWithLocation:(CLLocation *)location andComment:(NSString *)comment;
 @end

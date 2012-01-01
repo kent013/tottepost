@@ -30,7 +30,7 @@
 		376E155F1494C47800A34E7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 376E155D1494C47800A34E7D /* InfoPlist.strings */; };
 		376E15621494C47800A34E7D /* tottepostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 376E15611494C47800A34E7D /* tottepostTests.m */; };
 		37F0D26C14A710F900680F8A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0D26B14A710F900680F8A /* ImageIO.framework */; };
-		37F0D26F14A7701900680F8A /* UIImage+GeoTagging.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */; };
+		37F0D26F14A7701900680F8A /* UIImage+EXIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F0D26E14A7701900680F8A /* UIImage+EXIF.m */; };
 		37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0D27014A771A400680F8A /* AssetsLibrary.framework */; };
 		37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */; };
 		37F26D0D149F8AA1000172EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F26D0C149F8AA0000172EF /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -170,8 +170,8 @@
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
 		37F0D26B14A710F900680F8A /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		37F0D26D14A7701900680F8A /* UIImage+GeoTagging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+GeoTagging.h"; path = "Util/UIImage+GeoTagging.h"; sourceTree = "<group>"; };
-		37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GeoTagging.m"; path = "Util/UIImage+GeoTagging.m"; sourceTree = "<group>"; };
+		37F0D26D14A7701900680F8A /* UIImage+EXIF.h */ = {isa = PBXFileReference; fileEncoding = 4; name = "UIImage+EXIF.h"; path = "Util/UIImage+EXIF.h"; sourceTree = "<group>"; };
+		37F0D26E14A7701900680F8A /* UIImage+EXIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+EXIF.m"; path = "Util/UIImage+EXIF.m"; sourceTree = "<group>"; };
 		37F0D27014A771A400680F8A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterOperation.h; path = PhotoSubmitter/PhotoSubmitterOperation.h; sourceTree = "<group>"; };
 		37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterOperation.m; path = PhotoSubmitter/PhotoSubmitterOperation.m; sourceTree = "<group>"; };
@@ -593,8 +593,8 @@
 				37FB6589149C4E6D00387490 /* UIImage+Digest.m */,
 				376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */,
 				376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */,
-				37F0D26D14A7701900680F8A /* UIImage+GeoTagging.h */,
-				37F0D26E14A7701900680F8A /* UIImage+GeoTagging.m */,
+				37F0D26D14A7701900680F8A /* UIImage+EXIF.h */,
+				37F0D26E14A7701900680F8A /* UIImage+EXIF.m */,
 				797E392E14AC6A8800F17AC4 /* TTLang.h */,
 				797E392F14AC6A8800F17AC4 /* TTLang.m */,
 			);
@@ -838,7 +838,7 @@
 				3751175414A3672E001909AB /* DropboxPhotoSubmitter.m in Sources */,
 				3751175B14A36CCD001909AB /* DropboxSettingTableViewController.m in Sources */,
 				37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */,
-				37F0D26F14A7701900680F8A /* UIImage+GeoTagging.m in Sources */,
+				37F0D26F14A7701900680F8A /* UIImage+EXIF.m in Sources */,
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
 			);

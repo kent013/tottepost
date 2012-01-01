@@ -12,7 +12,7 @@
 #import "PhotoSubmitterAPIKey.h"
 #import "UIImage+Digest.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+GeoTagging.h"
+#import "UIImage+EXIF.h"
 
 #define PS_FILE_ENABLED @"PSFileEnabled"
 
@@ -67,7 +67,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         NSData *imageData = nil;
         if([PhotoSubmitterManager getInstance].enableGeoTagging){
-            imageData = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+            imageData = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
         }else{
             imageData = UIImageJPEGRepresentation(photo, 1.0);
         }

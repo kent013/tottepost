@@ -11,7 +11,7 @@
 #import "PhotoSubmitter.h"
 #import "PhotoSubmitterManager.h"
 #import "UIImage+Digest.h"
-#import "UIImage+GeoTagging.h"
+#import "UIImage+EXIF.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -164,9 +164,9 @@
 /*!
  * preprocess photo
  */
-- (UIImage *) photoPreprocess:(UIImage *)photo{
+- (UIImage *) photoPreprocess:(UIImage *)photo andComment:(NSString *)comment{
     if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        photo = [UIImage imageWithData:[photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location]];
+        photo = [UIImage imageWithData:[photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment]];
     }
     return photo;
 }

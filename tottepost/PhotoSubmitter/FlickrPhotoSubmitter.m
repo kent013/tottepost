@@ -10,7 +10,7 @@
 #import "FlickrPhotoSubmitter.h"
 #import "UIImage+Digest.h"
 #import "RegexKitLite.h"
-#import "UIImage+GeoTagging.h"
+#import "UIImage+EXIF.h"
 #import "PhotoSubmitterManager.h"
 
 #define PS_FLICKR_ENABLED @"PSFlickrEnabled"
@@ -163,7 +163,7 @@
    
     NSData *image = nil;
     if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location];
+        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
     }else{
         image = UIImageJPEGRepresentation(photo, 1.0);
     }
