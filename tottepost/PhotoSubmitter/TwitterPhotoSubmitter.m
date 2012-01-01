@@ -77,7 +77,7 @@
 //-----------------------------------------------------------------------------
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
-@synthesize albumDelegate;
+@synthesize dataDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -263,7 +263,8 @@
 /*!
  * update album list
  */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
     //do nothing
 }
 
@@ -279,6 +280,14 @@
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
     //do nothing
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    [self.dataDelegate photoSubmitter:self didUsernameUpdated:self.username];
 }
 
 /*!

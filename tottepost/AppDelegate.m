@@ -28,7 +28,6 @@
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
     [self.mainViewController createCameraController];
-    //[mvCtr viewDidUnload];
     return YES;
 }
 
@@ -45,15 +44,12 @@
  */
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     UIApplication* app = [UIApplication sharedApplication];
     
     self.mainViewController.isRecoveredFromSuspend = YES;    
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{
-        
-        NSLog(@"expired!");
         dispatch_async(dispatch_get_main_queue(), ^{
             if (backgroundTaskIdentifer != UIBackgroundTaskInvalid) {
                 [app endBackgroundTask:backgroundTaskIdentifer];

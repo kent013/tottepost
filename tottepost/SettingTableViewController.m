@@ -306,4 +306,20 @@
     [self setTitle:[TTLang lstr:@"Settings_Title"]];
 }
 
+
+#pragma mark -
+#pragma mark UIView delegate
+/*!
+ * auto rotation
+ */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+            return YES;
+        }
+        return NO;
+    }
+    return YES;
+}
 @end

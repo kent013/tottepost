@@ -11,7 +11,7 @@
 #import "PhotoSubmitterProtocol.h"
 #import "PhotoSubmitterSettingTableViewController.h"
 
-@interface FacebookSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterAlbumDelegate>{
+@interface FacebookSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
     int selectedAlbumIndex_;
 }
 @end

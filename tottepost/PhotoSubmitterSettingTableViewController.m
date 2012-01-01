@@ -138,4 +138,44 @@
 - (PhotoSubmitterType)type{
     return type_;
 }
+
+#pragma mark -
+#pragma mark UIView delegate
+/*!
+ * auto rotation
+ */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+            return YES;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+/*!
+ * albums
+ */
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.submitter updateUsernameWithDelegate:self];
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterAlbumDelegate methods
+/*!
+ * album
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated:(NSMutableArray *)albums{
+    //Do nothing
+}
+
+/*!
+ * username
+ */
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didUsernameUpdated:(NSString *)username{
+    [self.tableView reloadData];
+}
 @end

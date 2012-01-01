@@ -46,7 +46,7 @@
 //-----------------------------------------------------------------------------
 @implementation FilePhotoSubmitter
 @synthesize authDelegate;
-@synthesize albumDelegate;
+@synthesize dataDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -194,7 +194,7 @@
 /*!
  * update album list
  */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     //do nothing
 }
 
@@ -209,6 +209,13 @@
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    //do nothing
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     //do nothing
 }
 
