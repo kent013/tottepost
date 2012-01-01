@@ -27,7 +27,6 @@
     self.mainViewController = [[MainViewController alloc] initWithFrame:frame];
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
-    [self.mainViewController createCameraController];
     return YES;
 }
 

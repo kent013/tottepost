@@ -328,7 +328,9 @@
     [self.view addSubview:progressTableViewController_.view];
     [self.view addSubview:settingIndicatorView_];
     [self.view addSubview:toolbar_];
-    [self.view addSubview:progressSummaryView_];
+    [self.view addSubview:progressSummaryView_];  
+    imagePicker_.delegate = self;
+
     [self updateCoordinates];
 }
 @end
@@ -462,5 +464,13 @@
         return NO;
     }
     return YES;
+}
+
+/*!
+ * create camera controller when the view appeared
+ */
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
 }
 @end
