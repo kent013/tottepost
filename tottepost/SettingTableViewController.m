@@ -49,9 +49,9 @@
     
     accountTypes_ = [PhotoSubmitterManager getInstance].supportedTypes;
     facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
-    twitterSettingViewController_ = [[TwitterSettingTableViewController alloc] init];
-    flickrSettingViewController_ = [[FlickrSettingTableViewController alloc] init];
-    dropboxSettingViewController_ = [[DropboxSettingTableViewController alloc] init];
+    twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
+    flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
+    dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     
     [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
 }
@@ -126,13 +126,13 @@
             cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
             s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            [cell.contentView addSubview:s];
+            cell.accessoryView = s;
             break;
         case SV_GENERAL_GPS:
             cell.textLabel.text = [TTLang lstr:@"Settings_Row_GPSTagging"];
             UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            [cell.contentView addSubview:s];
+            cell.accessoryView = s;
             break;
     }
     return cell;
@@ -151,7 +151,7 @@
     
     UISwitch *s = [self createSwitchWithTag:tag on:NO];
     [s addTarget:self action:@selector(didSocialAppSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-    [cell.contentView addSubview:s];
+    cell.accessoryView = s;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     if([submitter isLogined]){
         [s setOn:YES animated:YES];
@@ -237,7 +237,7 @@
  * create switch with tag
  */
 - (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on{
-    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 150, 8, 100, 30)];
+    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectZero];
     s.tag = tag;
     s.on = on;
     return s;
@@ -304,11 +304,6 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingDone:)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
     [self setTitle:[TTLang lstr:@"Settings_Title"]];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 @end

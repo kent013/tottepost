@@ -16,7 +16,6 @@
 #define FSV_SECTION_ALBUMS 1
 #define FSV_ROW_ACCOUNT_NAME 0
 #define FSV_ROW_ACCOUNT_LOGOUT 1
-#define TOTTEPOST_DEFAULT_ALBUM_NAME @"tottepost"
 
 #define FSV_BUTTON_TYPE 102
 //-----------------------------------------------------------------------------
@@ -24,7 +23,6 @@
 //-----------------------------------------------------------------------------
 @interface FacebookSettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
-- (void) didLogoutButtonTapped:(id)sender;
 @end
 
 @implementation FacebookSettingTableViewController(PrivateImplementation)
@@ -33,14 +31,6 @@
  */
 -(void)setupInitialState{
 
-}
-
-/*!
- * did logout button tapped
- */
-- (void)didLogoutButtonTapped:(id)sender{
-    [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook] logout];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
 
@@ -52,7 +42,7 @@
  * initialize
  */
 - (id)init{
-    self = [super initWithStyle:UITableViewStyleGrouped];
+    self = [super initWithType:PhotoSubmitterTypeFacebook];
     if(self){
         [self setupInitialState];
     }
@@ -64,8 +54,7 @@
  */
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
-    [submitter updateAlbumListWithDelegate:self];
+    [self.submitter updateAlbumListWithDelegate:self];
 }
 
 #pragma mark -
@@ -81,25 +70,22 @@
 /*!
  * get row number
  */
-- (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case FSV_SECTION_ACCOUNT: return 2;
         case FSV_SECTION_ALBUMS: return [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].albumList.count;
     }
-    return 0;
+    return [super tableView:tableView numberOfRowsInSection:section];
 }
 
 /*!
  * title for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
     switch (section) {
-        case FSV_SECTION_ACCOUNT: return [submitter.name stringByAppendingString:[TTLang lstr:@"Detail_Section_Account"]] ; break;
         case FSV_SECTION_ALBUMS : return [TTLang lstr:@"Detail_Section_Album"]; break;
     }
-    return nil;
+    return [super tableView:tableView titleForHeaderInSection:section];
 }
 
 /*!
@@ -109,7 +95,7 @@
     switch (section){
         case FSV_SECTION_ALBUMS: return [TTLang lstr:@"Facebook_Detail_Section_Album_Footer"];
     }
-    return nil;
+    return [super tableView:tableView titleForFooterInSection:section];;
 }
 
 /*!
@@ -117,33 +103,11 @@
  */
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
-    if(indexPath.section == FSV_SECTION_ACCOUNT){
-        if(indexPath.row == FSV_ROW_ACCOUNT_NAME){
-            cell.textLabel.text = [TTLang lstr:@"Detail_Row_AccountName"];
-            UILabel *label = [[UILabel alloc] init];
-            label.text = submitter.username;
-            label.font = [UIFont systemFontOfSize:15.0];
-            [label sizeToFit];
-            label.backgroundColor = [UIColor clearColor];
-            CGRect frame = label.frame;
-            frame.origin.x = self.tableView.frame.size.width - frame.size.width - 70;
-            frame.origin.y = 10;
-            label.frame = frame;
-            [cell.contentView addSubview:label];
-        }else if(indexPath.row == FSV_ROW_ACCOUNT_LOGOUT){
-            cell.textLabel.text = [TTLang lstr:@"Detail_Row_Logout"];
-            UIButton *button = [UIButton buttonWithType:FSV_BUTTON_TYPE];
-            button.frame = CGRectMake(self.tableView.frame.size.width - 130, 8, button.frame.size.width, button.frame.size.height);
-            [button setTitle:[TTLang lstr:@"Detail_Row_LogoutButtonTitle"] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(didLogoutButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:button];
-        }
-    }else if(indexPath.section == FSV_SECTION_ALBUMS){
-        PhotoSubmitterAlbumEntity *album = [submitter.albumList objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    if(indexPath.section == FSV_SECTION_ALBUMS){
+        PhotoSubmitterAlbumEntity *album = [self.submitter.albumList objectAtIndex:indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
-        if([album.albumId isEqualToString: submitter.targetAlbum.albumId]){
+        if([album.albumId isEqualToString: self.submitter.targetAlbum.albumId]){
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
@@ -166,7 +130,7 @@
         submitter.targetAlbum = [submitter.albumList objectAtIndex:indexPath.row];
         selectedAlbumIndex_ = indexPath.row;
     }
-    [tableView deselectRowAtIndexPath:indexPath animated: YES];
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 #pragma mark -
