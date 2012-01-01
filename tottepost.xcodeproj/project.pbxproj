@@ -95,6 +95,7 @@
 		797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E395014B00F2B00F17AC4 /* setting@2x.png */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */; };
+		7980247314B1076400989368 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 /* End PBXBuildFile section */
@@ -269,6 +270,8 @@
 		7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewProtocol.h; sourceTree = "<group>"; };
+		7980247114B1076400989368 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor-Expanded.h"; path = "Libraries/uicolor-utilities/UIColor-Expanded.h"; sourceTree = "<group>"; };
+		7980247214B1076400989368 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor-Expanded.m"; path = "Libraries/uicolor-utilities/UIColor-Expanded.m"; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -596,6 +599,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				7980247014B1075000989368 /* uicolor-expanded */,
 				376A8B3714A060B700637B68 /* FBProgressView */,
 				37F26D0A149F8A90000172EF /* Reachability */,
 				37FB659E149C4F3200387490 /* RegexKitLite */,
@@ -630,6 +634,15 @@
 				797E392A14AC63ED00F17AC4 /* Localizable.strings */,
 			);
 			name = ja.lproj;
+			sourceTree = "<group>";
+		};
+		7980247014B1075000989368 /* uicolor-expanded */ = {
+			isa = PBXGroup;
+			children = (
+				7980247114B1076400989368 /* UIColor-Expanded.h */,
+				7980247214B1076400989368 /* UIColor-Expanded.m */,
+			);
+			name = "uicolor-expanded";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -831,6 +844,7 @@
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
 				7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */,
+				7980247314B1076400989368 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

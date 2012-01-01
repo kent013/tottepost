@@ -13,6 +13,7 @@
 #import "TottePostSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
+#import "UIColor-Expanded.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -193,9 +194,9 @@
     }
     
     if([TottePostSettings getInstance].commentPostEnabled){
-        commentButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:200/255.0f alpha:1.0f];
+        commentButton_.tintColor = [UIColor colorWithRGBHex:0x5da8f8];
     }else{
-        commentButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+        commentButton_.tintColor = [UIColor whiteColor];
     }
 }
 
