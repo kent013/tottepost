@@ -464,6 +464,8 @@
  */
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
+    if(imagePicker_ == nil){
+        [self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
+    }
 }
 @end
