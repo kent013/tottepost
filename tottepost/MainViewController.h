@@ -12,6 +12,7 @@
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
 #import "PreviewPhotoView.h"
+#import "SettingIndicatorView.h"
 
 /*!
  * Main view controller
@@ -32,6 +33,7 @@
     __strong UIBarButtonItem *gpsButton_;
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
+    __strong SettingIndicatorView *settingIndicatorView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
 }

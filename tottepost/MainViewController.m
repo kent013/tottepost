@@ -95,6 +95,9 @@
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,gpsButton_,flexSpace_, cameraButton_, spacer, settingButton_, nil]];
     
+    //setting indicator view
+    settingIndicatorView_ = [[SettingIndicatorView alloc] initWithFrame:CGRectZero];
+    
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:progressSummaryView_];
@@ -170,11 +173,22 @@
     }
     
     [previewImageView_ updateWithFrame:frame];
-    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2))];
-    [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
-    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH *3 - MAINVIEW_COMMENT_BUTTON_PADDING; 
+    
+    //progress view
+    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2) - settingIndicatorView_.contentSize.height - MAINVIEW_INDICATOR_PADDING_Y)];
+    
+    //progress summary
     CGRect ptframe = progressTableViewController_.view.frame;
     [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
+    
+    //setting indicator
+    CGRect psframe = progressSummaryView_.frame;
+    settingIndicatorView_.frame = CGRectMake(frame.size.width - settingIndicatorView_.contentSize.width - MAINVIEW_PROGRESS_PADDING_X, psframe.origin.y + psframe.size.height + MAINVIEW_PADDING_Y, settingIndicatorView_.contentSize.width, settingIndicatorView_.contentSize.height);
+    [settingIndicatorView_ update];
+    
+    //toolbar
+    [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
+    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH * 3 - MAINVIEW_COMMENT_BUTTON_PADDING; 
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGAffineTransform transform = CGAffineTransformIdentity;
@@ -186,15 +200,17 @@
         [imagePicker_ setCameraViewTransform:transform];
     }
     
-    if([TottePostSettings getInstance].commentPostEnabled)
+    if([TottePostSettings getInstance].commentPostEnabled){
         commentButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
-    else
+    }else{
         commentButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-
-    if([TottePostSettings getInstance].gpsEnabled)
+    }
+    
+    if([TottePostSettings getInstance].gpsEnabled){
         gpsButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
-    else
+    }else{
         gpsButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    }
 }
 
 #pragma mark -
@@ -334,6 +350,7 @@
     
     [self.view addSubview:imagePicker_.view];
     [self.view addSubview:progressTableViewController_.view];
+    [self.view addSubview:settingIndicatorView_];
     [self.view addSubview:toolbar_];
     [self.view addSubview:progressSummaryView_];
     [self updateCoordinates];
@@ -363,8 +380,11 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     //NSLog(@"%@ upload started", imageHash);
-    [progressTableViewController_ addProgressWithType:photoSubmitter.type
-                                              forHash:imageHash];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressTableViewController_ addProgressWithType:photoSubmitter.type
+                                                  forHash:imageHash];
+    });
 }
 
 /*!
@@ -383,8 +403,10 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //NSLog(@"%@, %f", imageHash, progress);
-    [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
-                                                 forHash:imageHash progress:progress];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
+                                                     forHash:imageHash progress:progress];
+    });
 }
 
 #pragma mark -

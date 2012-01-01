@@ -96,6 +96,7 @@
 		797E394E14B00EE500F17AC4 /* twitter_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E394414B00EE500F17AC4 /* twitter_16@2x.png */; };
 		797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E394514B00EE500F17AC4 /* twitter_32@2x.png */; };
 		797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E395014B00F2B00F17AC4 /* setting@2x.png */; };
+		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EA8F23F514ADAF960011D575 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F314ADAF960011D575 /* gps.png */; };
 /* End PBXBuildFile section */
@@ -271,6 +272,8 @@
 		797E394414B00EE500F17AC4 /* twitter_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter_16@2x.png"; path = "PhotoSubmitter/Images/twitter_16@2x.png"; sourceTree = "<group>"; };
 		797E394514B00EE500F17AC4 /* twitter_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter_32@2x.png"; path = "PhotoSubmitter/Images/twitter_32@2x.png"; sourceTree = "<group>"; };
 		797E395014B00F2B00F17AC4 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting@2x.png"; path = "Resources/Images/setting@2x.png"; sourceTree = "<group>"; };
+		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
+		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EA8F23F314ADAF960011D575 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gps.png; path = Resources/Images/gps.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -327,6 +330,8 @@
 				376A8D5C14A247A300637B68 /* PreviewPhotoView.m */,
 				37F7431B149D892E002EEADD /* UploadProgressEntity.h */,
 				37F7431C149D892E002EEADD /* UploadProgressEntity.m */,
+				797E395214B0377200F17AC4 /* SettingIndicatorView.h */,
+				797E395314B0377200F17AC4 /* SettingIndicatorView.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -835,6 +840,7 @@
 				37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */,
 				37F0D26F14A7701900680F8A /* UIImage+GeoTagging.m in Sources */,
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
+				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
