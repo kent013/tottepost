@@ -48,6 +48,7 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
     UIApplication* app = [UIApplication sharedApplication];
     
+    self.mainViewController.isRecoveredFromSuspend = YES;    
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{

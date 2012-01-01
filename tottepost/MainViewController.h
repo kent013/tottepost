@@ -38,6 +38,8 @@
     UIInterfaceOrientation lastOrientation_;
 }
 
+@property (nonatomic, assign) BOOL isRecoveredFromSuspend;
+
 - (id) initWithFrame:(CGRect)frame;
 - (void) createCameraController;
 @end

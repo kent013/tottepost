@@ -29,6 +29,7 @@
 - (void) closePreview;
 - (void) postPhoto:(UIImage *)photo comment:(NSString *)comment;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
+- (void) updateCameraController;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -40,6 +41,7 @@
 - (void) setupInitialState: (CGRect) aFrame{
     aFrame.origin.y = 0;
     self.view.frame = aFrame;
+    self.isRecoveredFromSuspend = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     //photo submitter setting
@@ -312,12 +314,31 @@
     }
     [toolbar_ setItems: items animated:YES];    
 }
+
+/*!
+ * update cameracontroller
+ */
+- (void)updateCameraController{
+    [imagePicker_.view removeFromSuperview];
+    [progressTableViewController_.view removeFromSuperview];
+    [settingIndicatorView_ removeFromSuperview];
+    [toolbar_ removeFromSuperview];
+    [progressSummaryView_ removeFromSuperview];
+    [self.view addSubview:imagePicker_.view];
+    [self.view addSubview:progressTableViewController_.view];
+    [self.view addSubview:settingIndicatorView_];
+    [self.view addSubview:toolbar_];
+    [self.view addSubview:progressSummaryView_];
+    [self updateCoordinates];
+}
 @end
 
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation MainViewController
+@synthesize isRecoveredFromSuspend;
+
 #pragma mark -
 #pragma mark public methods
 /*!
@@ -342,18 +363,14 @@
  */
 - (void) createCameraController{
     [UIApplication sharedApplication].statusBarHidden = YES;
-    imagePicker_ = [[UIImagePickerController alloc] init];
-    imagePicker_.delegate = self;
-    imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker_.showsCameraControls = YES;
-    //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone];    
-    
-    [self.view addSubview:imagePicker_.view];
-    [self.view addSubview:progressTableViewController_.view];
-    [self.view addSubview:settingIndicatorView_];
-    [self.view addSubview:toolbar_];
-    [self.view addSubview:progressSummaryView_];
-    [self updateCoordinates];
+    if(imagePicker_ == nil){
+        imagePicker_ = [[UIImagePickerController alloc] init];
+        imagePicker_.delegate = self;
+        imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker_.showsCameraControls = YES;
+        //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone]; 
+    }
+    [self updateCameraController];
 }
 
 #pragma mark -
@@ -423,7 +440,12 @@
         frame.size.height += MAINVIEW_STATUS_BAR_HEIGHT;
         [self.view setFrame:frame];
     }
-    [self updateCoordinates];
+    if(self.isRecoveredFromSuspend){
+        self.isRecoveredFromSuspend = NO;
+        [self performSelector:@selector(updateCameraController) withObject:nil afterDelay:0.5];
+    }else{
+        [self updateCoordinates];
+    }
 }
 
 #pragma mark -
