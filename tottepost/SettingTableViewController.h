@@ -26,6 +26,7 @@
     __strong DropboxSettingTableViewController *dropboxSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;
+    __strong UISwitch* commentSwitch;
 }
 @property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;
 @end

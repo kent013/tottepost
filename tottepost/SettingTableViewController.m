@@ -35,6 +35,8 @@
 - (PhotoSubmitterType) indexToSubmitterType:(int) index;
 - (int) submitterTypeToIndex:(PhotoSubmitterType) type;
 - (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on;
+- (UISwitch *)getSwitchWithSection:(int)section andRow:(int)row; 
+
 @end
 
 #pragma mark -
@@ -258,6 +260,19 @@
 - (int)submitterTypeToIndex:(PhotoSubmitterType)type{
     return [accountTypes_ indexOfObject:[NSNumber numberWithInt:type]]; 
 }
+
+/*!
+ * return UISwitch at pointed index in this table
+ */
+- (UISwitch *)getSwitchWithSection:(int)section andRow:(int)row
+{
+    NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:section];
+    UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:path];
+    for(UIView* view in cell.contentView.subviews)
+        if([view isKindOfClass:[UISwitch class]])
+            return  (UISwitch*)view;
+    return nil;
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -300,6 +315,12 @@
 
 #pragma mark -
 #pragma mark UIViewController methods
+- (void)viewWillAppear:(BOOL)animated
+{
+    UISwitch* s = [self getSwitchWithSection:SV_SECTION_GENERAL andRow:SV_GENERAL_COMMENT];
+    s.on = [TottePostSettings getInstance].commentPostEnabled;    
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingDone:)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];

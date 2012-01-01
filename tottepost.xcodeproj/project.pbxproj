@@ -98,7 +98,7 @@
 		797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E395014B00F2B00F17AC4 /* setting@2x.png */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
-		EA8F23F514ADAF960011D575 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F314ADAF960011D575 /* gps.png */; };
+		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,7 +170,7 @@
 		376E15601494C47800A34E7D /* tottepostTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tottepostTests.h; sourceTree = "<group>"; };
 		376E15611494C47800A34E7D /* tottepostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tottepostTests.m; sourceTree = "<group>"; };
 		37F0D26B14A710F900680F8A /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		37F0D26D14A7701900680F8A /* UIImage+EXIF.h */ = {isa = PBXFileReference; fileEncoding = 4; name = "UIImage+EXIF.h"; path = "Util/UIImage+EXIF.h"; sourceTree = "<group>"; };
+		37F0D26D14A7701900680F8A /* UIImage+EXIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+EXIF.h"; path = "Util/UIImage+EXIF.h"; sourceTree = "<group>"; };
 		37F0D26E14A7701900680F8A /* UIImage+EXIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+EXIF.m"; path = "Util/UIImage+EXIF.m"; sourceTree = "<group>"; };
 		37F0D27014A771A400680F8A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterOperation.h; path = PhotoSubmitter/PhotoSubmitterOperation.h; sourceTree = "<group>"; };
@@ -275,7 +275,7 @@
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
 		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
-		EA8F23F314ADAF960011D575 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gps.png; path = Resources/Images/gps.png; sourceTree = "<group>"; };
+		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,7 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				EA8F23F214ADAF960011D575 /* comment.png */,
-				EA8F23F314ADAF960011D575 /* gps.png */,
+				EAAB706D14B0D2CD001B873F /* comment@2x.png */,
 				37FB64DF1496239700387490 /* setting.png */,
 				797E395014B00F2B00F17AC4 /* setting@2x.png */,
 			);
@@ -752,7 +752,6 @@
 				797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */,
 				797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */,
 				EA8F23F414ADAF960011D575 /* comment.png in Resources */,
-				EA8F23F514ADAF960011D575 /* gps.png in Resources */,
 				797E394614B00EE500F17AC4 /* dropbox_16@2x.png in Resources */,
 				797E394714B00EE500F17AC4 /* dropbox_32@2x.png in Resources */,
 				797E394814B00EE500F17AC4 /* facebook_16@2x.png in Resources */,
@@ -764,6 +763,7 @@
 				797E394E14B00EE500F17AC4 /* twitter_16@2x.png in Resources */,
 				797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */,
 				797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */,
+				EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
