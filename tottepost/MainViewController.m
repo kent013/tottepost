@@ -76,10 +76,7 @@
     
     //comment button
     commentButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"comment.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didCommentButtonTapped:)];
-    
-    //gps button
-    gpsButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gps.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didGpsButtonTapped:)];
-    
+        
     //setting button
     settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
     
@@ -96,7 +93,7 @@
                   action:nil];
     UIBarButtonItem* spacer =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,gpsButton_,flexSpace_, cameraButton_, spacer, settingButton_, nil]];
+    [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,flexSpace_, cameraButton_, spacer, settingButton_, nil]];
     
     //setting indicator view
     settingIndicatorView_ = [[SettingIndicatorView alloc] initWithFrame:CGRectZero];
@@ -121,14 +118,6 @@
  */
 - (void) didCommentButtonTapped:(id)sender{
     [TottePostSettings getInstance].commentPostEnabled = ![TottePostSettings getInstance].commentPostEnabled;
-    [self updateCoordinates];
-}
-
-/*!
- * on gps button tapped, toggle gps tagging post
- */
-- (void) didGpsButtonTapped:(id)sender{
-    [TottePostSettings getInstance].gpsEnabled = ![TottePostSettings getInstance].gpsEnabled;
     [self updateCoordinates];
 }
 
@@ -191,7 +180,7 @@
     
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
-    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH * 3 - MAINVIEW_COMMENT_BUTTON_PADDING; 
+    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH * 2 - MAINVIEW_COMMENT_BUTTON_PADDING; 
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGAffineTransform transform = CGAffineTransformIdentity;
@@ -204,15 +193,9 @@
     }
     
     if([TottePostSettings getInstance].commentPostEnabled){
-        commentButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
+        commentButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:200/255.0f alpha:1.0f];
     }else{
         commentButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    }
-    
-    if([TottePostSettings getInstance].gpsEnabled){
-        gpsButton_.tintColor = [UIColor colorWithRed:77/255.0f green:77/255.0f blue:255/255.0f alpha:1.0f];
-    }else{
-        gpsButton_.tintColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     }
 }
 

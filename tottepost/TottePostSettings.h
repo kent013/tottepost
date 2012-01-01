@@ -14,3 +14,5 @@
 @property (nonatomic, assign) BOOL gpsEnabled;
 + (TottePostSettings *)getInstance;
 @end
+
+

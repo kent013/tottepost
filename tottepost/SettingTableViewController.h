@@ -24,6 +24,7 @@
     __strong PhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;
+    __strong UISwitch* commentSwitch;
 }
 - (void) updateSocialAppSwitches;
 @property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;

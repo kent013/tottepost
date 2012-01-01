@@ -96,7 +96,7 @@
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
-		EA8F23F514ADAF960011D575 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F314ADAF960011D575 /* gps.png */; };
+		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,7 +270,7 @@
 		7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewProtocol.h; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
-		EA8F23F314ADAF960011D575 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gps.png; path = Resources/Images/gps.png; sourceTree = "<group>"; };
+		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,7 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				EA8F23F214ADAF960011D575 /* comment.png */,
-				EA8F23F314ADAF960011D575 /* gps.png */,
+				EAAB706D14B0D2CD001B873F /* comment@2x.png */,
 				37FB64DF1496239700387490 /* setting.png */,
 				797E395014B00F2B00F17AC4 /* setting@2x.png */,
 			);
@@ -744,7 +744,6 @@
 				797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */,
 				797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */,
 				EA8F23F414ADAF960011D575 /* comment.png in Resources */,
-				EA8F23F514ADAF960011D575 /* gps.png in Resources */,
 				797E394614B00EE500F17AC4 /* dropbox_16@2x.png in Resources */,
 				797E394714B00EE500F17AC4 /* dropbox_32@2x.png in Resources */,
 				797E394814B00EE500F17AC4 /* facebook_16@2x.png in Resources */,
@@ -756,6 +755,7 @@
 				797E394E14B00EE500F17AC4 /* twitter_16@2x.png in Resources */,
 				797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */,
 				797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */,
+				EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingTableViewController.h"
+#import "TottePostSettings.h"
 #import "Facebook.h"
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
@@ -30,7 +31,6 @@
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
     __strong UIBarButtonItem *commentButton_;
-    __strong UIBarButtonItem *gpsButton_;
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
     __strong SettingIndicatorView *settingIndicatorView_;
