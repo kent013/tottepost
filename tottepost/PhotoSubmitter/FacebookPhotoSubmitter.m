@@ -112,6 +112,7 @@
         }
         NSString *username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];        
         [self setSetting:username forKey:PS_FACEBOOK_SETTING_USERNAME];
+        [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
     }else if([request.url isMatchedByRegex:@"photos$"]){
         if ([result isKindOfClass:[NSArray class]]) {
             result = [result objectAtIndex:0];
@@ -135,7 +136,7 @@
             [albums addObject:album];
         }
         [self setComplexSetting:albums forKey:PS_FACEBOOK_SETTING_ALBUMS];
-        [self.albumDelegate photoSubmitter:self didAlbumUpdated:albums];
+        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
     }
 };
 
@@ -166,7 +167,7 @@
 //-----------------------------------------------------------------------------
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
-@synthesize albumDelegate;
+@synthesize dataDelegate;
 #pragma mark -
 #pragma mark public PhotoSubmitter Protocol implementations
 /*!
@@ -313,8 +314,8 @@
 /*!
  * update album list
  */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-    self.albumDelegate = delegate;
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
     [facebook_ requestWithGraphPath:@"me/albums" andDelegate:self];
 }
 
@@ -330,6 +331,14 @@
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
     [self setComplexSetting:targetAlbum forKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    [self getUserInfomation];
 }
 
 /*!

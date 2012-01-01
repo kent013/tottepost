@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 #import "PhotoSubmitterProtocol.h"
+#import "PhotoSubmitterSettingTableViewController.h"
 
-@interface FacebookSettingTableViewController : UITableViewController<PhotoSubmitterAlbumDelegate>{
+@interface FacebookSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
     int selectedAlbumIndex_;
 }
 @end

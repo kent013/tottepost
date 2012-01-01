@@ -1,40 +1,34 @@
 //
-//  FlickrSettingTableViewController.m
+//  PhotoSubmitterSettingTableViewController.m
 //  tottepost
 //
-//  Created by ISHITOYA Kentaro on 11/12/22.
-//  Copyright (c) 2011 cocotomo. All rights reserved.
+//  Created by Kentaro ISHITOYA on 12/01/02.
+//  Copyright (c) 2012 cocotomo All rights reserved.
 //
 
-#import "FlickrSettingTableViewController.h"
-#import "PhotoSubmitterManager.h"
+#import "PhotoSubmitterSettingTableViewController.h"
 #import "TTLang.h"
-#define FSV_SECTION_ACCOUNT 0
-#define FSV_ROW_ACCOUNT_NAME 0
-#define FSV_ROW_ACCOUNT_LOGOUT 1
 
-#define FSV_BUTTON_TYPE 102
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface FlickrSettingTableViewController(PrivateImplementation)
+@interface PhotoSubmitterSettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
 - (void) didLogoutButtonTapped:(id)sender;
 @end
 
-@implementation FlickrSettingTableViewController(PrivateImplementation)
+@implementation PhotoSubmitterSettingTableViewController(PrivateImplementation)
 /*!
  * initialize
  */
 -(void)setupInitialState{
-    
 }
 
 /*!
  * did logout button tapped
  */
 - (void)didLogoutButtonTapped:(id)sender{
-    [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr] logout];
+    [self.submitter logout];
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
@@ -42,13 +36,14 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
-@implementation FlickrSettingTableViewController
+@implementation PhotoSubmitterSettingTableViewController
 /*!
  * initialize
  */
-- (id)init{
+- (id)initWithType:(PhotoSubmitterType)type{
     self = [super initWithStyle:UITableViewStyleGrouped];
     if(self){
+        type_ = type;
         [self setupInitialState];
     }
     return self;
@@ -80,9 +75,8 @@
  * title for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr];
     switch (section) {
-        case FSV_SECTION_ACCOUNT: return [submitter.name stringByAppendingString:[TTLang lstr:@"Detail_Section_Account"]] ; break;
+        case FSV_SECTION_ACCOUNT: return [self.submitter.name stringByAppendingString:[TTLang lstr:@"Detail_Section_Account"]] ; break;
     }
     return nil;
 }
@@ -100,27 +94,21 @@
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr];
     if(indexPath.section == FSV_SECTION_ACCOUNT){
         if(indexPath.row == FSV_ROW_ACCOUNT_NAME){
             cell.textLabel.text = [TTLang lstr:@"Detail_Row_AccountName"];
             UILabel *label = [[UILabel alloc] init];
-            label.text = submitter.username;
+            label.text = self.submitter.username;
             label.font = [UIFont systemFontOfSize:15.0];
             [label sizeToFit];
             label.backgroundColor = [UIColor clearColor];
-            CGRect frame = label.frame;
-            frame.origin.x = self.tableView.frame.size.width - frame.size.width - 70;
-            frame.origin.y = 10;
-            label.frame = frame;
-            [cell.contentView addSubview:label];
+            cell.accessoryView = label;
         }else if(indexPath.row == FSV_ROW_ACCOUNT_LOGOUT){
             cell.textLabel.text = [TTLang lstr:@"Detail_Row_Logout"];
             UIButton *button = [UIButton buttonWithType:FSV_BUTTON_TYPE];
-            button.frame = CGRectMake(self.tableView.frame.size.width - 130, 8, button.frame.size.width, button.frame.size.height);
             [button setTitle:[TTLang lstr:@"Detail_Row_LogoutButtonTitle"] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(didLogoutButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:button];
+            cell.accessoryView = button;
         }
         
     }
@@ -133,5 +121,61 @@
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterSettingTableViewProtocol methods
+/*!
+ * submitter
+ */
+- (id<PhotoSubmitterProtocol>)submitter{
+    return [PhotoSubmitterManager submitterForType:self.type];
+}
+
+/*!
+ * type
+ */
+- (PhotoSubmitterType)type{
+    return type_;
+}
+
+#pragma mark -
+#pragma mark UIView delegate
+/*!
+ * auto rotation
+ */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+            return YES;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+/*!
+ * albums
+ */
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.submitter updateUsernameWithDelegate:self];
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterAlbumDelegate methods
+/*!
+ * album
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated:(NSMutableArray *)albums{
+    //Do nothing
+}
+
+/*!
+ * username
+ */
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didUsernameUpdated:(NSString *)username{
+    [self.tableView reloadData];
 }
 @end

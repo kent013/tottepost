@@ -72,6 +72,7 @@
     if ([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_CHECK_TOKEN]) {
         NSString *username = [inResponseDictionary valueForKeyPath:@"user.username._text"];
         [self setSetting:username forKey:PS_FLICKR_SETTING_USERNAME];
+        [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
@@ -138,7 +139,7 @@
 //-----------------------------------------------------------------------------
 @implementation FlickrPhotoSubmitter
 @synthesize authDelegate;
-@synthesize albumDelegate;
+@synthesize dataDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -301,7 +302,8 @@
 /*!
  * update album list
  */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
     //do nothing
 }
 
@@ -316,6 +318,16 @@
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    //do nothing
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
+    [authRequest_ callAPIMethodWithGET:@"flickr.test.login" arguments:nil];
     //do nothing
 }
 

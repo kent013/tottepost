@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3751175414A3672E001909AB /* DropboxPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3751175314A3672E001909AB /* DropboxPhotoSubmitter.m */; };
-		3751175B14A36CCD001909AB /* DropboxSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3751175A14A36CCD001909AB /* DropboxSettingTableViewController.m */; };
 		3751175E14A37735001909AB /* dropbox_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 3751175C14A37735001909AB /* dropbox_16.png */; };
 		3751175F14A37735001909AB /* dropbox_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3751175D14A37735001909AB /* dropbox_32.png */; };
 		376A8B31149FA18E00637B68 /* UIImage+AutoRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B30149FA18E00637B68 /* UIImage+AutoRotation.m */; };
@@ -42,8 +41,6 @@
 		37F3BE66149DCFE3001A0CF7 /* facebook_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE63149DCFE3001A0CF7 /* facebook_16.png */; };
 		37F3BE67149DCFE3001A0CF7 /* flickr_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE64149DCFE3001A0CF7 /* flickr_16.png */; };
 		37F3BE68149DCFE3001A0CF7 /* twitter_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 37F3BE65149DCFE3001A0CF7 /* twitter_16.png */; };
-		37F589E014A313E0005C7700 /* TwitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */; };
-		37F589E314A313F8005C7700 /* FlickrSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */; };
 		37F589ED14A32910005C7700 /* PhotoSubmitterAlbumEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F589EC14A32910005C7700 /* PhotoSubmitterAlbumEntity.m */; };
 		37F589FF14A35C1E005C7700 /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F589FE14A35B78005C7700 /* libObjectiveFlickr.a */; };
 		37F58A1114A35D85005C7700 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F58A0614A35D85005C7700 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -97,6 +94,7 @@
 		797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E394514B00EE500F17AC4 /* twitter_32@2x.png */; };
 		797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E395014B00F2B00F17AC4 /* setting@2x.png */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
+		7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 /* End PBXBuildFile section */
@@ -135,8 +133,6 @@
 /* Begin PBXFileReference section */
 		3751175214A3672E001909AB /* DropboxPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropboxPhotoSubmitter.h; path = PhotoSubmitter/DropboxPhotoSubmitter.h; sourceTree = "<group>"; };
 		3751175314A3672E001909AB /* DropboxPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropboxPhotoSubmitter.m; path = PhotoSubmitter/DropboxPhotoSubmitter.m; sourceTree = "<group>"; };
-		3751175914A36CCD001909AB /* DropboxSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxSettingTableViewController.h; sourceTree = "<group>"; };
-		3751175A14A36CCD001909AB /* DropboxSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxSettingTableViewController.m; sourceTree = "<group>"; };
 		3751175C14A37735001909AB /* dropbox_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropbox_16.png; path = PhotoSubmitter/Images/dropbox_16.png; sourceTree = "<group>"; };
 		3751175D14A37735001909AB /* dropbox_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropbox_32.png; path = PhotoSubmitter/Images/dropbox_32.png; sourceTree = "<group>"; };
 		376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+AutoRotation.h"; path = "Util/UIImage+AutoRotation.h"; sourceTree = "<group>"; };
@@ -186,10 +182,6 @@
 		37F3BE63149DCFE3001A0CF7 /* facebook_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_16.png; path = PhotoSubmitter/Images/facebook_16.png; sourceTree = "<group>"; };
 		37F3BE64149DCFE3001A0CF7 /* flickr_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_16.png; path = PhotoSubmitter/Images/flickr_16.png; sourceTree = "<group>"; };
 		37F3BE65149DCFE3001A0CF7 /* twitter_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_16.png; path = PhotoSubmitter/Images/twitter_16.png; sourceTree = "<group>"; };
-		37F589DE14A313E0005C7700 /* TwitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterSettingTableViewController.h; sourceTree = "<group>"; };
-		37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterSettingTableViewController.m; sourceTree = "<group>"; };
-		37F589E114A313F8005C7700 /* FlickrSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrSettingTableViewController.h; sourceTree = "<group>"; };
-		37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrSettingTableViewController.m; sourceTree = "<group>"; };
 		37F589EB14A3290F005C7700 /* PhotoSubmitterAlbumEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterAlbumEntity.h; path = PhotoSubmitter/PhotoSubmitterAlbumEntity.h; sourceTree = "<group>"; };
 		37F589EC14A32910005C7700 /* PhotoSubmitterAlbumEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterAlbumEntity.m; path = PhotoSubmitter/PhotoSubmitterAlbumEntity.m; sourceTree = "<group>"; };
 		37F589F214A35B77005C7700 /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = Frameworks/objectiveflickr/ObjectiveFlickr.xcodeproj; sourceTree = "<group>"; };
@@ -274,6 +266,9 @@
 		797E395014B00F2B00F17AC4 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting@2x.png"; path = "Resources/Images/setting@2x.png"; sourceTree = "<group>"; };
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
 		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
+		7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewProtocol.h; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -343,14 +338,11 @@
 				37FB64D61496237500387490 /* SettingTableViewController.m */,
 				376A8D5514A227F900637B68 /* TottePostSettings.h */,
 				376A8D5614A227F900637B68 /* TottePostSettings.m */,
+				7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */,
+				7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */,
+				7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */,
 				37FB64E71496384800387490 /* FacebookSettingTableViewController.h */,
 				37FB64E81496384800387490 /* FacebookSettingTableViewController.m */,
-				37F589DE14A313E0005C7700 /* TwitterSettingTableViewController.h */,
-				37F589DF14A313E0005C7700 /* TwitterSettingTableViewController.m */,
-				37F589E114A313F8005C7700 /* FlickrSettingTableViewController.h */,
-				37F589E214A313F8005C7700 /* FlickrSettingTableViewController.m */,
-				3751175914A36CCD001909AB /* DropboxSettingTableViewController.h */,
-				3751175A14A36CCD001909AB /* DropboxSettingTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -819,8 +811,6 @@
 				376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */,
 				376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */,
 				376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */,
-				37F589E014A313E0005C7700 /* TwitterSettingTableViewController.m in Sources */,
-				37F589E314A313F8005C7700 /* FlickrSettingTableViewController.m in Sources */,
 				37F589ED14A32910005C7700 /* PhotoSubmitterAlbumEntity.m in Sources */,
 				37FB6599149C4F2A00387490 /* Facebook.m in Sources */,
 				37FB659B149C4F2A00387490 /* FBDialog.m in Sources */,
@@ -836,11 +826,11 @@
 				37F58A1514A35D85005C7700 /* SBJsonParser.m in Sources */,
 				37F58A1614A35D85005C7700 /* SBJsonWriter.m in Sources */,
 				3751175414A3672E001909AB /* DropboxPhotoSubmitter.m in Sources */,
-				3751175B14A36CCD001909AB /* DropboxSettingTableViewController.m in Sources */,
 				37F3632814A55F0B00C1BB2B /* FilePhotoSubmitter.m in Sources */,
 				37F0D26F14A7701900680F8A /* UIImage+EXIF.m in Sources */,
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
+				7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

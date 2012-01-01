@@ -108,6 +108,20 @@
     [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
+/*!
+ * Dropbox delegate, account info loaded
+ */
+- (void)restClient:(DBRestClient *)client loadedAccountInfo:(DBAccountInfo *)info{
+    [self setSetting:info.displayName forKey:PS_DROPBOX_SETTING_USERNAME];
+    [self.dataDelegate photoSubmitter:self didUsernameUpdated:info.displayName];
+    
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+}
+
+- (void)restClient:(DBRestClient *)client loadAccountInfoFailedWithError:(NSError *)error{
+    NSLog(@"%@", error.description);
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -115,7 +129,7 @@
 //-----------------------------------------------------------------------------
 @implementation DropboxPhotoSubmitter
 @synthesize authDelegate;
-@synthesize albumDelegate;
+@synthesize dataDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -275,7 +289,8 @@
 /*!
  * update album list
  */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
     //do nothing
 }
 
@@ -290,6 +305,21 @@
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    //do nothing
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    if([DBSession sharedSession].isLinked){
+        DBRestClient *restClient = 
+            [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+        [restClient loadAccountInfo];
+        [self addRequest:restClient];
+    }
     //do nothing
 }
 

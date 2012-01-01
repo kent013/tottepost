@@ -11,7 +11,7 @@
 
 @implementation UIImage (EXIF)
 /*!
- * tag geolocation to image
+ * add geolocation and comment to image
  */
 -(NSData *) geoTaggedDataWithLocation:(CLLocation *)location andComment:(NSString *)comment{
     NSData *data = UIImageJPEGRepresentation(self, 1.0);
