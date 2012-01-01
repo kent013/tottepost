@@ -25,6 +25,7 @@
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;
 }
+- (void) updateSocialAppSwitches;
 @property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;
 @end
 

@@ -278,6 +278,19 @@
     return self;
 }
 
+/*!
+ * update social app switches
+ */
+- (void)updateSocialAppSwitches{
+    for(NSNumber *num in accountTypes_){
+        PhotoSubmitterType type = [num intValue];
+        int index = [self submitterTypeToIndex:type];
+        UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
+        id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+        [s setOn:submitter.isLogined animated:YES];
+    }
+}
+
 #pragma mark -
 #pragma mark FacebookSettingViewController delegate methods
 /*!

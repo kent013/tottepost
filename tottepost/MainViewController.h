@@ -41,6 +41,6 @@
 @property (nonatomic, assign) BOOL isRecoveredFromSuspend;
 
 - (id) initWithFrame:(CGRect)frame;
-- (void) createCameraController;
+- (void) applicationDidBecomeActive;
 @end
 

@@ -45,7 +45,7 @@
 {
     UIApplication* app = [UIApplication sharedApplication];
     
-    self.mainViewController.isRecoveredFromSuspend = YES;    
+    self.mainViewController.isRecoveredFromSuspend = YES; 
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{
@@ -64,6 +64,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     UIApplication* app = [UIApplication sharedApplication];
+    [self.mainViewController applicationDidBecomeActive];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (backgroundTaskIdentifer != UIBackgroundTaskInvalid) {
             [app endBackgroundTask:backgroundTaskIdentifer];

@@ -30,6 +30,7 @@
 - (void) postPhoto:(UIImage *)photo comment:(NSString *)comment;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
+- (void) createCameraController;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -333,6 +334,21 @@
 
     [self updateCoordinates];
 }
+
+/*!
+ * create camera view
+ */
+- (void) createCameraController{
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    if(imagePicker_ == nil){
+        imagePicker_ = [[UIImagePickerController alloc] init];
+        imagePicker_.delegate = self;
+        imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker_.showsCameraControls = YES;
+        //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone]; 
+    }
+    [self updateCameraController];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -361,18 +377,12 @@
 }
 
 /*!
- * create camera view
+ * application Did Become active
  */
-- (void) createCameraController{
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    if(imagePicker_ == nil){
-        imagePicker_ = [[UIImagePickerController alloc] init];
-        imagePicker_.delegate = self;
-        imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker_.showsCameraControls = YES;
-        //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone]; 
+- (void)applicationDidBecomeActive{
+    if(settingNavigationController_.view.isHidden == NO){
+        [settingViewController_ updateSocialAppSwitches];
     }
-    [self updateCameraController];
 }
 
 #pragma mark -
