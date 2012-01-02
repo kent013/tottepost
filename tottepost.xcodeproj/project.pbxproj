@@ -98,6 +98,10 @@
 		7980247314B1076400989368 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
+		EAAB709D14B1A129001B873F /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709B14B1A129001B873F /* camera.png */; };
+		EAAB709E14B1A129001B873F /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709C14B1A129001B873F /* camera@2x.png */; };
+		EAAB70AD14B1AD6E001B873F /* comment-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB70AB14B1AD6E001B873F /* comment-selected.png */; };
+		EAAB70AE14B1AD6E001B873F /* comment-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB70AC14B1AD6E001B873F /* comment-selected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +278,10 @@
 		7980247214B1076400989368 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor-Expanded.m"; path = "Libraries/uicolor-utilities/UIColor-Expanded.m"; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
+		EAAB709B14B1A129001B873F /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = Resources/Images/camera.png; sourceTree = "<group>"; };
+		EAAB709C14B1A129001B873F /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera@2x.png"; path = "Resources/Images/camera@2x.png"; sourceTree = "<group>"; };
+		EAAB70AB14B1AD6E001B873F /* comment-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment-selected.png"; path = "Resources/Images/comment-selected.png"; sourceTree = "<group>"; };
+		EAAB70AC14B1AD6E001B873F /* comment-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment-selected@2x.png"; path = "Resources/Images/comment-selected@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,8 +369,12 @@
 		3704D5B51494DAE100380D30 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				EAAB709B14B1A129001B873F /* camera.png */,
+				EAAB709C14B1A129001B873F /* camera@2x.png */,
 				EA8F23F214ADAF960011D575 /* comment.png */,
 				EAAB706D14B0D2CD001B873F /* comment@2x.png */,
+				EAAB70AB14B1AD6E001B873F /* comment-selected.png */,
+				EAAB70AC14B1AD6E001B873F /* comment-selected@2x.png */,
 				37FB64DF1496239700387490 /* setting.png */,
 				797E395014B00F2B00F17AC4 /* setting@2x.png */,
 			);
@@ -769,6 +781,10 @@
 				797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */,
 				797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */,
 				EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */,
+				EAAB709D14B1A129001B873F /* camera.png in Resources */,
+				EAAB709E14B1A129001B873F /* camera@2x.png in Resources */,
+				EAAB70AD14B1AD6E001B873F /* comment-selected.png in Resources */,
+				EAAB70AE14B1AD6E001B873F /* comment-selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

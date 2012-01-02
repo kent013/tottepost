@@ -69,14 +69,14 @@
     toolbar_.barStyle = UIBarStyleBlack;
     
     //camera button
-    cameraButton_ =
-    [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
-                                                 target:self
-                                                 action:@selector(didCameraButtonTapped:)];
+    UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, 39)];
+    [customView setBackgroundImage:[UIImage imageNamed:@"camera.png"]forState:UIControlStateNormal];
+    [customView addTarget:self action:@selector(didCameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    cameraButton_ = [[UIBarButtonItem alloc]initWithCustomView:customView];
     cameraButton_.style = UIBarButtonItemStyleBordered;
     
     //comment button
-    commentButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"comment.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didCommentButtonTapped:)];
+    commentButton_ = [[UIBarButtonItem alloc] init];
         
     //setting button
     settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
@@ -94,7 +94,7 @@
                   action:nil];
     UIBarButtonItem* spacer =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,flexSpace_, cameraButton_, spacer, settingButton_, nil]];
+    [toolbar_ setItems:[NSArray arrayWithObjects:commentButton_,spacer, cameraButton_, spacer, settingButton_, nil]];
     
     //setting indicator view
     settingIndicatorView_ = [[SettingIndicatorView alloc] initWithFrame:CGRectZero];
@@ -181,7 +181,7 @@
     
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
-    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH * 2 - MAINVIEW_COMMENT_BUTTON_PADDING; 
+    flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH/2 - MAINVIEW_COMMENT_BUTTON_WIDTH - MAINVIEW_COMMENT_BUTTON_PADDING; 
 
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGAffineTransform transform = CGAffineTransformIdentity;
@@ -194,9 +194,15 @@
     }
     
     if([TottePostSettings getInstance].commentPostEnabled){
-        commentButton_.tintColor = [UIColor colorWithRGBHex:0x5da8f8];
+        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 27)];
+        [customView setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
+        [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        commentButton_.customView = customView;
     }else{
-        commentButton_.tintColor = [UIColor whiteColor];
+        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 27)];
+        [customView setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
+        [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        commentButton_.customView = customView;
     }
 }
 
