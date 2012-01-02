@@ -194,12 +194,12 @@
     }
     
     if([TottePostSettings getInstance].commentPostEnabled){
-        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 27)];
+        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
         [customView setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
         [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         commentButton_.customView = customView;
     }else{
-        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 27)];
+        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
         [customView setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
         [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         commentButton_.customView = customView;
