@@ -78,6 +78,7 @@
     [self.authDelegate photoSubmitter:self didLogin:self.type];
     
     [self getUserInfomation];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
 }
 
 /*!
@@ -86,6 +87,7 @@
 -(void)fbDidNotLogin:(BOOL)cancelled {
     [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
 }
 
 /*!
@@ -211,6 +213,7 @@
  */
 -(void)login{
     if (![facebook_ isSessionValid]) {
+        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
         NSArray *permissions = 
         [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
         [facebook_ authorize:permissions];
@@ -349,6 +352,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
     return YES;
 }
 

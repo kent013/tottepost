@@ -227,6 +227,13 @@
 }
 
 /*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return NO;
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{

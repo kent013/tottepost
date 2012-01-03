@@ -213,6 +213,19 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     //NSLog(@"%@, %@", location_.coordinate.longitude, location_.coordinate.latitude);
 }
 
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        if(submitter.isEnabled && submitter.requiresNetwork){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark -
 #pragma mark static methods
 /*!

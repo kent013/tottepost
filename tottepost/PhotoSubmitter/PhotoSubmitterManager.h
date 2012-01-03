@@ -35,6 +35,7 @@
 @property (nonatomic, readonly) int uploadOperationCount;
 @property (nonatomic, assign) BOOL enableGeoTagging;
 @property (nonatomic, readonly) CLLocation *location;
+@property (nonatomic, readonly) BOOL requiresNetwork;
 
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;

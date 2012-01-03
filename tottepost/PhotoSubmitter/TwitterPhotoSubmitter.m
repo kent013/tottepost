@@ -133,6 +133,7 @@
  * login to twitter
  */
 -(void)login{
+    [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
 	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
@@ -154,6 +155,7 @@
         }else{
             [self.authDelegate photoSubmitter:self didLogout:self.type];
         }
+        [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     }];
 }
 
@@ -294,6 +296,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
     return YES;
 }
 

@@ -38,6 +38,7 @@ typedef enum {
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSArray *albumList;
 @property (nonatomic, readonly) BOOL isConcurrent;
+@property (nonatomic, readonly) BOOL requiresNetwork;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterDataDelegate> dataDelegate;
 @property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;
@@ -63,6 +64,8 @@ typedef enum {
  */
 @protocol PhotoSubmitterAuthenticationDelegate <NSObject>
 @required
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willBeginAuthorization:(PhotoSubmitterType)type;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAuthorizationFinished:(PhotoSubmitterType)type;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogin:(PhotoSubmitterType) type;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogout:(PhotoSubmitterType) type;
 @end

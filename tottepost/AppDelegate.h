@@ -14,5 +14,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) MainViewController *mainViewController;
 @property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskIdentifer;
+@property (assign, nonatomic) BOOL applicationBecomeActiveAfterOpenURL;
 
 @end

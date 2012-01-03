@@ -241,11 +241,24 @@
  * post photo
  */
 - (void)postPhoto:(UIImage *)photo comment:(NSString *)comment{
-    if([self checkForConnection]){
-        [[PhotoSubmitterManager getInstance] submitPhoto:photo.UIImageAutoRotated comment:comment];
+    PhotoSubmitterManager *manager = [PhotoSubmitterManager getInstance];
+    if(manager.enabledSubmitterCount == 0){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if(manager.requiresNetwork == NO ||
+       (manager.requiresNetwork && [self checkForConnection])){
+        [manager submitPhoto:photo.UIImageAutoRotated comment:comment];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoNetwork"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+    }
+    
+    if(manager.requiresNetwork && [self checkForConnection] == NO &&
+       [manager submitterForType:PhotoSubmitterTypeFile].isEnabled){
+        [[manager submitterForType:PhotoSubmitterTypeFile] submitPhoto:photo.UIImageAutoRotated comment:comment];
     }
 }
 
