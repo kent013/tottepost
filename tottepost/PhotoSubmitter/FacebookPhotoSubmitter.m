@@ -144,12 +144,16 @@
  * facebook request delegate, did fail
  */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-    NSString *hash = [self photoForRequest:request];
-    NSLog(@"%@", error.description);
-    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationFinished];
-    [self clearRequest:request];
+    NSLog(@"%@, %@", request.url, error.description);
+    if([request.url isMatchedByRegex:@"me$"]){
+    }else if([request.url isMatchedByRegex:@"albums$"]){
+    }else if([request.url isMatchedByRegex:@"photos$"]){
+        NSString *hash = [self photoForRequest:request];
+        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+        [operationDelegate photoSubmitterDidOperationFinished];
+        [self clearRequest:request];
+    }
 };
 
 /*!
