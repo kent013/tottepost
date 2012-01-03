@@ -37,7 +37,19 @@
     commentTextView_.returnKeyType = UIReturnKeyDone;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         commentTextView_.font = [UIFont systemFontOfSize:18];
+    
+    textCountview_ = [[UILabel alloc] initWithFrame:CGRectZero];
+    textCountview_.backgroundColor = [UIColor clearColor];
+    textCountview_.textColor = [UIColor colorWithWhite:0.1 alpha:0.6];
+    textCountview_.textAlignment = UITextAlignmentRight;
+    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        textCountview_.font = [UIFont systemFontOfSize:22];
+    else
+        textCountview_.font = [UIFont systemFontOfSize:16];
+    
     [commentBackgroundView_ addSubview: commentTextView_];
+    [commentBackgroundView_ addSubview:textCountview_];
     [self addSubview:imageView_];
     [self addSubview:commentBackgroundView_];
     [self updateCoordinates:frame];
@@ -96,14 +108,15 @@
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
-            commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - 20);
+        commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - 20);
+        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 85, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD-30, 80, 30);
     }
     else
     {
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
         commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - 20);
+        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - 53, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE -20, 50, 20);
     }
-    
 }
 
 /*!
@@ -181,6 +194,9 @@
     return comment;
 }
 
+#pragma mark -
+#pragma mark textView delegate
+
 /*!
  * text field delegate
  */
@@ -193,11 +209,11 @@
 	return YES;
 }
 
-
-///*!
-// * photo
-// */
-//- (UIImage *)photo{
-//    return photo;
-//}
+/*!
+ * did changed text in textView
+ */
+- (void)textViewDidChange:(UITextView *)textView
+{
+    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+}
 @end

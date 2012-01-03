@@ -13,6 +13,7 @@
 @interface PreviewPhotoView : UIView<UITextViewDelegate>{
     __strong UITextView *commentTextView_;
     __strong UIView *commentBackgroundView_;
+    __strong UILabel* textCountview_;
     __strong UIImageView *imageView_;
     __strong UIImage *photo_;
 }
