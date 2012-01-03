@@ -23,7 +23,7 @@
     application.statusBarHidden = NO;
     CGRect frame = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:frame];
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor clearColor];
     
     self.mainViewController = [[MainViewController alloc] initWithFrame:frame];
     self.window.rootViewController = self.mainViewController;
@@ -47,7 +47,7 @@
 {
     UIApplication* app = [UIApplication sharedApplication];
     
-    self.mainViewController.isRecoveredFromSuspend = YES; 
+    [self.mainViewController determinRefreshCameraNeeded];
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{

@@ -36,11 +36,14 @@
     __strong SettingIndicatorView *settingIndicatorView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
+    BOOL refreshCameraNeeded_;
+    BOOL settingViewPresented_;
 }
 
-@property (nonatomic, assign) BOOL isRecoveredFromSuspend;
+@property (nonatomic, readonly) BOOL refreshCameraNeeded;
 
 - (id) initWithFrame:(CGRect)frame;
 - (void) applicationDidBecomeActive;
+- (void) determinRefreshCameraNeeded;
 @end
 

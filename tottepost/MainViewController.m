@@ -43,7 +43,8 @@
 - (void) setupInitialState: (CGRect) aFrame{
     aFrame.origin.y = 0;
     self.view.frame = aFrame;
-    self.isRecoveredFromSuspend = NO;
+    self.view.backgroundColor = [UIColor clearColor];
+    refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     //photo submitter setting
@@ -112,6 +113,7 @@
 - (void) didSettingButtonTapped:(id)sender{
     [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
+    settingViewPresented_ = YES;
 }
 
 /*!
@@ -358,7 +360,7 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation MainViewController
-@synthesize isRecoveredFromSuspend;
+@synthesize refreshCameraNeeded = refreshCameraNeeded_;
 
 #pragma mark -
 #pragma mark public methods
@@ -383,8 +385,19 @@
  * application Did Become active
  */
 - (void)applicationDidBecomeActive{
-    if(settingNavigationController_.view.isHidden == NO){
+    if(settingViewPresented_){
         [settingViewController_ updateSocialAppSwitches];
+    }
+}
+
+/*!
+ * determin refresh needed
+ */
+- (void)determinRefreshCameraNeeded{
+    if(settingViewPresented_){
+        refreshCameraNeeded_ = YES;
+    }else{
+        refreshCameraNeeded_ = NO;
     }
 }
 
@@ -455,12 +468,13 @@
         frame.size.height += MAINVIEW_STATUS_BAR_HEIGHT;
         [self.view setFrame:frame];
     }
-    if(self.isRecoveredFromSuspend){
-        self.isRecoveredFromSuspend = NO;
+    if(self.refreshCameraNeeded){
+        refreshCameraNeeded_ = NO;
         [self performSelector:@selector(updateCameraController) withObject:nil afterDelay:0.5];
     }else{
         [self updateCoordinates];
     }
+    settingViewPresented_ = NO;
 }
 
 #pragma mark -
