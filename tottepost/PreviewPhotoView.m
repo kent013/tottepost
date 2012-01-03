@@ -35,7 +35,8 @@
     commentTextView_.backgroundColor = [UIColor clearColor];
     commentTextView_.delegate = self;
     commentTextView_.returnKeyType = UIReturnKeyDone;
-    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        commentTextView_.font = [UIFont systemFontOfSize:18];
     [commentBackgroundView_ addSubview: commentTextView_];
     [self addSubview:imageView_];
     [self addSubview:commentBackgroundView_];
@@ -72,8 +73,11 @@
  */
 - (void)keyboardWillHide:(NSNotification *)aNotification {
     NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGRect frame = commentBackgroundView_.frame;    
-    frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y;
+    CGRect frame = commentBackgroundView_.frame;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y;
+    else
+        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y;        
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
     commentBackgroundView_.frame = frame;
@@ -89,8 +93,16 @@
     frame.origin.y = 0;
     imageView_.frame = frame;
     
-    commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH, MAINVIEW_COMMENT_VIEW_HEIGHT);
-    commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH - 10, MAINVIEW_COMMENT_VIEW_HEIGHT - 20);
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
+            commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - 20);
+    }
+    else
+    {
+        commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
+        commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - 20);
+    }
     
 }
 
