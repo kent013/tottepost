@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "PreviewPhotoView.h"
 #import "MainViewControllerConstants.h"
+#import "UIImage+AutoRotation.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -107,6 +108,7 @@
 //----------------------------------------------------------------------------
 @implementation PreviewPhotoView
 @synthesize delegate;
+@synthesize photo = photo_;
 /*!
  * initialize
  */
@@ -130,7 +132,19 @@
  */
 - (void)presentWithPhoto:(UIImage *)photo{
     commentTextView_.text = @"";
-    imageView_.image = photo;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        photo_ = photo.UIImageAutoRotated;
+        if(photo.imageOrientation != UIImageOrientationRight)
+            imageView_.image = [photo UIImageRotateByAngle:270];
+        else
+            imageView_.image = photo;
+    }
+    else
+    {
+        photo_ = photo.UIImageAutoRotated;
+        imageView_.image = photo_;
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];   
 }
@@ -168,10 +182,10 @@
 }
 
 
-/*!
- * photo
- */
-- (UIImage *)photo{
-    return imageView_.image;
-}
+///*!
+// * photo
+// */
+//- (UIImage *)photo{
+//    return photo;
+//}
 @end

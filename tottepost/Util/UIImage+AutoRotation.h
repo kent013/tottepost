@@ -12,4 +12,5 @@
 - (CGImageRef)CGImageRotatedByAngle :(CGFloat)angle;
 - (CGImageRef)CGImageAutoRotated;
 - (UIImage*) UIImageAutoRotated;
+- (UIImage*) UIImageRotateByAngle :(int)angle;
 @end

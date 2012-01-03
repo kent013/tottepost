@@ -14,6 +14,7 @@
     __strong UITextView *commentTextView_;
     __strong UIView *commentBackgroundView_;
     __strong UIImageView *imageView_;
+    __strong UIImage *photo_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
 @property (readonly, nonatomic) NSString *comment;

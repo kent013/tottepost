@@ -70,4 +70,13 @@
     return image;
 }
 
+/*!
+ * return rotated image by pointed angle
+ */
+- (UIImage*) UIImageRotateByAngle :(int)angle
+{
+    UIImage* image = [UIImage imageWithCGImage: [self CGImageRotatedByAngle:angle]];
+    return image;    
+}
+
 @end
