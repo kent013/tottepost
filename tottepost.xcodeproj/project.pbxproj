@@ -104,8 +104,6 @@
 		EAAB70AE14B1AD6E001B873F /* comment-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB70AC14B1AD6E001B873F /* comment-selected@2x.png */; };
 		EAAD435714B325AA0093E003 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435514B325AA0093E003 /* icon.png */; };
 		EAAD435814B325AA0093E003 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435614B325AA0093E003 /* icon@2x.png */; };
-		EAAD435A14B325BB0093E003 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435914B325BB0093E003 /* icon.png */; };
-		EAAD435C14B325C30093E003 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435B14B325C30093E003 /* icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,8 +286,6 @@
 		EAAB70AC14B1AD6E001B873F /* comment-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment-selected@2x.png"; path = "Resources/Images/comment-selected@2x.png"; sourceTree = "<group>"; };
 		EAAD435514B325AA0093E003 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/Images/icon.png; sourceTree = "<group>"; };
 		EAAD435614B325AA0093E003 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/Images/icon@2x.png"; sourceTree = "<group>"; };
-		EAAD435914B325BB0093E003 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		EAAD435B14B325C30093E003 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,8 +399,6 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
-				EAAD435B14B325C30093E003 /* icon@2x.png */,
-				EAAD435914B325BB0093E003 /* icon.png */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
@@ -799,8 +793,6 @@
 				EAAB70AE14B1AD6E001B873F /* comment-selected@2x.png in Resources */,
 				EAAD435714B325AA0093E003 /* icon.png in Resources */,
 				EAAD435814B325AA0093E003 /* icon@2x.png in Resources */,
-				EAAD435A14B325BB0093E003 /* icon.png in Resources */,
-				EAAD435C14B325C30093E003 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
