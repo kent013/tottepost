@@ -158,6 +158,7 @@
  */
 - (void)presentWithPhoto:(UIImage *)photo{
     commentTextView_.text = @"";
+     textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         photo_ = photo.UIImageAutoRotated;
