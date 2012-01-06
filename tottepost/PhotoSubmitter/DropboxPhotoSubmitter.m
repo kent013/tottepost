@@ -73,6 +73,9 @@
     [self removeSettingForKey:PS_DROPBOX_ENABLED];
 }
 
+
+#pragma mark -
+#pragma mark Dropbox delegate methods
 /*!
  * Dropbox delegate, upload finished
  */
@@ -118,6 +121,9 @@
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
 
+/*!
+ * when the load account finished
+ */
 - (void)restClient:(DBRestClient *)client loadAccountInfoFailedWithError:(NSError *)error{
     NSLog(@"%@", error.description);
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
@@ -182,6 +188,7 @@
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         return;
     }else{
+        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
 		[[DBSession sharedSession] link];
     }
 }
@@ -245,10 +252,16 @@
  */
 - (BOOL)didOpenURL:(NSURL *)url{
     [[DBSession sharedSession] handleOpenURL:url];
+    BOOL result = NO;
     if([[DBSession sharedSession] isLinked]){
-        return YES;
+        [self setSetting:@"enabled" forKey:PS_DROPBOX_ENABLED];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+        result = YES;
+    }else{
+        [self.authDelegate photoSubmitter:self didLogout:self.type];
     }
-    return NO;
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    return result;
 }
 
 /*!
@@ -331,6 +344,13 @@
 }
 
 /*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return YES;
+}
+
+/*!
  * isEnabled
  */
 + (BOOL)isEnabled{
@@ -343,7 +363,11 @@
 
 #pragma mark -
 #pragma mark Dropbox delegate methods
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId{
-    
+/*!
+ * authorization failed
+ */
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId{        [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
 }
 @end

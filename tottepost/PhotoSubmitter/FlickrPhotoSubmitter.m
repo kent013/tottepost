@@ -130,6 +130,8 @@
     
     authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
     [authRequest_ callAPIMethodWithGET:@"flickr.test.login" arguments:nil];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     
 }
 @end
@@ -185,6 +187,7 @@
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         return;
     }
+    [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
     authRequest_ = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     authRequest_.delegate = self;
     authRequest_.sessionInfo = PS_FLICKR_API_REQUEST_TOKEN;
@@ -335,6 +338,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
     return YES;
 }
 

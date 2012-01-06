@@ -293,7 +293,7 @@
 }
 
 #pragma mark -
-#pragma mark FacebookSettingViewController delegate methods
+#pragma mark PhotoSubmitterAuthDelegate delegate methods
 /*!
  * photo submitter did login
  */
@@ -310,6 +310,18 @@
     int index = [self submitterTypeToIndex:type];
     UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
     [s setOn:NO animated:YES];    
+}
+
+/*!
+ * photo submitter start authorization
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willBeginAuthorization:(PhotoSubmitterType)type{
+}
+
+/*!
+ * photo submitter authorization finished
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAuthorizationFinished:(PhotoSubmitterType)type{
 }
 
 #pragma mark -

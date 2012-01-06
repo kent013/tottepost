@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------------
 
 @implementation PhotoSubmitter
+
 /*!
  * initialize
  */
@@ -252,6 +253,4 @@
 - (BOOL)settingExistsForKey:(NSString *)key{
     return [self settingForKey:key] != nil;
 }
-
-
 @end

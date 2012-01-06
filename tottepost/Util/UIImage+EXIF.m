@@ -23,7 +23,9 @@
 	NSString* datetime = [dateFormatter stringFromDate:location.timestamp];
 	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
 	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
-    [exifDict setObject:comment forKey:(NSString*)kCGImagePropertyExifUserComment];
+    if(comment != nil){
+        [exifDict setObject:comment forKey:(NSString*)kCGImagePropertyExifUserComment];
+    }
 	[locDict setObject:location.timestamp forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
 	if (location.coordinate.latitude <0.0){ 
 		[locDict setObject:@"S" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];

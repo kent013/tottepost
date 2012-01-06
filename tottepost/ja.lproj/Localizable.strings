@@ -8,6 +8,7 @@
 
 "Alert_Error" = "エラー";
 "Alert_NoNetwork" = "ネットワークに接続していません。\nアップロードをキャンセルします。";
+"Alert_NoSubmittersEnabled" = "アップロード先のサービスが選択されていません。";
 
 "Main_Post" = "投稿";
 "Main_Cancel" = "キャンセル";

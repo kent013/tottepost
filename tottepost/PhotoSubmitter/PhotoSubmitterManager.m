@@ -85,6 +85,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     if(submitter){
         [submitters_ setObject:submitter forKey:[NSNumber numberWithInt:type]];
     }
+    [submitter addPhotoDelegate:self];
     return submitter;
 }
 
@@ -159,7 +160,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * get uploadOperationCount
  */
 - (int)uploadOperationCount{
-    return operationQueue_.operationCount;
+    return uploadOperationCount_;
 }
 
 /*!
@@ -211,6 +212,42 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     location_ = newLocation;
     //NSLog(@"%@, %@", location_.coordinate.longitude, location_.coordinate.latitude);
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    for(NSNumber *key in submitters_){
+        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
+        if(submitter.isEnabled && submitter.requiresNetwork){
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterPhotoDelegate methods
+/*!
+ * upload started
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+    uploadOperationCount_ ++;
+}
+
+/*!
+ * upload finished
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
+    uploadOperationCount_ --;
+}
+
+/*!
+ * progress changed
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+    //do nothing
 }
 
 #pragma mark -

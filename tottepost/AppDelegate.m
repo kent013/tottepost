@@ -13,6 +13,7 @@
 @synthesize window = _window;
 @synthesize mainViewController = _mainViewController;
 @synthesize backgroundTaskIdentifer;
+@synthesize applicationBecomeActiveAfterOpenURL;
 
 /*!
  * when the application lunched, initialize camera view immediately
@@ -22,7 +23,7 @@
     application.statusBarHidden = NO;
     CGRect frame = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:frame];
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor clearColor];
     
     self.mainViewController = [[MainViewController alloc] initWithFrame:frame];
     self.window.rootViewController = self.mainViewController;
@@ -35,6 +36,7 @@
  */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    applicationBecomeActiveAfterOpenURL = YES;
     return [[PhotoSubmitterManager getInstance] didOpenURL:url];
 }
 
@@ -45,7 +47,7 @@
 {
     UIApplication* app = [UIApplication sharedApplication];
     
-    self.mainViewController.isRecoveredFromSuspend = YES; 
+    [self.mainViewController determinRefreshCameraNeeded];
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{
@@ -64,7 +66,10 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     UIApplication* app = [UIApplication sharedApplication];
-    [self.mainViewController applicationDidBecomeActive];
+    if(applicationBecomeActiveAfterOpenURL == NO){
+        [self.mainViewController applicationDidBecomeActive];
+    }
+    applicationBecomeActiveAfterOpenURL = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (backgroundTaskIdentifer != UIBackgroundTaskInvalid) {
             [app endBackgroundTask:backgroundTaskIdentifer];

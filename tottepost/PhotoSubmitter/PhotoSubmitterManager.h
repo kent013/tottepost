@@ -19,7 +19,7 @@
 /*!
  * photo submitter aggregation class
  */
-@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate>{
+@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate, PhotoSubmitterPhotoDelegate>{
     @protected 
     __strong NSMutableDictionary *submitters_;
     __strong NSMutableArray *supportedTypes_;
@@ -27,6 +27,7 @@
     __strong CLLocationManager *locationManager_;
     __strong CLLocation *location_;
     BOOL geoTaggingEnabled_;
+    int uploadOperationCount_;
 }
 
 @property (nonatomic, readonly) NSArray* supportedTypes;
@@ -35,6 +36,7 @@
 @property (nonatomic, readonly) int uploadOperationCount;
 @property (nonatomic, assign) BOOL enableGeoTagging;
 @property (nonatomic, readonly) CLLocation *location;
+@property (nonatomic, readonly) BOOL requiresNetwork;
 
 - (void) submitPhoto:(UIImage *)photo;
 - (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
