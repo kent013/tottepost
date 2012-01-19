@@ -80,7 +80,7 @@
         CFRelease(cgImage);
         
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
-        [lib writeImageToSavedPhotosAlbum:photo.CGImage
+        [lib writeImageDataToSavedPhotosAlbum:imageData
                                  metadata:metadata
                           completionBlock:^(NSURL* url, NSError* error){
                               [self photoSubmitter:self didProgressChanged:hash progress:0.75];
