@@ -14,16 +14,17 @@
 #import "ProgressSummaryView.h"
 #import "PreviewPhotoView.h"
 #import "SettingIndicatorView.h"
+#import "AVFoundationCameraController.h"
 
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
     __strong UINavigationController *settingNavigationController_;
-    __strong UIImagePickerController* imagePicker_;
+    __strong AVFoundationCameraController *imagePicker_;
     __strong UIBarButtonItem* cameraButton_;
     __strong UIBarButtonItem* postButton_;
     __strong UIBarButtonItem* postCancelButton_;

@@ -185,7 +185,7 @@
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH/2 - MAINVIEW_COMMENT_BUTTON_WIDTH - MAINVIEW_COMMENT_BUTTON_PADDING; 
 
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+    /*if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         CGAffineTransform transform = CGAffineTransformIdentity;
         if(orientation_ == UIInterfaceOrientationPortraitUpsideDown){
             transform = CGAffineTransformMakeRotation(M_PI);
@@ -193,7 +193,7 @@
             transform = CGAffineTransformMakeRotation(0);
         }
         [imagePicker_ setCameraViewTransform:transform];
-    }
+    }*/
     
     if([TottePostSettings getInstance].commentPostEnabled){
         UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
@@ -346,11 +346,9 @@
 - (void) createCameraController{
     [UIApplication sharedApplication].statusBarHidden = YES;
     if(imagePicker_ == nil){
-        imagePicker_ = [[UIImagePickerController alloc] init];
+        imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame];
         imagePicker_.delegate = self;
-        imagePicker_.sourceType = UIImagePickerControllerSourceTypeCamera;
         imagePicker_.showsCameraControls = YES;
-        //[imagePicker_.view setAutoresizingMask:UIViewAutoresizingNone]; 
     }
     [self updateCameraController];
 }
@@ -406,16 +404,15 @@
 /*! 
  * take photo
  */
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+- (void)cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image metadata:(NSDictionary *)metadata{
     cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
-    UIImage *image = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     if([TottePostSettings getInstance].commentPostEnabled){
         [self previewPhoto:image];
     }else{
         image = image.UIImageAutoRotated;
         [self postPhoto:image comment:nil];
-    }
+    }    
 }
 
 #pragma mark -
