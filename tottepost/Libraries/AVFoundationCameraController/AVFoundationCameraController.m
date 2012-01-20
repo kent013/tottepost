@@ -35,7 +35,7 @@
 - (void) setFocus:(CGPoint)point;
 - (void) autofocus;
 - (void) updateCameraControls;
-- (void) didDeviceRotate;
+- (void) deviceOrientationDidChange;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -77,7 +77,7 @@
     [self updateCameraControls];
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDeviceRotate) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
 /*!
@@ -158,7 +158,6 @@
     CGRect f = self.view.frame;
     if(showsShutterButton_ && [shutterButton_ isDescendantOfView:self.view] == NO){
         [shutterButton_ setFrame:CGRectMake((f.size.width - PICKER_SHUTTER_BUTTON_WIDTH) / 2    , f.size.height - PICKER_SHUTTER_BUTTON_HEIGHT - PICKER_PADDING_Y, PICKER_SHUTTER_BUTTON_WIDTH, PICKER_SHUTTER_BUTTON_HEIGHT)];
-        NSLog(@"%@", NSStringFromCGRect(shutterButton_.frame));
         [self.view addSubview: shutterButton_];
     }
     if(showsFlashModeButton_ && [flashModeButton_ isDescendantOfView:self.view] == NO){
@@ -378,19 +377,30 @@
 /*!
  * when the device rotated
  */
-- (void)didDeviceRotate{
+- (void)deviceOrientationDidChange
+{   
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    if (deviceOrientation == UIDeviceOrientationPortrait){
+        videoOrientation_ = AVCaptureVideoOrientationPortrait;
+    }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
+        videoOrientation_ = AVCaptureVideoOrientationPortraitUpsideDown;
+    }else if (deviceOrientation == UIDeviceOrientationLandscapeLeft){        
+        videoOrientation_ = AVCaptureVideoOrientationLandscapeRight;
+    }else if (deviceOrientation == UIDeviceOrientationLandscapeRight){
+        videoOrientation_ = AVCaptureVideoOrientationLandscapeLeft;
+    }
+    for (AVCaptureConnection* connection in imageOutput_.connections) {
+        connection.videoOrientation = videoOrientation_;
+    }
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        UIDevice *device = [UIDevice currentDevice];
-        if(device.orientation == UIInterfaceOrientationPortrait ||
-           device.orientation == UIInterfaceOrientationPortraitUpsideDown){
-            if (previewLayer_) {
-                // set the correct orientation for the video layer
-                previewLayer_.orientation = [[UIDevice currentDevice] orientation];
-                
-                // and set its frame to that of its parent UIView
-                previewLayer_.frame = self.view.bounds;
-            }
+        if(videoOrientation_ != UIInterfaceOrientationPortrait &&
+           videoOrientation_ != UIInterfaceOrientationPortraitUpsideDown){
+            return;
         }
+    }
+    if (previewLayer_) {
+        previewLayer_.orientation = [[UIDevice currentDevice] orientation];
+        previewLayer_.frame = self.view.bounds;
     }
 }
 @end
@@ -443,6 +453,7 @@
 	[imageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
 		 NSDictionary *exifAttachments = (__bridge NSDictionary*)CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
+         [exifAttachments setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          UIImage *image = [[UIImage alloc] initWithData:imageData];
          

@@ -61,6 +61,7 @@
     
     //preview image view
     previewImageView_ = [[PreviewPhotoView alloc] initWithFrame:CGRectZero];
+    previewImageView_.delegate = self;
     
     //progress view
     progressTableViewController_ = [[ProgressTableViewController alloc] initWithFrame:CGRectZero andProgressSize:CGSizeMake(MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
@@ -105,6 +106,12 @@
     [[PhotoSubmitterManager getInstance] setPhotoDelegate:progressSummaryView_];
     [PhotoSubmitterManager getInstance].enableGeoTagging = 
       [TottePostSettings getInstance].gpsEnabled;
+    if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
+        orientation_ = UIInterfaceOrientationPortraitUpsideDown;
+    }else{
+        orientation_ = UIInterfaceOrientationPortrait;
+    }
+    lastOrientation_ = orientation_;
 }
 
 /*!
@@ -349,6 +356,7 @@
         imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame];
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
+        imagePicker_.showsShutterButton = NO;
     }
     [self updateCameraController];
 }
@@ -449,6 +457,15 @@
         [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
                                                      forHash:imageHash progress:progress];
     });
+}
+
+#pragma mark -
+#pragma mark PreviewPhotoVieww delegate
+/*!
+ * request for orientation
+ */
+- (UIInterfaceOrientation)requestForOrientation{
+    return orientation_;
 }
 
 #pragma mark -

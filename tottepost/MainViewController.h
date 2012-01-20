@@ -19,7 +19,7 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;

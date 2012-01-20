@@ -34,6 +34,8 @@
     CGRect defaultBounds_;
     CGFloat lastPinchScale_;
     CGFloat scale_;
+    
+    AVCaptureVideoOrientation videoOrientation_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;
