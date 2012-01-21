@@ -9,6 +9,8 @@
 #import <CoreMedia/CoreMedia.h>
 #import <ImageIO/ImageIO.h>
 #import "AVFoundationCameraController.h"
+#import "UIImage+Resize.h"
+#import "UIImage+AutoRotation.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
@@ -36,6 +38,8 @@
 - (void) autofocus;
 - (void) updateCameraControls;
 - (void) deviceOrientationDidChange;
+- (NSData *) cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale;
+- (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -47,6 +51,7 @@
     pointOfInterest_ = CGPointMake(frame.size.width / 2, frame.size.height / 2);
     defaultBounds_ = frame;
     scale_ = 1.0;
+    croppedViewRect_ = CGRectZero;
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     tapRecognizer.delegate = self;
@@ -142,6 +147,8 @@
                INDICATOR_RECT_SIZE);
     indicatorLayer_.hidden = NO;
     [self.view.layer addSublayer:indicatorLayer_];
+    viewOrientation_ = UIDeviceOrientationPortrait;
+    [self deviceOrientationDidChange];
 }
 
 /*!
@@ -257,8 +264,14 @@
     [CATransaction commit];
     lastPinchScale_ = pinchScale;
     
+    if(scale == 1.0){
+        croppedViewRect_ = CGRectZero;
+    }else{
+        croppedViewRect_ = CGRectMake(fabsf(rect.origin.x), fabsf(rect.origin.y), defaultBounds_.size.width, defaultBounds_.size.height);
+    }
+    
     if([self.delegate respondsToSelector:@selector(cameraController:didScaledTo:viewRect:)]){
-        [self.delegate cameraController:self didScaledTo:scale_ viewRect:CGRectMake(fabsf(rect.origin.x / scale_), fabsf(rect.origin.y / scale_), defaultBounds_.size.width, defaultBounds_.size.height)];
+        [self.delegate cameraController:self didScaledTo:scale_ viewRect:croppedViewRect_];
     }
 }
 
@@ -393,15 +406,114 @@
         connection.videoOrientation = videoOrientation_;
     }
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(videoOrientation_ != UIInterfaceOrientationPortrait &&
-           videoOrientation_ != UIInterfaceOrientationPortraitUpsideDown){
+        if(videoOrientation_ != AVCaptureVideoOrientationPortrait &&
+           videoOrientation_ != AVCaptureVideoOrientationPortraitUpsideDown){
             return;
         }
     }
+    
+    viewOrientation_ = deviceOrientation;
     if (previewLayer_) {
         previewLayer_.orientation = [[UIDevice currentDevice] orientation];
         previewLayer_.frame = self.view.bounds;
+        scale_ = 1.0;
+        croppedViewRect_ = CGRectZero;
     }
+}
+
+/*
+ * crop image data with data
+ * @param data 
+ * @param rect crop rect
+ */
+- (NSData *)cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale{
+    if(CGRectEqualToRect(viewRect, CGRectZero)){
+        return data;
+    }
+    
+    //read exif data
+    CGImageSourceRef cfImage = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
+    
+    //calculate view -> image scale
+    UIImage *image = [UIImage imageWithData:data];
+    CGFloat ivScale = 1.0;
+    if(image.size.width > image.size.height){
+        ivScale = image.size.width / defaultBounds_.size.height;
+    }else{
+        ivScale = image.size.height / defaultBounds_.size.height;
+    }
+    //ivScale = scale_ / ivScale;
+
+    //crop image
+    CGRect rect = CGRectMake(viewRect.origin.x, viewRect.origin.y, image.size.width / scale, image.size.height / scale);
+    rect = [self normalizeCropRect:rect size:image.size];
+    
+    image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
+    NSData *croppedData = UIImageJPEGRepresentation(image, 1.0);
+    CGImageSourceRef croppedImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
+    
+    //write back exif info
+    CGImageSourceRef croppedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
+    NSMutableDictionary *croppedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(croppedCFImage, 0, nil)];
+    NSMutableDictionary *exifMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
+    NSMutableDictionary *tiffMetadata = [croppedMetadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+
+    [croppedMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
+    //[exifMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
+    [tiffMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    [croppedMetadata setValue:exifMetadata forKey:(NSString *)kCGImagePropertyExifDictionary];
+    [croppedMetadata setValue:tiffMetadata forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)croppedData, CGImageSourceGetType(croppedImage), 1, NULL);
+	CGImageDestinationAddImageFromSource(dest, croppedImage, 0, (__bridge CFDictionaryRef)croppedMetadata);
+	CGImageDestinationFinalize(dest);
+    
+    NSLog(@"%@", croppedMetadata.description);
+    
+    //release 
+	CFRelease(cfImage);
+    CFRelease(croppedCFImage);
+    CFRelease(croppedImage);
+	CFRelease(dest);
+    return croppedData;   
+}
+
+/*!
+ * normalize crop rect
+ * @param rect target rect
+ * @return CGRect
+ */
+- (CGRect)normalizeCropRect:(CGRect)rect size:(CGSize)size{
+    CGRect rotatedRect = rect;
+    if(videoOrientation_ == AVCaptureVideoOrientationPortrait){
+        return rect;
+    }else if((viewOrientation_ == UIDeviceOrientationPortrait && 
+              videoOrientation_ == AVCaptureVideoOrientationLandscapeLeft) ||
+             (viewOrientation_ == UIDeviceOrientationPortraitUpsideDown &&
+              videoOrientation_ == AVCaptureVideoOrientationLandscapeRight)){
+        rotatedRect.origin.x = size.height - rect.origin.y;
+        rotatedRect.origin.y = rect.origin.x;
+    }else if((viewOrientation_ == UIDeviceOrientationPortrait && 
+              videoOrientation_ == AVCaptureVideoOrientationLandscapeRight) ||
+             (viewOrientation_ == UIDeviceOrientationPortraitUpsideDown &&
+              videoOrientation_ == AVCaptureVideoOrientationLandscapeLeft)){
+        rotatedRect.origin.x = rect.origin.y;
+        rotatedRect.origin.y = size.height - rect.origin.x;
+    }
+    
+    if(rotatedRect.origin.x < 0){
+        rotatedRect.origin.x = 0;
+    }
+    if(rotatedRect.origin.y < 0){
+        rotatedRect.origin.y = 0;
+    }
+    if(rotatedRect.origin.x + rotatedRect.size.width > size.width){
+        rotatedRect.origin.x = size.width - rotatedRect.size.width;
+    }
+    if(rotatedRect.origin.y + rotatedRect.size.height > size.height){
+        rotatedRect.origin.y = size.height - rotatedRect.size.height;
+    }
+    return rotatedRect;
 }
 @end
 
@@ -453,18 +565,28 @@
 	[imageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
 		 NSDictionary *exifAttachments = (__bridge NSDictionary*)CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
-         [exifAttachments setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-         UIImage *image = [[UIImage alloc] initWithData:imageData];
          
-         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
-             [self.delegate cameraController:self didFinishPickingImage:image];
+         UIImage *image = nil;
+         if(scale_ != 1.0){
+             imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
+             image = [[UIImage alloc] initWithData:imageData];
+         }else{
+             image = [[[UIImage alloc] initWithData:imageData] fixOrientation];
          }
+         //UIImage *image = [[[[UIImage alloc] initWithData:imageData] fixOrientation] croppedImage:CGRectMake(0, 0, 200, 200)];
+         
          if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:metadata:)]){
              [self.delegate cameraController:self didFinishPickingImage:image metadata:exifAttachments];
          }
+         
+         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:metadata:)]){
+             [self.delegate cameraController:self didFinishPickingImageData:imageData metadata:exifAttachments];
+         }
 	 }];
 }
+
+
 
 /*!
  * shows camera controls

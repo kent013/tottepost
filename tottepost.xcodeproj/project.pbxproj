@@ -100,6 +100,9 @@
 		7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588C14C86D47006E3817 /* AVFoundation.framework */; };
 		7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588E14C86D7F006E3817 /* CoreMedia.framework */; };
 		7980589114C86DBA006E3817 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980589014C86DBA006E3817 /* CoreVideo.framework */; };
+		7980589D14CAA7C7006E3817 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589814CAA7C7006E3817 /* UIImage+Alpha.m */; };
+		7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589A14CAA7C7006E3817 /* UIImage+Resize.m */; };
+		7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 		EAAB709D14B1A129001B873F /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709B14B1A129001B873F /* camera.png */; };
@@ -292,6 +295,12 @@
 		7980588C14C86D47006E3817 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7980588E14C86D7F006E3817 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		7980589014C86DBA006E3817 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		7980589714CAA7C7006E3817 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "Libraries/UIImage-categories/UIImage+Alpha.h"; sourceTree = "<group>"; };
+		7980589814CAA7C7006E3817 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "Libraries/UIImage-categories/UIImage+Alpha.m"; sourceTree = "<group>"; };
+		7980589914CAA7C7006E3817 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Libraries/UIImage-categories/UIImage+Resize.h"; sourceTree = "<group>"; };
+		7980589A14CAA7C7006E3817 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Libraries/UIImage-categories/UIImage+Resize.m"; sourceTree = "<group>"; };
+		7980589B14CAA7C7006E3817 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "Libraries/UIImage-categories/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Libraries/UIImage-categories/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 		EAAB709B14B1A129001B873F /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = Resources/Images/camera.png; sourceTree = "<group>"; };
@@ -647,6 +656,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				7980589614CAA7B5006E3817 /* UIImage-categories */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				7980247014B1075000989368 /* uicolor-expanded */,
 				376A8B3714A060B700637B68 /* FBProgressView */,
@@ -701,6 +711,19 @@
 				7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */,
 			);
 			name = AVFoundationCameraController;
+			sourceTree = "<group>";
+		};
+		7980589614CAA7B5006E3817 /* UIImage-categories */ = {
+			isa = PBXGroup;
+			children = (
+				7980589714CAA7C7006E3817 /* UIImage+Alpha.h */,
+				7980589814CAA7C7006E3817 /* UIImage+Alpha.m */,
+				7980589914CAA7C7006E3817 /* UIImage+Resize.h */,
+				7980589A14CAA7C7006E3817 /* UIImage+Resize.m */,
+				7980589B14CAA7C7006E3817 /* UIImage+RoundedCorner.h */,
+				7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */,
+			);
+			name = "UIImage-categories";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -915,6 +938,9 @@
 				7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */,
 				7980247314B1076400989368 /* UIColor-Expanded.m in Sources */,
 				7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */,
+				7980589D14CAA7C7006E3817 /* UIImage+Alpha.m in Sources */,
+				7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */,
+				7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

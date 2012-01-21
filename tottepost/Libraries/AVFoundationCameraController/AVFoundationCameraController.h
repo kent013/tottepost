@@ -34,8 +34,10 @@
     CGRect defaultBounds_;
     CGFloat lastPinchScale_;
     CGFloat scale_;
+    CGRect croppedViewRect_;
     
     AVCaptureVideoOrientation videoOrientation_;
+    UIDeviceOrientation viewOrientation_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;
@@ -57,7 +59,13 @@
 
 @protocol AVFoundationCameraControllerDelegate <NSObject>
 @optional
-- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image;
+/*!
+ * delegate with image and metadata
+ */
 - (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image metadata:(NSDictionary *) metadata;
+/*!
+ * delegate raw data and metadata
+ */
+- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data metadata:(NSDictionary *) metadata;
 - (void) cameraController:(AVFoundationCameraController *)cameraController didScaledTo:(CGFloat) scale viewRect:(CGRect)rect;
 @end
