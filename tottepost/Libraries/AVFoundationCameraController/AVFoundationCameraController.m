@@ -401,6 +401,8 @@
         videoOrientation_ = AVCaptureVideoOrientationLandscapeRight;
     }else if (deviceOrientation == UIDeviceOrientationLandscapeRight){
         videoOrientation_ = AVCaptureVideoOrientationLandscapeLeft;
+    }else{
+        return;
     }
     for (AVCaptureConnection* connection in imageOutput_.connections) {
         connection.videoOrientation = videoOrientation_;
