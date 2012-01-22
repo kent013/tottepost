@@ -10,7 +10,6 @@
 #import <ImageIO/ImageIO.h>
 #import "AVFoundationCameraController.h"
 #import "UIImage+Resize.h"
-#import "UIImage+AutoRotation.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
@@ -451,7 +450,7 @@
     CGRect rect = CGRectMake(viewRect.origin.x, viewRect.origin.y, image.size.width / scale, image.size.height / scale);
     rect = [self normalizeCropRect:rect size:image.size];
     
-    image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
+    image = [[image croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
     NSData *croppedData = UIImageJPEGRepresentation(image, 1.0);
     CGImageSourceRef croppedImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
     
@@ -566,24 +565,20 @@
     
 	[imageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
-		 NSDictionary *exifAttachments = (__bridge NSDictionary*)CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          
          UIImage *image = nil;
          if(scale_ != 1.0){
              imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
+         }
+         
+         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
              image = [[UIImage alloc] initWithData:imageData];
-         }else{
-             image = [[[UIImage alloc] initWithData:imageData] fixOrientation];
-         }
-         //UIImage *image = [[[[UIImage alloc] initWithData:imageData] fixOrientation] croppedImage:CGRectMake(0, 0, 200, 200)];
-         
-         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:metadata:)]){
-             [self.delegate cameraController:self didFinishPickingImage:image metadata:exifAttachments];
+             [self.delegate cameraController:self didFinishPickingImage:image];
          }
          
-         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:metadata:)]){
-             [self.delegate cameraController:self didFinishPickingImageData:imageData metadata:exifAttachments];
+         if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:)]){
+             [self.delegate cameraController:self didFinishPickingImageData:imageData];
          }
 	 }];
 }

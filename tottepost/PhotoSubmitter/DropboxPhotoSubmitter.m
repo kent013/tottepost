@@ -150,19 +150,12 @@
 }
 
 /*!
- * submit photo with comment
+ * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{      
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     DBRestClient *restClient = 
     [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     restClient.delegate = self;
-
-    NSData *image = nil;
-    if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
-    }else{
-        image = UIImageJPEGRepresentation(photo, 1.0);
-    }
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat  = @"yyyyMMddHHmmssSSSS";
@@ -170,7 +163,7 @@
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:[NSDate date]]];
     NSString *path = [dir stringByAppendingString:filename];
 
-    [image writeToFile:path atomically:NO];
+    [photo.data writeToFile:path atomically:NO];
     [self addRequest:restClient];
     [self setPhotoHash:path forRequest:restClient];
     [self setOperationDelegate:delegate forRequest:restClient];

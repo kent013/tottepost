@@ -10,7 +10,7 @@
 #import <ImageIO/ImageIO.h>
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
-#import "UIImage+Digest.h"
+#import "NSData+Digest.h"
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
@@ -61,27 +61,14 @@
 }
 
 /*!
- * submit photo with comment
+ * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSData *imageData = nil;
-        if([PhotoSubmitterManager getInstance].enableGeoTagging){
-            imageData = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
-        }else{
-            imageData = UIImageJPEGRepresentation(photo, 1.0);
-        }
-        
-        NSString *hash = photo.MD5DigestString;
-        CGImageSourceRef cgImage = 
-        CGImageSourceCreateWithData((__bridge CFDataRef)imageData, nil); 
-        NSDictionary *metadata = 
-        (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cgImage, 0, nil);
-        CFRelease(cgImage);
-        
+        NSString *hash = photo.md5;
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
-        [lib writeImageDataToSavedPhotosAlbum:imageData
-                                 metadata:metadata
+        [lib writeImageDataToSavedPhotosAlbum:photo.data
+                                 metadata:photo.metadata
                           completionBlock:^(NSURL* url, NSError* error){
                               [self photoSubmitter:self didProgressChanged:hash progress:0.75];
                               if(error == nil){

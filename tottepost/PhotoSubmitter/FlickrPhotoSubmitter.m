@@ -9,6 +9,7 @@
 #import "PhotoSubmitterAPIKey.h"
 #import "FlickrPhotoSubmitter.h"
 #import "UIImage+Digest.h"
+#import "NSData+Digest.h"
 #import "RegexKitLite.h"
 #import "UIImage+EXIF.h"
 #import "PhotoSubmitterManager.h"
@@ -156,23 +157,17 @@
 }
 
 /*!
- * submit photo with comment
+ * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
     [self addRequest:request];
-   
-    NSData *image = nil;
-    if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        image = [photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment];
-    }else{
-        image = UIImageJPEGRepresentation(photo, 1.0);
-    }
-    [request uploadImageStream:[NSInputStream inputStreamWithData:image] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", comment, @"title", nil]];
+    
+    [request uploadImageStream:[NSInputStream inputStreamWithData:photo.data] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", photo.comment, @"title", nil]];
 	
-    NSString *hash = photo.MD5DigestString;
+    NSString *hash = photo.md5;
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [self photoSubmitter:self willStartUpload:hash];

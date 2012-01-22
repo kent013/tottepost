@@ -15,6 +15,7 @@
 #import "DropboxPhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
 #import "FilePhotoSubmitter.h"
+#import "PhotoSubmitterImageEntity.h"
 
 /*!
  * photo submitter aggregation class
@@ -38,9 +39,7 @@
 @property (nonatomic, readonly) CLLocation *location;
 @property (nonatomic, readonly) BOOL requiresNetwork;
 
-- (void) submitPhoto:(UIImage *)photo;
-- (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
-
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) loadSubmitters;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;

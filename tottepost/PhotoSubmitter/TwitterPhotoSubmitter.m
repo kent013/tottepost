@@ -92,15 +92,14 @@
 }
 
 /*!
- * submit photo with comment
+ * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    photo = [self photoPreprocess:photo andComment:comment];
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
 	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	
-    if(comment == nil){
-        comment = @"TottePost Photo";
+    if(photo.comment == nil){
+        photo.comment = @"TottePost Photo";
     }
     NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
     if ([accountsArray count] > 0) {
@@ -110,15 +109,14 @@
         TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
                                               requestMethod:TWRequestMethodPOST];
         [request setAccount:twitterAccount];
-        NSData *imageData = UIImagePNGRepresentation(photo);
-        [request addMultiPartData:imageData 
+        [request addMultiPartData:photo.data 
                          withName:@"media[]" type:@"multipart/form-data"];
-        [request addMultiPartData:[comment dataUsingEncoding:NSUTF8StringEncoding] 
+        [request addMultiPartData:[photo.comment dataUsingEncoding:NSUTF8StringEncoding] 
                          withName:@"status" type:@"multipart/form-data"];
         
         NSURLConnection *connection = 
           [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
-        NSString *imageHash = photo.MD5DigestString;
+        NSString *imageHash = photo.md5;
         
         if(connection){
             [self setPhotoHash:imageHash forRequest:connection];

@@ -9,7 +9,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
 #import "Reachability.h"
-#import "UIImage+AutoRotation.h"
 #import "TottePostSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
@@ -26,9 +25,9 @@
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
 - (BOOL) checkForConnection;
-- (void) previewPhoto:(UIImage *)photo;
+- (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) closePreview;
-- (void) postPhoto:(UIImage *)photo comment:(NSString *)comment;
+- (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
 - (void) createCameraController;
@@ -249,7 +248,7 @@
 /*!
  * post photo
  */
-- (void)postPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)postPhoto:(PhotoSubmitterImageEntity *)photo{
     PhotoSubmitterManager *manager = [PhotoSubmitterManager getInstance];
     if(manager.enabledSubmitterCount == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -259,7 +258,7 @@
     
     if(manager.requiresNetwork == NO ||
        (manager.requiresNetwork && [self checkForConnection])){
-        [manager submitPhoto:photo.UIImageAutoRotated comment:comment];
+        [manager submitPhoto:photo];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoNetwork"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -267,7 +266,7 @@
     
     if(manager.requiresNetwork && [self checkForConnection] == NO &&
        [manager submitterForType:PhotoSubmitterTypeFile].isEnabled){
-        [[manager submitterForType:PhotoSubmitterTypeFile] submitPhoto:photo.UIImageAutoRotated comment:comment];
+        [[manager submitterForType:PhotoSubmitterTypeFile] submitPhoto:photo andOperationDelegate:nil];
     }
 }
 
@@ -277,7 +276,7 @@
  * on post button tapped
  */
 - (void) didPostButtonTapped:(id)sender{
-    [self postPhoto:previewImageView_.photo comment:previewImageView_.comment];
+    [self postPhoto:previewImageView_.photo];
     [self closePreview];
 }
 
@@ -299,7 +298,7 @@
 /*!
  * preview photo
  */
-- (void)previewPhoto:(UIImage *)photo{
+- (void)previewPhoto:(PhotoSubmitterImageEntity *)photo{
     [self.view addSubview:previewImageView_];
     [previewImageView_ presentWithPhoto:photo];
     
@@ -412,14 +411,14 @@
 /*! 
  * take photo
  */
-- (void)cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image metadata:(NSDictionary *)metadata{
+- (void)cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data{
     cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
+    PhotoSubmitterImageEntity *photo = [[PhotoSubmitterImageEntity alloc] initWithData:data];
     if([TottePostSettings getInstance].commentPostEnabled){
-        [self previewPhoto:image];
+        [self previewPhoto:photo];
     }else{
-        image = image.UIImageAutoRotated;
-        [self postPhoto:image comment:nil];
+        [self postPhoto:photo];
     }    
 }
 

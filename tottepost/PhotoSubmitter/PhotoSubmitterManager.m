@@ -7,6 +7,8 @@
 //
 
 #import "PhotoSubmitterManager.h"
+#import "UIImage+EXIF.h"
+
 /*!
  * singleton instance
  */
@@ -92,26 +94,35 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 /*!
  * submit photo to social app
  */
-- (void)submitPhoto:(UIImage *)photo{
-    [self submitPhoto:photo comment:nil];
-}
-
-/*!
- * submit photo with comment to social app
- */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo{
+    if(self.enableGeoTagging){
+        photo.location = self.location;
+    }
+    [photo applyMetadata];
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
             if(self.submitPhotoWithOperations && submitter.isConcurrent){
-                PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo comment: comment];
+                PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo];
                 [operationQueue_ addOperation:operation];
             }else{
-                [submitter submitPhoto:photo comment:comment];
+                [submitter submitPhoto:photo andOperationDelegate:nil];
             }
         }
     }
 }
+
+/*!
+ * submit photo with filepath and comment
+ */
+/*- (void)submitPhotoWithFilePath:(NSString *)path comment:(NSString *)comment{
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    if(self.enableGeoTagging){
+        data = [UIImage geoTaggedData:data withLocation:location_ andComment:comment];
+    }
+    NSDictionary *metadata = [UIImage extractMetadata:data];
+    [self submitPhotoWithData:data metadata:metadata comment:comment];
+}*/
 
 /*!
  * set authentication delegate to submitters

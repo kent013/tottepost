@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PhotoSubmitterProtocol.h"
 #import "PhotoSubmitterOperation.h"
+#import "PhotoSubmitterImageEntity.h"
 
 /*!
  * this class manages 
@@ -53,13 +54,9 @@
 
 //util
 - (void) clearRequest: (NSObject *)request;
-- (UIImage *) photoPreprocess:(UIImage *)photo andComment:(NSString *)comment;
 
 //submit photo
-- (void) submitPhoto:(UIImage *)photo;
-- (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
-- (void) submitPhoto:(UIImage *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
-- (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 
 //write setting methods
 - (void)setSetting:(id)value forKey:(NSString *)key;

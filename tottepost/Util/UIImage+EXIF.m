@@ -15,6 +15,13 @@
  */
 -(NSData *) geoTaggedDataWithLocation:(CLLocation *)location andComment:(NSString *)comment{
     NSData *data = UIImageJPEGRepresentation(self, 1.0);
+    return [UIImage geoTaggedData:data withLocation:location andComment:comment];
+}
+
+/*!
+ * add geolocation and comment to image
+ */
++(NSData *) geoTaggedData:(NSData *)data withLocation:(CLLocation *)location andComment:(NSString *)comment{
     CGImageSourceRef img = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
 	NSMutableDictionary* exifDict = [[NSMutableDictionary alloc] init];
 	NSMutableDictionary* locDict = [[NSMutableDictionary alloc] init];
@@ -52,5 +59,14 @@
 	CFRelease(img);
 	CFRelease(dest);
     return imageData;
+}
+/*!
+ * load metadata
+ */
++(NSDictionary *)extractMetadata:(NSData *)data{
+    CGImageSourceRef image = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(image, 0, nil)];
+    CFRelease(image);
+    return metadata;
 }
 @end

@@ -59,7 +59,7 @@
     }
 
     [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
-    [self.submitter submitPhoto:self.photo comment:self.comment andDelegate:self];
+    [self.submitter submitPhoto:self.photo andOperationDelegate:self];
     do {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                  beforeDate:[NSDate distantFuture]];
@@ -83,18 +83,16 @@
 @implementation PhotoSubmitterOperation
 @synthesize submitter;
 @synthesize photo;
-@synthesize comment;
 
 /*!
  * initialize with data
  */
 - (id)initWithSubmitter:(id<PhotoSubmitterProtocol>)inSubmitter 
-                  photo:(UIImage *)inPhoto comment:(NSString *)inComment{
+                  photo:(PhotoSubmitterImageEntity *)inPhoto{
     self = [super init];
     if(self){
         self.submitter = inSubmitter;
         self.photo = inPhoto;
-        self.comment = inComment;
     }
     return self;
 }

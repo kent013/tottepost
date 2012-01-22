@@ -161,45 +161,16 @@
     [self removePhotoForRequest:request];
 }
 
-
-/*!
- * preprocess photo
- */
-- (UIImage *) photoPreprocess:(UIImage *)photo andComment:(NSString *)comment{
-    if([PhotoSubmitterManager getInstance].enableGeoTagging){
-        photo = [UIImage imageWithData:[photo geoTaggedDataWithLocation:[PhotoSubmitterManager getInstance].location andComment:comment]];
-    }
-    return photo;
-}
 #pragma mark -
 #pragma mark submit photo methods
 /*!
- * submit photo
- */
-- (void)submitPhoto:(UIImage *)photo{
-    [self submitPhoto:photo comment:nil andDelegate:nil];
-}
-
-/*!
- * submit photo with comment
- */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment{
-    [self submitPhoto:photo comment:comment andDelegate:nil];
-}
-
-/*!
- * submit photo with operation
- */
-- (void)submitPhoto:(UIImage *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    return [self submitPhoto:photo comment:nil andDelegate:delegate];
-}
-
-/*!
  * submit photo with comment and operation
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    NSLog(@"Subclasses must implement this method, %@", __PRETTY_FUNCTION__);    
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
 }
+
+#pragma mark -
+#pragma mark util methods
 
 /*!
  * write setting to user defaults

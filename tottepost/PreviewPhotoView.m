@@ -156,32 +156,32 @@
 /*!
  * show view
  */
-- (void)presentWithPhoto:(UIImage *)photo{
+- (void)presentWithPhoto:(PhotoSubmitterImageEntity *)photo{
     commentTextView_.text = @"";
      textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
-    NSLog(@"%d", photo.imageOrientation);
+    /*NSLog(@"%d", photo.imageOrientation);
     NSLog(@"%d", [UIDevice currentDevice].orientation);
-    NSLog(@"%d,%d,%d,%d", UIImageOrientationUp, UIImageOrientationDown, UIImageOrientationLeft, UIImageOrientationRight);
+    NSLog(@"%d,%d,%d,%d", UIImageOrientationUp, UIImageOrientationDown, UIImageOrientationLeft, UIImageOrientationRight);*/
     photo_ = photo;
+    
+    UIImage *image = photo.image;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
         UIInterfaceOrientation appOrientation = [self.delegate requestForOrientation];
         if(appOrientation == UIInterfaceOrientationPortrait){
-            if(orientation == UIDeviceOrientationLandscapeLeft){
-                photo = [photo UIImageRotateByAngle:270];
-            }else if(orientation == UIDeviceOrientationLandscapeRight){
-                photo = [photo UIImageRotateByAngle:90];                
+            if(orientation == UIDeviceOrientationLandscapeLeft ||
+               orientation == UIDeviceOrientationLandscapeRight){
+                image = [image UIImageRotateByAngle:270];                
             }
         }else if(appOrientation == UIInterfaceOrientationPortraitUpsideDown){
-            if(orientation == UIDeviceOrientationLandscapeLeft){
-                photo = [photo UIImageRotateByAngle:90];
-            }else if(orientation == UIDeviceOrientationLandscapeRight){
-                photo = [photo UIImageRotateByAngle:270];                
+            if(orientation == UIDeviceOrientationLandscapeLeft ||
+               orientation == UIDeviceOrientationLandscapeRight){
+                image = [image UIImageRotateByAngle:90];
             }
         }
     }
-    imageView_.image = photo;
+    imageView_.image = image;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];   
 }
@@ -190,20 +190,12 @@
  * hide view
  */
 - (void)dissmiss{
+    if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
+        photo_.comment = commentTextView_.text;
+    }
     [self removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-/*!
- * comment
- */
-- (NSString *)comment{
-    NSString *comment = nil;
-    if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
-        comment = commentTextView_.text;
-    }
-    return comment;
 }
 
 #pragma mark -

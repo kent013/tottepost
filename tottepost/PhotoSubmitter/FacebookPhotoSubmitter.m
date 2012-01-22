@@ -188,24 +188,23 @@
 }
 
 /*!
- * submit photo with comment
+ * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
-    photo = [self photoPreprocess:photo andComment:comment];
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     NSMutableDictionary *params = 
-      [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-       photo, @"source", 
-       comment, @"name",
-       nil];
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+     photo.image, @"source", 
+     photo.comment, @"name",
+     nil];
     NSString *path = @"me/photos";
     if(self.targetAlbum != nil){
         path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
     }
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
-    NSString *hash = photo.MD5DigestString;
+    NSString *hash = photo.md5;
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:hash];
+    [self photoSubmitter:self willStartUpload:hash];    
 }
 
 /*!

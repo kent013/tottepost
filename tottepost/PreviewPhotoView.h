@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotoSubmitterImageEntity.h"
 
 @protocol PreviewPhotoViewDelegate;
 
@@ -15,15 +16,14 @@
     __strong UIView *commentBackgroundView_;
     __strong UILabel* textCountview_;
     __strong UIImageView *imageView_;
-    __strong UIImage *photo_;
+    __strong PhotoSubmitterImageEntity *photo_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
-@property (readonly, nonatomic) NSString *comment;
-@property (readonly, nonatomic) UIImage *photo;
+@property (readonly, nonatomic) PhotoSubmitterImageEntity *photo;
 
 - (void) updateWithFrame:(CGRect)frame;
-- (void) presentWithPhoto:(UIImage *)photo;
+- (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) dissmiss;
 @end
 

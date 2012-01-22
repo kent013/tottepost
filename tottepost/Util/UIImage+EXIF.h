@@ -11,4 +11,6 @@
 
 @interface UIImage (EXIF)
 -(NSData *) geoTaggedDataWithLocation:(CLLocation *)location andComment:(NSString *)comment;
++(NSData *) geoTaggedData:(NSData *)data withLocation:(CLLocation *)location andComment:(NSString *)comment;
++(NSDictionary *)extractMetadata:(NSData *)data;
 @end

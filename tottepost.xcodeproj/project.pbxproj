@@ -103,6 +103,7 @@
 		7980589D14CAA7C7006E3817 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589814CAA7C7006E3817 /* UIImage+Alpha.m */; };
 		7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589A14CAA7C7006E3817 /* UIImage+Resize.m */; };
 		7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */; };
+		798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 		EAAB709D14B1A129001B873F /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709B14B1A129001B873F /* camera.png */; };
@@ -301,6 +302,8 @@
 		7980589A14CAA7C7006E3817 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Libraries/UIImage-categories/UIImage+Resize.m"; sourceTree = "<group>"; };
 		7980589B14CAA7C7006E3817 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "Libraries/UIImage-categories/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Libraries/UIImage-categories/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		798058A614CBDF85006E3817 /* PhotoSubmitterImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterImageEntity.h; path = PhotoSubmitter/PhotoSubmitterImageEntity.h; sourceTree = "<group>"; };
+		798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterImageEntity.m; path = PhotoSubmitter/PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 		EAAB709B14B1A129001B873F /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = Resources/Images/camera.png; sourceTree = "<group>"; };
@@ -630,6 +633,8 @@
 				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 				37F589EB14A3290F005C7700 /* PhotoSubmitterAlbumEntity.h */,
 				37F589EC14A32910005C7700 /* PhotoSubmitterAlbumEntity.m */,
+				798058A614CBDF85006E3817 /* PhotoSubmitterImageEntity.h */,
+				798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */,
 			);
 			name = PhotoSubmitter;
 			sourceTree = "<group>";
@@ -941,6 +946,7 @@
 				7980589D14CAA7C7006E3817 /* UIImage+Alpha.m in Sources */,
 				7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */,
 				7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */,
+				798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

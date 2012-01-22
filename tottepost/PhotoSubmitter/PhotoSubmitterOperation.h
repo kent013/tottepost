@@ -17,8 +17,7 @@
     BOOL isFinished;
 }
 @property (strong, nonatomic) id<PhotoSubmitterProtocol> submitter;
-@property (strong, nonatomic) UIImage *photo;
-@property (strong, nonatomic) NSString *comment;
+@property (strong, nonatomic) PhotoSubmitterImageEntity *photo;
 
-- (id)initWithSubmitter:(id<PhotoSubmitterProtocol>)submitter photo:(UIImage *)photo comment:(NSString *)comment;
+- (id)initWithSubmitter:(id<PhotoSubmitterProtocol>)submitter photo:(PhotoSubmitterImageEntity *)photo;
 @end

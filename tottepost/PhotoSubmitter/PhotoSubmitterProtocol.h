@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PhotoSubmitterAlbumEntity.h"
+#import "PhotoSubmitterImageEntity.h"
 /*!
  * Submitter Types
  */
@@ -45,10 +46,7 @@ typedef enum {
 - (void) login;
 - (void) logout;
 - (void) disable;
-- (void) submitPhoto:(UIImage *)photo;
-- (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment;
-- (void) submitPhoto:(UIImage *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
-- (void) submitPhoto:(UIImage *)photo comment:(NSString *)comment andDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (BOOL) isProcessableURL:(NSURL *)url;
 - (BOOL) didOpenURL:(NSURL *)url;
 - (void) addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate;

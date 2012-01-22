@@ -62,10 +62,10 @@
 /*!
  * delegate with image and metadata
  */
-- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image metadata:(NSDictionary *) metadata;
+- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImage:(UIImage *)image;
 /*!
  * delegate raw data and metadata
  */
-- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data metadata:(NSDictionary *) metadata;
+- (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data;
 - (void) cameraController:(AVFoundationCameraController *)cameraController didScaledTo:(CGFloat) scale viewRect:(CGRect)rect;
 @end
