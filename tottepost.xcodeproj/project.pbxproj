@@ -105,6 +105,7 @@
 		7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */; };
 		798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
+		EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAA791114CC5EDC00E431D1 /* camera_change.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
 		EAAB709D14B1A129001B873F /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709B14B1A129001B873F /* camera.png */; };
 		EAAB709E14B1A129001B873F /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB709C14B1A129001B873F /* camera@2x.png */; };
@@ -305,6 +306,7 @@
 		798058A614CBDF85006E3817 /* PhotoSubmitterImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterImageEntity.h; path = PhotoSubmitter/PhotoSubmitterImageEntity.h; sourceTree = "<group>"; };
 		798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterImageEntity.m; path = PhotoSubmitter/PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
+		EAAA791114CC5EDC00E431D1 /* camera_change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera_change.png; path = Resources/Images/camera_change.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
 		EAAB709B14B1A129001B873F /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = Resources/Images/camera.png; sourceTree = "<group>"; };
 		EAAB709C14B1A129001B873F /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera@2x.png"; path = "Resources/Images/camera@2x.png"; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				EAAD437114B34D310093E003 /* Default-Landscape.png */,
+				EAAA791114CC5EDC00E431D1 /* camera_change.png */,
 				EAAD437214B34D310093E003 /* Default-Portrait.png */,
 				EAAD436514B34A620093E003 /* icon_ipad.png */,
 				EAAD436114B3490A0093E003 /* Default.png */,
@@ -866,6 +869,7 @@
 				EAAD436614B34A620093E003 /* icon_ipad.png in Resources */,
 				EAAD437314B34D310093E003 /* Default-Landscape.png in Resources */,
 				EAAD437414B34D310093E003 /* Default-Portrait.png in Resources */,
+				EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

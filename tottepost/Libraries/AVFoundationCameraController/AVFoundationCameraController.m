@@ -64,8 +64,8 @@
     flashModeButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [flashModeButton_ setTitle:@"Flash" forState:UIControlStateNormal];
     [flashModeButton_ addTarget:self action:@selector(handleFlashModeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    cameraDeviceButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [cameraDeviceButton_ setTitle:@"Device" forState:UIControlStateNormal];
+    cameraDeviceButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cameraDeviceButton_ setBackgroundImage:[UIImage imageNamed:@"camera_change.png"] forState:UIControlStateNormal];
     [cameraDeviceButton_ addTarget:self action:@selector(handleCameraDeviceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [self initCamera:self.backCameraDevice];
