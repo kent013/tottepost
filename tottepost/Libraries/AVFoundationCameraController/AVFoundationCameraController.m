@@ -10,6 +10,7 @@
 #import <ImageIO/ImageIO.h>
 #import "AVFoundationCameraController.h"
 #import "UIImage+Resize.h"
+#import "UIImage+AutoRotation.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
@@ -432,12 +433,8 @@
         return data;
     }
     
-    //read exif data
-    CGImageSourceRef cfImage = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
-    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
-    
     //calculate view -> image scale
-    UIImage *image = [UIImage imageWithData:data];
+    UIImage *image = [UIImage  imageWithData:data];
     CGFloat ivScale = 1.0;
     if(image.size.width > image.size.height){
         ivScale = image.size.width / defaultBounds_.size.height;
@@ -450,32 +447,44 @@
     CGRect rect = CGRectMake(viewRect.origin.x, viewRect.origin.y, image.size.width / scale, image.size.height / scale);
     rect = [self normalizeCropRect:rect size:image.size];
     
-    image = [[image croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
+    image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
     NSData *croppedData = UIImageJPEGRepresentation(image, 1.0);
+    if(croppedData == nil){
+        return data;
+    }
     CGImageSourceRef croppedImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
+    
+    //read exif data
+    CGImageSourceRef cfImage = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
     
     //write back exif info
     CGImageSourceRef croppedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
+    
+    UIImageOrientation orientation;
+    //if(image.size.width > image.size.height){
+        //orientation = UIImageOrientationRight;
+    //}else{
+        orientation = UIImageOrientationUp;
+    //}
     NSMutableDictionary *croppedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(croppedCFImage, 0, nil)];
     NSMutableDictionary *exifMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-    NSMutableDictionary *tiffMetadata = [croppedMetadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-
-    [croppedMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
-    //[exifMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyOrientation];
-    [tiffMetadata setValue:[NSNumber numberWithInt:videoOrientation_] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    NSMutableDictionary *tiffMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    
+    [croppedMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyOrientation];
+    [tiffMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
     [croppedMetadata setValue:exifMetadata forKey:(NSString *)kCGImagePropertyExifDictionary];
     [croppedMetadata setValue:tiffMetadata forKey:(NSString *)kCGImagePropertyTIFFDictionary];
 	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)croppedData, CGImageSourceGetType(croppedImage), 1, NULL);
 	CGImageDestinationAddImageFromSource(dest, croppedImage, 0, (__bridge CFDictionaryRef)croppedMetadata);
 	CGImageDestinationFinalize(dest);
-    
-    NSLog(@"%@", croppedMetadata.description);
-    
+  
+    NSLog(@"%@, %@", metadata.description, croppedMetadata.description);
     //release 
 	CFRelease(cfImage);
     CFRelease(croppedCFImage);
     CFRelease(croppedImage);
-	CFRelease(dest);
+	//CFRelease(dest);
     return croppedData;   
 }
 
@@ -486,9 +495,7 @@
  */
 - (CGRect)normalizeCropRect:(CGRect)rect size:(CGSize)size{
     CGRect rotatedRect = rect;
-    if(videoOrientation_ == AVCaptureVideoOrientationPortrait){
-        return rect;
-    }else if((viewOrientation_ == UIDeviceOrientationPortrait && 
+    if((viewOrientation_ == UIDeviceOrientationPortrait && 
               videoOrientation_ == AVCaptureVideoOrientationLandscapeLeft) ||
              (viewOrientation_ == UIDeviceOrientationPortraitUpsideDown &&
               videoOrientation_ == AVCaptureVideoOrientationLandscapeRight)){
@@ -514,6 +521,9 @@
     if(rotatedRect.origin.y + rotatedRect.size.height > size.height){
         rotatedRect.origin.y = size.height - rotatedRect.size.height;
     }
+    NSLog(@"size  :%@", NSStringFromCGSize(size));
+    NSLog(@"before:%@", NSStringFromCGRect(rect));
+    NSLog(@"after :%@", NSStringFromCGRect(rotatedRect));
     return rotatedRect;
 }
 @end
