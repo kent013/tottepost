@@ -8,6 +8,7 @@
 
 #import "PhotoSubmitterImageEntity.h"
 #import "NSData+Digest.h"
+#import "UIImage+Resize.h"
 #import <ImageIO/ImageIO.h>
 
 //-----------------------------------------------------------------------------
@@ -92,6 +93,22 @@
  */
 - (UIImage *)image{
     return [UIImage imageWithData:self.data];
+}
+
+/*!
+ * populate image 960
+ */
+- (UIImage *)image960{
+    CGSize origSize = self.image.size;
+    CGSize size;
+    if(origSize.width > origSize.height){
+        size.width = 960;
+        size.height = 720;
+    }else{
+        size.height = 960;
+        size.width = 720;
+    }
+    return [[UIImage imageWithData:self.data] resizedImage:size interpolationQuality:kCGInterpolationHigh];
 }
 
 /*!

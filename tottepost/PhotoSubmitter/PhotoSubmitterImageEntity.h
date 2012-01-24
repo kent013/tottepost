@@ -17,6 +17,7 @@
 @property (readonly, nonatomic) NSData *data;
 @property (readonly, nonatomic) NSMutableDictionary *metadata;
 @property (readonly, nonatomic) UIImage *image;
+@property (readonly, nonatomic) UIImage *image960;
 @property (readonly, nonatomic) NSString *md5;
 
 - (id) initWithData:(NSData *)data;

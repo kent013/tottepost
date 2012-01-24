@@ -193,7 +193,7 @@
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     NSMutableDictionary *params = 
     [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-     photo.image, @"source", 
+     photo.image960, @"source", 
      photo.comment, @"name",
      nil];
     NSString *path = @"me/photos";
