@@ -447,7 +447,8 @@
     CGRect rect = CGRectMake(viewRect.origin.x, viewRect.origin.y, image.size.width / scale, image.size.height / scale);
     rect = [self normalizeCropRect:rect size:image.size];
     
-    image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
+    //image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
+    image = [[image subImageWithRect:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
     NSData *croppedData = UIImageJPEGRepresentation(image, 1.0);
     if(croppedData == nil){
         return data;
@@ -461,30 +462,25 @@
     //write back exif info
     CGImageSourceRef croppedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
     
-    UIImageOrientation orientation;
-    //if(image.size.width > image.size.height){
-        //orientation = UIImageOrientationRight;
-    //}else{
-        orientation = UIImageOrientationUp;
-    //}
     NSMutableDictionary *croppedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(croppedCFImage, 0, nil)];
     NSMutableDictionary *exifMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-    NSMutableDictionary *tiffMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-    
-    [croppedMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyOrientation];
-    [tiffMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    //NSMutableDictionary *tiffMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+        
+    //[croppedMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyOrientation];
+    //[tiffMetadata setValue:[NSNumber numberWithInt:orientation] forKey:(NSString *)kCGImagePropertyTIFFOrientation];
+    //[croppedMetadata setValue:[metadata objectForKey:(NSString *)kCGImagePropertyOrientation] forKey:(NSString *)kCGImagePropertyOrientation];
     [croppedMetadata setValue:exifMetadata forKey:(NSString *)kCGImagePropertyExifDictionary];
-    [croppedMetadata setValue:tiffMetadata forKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    //[croppedMetadata setValue:tiffMetadata forKey:(NSString *)kCGImagePropertyTIFFDictionary];
 	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)croppedData, CGImageSourceGetType(croppedImage), 1, NULL);
 	CGImageDestinationAddImageFromSource(dest, croppedImage, 0, (__bridge CFDictionaryRef)croppedMetadata);
 	CGImageDestinationFinalize(dest);
-  
-    NSLog(@"%@, %@", metadata.description, croppedMetadata.description);
+    
+    //NSLog(@"%@, %@", metadata.description, croppedMetadata.description);
     //release 
 	CFRelease(cfImage);
     CFRelease(croppedCFImage);
     CFRelease(croppedImage);
-	//CFRelease(dest);
+	CFRelease(dest);
     return croppedData;   
 }
 
@@ -580,7 +576,12 @@
          UIImage *image = nil;
          if(scale_ != 1.0){
              imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
-         }
+         }/*else{
+             CGImageSourceRef cfImage = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+             NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
+             NSLog(@"%@", metadata.description);
+             CFRelease(cfImage);
+         }*/
          
          if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
              image = [[UIImage alloc] initWithData:imageData];

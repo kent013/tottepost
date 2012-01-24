@@ -159,29 +159,30 @@
 - (void)presentWithPhoto:(PhotoSubmitterImageEntity *)photo{
     commentTextView_.text = @"";
      textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
-    /*NSLog(@"%d", photo.imageOrientation);
-    NSLog(@"%d", [UIDevice currentDevice].orientation);
-    NSLog(@"%d,%d,%d,%d", UIImageOrientationUp, UIImageOrientationDown, UIImageOrientationLeft, UIImageOrientationRight);*/
+
     photo_ = photo;
     
-    UIImage *image = photo.image;
+    UIImage *image = photo.image.fixOrientation;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
         UIInterfaceOrientation appOrientation = [self.delegate requestForOrientation];
+        //NSLog(@"%d, %d, %d, %d", photo.image.imageOrientation, image.imageOrientation, orientation, appOrientation);
         if(appOrientation == UIInterfaceOrientationPortrait){
-            if(orientation == UIDeviceOrientationLandscapeLeft ||
-               orientation == UIDeviceOrientationLandscapeRight){
+            if(orientation == UIDeviceOrientationLandscapeLeft){
                 image = [image UIImageRotateByAngle:270];                
+            }else if(orientation == UIDeviceOrientationLandscapeRight){
+                image = [image UIImageRotateByAngle:90];                 
             }
         }else if(appOrientation == UIInterfaceOrientationPortraitUpsideDown){
-            if(orientation == UIDeviceOrientationLandscapeLeft ||
-               orientation == UIDeviceOrientationLandscapeRight){
+            if(orientation == UIDeviceOrientationLandscapeLeft){
                 image = [image UIImageRotateByAngle:90];
+            }else if(orientation == UIDeviceOrientationLandscapeRight){
+                image = [image UIImageRotateByAngle:270];            
             }
         }
     }
-    imageView_.image = image;
+    imageView_.image = image.fixOrientation;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];   
 }
