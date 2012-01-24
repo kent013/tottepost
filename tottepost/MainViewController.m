@@ -47,8 +47,8 @@
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     //photo submitter setting
-    [[PhotoSubmitterManager getInstance] setPhotoDelegate:self];
-    [PhotoSubmitterManager getInstance].submitPhotoWithOperations = YES;
+    [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:self];
+    [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
     
     //setting view
     settingViewController_ = 
@@ -102,8 +102,8 @@
     
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
-    [[PhotoSubmitterManager getInstance] setPhotoDelegate:progressSummaryView_];
-    [PhotoSubmitterManager getInstance].enableGeoTagging = 
+    [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:progressSummaryView_];
+    [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
       [TottePostSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
         orientation_ = UIInterfaceOrientationPortraitUpsideDown;
@@ -232,7 +232,7 @@
     BOOL oldValue = isConnected_;
     isConnected_ = (reachability.connectionMode != FBNetworkReachableNon);
     if(oldValue == NO && isConnected_){
-        [[PhotoSubmitterManager getInstance] restartOperations];
+        [[PhotoSubmitterManager sharedInstance] restartOperations];
     }
 }
 
@@ -250,7 +250,7 @@
  * post photo
  */
 - (void)postPhoto:(PhotoSubmitterImageEntity *)photo{
-    PhotoSubmitterManager *manager = [PhotoSubmitterManager getInstance];
+    PhotoSubmitterManager *manager = [PhotoSubmitterManager sharedInstance];
     if(manager.enabledSubmitterCount == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];

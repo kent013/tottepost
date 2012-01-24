@@ -37,7 +37,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     applicationBecomeActiveAfterOpenURL = YES;
-    return [[PhotoSubmitterManager getInstance] didOpenURL:url];
+    return [[PhotoSubmitterManager sharedInstance] didOpenURL:url];
 }
 
 /*!

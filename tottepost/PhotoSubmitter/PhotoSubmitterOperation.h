@@ -14,7 +14,7 @@
 /*!
  * NSOperation subclass for submitting photo
  */
-@interface PhotoSubmitterOperation : NSOperation<PhotoSubmitterPhotoOperationDelegate>{
+@interface PhotoSubmitterOperation : NSOperation<NSCoding, PhotoSubmitterPhotoOperationDelegate>{
     BOOL isExecuting;
     BOOL isFinished;
 }

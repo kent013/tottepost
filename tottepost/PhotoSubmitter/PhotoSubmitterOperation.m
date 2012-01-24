@@ -7,6 +7,7 @@
 //
 
 #import "PhotoSubmitterOperation.h"
+#import "PhotoSubmitterManager.h"
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -94,6 +95,27 @@
     if(self){
         self.submitter = inSubmitter;
         self.photo = inPhoto;
+    }
+    return self;
+}
+
+/*!
+ * encode
+ */
+- (void)encodeWithCoder:(NSCoder*)coder {
+    [coder encodeInt:self.submitter.type forKey:@"submitter_type"];
+    [coder encodeObject:self.photo forKey:@"photo"];
+}
+
+/*!
+ * init with coder
+ */
+- (id)initWithCoder:(NSCoder*)coder {
+    self = [super init];
+    if (self) {
+        self.submitter = 
+            [PhotoSubmitterManager submitterForType:[coder decodeIntForKey:@"submitter_type"]];
+        self.photo = [coder decodeObjectForKey:@"photo"];
     }
     return self;
 }

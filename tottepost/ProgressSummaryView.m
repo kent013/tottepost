@@ -108,8 +108,8 @@
  * PhotoSubmitterPhotoDelegate will start upload
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    operationCount_ = [PhotoSubmitterManager getInstance].uploadOperationCount;
-    enabledAppCount_ = [PhotoSubmitterManager getInstance].enabledSubmitterCount;
+    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+    enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
     [self updateLabel];
     if(operationCount_ != 0 && isVisible_ == NO){
         [self show];
@@ -122,7 +122,7 @@
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
     if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
         operationCount_--;
-        enabledAppCount_ = [PhotoSubmitterManager getInstance].enabledSubmitterCount;
+        enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
         [self updateLabel];
         if(operationCount_ <= 0 && isVisible_){
             [self hide];

@@ -41,11 +41,13 @@
 
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) loadSubmitters;
+- (void) suspend;
+- (void) wakeup;
 - (void) restartOperations;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
 - (BOOL) didOpenURL: (NSURL *)url;
-+ (PhotoSubmitterManager *)getInstance;
++ (PhotoSubmitterManager *)sharedInstance;
 + (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
 @end

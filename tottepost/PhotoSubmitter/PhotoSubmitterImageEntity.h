@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface PhotoSubmitterImageEntity : NSObject{
+@interface PhotoSubmitterImageEntity : NSObject<NSCoding>{
     __strong NSData *data_;
     __strong NSDate *timestamp_;
 }

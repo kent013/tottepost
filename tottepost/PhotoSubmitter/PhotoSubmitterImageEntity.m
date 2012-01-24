@@ -122,4 +122,24 @@
     CFRelease(cfImage);
     return [NSMutableDictionary dictionaryWithDictionary:metadata];
 }
+
+/*!
+ * encode
+ */
+- (void)encodeWithCoder:(NSCoder*)coder {
+    [coder encodeObject:data_ forKey:@"data"];
+    [coder encodeObject:timestamp_ forKey:@"timestamp"];
+}
+
+/*!
+ * init with coder
+ */
+- (id)initWithCoder:(NSCoder*)coder {
+    self = [super init];
+    if (self) {
+        data_ = [coder decodeObjectForKey:@"data"]; 
+        timestamp_ = [coder decodeObjectForKey:@"timestamp"];
+    }
+    return self;
+}
 @end

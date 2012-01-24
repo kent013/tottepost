@@ -48,13 +48,13 @@
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
     
-    accountTypes_ = [PhotoSubmitterManager getInstance].supportedTypes;
+    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
     facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     
-    [[PhotoSubmitterManager getInstance] setAuthenticationDelegate:self];
+    [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
 
 #pragma mark -
@@ -229,7 +229,7 @@
             break;
         case SV_GENERAL_GPS:
             settings.gpsEnabled = s.on;
-            [PhotoSubmitterManager getInstance].enableGeoTagging = s.on;
+            [PhotoSubmitterManager sharedInstance].enableGeoTagging = s.on;
             break;
     }
 }

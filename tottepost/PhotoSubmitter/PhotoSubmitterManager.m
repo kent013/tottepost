@@ -9,6 +9,8 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
+#define PS_OPERATIONS @"PSOperations"
+
 /*!
  * singleton instance
  */
@@ -288,11 +290,35 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 }
 
 #pragma mark -
+#pragma mark suspend
+/*!
+ * save operations and suspend
+ */
+- (void)suspend{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:operations_];
+    [defaults setValue:data forKey:PS_OPERATIONS];
+    [defaults synchronize];
+}
+
+/*!
+ * load operations and wakeup
+ */
+- (void)wakeup{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults valueForKey:PS_OPERATIONS];
+    operations_ = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    for(NSNumber *key in operations_){
+        [operationQueue_ addOperation:[operations_ objectForKey:key]];
+    }
+}
+
+#pragma mark -
 #pragma mark static methods
 /*!
  * singleton method
  */
-+ (PhotoSubmitterManager *)getInstance{
++ (PhotoSubmitterManager *)sharedInstance{
     if(TottePostPhotoSubmitterSingletonInstance == nil){
         TottePostPhotoSubmitterSingletonInstance = [[PhotoSubmitterManager alloc]init];
     }
@@ -303,6 +329,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * get submitter
  */
 + (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
-    return [[PhotoSubmitterManager getInstance] submitterForType:type];
+    return [[PhotoSubmitterManager sharedInstance] submitterForType:type];
 }
 @end

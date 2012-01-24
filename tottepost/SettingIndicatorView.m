@@ -60,7 +60,7 @@
         }
     }
     int x = label_.frame.size.width + 4;
-    for (NSNumber *num in [PhotoSubmitterManager getInstance].supportedTypes){
+    for (NSNumber *num in [PhotoSubmitterManager sharedInstance].supportedTypes){
         PhotoSubmitterType type = (PhotoSubmitterType)[num intValue];
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
         if(submitter.isEnabled){
@@ -73,7 +73,7 @@
             x += submitter.smallIcon.size.width;
         }
     }
-    if([PhotoSubmitterManager getInstance].enableGeoTagging){
+    if([PhotoSubmitterManager sharedInstance].enableGeoTagging){
         label_.text = @"GPS ON";
     }else{
         label_.text = @"";
@@ -85,7 +85,7 @@
  */
 - (CGSize)contentSize{
     id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
-    return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * [PhotoSubmitterManager getInstance].enabledSubmitterCount, submitter.smallIcon.size.height);
+    return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * [PhotoSubmitterManager sharedInstance].enabledSubmitterCount, submitter.smallIcon.size.height);
     
 }
 @end
