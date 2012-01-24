@@ -120,11 +120,13 @@
  * PhotoSubmitterPhotoDelegate did submitted
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
-    operationCount_--;
-    enabledAppCount_ = [PhotoSubmitterManager getInstance].enabledSubmitterCount;
-    [self updateLabel];
-    if(operationCount_ <= 0 && isVisible_){
-        [self hide];
+    if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
+        operationCount_--;
+        enabledAppCount_ = [PhotoSubmitterManager getInstance].enabledSubmitterCount;
+        [self updateLabel];
+        if(operationCount_ <= 0 && isVisible_){
+            [self hide];
+        }
     }
 }
 

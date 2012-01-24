@@ -160,7 +160,7 @@
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat  = @"yyyyMMddHHmmssSSSS";
     NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
-    NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:[NSDate date]]];
+    NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     NSString *path = [dir stringByAppendingString:filename];
 
     [photo.data writeToFile:path atomically:NO];

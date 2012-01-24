@@ -8,8 +8,6 @@
 
 #import "ProgressTableViewController.h"
 
-#define TOTTEPOST_PROGRESS_REMOVE_DELAY 5
-
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -203,22 +201,13 @@
     cell.progressView.progress = progress;
 }
 
-/*!
- * remove progress
- */
-- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash{
-    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
-    [self showText:entity text:@"Upload completed"];
-    [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:TOTTEPOST_PROGRESS_REMOVE_DELAY];
-}
-
 /*! 
  * remove progress with message
  */
-- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash message:(NSString *)message{
+- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
     [self showText:entity text:message];
-    [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:TOTTEPOST_PROGRESS_REMOVE_DELAY];
+    [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:delay];
 }
 @end
 

@@ -431,8 +431,9 @@
  * photo upload start
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    //NSLog(@"%@ upload started", imageHash);
-    
+    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [progressTableViewController_ addProgressWithType:photoSubmitter.type
                                                   forHash:imageHash];
@@ -444,9 +445,19 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
+    
+    NSString *msg = @"Upload completed";
+    int delay = TOTTEPOST_PROGRESS_REMOVE_DELAY;
+    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+        return;
+    }else if(suceeded == NO){
+        delay = 0;
+        msg = @"";
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [progressTableViewController_ removeProgressWithType:photoSubmitter.type
-                                                 forHash:imageHash];
+                                                     forHash:imageHash 
+                                                     message:msg delay:delay];
     });
 }
 
@@ -454,6 +465,9 @@
  * photo upload progress changed
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+        return;
+    }
     //NSLog(@"%@, %f", imageHash, progress);
     dispatch_async(dispatch_get_main_queue(), ^{
         [progressTableViewController_ updateProgressWithType:photoSubmitter.type 

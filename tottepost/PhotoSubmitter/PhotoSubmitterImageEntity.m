@@ -25,6 +25,7 @@
 //----------------------------------------------------------------------------
 @implementation PhotoSubmitterImageEntity
 @synthesize data = data_;
+@synthesize timestamp = timestamp_;
 @synthesize comment;
 @synthesize location;
 
@@ -35,6 +36,7 @@
     self = [super init];
     if(self){
         data_ = inData;
+        timestamp_ = [NSDate date];
     }
     return self;
 }
@@ -48,7 +50,7 @@
 	NSMutableDictionary* locDict = [[NSMutableDictionary alloc] init];
 	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-	NSString* datetime = [dateFormatter stringFromDate:location.timestamp];
+	NSString* datetime = [dateFormatter stringFromDate:timestamp_];
 	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
 	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
     if(comment != nil){

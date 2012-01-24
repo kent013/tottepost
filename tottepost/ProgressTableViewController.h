@@ -22,6 +22,5 @@
 - (void) update;
 - (void) addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash;
 - (void) updateProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash progress:(CGFloat)progress;
-- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash;
-- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash message:(NSString *)message;
+- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash message:(NSString *)message delay:(int)delay;
 @end

@@ -11,6 +11,7 @@
 
 @interface PhotoSubmitterImageEntity : NSObject{
     __strong NSData *data_;
+    __strong NSDate *timestamp_;
 }
 @property (strong, nonatomic) NSString *comment;
 @property (strong, nonatomic) CLLocation *location;
@@ -19,6 +20,7 @@
 @property (readonly, nonatomic) UIImage *image;
 @property (readonly, nonatomic) UIImage *image960;
 @property (readonly, nonatomic) NSString *md5;
+@property (readonly, nonatomic) NSDate *timestamp;
 
 - (id) initWithData:(NSData *)data;
 - (void) applyMetadata;
