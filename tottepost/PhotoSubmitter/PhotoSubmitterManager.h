@@ -20,15 +20,15 @@
 /*!
  * photo submitter aggregation class
  */
-@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate, PhotoSubmitterPhotoDelegate>{
+@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate, PhotoSubmitterPhotoDelegate, PhotoSubmitterOperationDelegate>{
     @protected 
     __strong NSMutableDictionary *submitters_;
+    __strong NSMutableDictionary *operations_;
     __strong NSMutableArray *supportedTypes_;
     __strong NSOperationQueue *operationQueue_;
     __strong CLLocationManager *locationManager_;
     __strong CLLocation *location_;
     BOOL geoTaggingEnabled_;
-    int uploadOperationCount_;
 }
 
 @property (nonatomic, readonly) NSArray* supportedTypes;
@@ -41,6 +41,7 @@
 
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) loadSubmitters;
+- (void) restartOperations;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;

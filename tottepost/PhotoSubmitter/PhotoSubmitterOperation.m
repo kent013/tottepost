@@ -83,6 +83,7 @@
 @implementation PhotoSubmitterOperation
 @synthesize submitter;
 @synthesize photo;
+@synthesize delegate;
 
 /*!
  * initialize with data
@@ -100,7 +101,17 @@
 /*!
  * submitter operation delegate
  */
-- (void)photoSubmitterDidOperationFinished{
+- (void)photoSubmitterDidOperationFinished:(BOOL)suceeded{
     [self finishOperation];
+    [self.delegate photoSubmitterOperation:self didFinished:suceeded];
+}
+
+/*!
+ * create new instance from operation
+ */
++ (id)operationWithOperation:(PhotoSubmitterOperation *)operation{
+    PhotoSubmitterOperation *ret = [[PhotoSubmitterOperation alloc] initWithSubmitter:operation.submitter photo:operation.photo];
+    ret.delegate = operation.delegate;
+    return ret;
 }
 @end

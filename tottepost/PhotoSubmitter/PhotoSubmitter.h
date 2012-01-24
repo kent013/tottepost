@@ -36,9 +36,9 @@
 - (void) removeRequest:(NSObject *)request;
 
 //operation delegate methods
-- (void) setOperationDelegate:(id<PhotoSubmitterOperationDelegate>)operation forRequest:(NSObject *)request;
+- (void) setOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)operation forRequest:(NSObject *)request;
 - (void) removeOperationDelegateForRequest:(NSObject *)request;
-- (id<PhotoSubmitterOperationDelegate>) operationDelegateForRequest:(NSObject *)request;
+- (id<PhotoSubmitterPhotoOperationDelegate>) operationDelegateForRequest:(NSObject *)request;
 
 //photo delegate methods
 - (void) addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate;
@@ -56,7 +56,7 @@
 - (void) clearRequest: (NSObject *)request;
 
 //submit photo
-- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
 
 //write setting methods
 - (void)setSetting:(id)value forKey:(NSString *)key;

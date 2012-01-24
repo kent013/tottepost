@@ -22,7 +22,7 @@ typedef enum {
 
 @protocol PhotoSubmitterAuthenticationDelegate;
 @protocol PhotoSubmitterPhotoDelegate;
-@protocol PhotoSubmitterOperationDelegate;
+@protocol PhotoSubmitterPhotoOperationDelegate;
 @protocol PhotoSubmitterDataDelegate;
 
 /*!
@@ -46,7 +46,7 @@ typedef enum {
 - (void) login;
 - (void) logout;
 - (void) disable;
-- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
 - (BOOL) isProcessableURL:(NSURL *)url;
 - (BOOL) didOpenURL:(NSURL *)url;
 - (void) addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate;
@@ -81,8 +81,8 @@ typedef enum {
 /*!
  * protocol for operation
  */
-@protocol PhotoSubmitterOperationDelegate <NSObject>
-- (void) photoSubmitterDidOperationFinished;
+@protocol PhotoSubmitterPhotoOperationDelegate <NSObject>
+- (void) photoSubmitterDidOperationFinished:(BOOL)suceeded;
 @end
 
 /*!

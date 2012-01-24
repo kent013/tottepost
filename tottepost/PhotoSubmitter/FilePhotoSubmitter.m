@@ -63,7 +63,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *hash = photo.md5;
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
@@ -76,8 +76,8 @@
                               }else{
                                   [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
                               }
-                              id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
-                              [operationDelegate photoSubmitterDidOperationFinished];
+                              id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
+                              [operationDelegate photoSubmitterDidOperationFinished:YES];
                               [self clearRequest:hash];
                           }];
         [self photoSubmitter:self willStartUpload:hash];

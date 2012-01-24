@@ -77,8 +77,8 @@
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
-        [operationDelegate photoSubmitterDidOperationFinished];
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
+        [operationDelegate photoSubmitterDidOperationFinished:YES];
         [self clearRequest:inRequest];
     }
 }
@@ -90,8 +90,8 @@
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
-        [operationDelegate photoSubmitterDidOperationFinished];   
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
+        [operationDelegate photoSubmitterDidOperationFinished:NO];   
         [self clearRequest:inRequest];
     }else{
         NSLog(@"flickr error:%@", inError);
@@ -159,7 +159,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;

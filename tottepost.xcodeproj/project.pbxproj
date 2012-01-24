@@ -104,6 +104,7 @@
 		7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589A14CAA7C7006E3817 /* UIImage+Resize.m */; };
 		7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */; };
 		798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */; };
+		798058B714CE98E4006E3817 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058B614CE98E4006E3817 /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAA791114CC5EDC00E431D1 /* camera_change.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
@@ -305,6 +306,8 @@
 		7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "Libraries/UIImage-categories/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		798058A614CBDF85006E3817 /* PhotoSubmitterImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterImageEntity.h; path = PhotoSubmitter/PhotoSubmitterImageEntity.h; sourceTree = "<group>"; };
 		798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterImageEntity.m; path = PhotoSubmitter/PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
+		798058B514CE98E4006E3817 /* FBNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBNetworkReachability.h; path = Libraries/FBNetworkReachability/FBNetworkReachability.h; sourceTree = "<group>"; };
+		798058B614CE98E4006E3817 /* FBNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBNetworkReachability.m; path = Libraries/FBNetworkReachability/FBNetworkReachability.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAA791114CC5EDC00E431D1 /* camera_change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera_change.png; path = Resources/Images/camera_change.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
@@ -664,6 +667,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				798058B414CE98D0006E3817 /* FBNetworkReachability */,
 				7980589614CAA7B5006E3817 /* UIImage-categories */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				7980247014B1075000989368 /* uicolor-expanded */,
@@ -732,6 +736,15 @@
 				7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */,
 			);
 			name = "UIImage-categories";
+			sourceTree = "<group>";
+		};
+		798058B414CE98D0006E3817 /* FBNetworkReachability */ = {
+			isa = PBXGroup;
+			children = (
+				798058B514CE98E4006E3817 /* FBNetworkReachability.h */,
+				798058B614CE98E4006E3817 /* FBNetworkReachability.m */,
+			);
+			name = FBNetworkReachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -951,6 +964,7 @@
 				7980589E14CAA7C7006E3817 /* UIImage+Resize.m in Sources */,
 				7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */,
 				798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */,
+				798058B714CE98E4006E3817 /* FBNetworkReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

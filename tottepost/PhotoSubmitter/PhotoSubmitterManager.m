@@ -24,6 +24,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @implementation PhotoSubmitterManager(PrivateImplementation)
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
+    operations_ = [[NSMutableDictionary alloc] init];
     supportedTypes_ = [NSMutableArray arrayWithObjects:
                        [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
                        [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
@@ -104,7 +105,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         if([submitter isLogined]){
             if(self.submitPhotoWithOperations && submitter.isConcurrent){
                 PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo];
+                operation.delegate = self;
                 [operationQueue_ addOperation:operation];
+                [operations_ setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
             }else{
                 [submitter submitPhoto:photo andOperationDelegate:nil];
             }
@@ -171,7 +174,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * get uploadOperationCount
  */
 - (int)uploadOperationCount{
-    return uploadOperationCount_;
+    return [operations_ count];
 }
 
 /*!
@@ -238,20 +241,32 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     return NO;
 }
 
+/*!
+ * restart operations
+ */
+- (void)restartOperations{
+    [operationQueue_ cancelAllOperations];
+    NSMutableDictionary *newOperations = [[NSMutableDictionary alloc] init];
+    for(NSNumber *key in operations_){
+        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[operations_ objectForKey:key]];
+        [operationQueue_ addOperation:operation];
+        [newOperations setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
+    }
+    operations_ = newOperations;
+}
+
 #pragma mark -
 #pragma mark PhotoSubmitterPhotoDelegate methods
 /*!
  * upload started
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    uploadOperationCount_ ++;
 }
 
 /*!
  * upload finished
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
-    uploadOperationCount_ --;
 }
 
 /*!
@@ -259,6 +274,17 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //do nothing
+}
+
+#pragma mark -
+#pragma mark operation delegate
+/*!
+ * operation finished
+ */
+- (void)photoSubmitterOperation:(PhotoSubmitterOperation *)operation didFinished:(BOOL)suceeeded{
+    if(suceeeded){
+        [operations_ removeObjectForKey:[NSNumber numberWithInt:operation.hash]];
+    }
 }
 
 #pragma mark -

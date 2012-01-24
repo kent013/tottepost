@@ -41,6 +41,7 @@
     UIInterfaceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;
     BOOL settingViewPresented_;
+    BOOL isConnected_;
 }
 
 @property (nonatomic, readonly) BOOL refreshCameraNeeded;

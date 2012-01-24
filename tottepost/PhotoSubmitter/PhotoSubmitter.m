@@ -106,7 +106,7 @@
 /*!
  * set operation
  */
-- (void)setOperationDelegate:(id<PhotoSubmitterOperationDelegate>)operation forRequest:(NSObject *)request{
+- (void)setOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)operation forRequest:(NSObject *)request{
     if(operation != nil){
         [operationDelegates_ setObject:operation forKey:[NSNumber numberWithInt:request.hash]];
     }
@@ -122,7 +122,7 @@
 /*!
  * operation for request
  */
-- (id<PhotoSubmitterOperationDelegate>)operationDelegateForRequest:(NSObject *)request{
+- (id<PhotoSubmitterPhotoOperationDelegate>)operationDelegateForRequest:(NSObject *)request{
     return [operationDelegates_ objectForKey:[NSNumber numberWithInt:request.hash]];
 }
 

@@ -44,8 +44,8 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:connection];    
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-    [operationDelegate photoSubmitterDidOperationFinished];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationFinished:NO];
     [self clearRequest:connection];
 
 }
@@ -56,8 +56,8 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
     [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-    [operationDelegate photoSubmitterDidOperationFinished];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationFinished:YES];
     [self clearRequest:connection];
     
 }
@@ -94,7 +94,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
 	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	

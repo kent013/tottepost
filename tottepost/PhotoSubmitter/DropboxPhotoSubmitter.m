@@ -86,8 +86,8 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:srcPath error:nil];
     
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-    [operationDelegate photoSubmitterDidOperationFinished];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
+    [operationDelegate photoSubmitterDidOperationFinished:YES];
     
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
@@ -98,8 +98,8 @@
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError *)error{
     NSString *hash = [self photoForRequest:client];
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-    [operationDelegate photoSubmitterDidOperationFinished];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
+    [operationDelegate photoSubmitterDidOperationFinished:NO];
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
 
@@ -152,7 +152,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     DBRestClient *restClient = 
     [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     restClient.delegate = self;

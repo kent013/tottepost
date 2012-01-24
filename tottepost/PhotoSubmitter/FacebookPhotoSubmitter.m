@@ -120,14 +120,15 @@
             result = [result objectAtIndex:0];
         }
         NSString *hash = [self photoForRequest:request];
+        
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
         if ([result objectForKey:@"owner"]) {
             [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+            [operationDelegate photoSubmitterDidOperationFinished:YES];
         } else {
             [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
+            [operationDelegate photoSubmitterDidOperationFinished:NO];
         }
-    
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [operationDelegate photoSubmitterDidOperationFinished];
         [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"albums$"]){
         NSArray *as = [result objectForKey:@"data"];
@@ -152,8 +153,8 @@
     }else if([request.url isMatchedByRegex:@"photos$"]){
         NSString *hash = [self photoForRequest:request];
         [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        id<PhotoSubmitterOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [operationDelegate photoSubmitterDidOperationFinished];
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+        [operationDelegate photoSubmitterDidOperationFinished:NO];
         [self clearRequest:request];
     }
 };
@@ -190,7 +191,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     NSMutableDictionary *params = 
     [NSMutableDictionary dictionaryWithObjectsAndKeys: 
      photo.image960, @"source", 

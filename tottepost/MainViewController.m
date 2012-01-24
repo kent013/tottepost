@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
-#import "Reachability.h"
+#import "FBNetworkReachability.h"
 #import "TottePostSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
@@ -24,7 +24,7 @@
 - (void) didPostCancelButtonTapped: (id)sender;
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
-- (BOOL) checkForConnection;
+- (void) didChangeNetworkReachability:(NSNotification*)notification;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) closePreview;
 - (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
@@ -111,6 +111,13 @@
         orientation_ = UIInterfaceOrientationPortrait;
     }
     lastOrientation_ = orientation_;
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didChangeNetworkReachability:)
+     name:FBNetworkReachabilityDidChangeNotification
+     object:nil];
+    [[FBNetworkReachability sharedInstance] startNotifier];
 }
 
 /*!
@@ -219,20 +226,14 @@
 /*!
  * check for connection
  */
-- (BOOL) checkForConnection
+- (void)didChangeNetworkReachability:(NSNotification *)notification
 {
-    Reachability* pathReach = [Reachability reachabilityWithHostName:@"www.facebook.com"];
-    switch([pathReach currentReachabilityStatus])
-    {
-        case NotReachable:
-            return NO;
-            break;
-        case ReachableViaWWAN:
-        case ReachableViaWiFi:
-            return YES;
-            break;
+    FBNetworkReachability *reachability = (FBNetworkReachability *)[notification object];
+    BOOL oldValue = isConnected_;
+    isConnected_ = (reachability.connectionMode != FBNetworkReachableNon);
+    if(oldValue == NO && isConnected_){
+        [[PhotoSubmitterManager getInstance] restartOperations];
     }
-    return NO;
 }
 
 /*!
@@ -256,18 +257,20 @@
         return;
     }
     
+    [manager submitPhoto:photo];
+    /*
     if(manager.requiresNetwork == NO ||
-       (manager.requiresNetwork && [self checkForConnection])){
+       (manager.requiresNetwork && isConnected_)){
         [manager submitPhoto:photo];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoNetwork"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
     
-    if(manager.requiresNetwork && [self checkForConnection] == NO &&
+    if(manager.requiresNetwork && isConnected_ == NO &&
        [manager submitterForType:PhotoSubmitterTypeFile].isEnabled){
         [[manager submitterForType:PhotoSubmitterTypeFile] submitPhoto:photo andOperationDelegate:nil];
-    }
+    }*/
 }
 
 #pragma mark -
