@@ -295,6 +295,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * save operations and suspend
  */
 - (void)suspend{
+    if(operations_.count == 0){
+        return;
+    }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:operations_];
     [defaults setValue:data forKey:PS_OPERATIONS];
@@ -307,6 +310,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void)wakeup{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [defaults valueForKey:PS_OPERATIONS];
+    if(data == nil){
+        return;
+    }
+    [defaults removeObjectForKey:PS_OPERATIONS];
     operations_ = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     for(NSNumber *key in operations_){
         [operationQueue_ addOperation:[operations_ objectForKey:key]];

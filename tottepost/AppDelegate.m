@@ -28,6 +28,8 @@
     self.mainViewController = [[MainViewController alloc] initWithFrame:frame];
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
+    
+    [[PhotoSubmitterManager sharedInstance] wakeup];
     return YES;
 }
 
@@ -52,6 +54,7 @@
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            [[PhotoSubmitterManager sharedInstance] suspend];
             if (backgroundTaskIdentifer != UIBackgroundTaskInvalid) {
                 [app endBackgroundTask:backgroundTaskIdentifer];
                 backgroundTaskIdentifer = UIBackgroundTaskInvalid;
@@ -68,6 +71,7 @@
     UIApplication* app = [UIApplication sharedApplication];
     if(applicationBecomeActiveAfterOpenURL == NO){
         [self.mainViewController applicationDidBecomeActive];
+        [[PhotoSubmitterManager sharedInstance] wakeup];
     }
     applicationBecomeActiveAfterOpenURL = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -76,5 +80,12 @@
             backgroundTaskIdentifer = UIBackgroundTaskInvalid;
         }
     });
+}
+
+/*!
+ * When the application terminate
+ */
+- (void)applicationWillTerminate:(UIApplication *)application{
+    [[PhotoSubmitterManager sharedInstance] suspend];
 }
 @end
