@@ -51,7 +51,7 @@
 - (void) wakeup;
 - (void) pause;
 - (void) cancel;
-- (void) restartOperations;
+- (void) restart;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;

@@ -237,7 +237,7 @@
     BOOL oldValue = isConnected_;
     isConnected_ = (reachability.connectionMode != FBNetworkReachableNon);
     if(oldValue == NO && isConnected_){
-        [[PhotoSubmitterManager sharedInstance] restartOperations];
+        [[PhotoSubmitterManager sharedInstance] restart];
     }
 }
 

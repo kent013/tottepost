@@ -299,7 +299,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 /*!
  * restart operations
  */
-- (void)restartOperations{
+- (void)restart{
     [operationQueue_ cancelAllOperations];
     NSMutableDictionary *ops = operations_;
     operations_ = [[NSMutableDictionary alloc] init];

@@ -64,7 +64,7 @@
     if([PhotoSubmitterManager sharedInstance].isUploading){
         return;
     }
-    [[PhotoSubmitterManager sharedInstance] restartOperations];
+    [[PhotoSubmitterManager sharedInstance] restart];
 }
 @end
 
