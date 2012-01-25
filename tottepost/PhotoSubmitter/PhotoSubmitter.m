@@ -216,6 +216,7 @@
 - (void)removeSettingForKey:(NSString *)key{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:key];
+    [defaults synchronize];
 }
 
 /*!

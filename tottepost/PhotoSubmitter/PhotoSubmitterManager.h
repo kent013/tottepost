@@ -38,6 +38,7 @@
 @property (nonatomic, assign) BOOL enableGeoTagging;
 @property (nonatomic, readonly) CLLocation *location;
 @property (nonatomic, readonly) BOOL requiresNetwork;
+@property (nonatomic, readonly) BOOL isUploading;
 
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) loadSubmitters;

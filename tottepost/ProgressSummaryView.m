@@ -16,6 +16,7 @@
 @interface ProgressSummaryView(PrivateImplementation)
 - (void)setupInitialState: (CGRect)frame;
 - (void)updateLabel;
+- (void)handleTapGesture: (UITapGestureRecognizer *)sender;
 @end
 
 @implementation ProgressSummaryView(PrivateImplementation)
@@ -36,7 +37,10 @@
     textLabel_.backgroundColor = [UIColor clearColor];
     [self addSubview:textLabel_];
 
-    self.alpha = 0.0f; 
+    self.alpha = 0.0f;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    [self addGestureRecognizer:tapGesture];
 }
 
 /*!
@@ -50,6 +54,16 @@
     }
     [textLabel_ sizeToFit];
     [self updateWithFrame:self.frame];
+}
+
+/*!
+ * handle tap gesture
+ */
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender{
+    if([PhotoSubmitterManager sharedInstance].isUploading){
+        return;
+    }
+    [[PhotoSubmitterManager sharedInstance] restartOperations];
 }
 @end
 

@@ -12,16 +12,18 @@
 @interface PhotoSubmitterImageEntity : NSObject<NSCoding>{
     __strong NSData *data_;
     __strong NSDate *timestamp_;
+    __strong UIImage *image_;
+    __strong NSMutableDictionary *resizedImages_;
 }
 @property (strong, nonatomic) NSString *comment;
 @property (strong, nonatomic) CLLocation *location;
 @property (readonly, nonatomic) NSData *data;
 @property (readonly, nonatomic) NSMutableDictionary *metadata;
 @property (readonly, nonatomic) UIImage *image;
-@property (readonly, nonatomic) UIImage *image960;
 @property (readonly, nonatomic) NSString *md5;
 @property (readonly, nonatomic) NSDate *timestamp;
 
 - (id) initWithData:(NSData *)data;
 - (void) applyMetadata;
+- (UIImage *) resizedImage: (CGSize) size;
 @end

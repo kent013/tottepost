@@ -20,6 +20,8 @@
 #define PS_FACEBOOK_SETTING_USERNAME @"FBUsername"
 #define PS_FACEBOOK_SETTING_ALBUMS @"FBAlbums"
 #define PS_FACEBOOK_SETTING_TARGET_ALBUM @"FBTargetAlbums"
+#define PS_FACEBOOK_PHOTO_WIDTH 960
+#define PS_FACEBOOK_PHOTO_HEIGHT 720
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -122,13 +124,9 @@
         NSString *hash = [self photoForRequest:request];
         
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        if ([result objectForKey:@"owner"]) {
-            [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-            [operationDelegate photoSubmitterDidOperationFinished:YES];
-        } else {
-            [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[result objectForKey:@"name"]];
-            [operationDelegate photoSubmitterDidOperationFinished:NO];
-        }
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        [operationDelegate photoSubmitterDidOperationFinished:YES];
+        
         [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"albums$"]){
         NSArray *as = [result objectForKey:@"data"];
@@ -192,9 +190,14 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    CGSize size = CGSizeMake(PS_FACEBOOK_PHOTO_WIDTH, PS_FACEBOOK_PHOTO_HEIGHT);
+    if(photo.image.size.width < photo.image.size.height){
+        size = CGSizeMake(PS_FACEBOOK_PHOTO_HEIGHT, PS_FACEBOOK_PHOTO_WIDTH);
+    }
+    
     NSMutableDictionary *params = 
     [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-     photo.image960, @"source", 
+     [photo resizedImage:size], @"source", 
      photo.comment, @"name",
      nil];
     NSString *path = @"me/photos";

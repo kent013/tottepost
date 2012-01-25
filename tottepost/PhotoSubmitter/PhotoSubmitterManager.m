@@ -48,6 +48,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @synthesize supportedTypes = supportedTypes_;
 @synthesize submitPhotoWithOperations;
 @synthesize location = location_;
+@synthesize isUploading;
 
 /*!
  * initializer
@@ -198,6 +199,17 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (BOOL)enableGeoTagging{
     return geoTaggingEnabled_; 
+}
+
+
+/*!
+ * check is uploading
+ */
+- (BOOL)isUploading{
+    if(operationQueue_.operationCount != 0){
+        return YES;
+    }
+    return NO;
 }
 
 /*!

@@ -9,12 +9,13 @@
 #import "PhotoSubmitterImageEntity.h"
 #import "NSData+Digest.h"
 #import "UIImage+Resize.h"
+#import "UIImage+AutoRotation.h"
 #import <ImageIO/ImageIO.h>
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface PhotoSubmitterImageEntity(PrivateImplementation)
+@interface PhotoSubmitterImageEntity(PrivateImplementatio)
 @end
 
 @implementation PhotoSubmitterImageEntity(PrivateImplementation)
@@ -37,6 +38,7 @@
     if(self){
         data_ = inData;
         timestamp_ = [NSDate date];
+        resizedImages_ = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -94,23 +96,43 @@
  * populate image
  */
 - (UIImage *)image{
-    return [UIImage imageWithData:self.data];
+    if(image_ == nil){
+        image_ = [[UIImage imageWithData:self.data] fixOrientation];
+    }
+    return image_;
 }
 
 /*!
- * populate image 960
+ * populate resized image 
  */
-- (UIImage *)image960{
-    CGSize origSize = self.image.size;
-    CGSize size;
-    if(origSize.width > origSize.height){
-        size.width = 960;
-        size.height = 720;
-    }else{
-        size.height = 960;
-        size.width = 720;
+- (UIImage *)resizedImage:(CGSize)size{
+    if(CGSizeEqualToSize(size, self.image.size)){
+        return self.image;
     }
-    return [[UIImage imageWithData:self.data] resizedImage:size interpolationQuality:kCGInterpolationHigh];
+    
+    NSString *key = NSStringFromCGSize(size);
+    UIImage *resized = [resizedImages_ objectForKey:key];
+    if(resized){
+        return resized;
+    }
+    
+    resized = [[self.image resizedImage:size
+                  interpolationQuality:kCGInterpolationHigh] fixOrientation];
+    
+    NSData *resizedData = UIImageJPEGRepresentation(resized, 1.0);
+    CGImageSourceRef resizedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)resizedData, NULL);
+    
+    NSMutableDictionary *metadata = self.metadata;
+    NSMutableDictionary *resizedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(resizedCFImage, 0, nil)];
+    NSMutableDictionary *exifMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
+    [resizedMetadata setValue:exifMetadata forKey:(NSString *)kCGImagePropertyExifDictionary];
+    CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)resizedData, CGImageSourceGetType(resizedCFImage), 1, NULL);
+    CGImageDestinationAddImageFromSource(dest, resizedCFImage, 0, (__bridge CFDictionaryRef)resizedMetadata);
+    CGImageDestinationFinalize(dest);
+    CFRelease(resizedCFImage);
+    
+    [resizedImages_ setObject:resized forKey:key];
+    return resized;
 }
 
 /*!
