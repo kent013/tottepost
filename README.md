@@ -3,12 +3,21 @@ Simple Camera Application for iOS
 
 Camera application for iOS devices, focusing on simplicity, minimam operation to take photo and post it to social apps.
 
+AUTHORS
+------------------------------------
+ * ISHITOYA Kentaro [@kent013](http://twitter.com/kent013) mail:ishitoya at rio.ne.jp
+ * WATANABE Ken [@ken4500](http://twitter.com/ken4500)
+
+REDISTRIBUTION
+------------------------------------
+If you planning to redistribute this application in Apple App Store, you must contact me via email before do so.
+
 LICENSE
 ------------------------------------
 Copyright (c) 2011, ISHITOYA Kentaro.  
 Copyright (c) 2011, WATANABE Ken.  
 
-New BSD License. See LICENSE file.
+New BSD License. See LICENSE file. 
 
 3rd Party Libraries and their Licenses
 ------------------------------------
