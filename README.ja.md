@@ -1,42 +1,48 @@
-Simple Camera Application for iOS
+1タップでポストできるカメラアプリケーション tottepost
 =========================================
-
 <img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
  alt="Tottepost logo" title="tottepost" align="right" />
  
-Camera application for iOS devices, focusing on simplicity, minimam operation to take photo and post it to social apps.
+tottepostはシンプルさ、写真を撮ってソーシャルサービスやクラウドサービスにアップロードするために必要な操作の少なさにフォーカスしたiOS用のカメラアプリケーションです。
 
-This application is not similer to Instagram or other kind of camera application that offer users to add effects to photo. They are very good application to share nice looking photos, but they are messy to select effects if you want to share photos instantly.
+このアプリケーションは、Instagramのような写真にエフェクトをつけて楽しむカメラアプリケーションではありません。  
+そういったアプリケーションは見た目の良いの写真を共有するのには向いています。  
+でも、写真をすばやく共有したいと思ったときには、操作が面倒くさいときがありますよね。
 
-Tottepost is focusing on simplicity, thus we will not provide effects, cropping or decorating photo functionality. We provide features to take photo and share the photo in social applications or cloud services.
+tottepostはシンプルさにフォーカスしています。  
+エフェクトや写真の切り出し、デコレーションなどはサポートしません。
 
+写真をとってソーシャルサービスやクラウドサービスにアップロードする、それだけのアプリーションです。
 
-FEATURE LIST
+[KISS](http://en.wikipedia.org/wiki/KISS_principle).
+
+できること一覧
 ------------------------------------
- * Upload image to social applications and cloud services
+ * 写真をソーシャルサービスやクラウドサービスにアップロード
    * Facebook
-     * Album selection
-     * 960x720 resolution
+     * アルバム選択
+     * 960x720の解像度
    * Twitter
    * Flickr
    * Dropbox
-     * full resolution
-   * Google Plus (Planning)
- * Save image to local camera roll
- * Toggle comment / no comment
- * Toggle Geo location
- * Background upload
+     * フル解像度
+   * Google Plus (予定)
+ * ローカルのカメラロールに保存
+ * コメント入力あり/なしの切り替え
+ * ジオタグ埋め込みの切り替え
+ * バックグラウンドでのアップロード
 
-AUTHORS
+作者
 ------------------------------------
- * ISHITOYA Kentaro [@kent013](http://twitter.com/kent013) mail:ishitoya at rio.ne.jp
- * WATANABE Ken [@ken4500](http://twitter.com/ken4500)
+ * 石戸谷 顕太朗 [@kent013](http://twitter.com/kent013) メール:ishitoya at rio.ne.jp
+ * 渡辺 賢 [@ken4500](http://twitter.com/ken4500)
 
-REDISTRIBUTION
+配布について
 ------------------------------------
-If you planning to redistribute this application in Apple App Store, you must contact me via email before do so.
+このアプリケーションをそのままAppleのApp Storeで配布することは、特段の理由がないと許容致しかねます。
+"そのまま"でない場合はライセンスに従ってください。
 
-LICENSE
+ライセンス
 ------------------------------------
 Copyright (c) 2011, ISHITOYA Kentaro.  
 Copyright (c) 2011, WATANABE Ken.  
@@ -93,7 +99,7 @@ New BSD License. See LICENSE file.
 Third party icons
 -----------------
  * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)     
-    Copyright (c) 2007-2011 ~pierocksmysocks. All Rights Reserved.
+    Copyright (c) 2007-2011 ‾pierocksmysocks. All Rights Reserved.
 
  * [Social Bookmarks Icon Set](http://www.yootheme.com/icons/freebies)  
     This icon set is licensed under the YOOtheme GmbH.   
