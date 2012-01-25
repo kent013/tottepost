@@ -79,4 +79,9 @@ Third party icons
  
     This icon set is licensed under the YOOtheme GmbH.   
     See YOOtheme, [http://www.yootheme.com/icons](http://www.yootheme.com/icons) for more detail.
+
+ * [Glyphish](http://glyphish.com/)
+    
+    We are using Glyphish Pro3 icon for app icon, camera/comment/setting button.
+    If you want to reuse them, you must purchase them or use free version. 
   
