@@ -28,3 +28,7 @@
 
 "Progress_Completed" = "アップロード完了";
 "Progress_Summary" = "%d ops to %d apps";
+
+"Flash_On" = "オン";
+"Flash_Off" = "オフ";
+"Flash_Auto" = "自動";

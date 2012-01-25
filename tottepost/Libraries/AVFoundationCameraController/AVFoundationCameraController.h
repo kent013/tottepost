@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "FlashButton.h"
+
+#define INDICATOR_RECT_SIZE 50.0
+#define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
+#define PICKER_PADDING_X 10
+#define PICKER_PADDING_Y 10
+#define PICKER_SHUTTER_BUTTON_WIDTH 60
+#define PICKER_SHUTTER_BUTTON_HEIGHT 30
+#define PICKER_FLASHMODE_BUTTON_WIDTH 60
+#define PICKER_FLASHMODE_BUTTON_HEIGHT 30
+#define PICKER_CAMERADEVICE_BUTTON_WIDTH 60
+#define PICKER_CAMERADEVICE_BUTTON_HEIGHT 30
 
 @protocol AVFoundationCameraControllerDelegate;
 
-@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate>{
+@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,FlashButtonDelegate>{
     __strong AVCaptureDevice *device_;
     __strong AVCaptureSession *session_;
     __strong AVCaptureStillImageOutput *imageOutput_;
@@ -19,7 +31,7 @@
     __strong AVCaptureVideoPreviewLayer *previewLayer_;
     __strong CALayer *indicatorLayer_;
     __strong UIButton *shutterButton_;
-    __strong UIButton *flashModeButton_;
+    __strong FlashButton *flashModeButton_;
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
 

@@ -12,17 +12,6 @@
 #import "UIImage+Resize.h"
 #import "UIImage+AutoRotation.h"
 
-#define INDICATOR_RECT_SIZE 50.0
-#define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
-#define PICKER_PADDING_X 10
-#define PICKER_PADDING_Y 10
-#define PICKER_SHUTTER_BUTTON_WIDTH 60
-#define PICKER_SHUTTER_BUTTON_HEIGHT 30
-#define PICKER_FLASHMODE_BUTTON_WIDTH 60
-#define PICKER_FLASHMODE_BUTTON_HEIGHT 30
-#define PICKER_CAMERADEVICE_BUTTON_WIDTH 60
-#define PICKER_CAMERADEVICE_BUTTON_HEIGHT 30
-
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -32,7 +21,6 @@
 - (void) handleTapGesture: (UITapGestureRecognizer *)recognizer;
 - (void) handlePinchGesture: (UIPinchGestureRecognizer *)recognizer;
 - (void) handleShutterButtonTapped:(UIButton *)sender;
-- (void) handleFlashModeButtonTapped:(UIButton *)sender;
 - (void) handleCameraDeviceButtonTapped:(UIButton *)sender;
 - (void) setFocus:(CGPoint)point;
 - (void) autofocus;
@@ -62,9 +50,8 @@
     shutterButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [shutterButton_ setTitle:@"Shutter" forState:UIControlStateNormal]; 
     [shutterButton_ addTarget:self action:@selector(handleShutterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    flashModeButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [flashModeButton_ setTitle:@"Flash" forState:UIControlStateNormal];
-    [flashModeButton_ addTarget:self action:@selector(handleFlashModeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    flashModeButton_ = [[FlashButton alloc] init];
+    flashModeButton_.delegate = self;
     cameraDeviceButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
     [cameraDeviceButton_ setBackgroundImage:[UIImage imageNamed:@"camera_change.png"] forState:UIControlStateNormal];
     [cameraDeviceButton_ addTarget:self action:@selector(handleCameraDeviceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -367,12 +354,6 @@
  */
 - (void)handleShutterButtonTapped:(UIButton *)sender{
     [self takePicture];
-}
-
-/*!
- * flash mode tapped
- */
-- (void)handleFlashModeButtonTapped:(UIButton *)sender{
 }
 
 /*!
@@ -687,5 +668,18 @@
  */
 - (BOOL)backCameraAvailable{
     return self.backCameraDevice != nil;
+}
+
+#pragma mark -
+#pragma mark flashButton delegate
+
+/*!
+ * set flash mode
+ */
+- (void)setFlashMode:(AVCaptureFlashMode)mode{
+    AVCaptureDevice* device = self.backCameraDevice;
+    [device lockForConfiguration:nil];    
+    [device setFlashMode:mode];
+    [device unlockForConfiguration];
 }
 @end
