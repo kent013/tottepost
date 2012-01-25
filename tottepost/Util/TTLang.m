@@ -2,7 +2,7 @@
 //  TTLang.m
 //  tottepost
 //
-//  Created by Kentaro ISHITOYA on 11/12/29.
+//  Created by ISHITOYA Kentaro on 11/12/29.
 //  Copyright (c) cocotomo. All rights reserved.
 //
 

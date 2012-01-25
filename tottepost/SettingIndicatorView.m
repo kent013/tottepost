@@ -2,7 +2,7 @@
 //  SettingIndicatorView.m
 //  tottepost
 //
-//  Created by Kentaro ISHITOYA on 12/01/01.
+//  Created by ISHITOYA Kentaro on 12/01/01.
 //  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
