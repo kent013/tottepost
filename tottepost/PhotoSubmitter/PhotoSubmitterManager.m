@@ -314,9 +314,12 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         return;
     }
     [defaults removeObjectForKey:PS_OPERATIONS];
+    [defaults synchronize];
     operations_ = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     for(NSNumber *key in operations_){
-        [operationQueue_ addOperation:[operations_ objectForKey:key]];
+        PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
+        operation.delegate = self;
+        [operationQueue_ addOperation:operation];
     }
 }
 
