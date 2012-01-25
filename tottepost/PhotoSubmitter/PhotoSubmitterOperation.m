@@ -112,6 +112,7 @@
  * init with coder
  */
 - (id)initWithCoder:(NSCoder*)coder {
+    delegates_ = [[NSMutableArray alloc] init];
     self = [super init];
     if (self) {
         self.submitter = 

@@ -60,7 +60,17 @@
                 backgroundTaskIdentifer = UIBackgroundTaskInvalid;
             }
         });
-    }];    
+    }];
+    
+    // Start the long-running task and return immediately.    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        while([[PhotoSubmitterManager sharedInstance] isUploading] &&
+              backgroundTaskIdentifer != UIBackgroundTaskInvalid){
+            [NSThread sleepForTimeInterval:1];
+        }
+        [app endBackgroundTask:backgroundTaskIdentifer];
+        backgroundTaskIdentifer = UIBackgroundTaskInvalid;
+    });
 }
 
 /*!

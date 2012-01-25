@@ -161,6 +161,7 @@
     if (self) {
         data_ = [coder decodeObjectForKey:@"data"]; 
         timestamp_ = [coder decodeObjectForKey:@"timestamp"];
+        resizedImages_ = [[NSMutableDictionary alloc] init];
     }
     return self;
 }

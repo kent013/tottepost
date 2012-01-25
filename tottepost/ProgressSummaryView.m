@@ -41,6 +41,7 @@
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGesture];
+    [[PhotoSubmitterManager sharedInstance] addDelegate:self];
 }
 
 /*!
@@ -149,5 +150,13 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //do nothing
+}
+
+/*!
+ * PhotoSubmitterManager delegate
+ */
+- (void)photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation{
+    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+    [self updateLabel];
 }
 @end

@@ -17,6 +17,9 @@
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
 #import "PhotoSubmitterSequencialOperationQueue.h"
+
+@protocol PhotoSubmitterManagerDelegate;
+
 /*!
  * photo submitter aggregation class
  */
@@ -27,6 +30,7 @@
     __strong NSMutableDictionary *sequencialOperationQueues_;
     __strong NSMutableArray *supportedTypes_;
     __strong NSOperationQueue *operationQueue_;
+    __strong NSMutableArray *delegates_;
     __strong CLLocationManager *locationManager_;
     __strong CLLocation *location_;
     BOOL geoTaggingEnabled_;
@@ -50,6 +54,16 @@
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
 - (BOOL) didOpenURL: (NSURL *)url;
+
+- (void) addDelegate:(id<PhotoSubmitterManagerDelegate>)delegate;
+- (void) removeDelegate:(id<PhotoSubmitterManagerDelegate>)delegate;
+- (void) clearDelegate:(id<PhotoSubmitterManagerDelegate>)delegate;
+
 + (PhotoSubmitterManager *)sharedInstance;
 + (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
+@end
+
+
+@protocol PhotoSubmitterManagerDelegate <NSObject>
+- (void) photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation;
 @end

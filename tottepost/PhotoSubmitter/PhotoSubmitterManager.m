@@ -32,6 +32,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
     operations_ = [[NSMutableDictionary alloc] init];
+    delegates_ = [[NSMutableArray alloc] init];
     sequencialOperationQueues_ = [[NSMutableDictionary alloc] init];
     supportedTypes_ = [NSMutableArray arrayWithObjects:
                        [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
@@ -70,6 +71,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         [queue enqueue:operation];
     }else{
         [operationQueue_ addOperation:operation];
+    }
+    for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
+        [delegate photoSubmitterManager:self didOperationAdded:operation];
     }
 }
 @end
@@ -238,8 +242,13 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * check is uploading
  */
 - (BOOL)isUploading{
-    if(operationQueue_.operationCount != 0){
-        return YES;
+    if(operations_.count != 0){
+        for(NSNumber *key in operations_){
+            PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
+            if(operation.isExecuting){
+                return YES;
+            }
+        }
     }
     return NO;
 }
@@ -295,7 +304,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     NSMutableDictionary *ops = operations_;
     operations_ = [[NSMutableDictionary alloc] init];
     for(NSNumber *key in ops){
-        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[operations_ objectForKey:key]];
+        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
         [self addOperation:operation];
     }
 }
@@ -306,12 +315,14 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * upload started
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+    //NSLog(@"start");
 }
 
 /*!
  * upload finished
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
+    //NSLog(@"submitted");
 }
 
 /*!
@@ -319,6 +330,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //do nothing
+    //NSLog(@"progress:%f", progress);
 }
 
 #pragma mark -
@@ -360,24 +372,42 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     [defaults synchronize];
     NSMutableDictionary *ops = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     for(NSNumber *key in ops){
-        PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
+        PhotoSubmitterOperation *operation = [ops objectForKey:key];
         [self addOperation:operation];
     }
 }
 
 #pragma mark -
 #pragma mark PhotoSubmitterSequencialOperationQueue delegate
-/*!
- * did Enqueued
- */
--(void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didEnqueued:(PhotoSubmitterOperation *)operation{
-    if(sequencialOperationQueue.count == 1){
-        [operationQueue_ addOperation:operation];
-    }
-}
-
 - (void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation{
     [operationQueue_ addOperation:operation];
+}
+
+#pragma mark -
+#pragma mark delegate methods
+
+/*!
+ * add delegate
+ */
+- (void)addDelegate:(id<PhotoSubmitterManagerDelegate>)delegate{
+    if([delegates_ containsObject:delegate]){
+        return;
+    }
+    [delegates_ addObject:delegate];
+}
+
+/*!
+ * remove delegate
+ */
+- (void)removeDelegate:(id<PhotoSubmitterManagerDelegate>)delegate{
+    [delegates_ removeObject:delegate];
+}
+
+/*!
+ * clear delegate
+ */
+- (void)clearDelegate:(id<PhotoSubmitterManagerDelegate>)delegate{
+    [delegates_ removeAllObjects];
 }
 
 #pragma mark -

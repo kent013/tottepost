@@ -117,6 +117,11 @@
      selector:@selector(didChangeNetworkReachability:)
      name:FBNetworkReachabilityDidChangeNotification
      object:nil];
+    if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
+        isConnected_ = NO;
+    }else{
+        isConnected_ = YES;
+    }
     [[FBNetworkReachability sharedInstance] startNotifier];
 }
 

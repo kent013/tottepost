@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PhotoSubmitterProtocol.h"
+#import "PhotoSubmitterManager.h"
 
-@interface ProgressSummaryView : UIView<PhotoSubmitterPhotoDelegate>{
+@interface ProgressSummaryView : UIView<PhotoSubmitterPhotoDelegate,PhotoSubmitterManagerDelegate>{
     __strong UILabel *textLabel_;
     int operationCount_;
     int enabledAppCount_;

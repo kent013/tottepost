@@ -58,7 +58,9 @@
 - (void)enqueue:(PhotoSubmitterOperation *)operation{
     [operation addDelegate:self];
     [queue_ enqueue:operation];
-    [delegate_ sequencialOperationQueue:self didEnqueued:operation];
+    if(queue_.count == 1){
+        [delegate_ sequencialOperationQueue:self didPeeked:operation];
+    }
 }
 
 /*!

@@ -27,6 +27,5 @@
 @end
 
 @protocol PhotoSubmitterSequencialOperationQueueDelegate <NSObject>
-- (void) sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didEnqueued:(PhotoSubmitterOperation *)operation;
 - (void) sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation;
 @end
