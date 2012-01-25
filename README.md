@@ -63,8 +63,8 @@ New BSD License. See LICENSE file.
 
  * [AVFoundationCameraController](https://github.com/kent013/AVFoundationCameraController)
    
-    Copyright (c) 2011, ISHITOYA Kentaro.
-    SBJSON is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
+    Copyright (c) 2011, ISHITOYA Kentaro.  
+    AVFoundationCameraController is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
    
 
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
