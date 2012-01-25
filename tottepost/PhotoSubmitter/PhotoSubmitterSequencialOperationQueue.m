@@ -78,6 +78,13 @@
     return queue_.count;
 }
 
+/*!
+ * cancel
+ */
+-(void)cancel{
+    [queue_ removeAllObjects];
+}
+
 #pragma mark -
 #pragma mark operation delegate
 /*!

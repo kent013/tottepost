@@ -24,6 +24,7 @@
 - (id) initWithPhotoSubmitterType:(PhotoSubmitterType) type andDelegate:(id<PhotoSubmitterSequencialOperationQueueDelegate>)delegate;
 - (void) enqueue: (PhotoSubmitterOperation *)operation;
 - (PhotoSubmitterOperation *) dequeue;
+- (void) cancel;
 @end
 
 @protocol PhotoSubmitterSequencialOperationQueueDelegate <NSObject>

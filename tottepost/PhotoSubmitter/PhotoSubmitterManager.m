@@ -377,6 +377,25 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     }
 }
 
+/*!
+ * pause
+ */
+- (void) pause{
+    [operationQueue_ cancelAllOperations];
+}
+
+/*!
+ * cancel
+ */
+- (void) cancel{
+    [operations_ removeAllObjects];
+    for(NSNumber *key in sequencialOperationQueues_){
+        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
+        [queue cancel];
+    }
+    [operationQueue_ cancelAllOperations];    
+}
+
 #pragma mark -
 #pragma mark PhotoSubmitterSequencialOperationQueue delegate
 - (void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation{
