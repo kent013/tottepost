@@ -1,4 +1,4 @@
-シンプルなカメラアプリケーション tottepost
+1タップでポストできるカメラアプリケーション tottepost
 =========================================
 <img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
  alt="Tottepost logo" title="tottepost" align="right" />
