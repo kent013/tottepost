@@ -31,6 +31,11 @@ New BSD License. See LICENSE file.
     Copyright (c) 2011 Five-technology Co.,Ltd.  
     FBProgressView is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
+ * [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability)
+ 
+    Copyright (c) 2011 Hiroshi Hashiguchi.
+    FBNetworkReachability is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
+
  * [json-framework](https://github.com/stig/json-framework/)
  
     Copyright (c) 2007-2011 Stig Brautaset. All rights reserved.  
@@ -41,11 +46,29 @@ New BSD License. See LICENSE file.
     Copyright (c) 2008-2010, John Engelhart.  
     RegexKitLite is licensed under BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/bsd-license.php](http://www.opensource.org/licenses/bsd-license.php)
 
+ * [UIImage-categories](https://github.com/jchatard/UIImage-categories)
+   
+    UIImage-categories is free for personal or commercial use, with or without modification.
+    See author post for explanation: http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/
+
  * [Reachability](http://developer.apple.com/library/ios/#samplecode/Reachability/Introduction/Intro.html)
 
     Copyright (c) 2010 Apple Inc. All Rights Reserved.  
     See [http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html](http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html) for more detail.
-    
+
+ * [SBJSON](https://github.com/stig/json-framework/)
+ 
+    Copyright (C) 2007-2011 Stig Brautaset. All rights reserved.  
+    SBJSON is licensed under BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/bsd-license.php](http://www.opensource.org/licenses/bsd-license.php)
+
+ * [AVFoundationCameraController](https://github.com/kent013/AVFoundationCameraController)
+   
+    Copyright (c) 2011, ISHITOYA Kentaro.
+    SBJSON is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
+   
+
+ * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
+
 Third party icons
 -----------------
  * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)
