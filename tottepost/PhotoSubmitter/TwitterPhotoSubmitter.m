@@ -298,6 +298,13 @@
 }
 
 /*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return YES;
+}
+
+/*!
  * requires network
  */
 - (BOOL)requiresNetwork{

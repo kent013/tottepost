@@ -105,6 +105,8 @@
 		7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980589C14CAA7C7006E3817 /* UIImage+RoundedCorner.m */; };
 		798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */; };
 		798058B714CE98E4006E3817 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058B614CE98E4006E3817 /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		798058BB14CFD317006E3817 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		798058BE14CFD452006E3817 /* PhotoSubmitterSequencialOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAA791114CC5EDC00E431D1 /* camera_change.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
@@ -308,6 +310,10 @@
 		798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterImageEntity.m; path = PhotoSubmitter/PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
 		798058B514CE98E4006E3817 /* FBNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBNetworkReachability.h; path = Libraries/FBNetworkReachability/FBNetworkReachability.h; sourceTree = "<group>"; };
 		798058B614CE98E4006E3817 /* FBNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBNetworkReachability.m; path = Libraries/FBNetworkReachability/FBNetworkReachability.m; sourceTree = "<group>"; };
+		798058B914CFD317006E3817 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueAdditions.h"; path = "Libraries/ios-queue-object/NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "Libraries/ios-queue-object/NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
+		798058BC14CFD450006E3817 /* PhotoSubmitterSequencialOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterSequencialOperationQueue.h; path = PhotoSubmitter/PhotoSubmitterSequencialOperationQueue.h; sourceTree = "<group>"; };
+		798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterSequencialOperationQueue.m; path = PhotoSubmitter/PhotoSubmitterSequencialOperationQueue.m; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAA791114CC5EDC00E431D1 /* camera_change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera_change.png; path = Resources/Images/camera_change.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
@@ -625,6 +631,8 @@
 				37FB654A1497313500387490 /* PhotoSubmitterManager.m */,
 				37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */,
 				37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */,
+				798058BC14CFD450006E3817 /* PhotoSubmitterSequencialOperationQueue.h */,
+				798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */,
 				37FB65C9149C904D00387490 /* PhotoSubmitter.h */,
 				37FB65CA149C904D00387490 /* PhotoSubmitter.m */,
 				37FB65471497313500387490 /* FacebookPhotoSubmitter.h */,
@@ -667,6 +675,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				798058B814CFD2E4006E3817 /* ios-queue-object */,
 				798058B414CE98D0006E3817 /* FBNetworkReachability */,
 				7980589614CAA7B5006E3817 /* UIImage-categories */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
@@ -745,6 +754,15 @@
 				798058B614CE98E4006E3817 /* FBNetworkReachability.m */,
 			);
 			name = FBNetworkReachability;
+			sourceTree = "<group>";
+		};
+		798058B814CFD2E4006E3817 /* ios-queue-object */ = {
+			isa = PBXGroup;
+			children = (
+				798058B914CFD317006E3817 /* NSMutableArray+QueueAdditions.h */,
+				798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */,
+			);
+			name = "ios-queue-object";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -965,6 +983,8 @@
 				7980589F14CAA7C7006E3817 /* UIImage+RoundedCorner.m in Sources */,
 				798058A814CBDF8B006E3817 /* PhotoSubmitterImageEntity.m in Sources */,
 				798058B714CE98E4006E3817 /* FBNetworkReachability.m in Sources */,
+				798058BB14CFD317006E3817 /* NSMutableArray+QueueAdditions.m in Sources */,
+				798058BE14CFD452006E3817 /* PhotoSubmitterSequencialOperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

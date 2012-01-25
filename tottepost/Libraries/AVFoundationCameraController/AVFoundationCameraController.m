@@ -2,8 +2,8 @@
 //  AVFoundationCameraController.m
 //  AVFoundationCameraController
 //
-//  Created by Kentaro ISHITOYA on 12/01/02.
-//  Copyright (c) 2012 Kentaro ISHITOYA. All rights reserved.
+//  Created by ISHITOYA Kentaro on 12/01/02.
+//  Copyright (c) 2012 ISHITOYA Kentaro. All rights reserved.
 //
 
 #import <CoreMedia/CoreMedia.h>

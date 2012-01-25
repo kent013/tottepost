@@ -16,14 +16,15 @@
 #import "PhotoSubmitterOperation.h"
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
-
+#import "PhotoSubmitterSequencialOperationQueue.h"
 /*!
  * photo submitter aggregation class
  */
-@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate, PhotoSubmitterPhotoDelegate, PhotoSubmitterOperationDelegate>{
+@interface PhotoSubmitterManager : NSObject<CLLocationManagerDelegate, PhotoSubmitterPhotoDelegate, PhotoSubmitterOperationDelegate, PhotoSubmitterSequencialOperationQueueDelegate>{
     @protected 
     __strong NSMutableDictionary *submitters_;
     __strong NSMutableDictionary *operations_;
+    __strong NSMutableDictionary *sequencialOperationQueues_;
     __strong NSMutableArray *supportedTypes_;
     __strong NSOperationQueue *operationQueue_;
     __strong CLLocationManager *locationManager_;

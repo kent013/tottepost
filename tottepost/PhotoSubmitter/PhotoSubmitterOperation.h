@@ -17,10 +17,15 @@
 @interface PhotoSubmitterOperation : NSOperation<NSCoding, PhotoSubmitterPhotoOperationDelegate>{
     BOOL isExecuting;
     BOOL isFinished;
+    NSMutableArray *delegates_;
 }
 @property (strong, nonatomic) id<PhotoSubmitterProtocol> submitter;
 @property (strong, nonatomic) PhotoSubmitterImageEntity *photo;
-@property (weak, nonatomic) id<PhotoSubmitterOperationDelegate> delegate;
+@property (readonly, nonatomic) NSMutableArray *delegates;
+
+- (void) addDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) removeDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) clearDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 
 - (id)initWithSubmitter:(id<PhotoSubmitterProtocol>)submitter photo:(PhotoSubmitterImageEntity *)photo;
 + (id)operationWithOperation:(PhotoSubmitterOperation *)operation;

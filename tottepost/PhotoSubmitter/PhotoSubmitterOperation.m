@@ -84,7 +84,7 @@
 @implementation PhotoSubmitterOperation
 @synthesize submitter;
 @synthesize photo;
-@synthesize delegate;
+@synthesize delegates = delegates_;
 
 /*!
  * initialize with data
@@ -95,6 +95,7 @@
     if(self){
         self.submitter = inSubmitter;
         self.photo = inPhoto;
+        delegates_ = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -125,7 +126,9 @@
  */
 - (void)photoSubmitterDidOperationFinished:(BOOL)suceeded{
     [self finishOperation];
-    [self.delegate photoSubmitterOperation:self didFinished:suceeded];
+    for(id<PhotoSubmitterOperationDelegate> delegate in delegates_){
+        [delegate photoSubmitterOperation:self didFinished:suceeded];
+    }
 }
 
 /*!
@@ -133,7 +136,33 @@
  */
 + (id)operationWithOperation:(PhotoSubmitterOperation *)operation{
     PhotoSubmitterOperation *ret = [[PhotoSubmitterOperation alloc] initWithSubmitter:operation.submitter photo:operation.photo];
-    ret.delegate = operation.delegate;
+    for(id<PhotoSubmitterOperationDelegate> delegate in operation.delegates){
+        [ret addDelegate:delegate];
+    }
     return ret;
+}
+
+/*!
+ * add delegate
+ */
+- (void)addDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    if([delegates_ containsObject:delegate]){
+        return;
+    }
+    [delegates_ addObject:delegate];
+}
+
+/*!
+ * remove delegate
+ */
+- (void)removeDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    [delegates_ removeObject:delegate];
+}
+
+/*!
+ * clear delegate
+ */
+- (void)clearDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
+    [delegates_ removeAllObjects];
 }
 @end

@@ -21,12 +21,18 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 //-----------------------------------------------------------------------------
 @interface PhotoSubmitterManager(PrivateImplementation)
 - (void) setupInitialState;
+- (void) addOperation: (PhotoSubmitterOperation *)operation;
+- (PhotoSubmitterSequencialOperationQueue *) sequencialOperationQueueForType: (PhotoSubmitterType) type;
 @end
 
 @implementation PhotoSubmitterManager(PrivateImplementation)
+/*!
+ * initialize
+ */
 -(void)setupInitialState{
     submitters_ = [[NSMutableDictionary alloc] init];
     operations_ = [[NSMutableDictionary alloc] init];
+    sequencialOperationQueues_ = [[NSMutableDictionary alloc] init];
     supportedTypes_ = [NSMutableArray arrayWithObjects:
                        [NSNumber numberWithInt: PhotoSubmitterTypeFacebook],
                        [NSNumber numberWithInt: PhotoSubmitterTypeTwitter],
@@ -37,6 +43,34 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
     [self loadSubmitters];
+}
+
+/*!
+ * get sequenctial operation queue for type
+ */
+- (PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueueForType:(PhotoSubmitterType)type{
+    NSNumber *key = [NSNumber numberWithInt:type];
+    PhotoSubmitterSequencialOperationQueue *queue = 
+        [sequencialOperationQueues_ objectForKey:key];
+    if(queue == nil){
+        queue = [[PhotoSubmitterSequencialOperationQueue alloc] initWithPhotoSubmitterType:type andDelegate:self];
+        [sequencialOperationQueues_ setObject:queue forKey:key];
+    }
+    return queue;
+}
+
+/*!
+ * add operation
+ */
+- (void)addOperation:(PhotoSubmitterOperation *)operation{
+    [operation addDelegate: self];
+    [operations_ setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
+    if(operation.submitter.isSequencial){
+        PhotoSubmitterSequencialOperationQueue *queue = [self sequencialOperationQueueForType:operation.submitter.type];
+        [queue enqueue:operation];
+    }else{
+        [operationQueue_ addOperation:operation];
+    }
 }
 @end
 
@@ -108,9 +142,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         if([submitter isLogined]){
             if(self.submitPhotoWithOperations && submitter.isConcurrent){
                 PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo];
-                operation.delegate = self;
-                [operationQueue_ addOperation:operation];
-                [operations_ setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
+                [self addOperation:operation];
             }else{
                 [submitter submitPhoto:photo andOperationDelegate:nil];
             }
@@ -260,13 +292,12 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (void)restartOperations{
     [operationQueue_ cancelAllOperations];
-    NSMutableDictionary *newOperations = [[NSMutableDictionary alloc] init];
-    for(NSNumber *key in operations_){
+    NSMutableDictionary *ops = operations_;
+    operations_ = [[NSMutableDictionary alloc] init];
+    for(NSNumber *key in ops){
         PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[operations_ objectForKey:key]];
-        [operationQueue_ addOperation:operation];
-        [newOperations setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
+        [self addOperation:operation];
     }
-    operations_ = newOperations;
 }
 
 #pragma mark -
@@ -327,12 +358,26 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     }
     [defaults removeObjectForKey:PS_OPERATIONS];
     [defaults synchronize];
-    operations_ = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    for(NSNumber *key in operations_){
+    NSMutableDictionary *ops = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    for(NSNumber *key in ops){
         PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
-        operation.delegate = self;
+        [self addOperation:operation];
+    }
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterSequencialOperationQueue delegate
+/*!
+ * did Enqueued
+ */
+-(void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didEnqueued:(PhotoSubmitterOperation *)operation{
+    if(sequencialOperationQueue.count == 1){
         [operationQueue_ addOperation:operation];
     }
+}
+
+- (void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation{
+    [operationQueue_ addOperation:operation];
 }
 
 #pragma mark -

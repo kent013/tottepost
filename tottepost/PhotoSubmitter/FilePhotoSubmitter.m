@@ -214,6 +214,13 @@
 }
 
 /*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return NO;
+}
+
+/*!
  * requires network
  */
 - (BOOL)requiresNetwork{
