@@ -66,8 +66,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         while([[PhotoSubmitterManager sharedInstance] isUploading] &&
               backgroundTaskIdentifer != UIBackgroundTaskInvalid){
+            //NSLog(@"continue: %d, %d", [[PhotoSubmitterManager sharedInstance] isUploading], backgroundTaskIdentifer);
             [NSThread sleepForTimeInterval:1];
         }
+        //NSLog(@"finished: %d, %d", [[PhotoSubmitterManager sharedInstance] isUploading], backgroundTaskIdentifer);
         [app endBackgroundTask:backgroundTaskIdentifer];
         backgroundTaskIdentifer = UIBackgroundTaskInvalid;
     });

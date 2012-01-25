@@ -250,6 +250,12 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             }
         }
     }
+    for(NSNumber *key in sequencialOperationQueues_){
+        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
+        if(queue.count != 0){
+            return YES;
+        }
+    }
     return NO;
 }
 
@@ -329,7 +335,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * progress changed
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
-    //do nothing
     //NSLog(@"progress:%f", progress);
 }
 
