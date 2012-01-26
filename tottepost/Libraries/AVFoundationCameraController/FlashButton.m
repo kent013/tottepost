@@ -3,7 +3,7 @@
 //  tottepost
 //
 //  Created by Ken Watanabe on 12/01/25.
-//  Copyright (c) 2012年 Ken Watanabe. All rights reserved.
+//  Copyright (c) 2012 Ken Watanabe. All rights reserved.
 //
 
 #import "FlashButton.h"
@@ -37,7 +37,7 @@
     [self setClipsToBounds:YES];
     [self.layer setBorderColor:[[UIColor colorWithWhite:0.0 alpha:0.8] CGColor]];
     [self.layer setBorderWidth:1.0];
-    flashImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flash.png"]];
+    flashImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AVFoundationCameraFlash.png"]];
     flashImageView_.frame = CGRectMake(FLASHIMAGE_PADDING_X, FLASHIMAGE_PADDING_Y
                                        ,FLASHIMAGE_WIDTH, FLASHIMAGE_HEIGHT);
     flashImageView_.alpha = 0.8f;

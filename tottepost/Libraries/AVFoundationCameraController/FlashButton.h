@@ -3,7 +3,7 @@
 //  tottepost
 //
 //  Created by Ken Watanabe on 12/01/25.
-//  Copyright (c) 2012年 Ken Watanabe. All rights reserved.
+//  Copyright (c) 2012 Ken Watanabe. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
