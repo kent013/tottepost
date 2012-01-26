@@ -68,4 +68,5 @@
 
 @protocol PhotoSubmitterManagerDelegate <NSObject>
 - (void) photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation;
+- (void) didOperationCanceled;
 @end

@@ -398,7 +398,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
         [queue cancel];
     }
-    [operationQueue_ cancelAllOperations];    
+    [operationQueue_ cancelAllOperations];
+    for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
+        [delegate didOperationCanceled];
+    }
 }
 
 #pragma mark -

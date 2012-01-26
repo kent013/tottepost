@@ -110,6 +110,10 @@
 		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		EA76227614D0675B00C54159 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227414D0675B00C54159 /* flash.png */; };
 		EA76227714D0675B00C54159 /* flash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227514D0675B00C54159 /* flash@2x.png */; };
+		EA76227A14D0B9A700C54159 /* retry.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227814D0B9A700C54159 /* retry.png */; };
+		EA76227B14D0B9A700C54159 /* retry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227914D0B9A700C54159 /* retry@2x.png */; };
+		EA76227E14D0BCBB00C54159 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227C14D0BCBB00C54159 /* cancel.png */; };
+		EA76227F14D0BCBB00C54159 /* cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA76227D14D0BCBB00C54159 /* cancel@2x.png */; };
 		EA8F23F414ADAF960011D575 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EA8F23F214ADAF960011D575 /* comment.png */; };
 		EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAA791114CC5EDC00E431D1 /* camera_change.png */; };
 		EAAB706E14B0D2CD001B873F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAB706D14B0D2CD001B873F /* comment@2x.png */; };
@@ -321,6 +325,10 @@
 		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
 		EA76227414D0675B00C54159 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flash.png; path = Resources/Images/flash.png; sourceTree = "<group>"; };
 		EA76227514D0675B00C54159 /* flash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "flash@2x.png"; path = "Resources/Images/flash@2x.png"; sourceTree = "<group>"; };
+		EA76227814D0B9A700C54159 /* retry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retry.png; path = Resources/Images/retry.png; sourceTree = "<group>"; };
+		EA76227914D0B9A700C54159 /* retry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "retry@2x.png"; path = "Resources/Images/retry@2x.png"; sourceTree = "<group>"; };
+		EA76227C14D0BCBB00C54159 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancel.png; path = Resources/Images/cancel.png; sourceTree = "<group>"; };
+		EA76227D14D0BCBB00C54159 /* cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancel@2x.png"; path = "Resources/Images/cancel@2x.png"; sourceTree = "<group>"; };
 		EA8F23F214ADAF960011D575 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Resources/Images/comment.png; sourceTree = "<group>"; };
 		EAAA791114CC5EDC00E431D1 /* camera_change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera_change.png; path = Resources/Images/camera_change.png; sourceTree = "<group>"; };
 		EAAB706D14B0D2CD001B873F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment@2x.png"; path = "Resources/Images/comment@2x.png"; sourceTree = "<group>"; };
@@ -425,6 +433,10 @@
 		3704D5B51494DAE100380D30 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				EA76227C14D0BCBB00C54159 /* cancel.png */,
+				EA76227D14D0BCBB00C54159 /* cancel@2x.png */,
+				EA76227814D0B9A700C54159 /* retry.png */,
+				EA76227914D0B9A700C54159 /* retry@2x.png */,
 				EA76227414D0675B00C54159 /* flash.png */,
 				EA76227514D0675B00C54159 /* flash@2x.png */,
 				EAAD437114B34D310093E003 /* Default-Landscape.png */,
@@ -914,6 +926,10 @@
 				EAAA791214CC5EDC00E431D1 /* camera_change.png in Resources */,
 				EA76227614D0675B00C54159 /* flash.png in Resources */,
 				EA76227714D0675B00C54159 /* flash@2x.png in Resources */,
+				EA76227A14D0B9A700C54159 /* retry.png in Resources */,
+				EA76227B14D0B9A700C54159 /* retry@2x.png in Resources */,
+				EA76227E14D0BCBB00C54159 /* cancel.png in Resources */,
+				EA76227F14D0BCBB00C54159 /* cancel@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ProgressSummaryView.h"
 #import "PhotoSubmitterManager.h"
+#import "TTLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -37,6 +38,9 @@
     textLabel_.backgroundColor = [UIColor clearColor];
     [self addSubview:textLabel_];
 
+    imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cancel.png"]];
+    [self addSubview:imageView];
+    
     self.alpha = 0.0f;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
@@ -49,9 +53,9 @@
  */
 - (void)updateLabel{
     if(operationCount_ == 0){
-        textLabel_.text = [NSString stringWithFormat:@"nothing to upload.", operationCount_, enabledAppCount_];
+        textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
     }else{
-        textLabel_.text = [NSString stringWithFormat:@"%d ops to %d apps.", operationCount_, enabledAppCount_];
+        textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Uploading"], operationCount_];
     }
     [textLabel_ sizeToFit];
     [self updateWithFrame:self.frame];
@@ -61,10 +65,18 @@
  * handle tap gesture
  */
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender{
-    if([PhotoSubmitterManager sharedInstance].isUploading){
-        return;
-    }
-    [[PhotoSubmitterManager sharedInstance] restart];
+    [[PhotoSubmitterManager sharedInstance] pause];
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Title"]
+                               message:[TTLang lstr:@"Alert_Message"]
+                              delegate:self 
+                     cancelButtonTitle:[TTLang lstr:@"Alert_Cancel"]
+                     otherButtonTitles:[TTLang lstr:@"Alert_OK"], nil];
+    [alert show];
+//    if([PhotoSubmitterManager sharedInstance].isUploading){
+//        return;
+//    }
+//    [[PhotoSubmitterManager sharedInstance] restart];
 }
 @end
 
@@ -90,9 +102,11 @@
 - (void)updateWithFrame:(CGRect)inFrame{
     self.frame = inFrame;
     CGRect labelFrame = inFrame;
-    labelFrame.origin.x = (labelFrame.size.width - textLabel_.frame.size.width) / 2;
+    labelFrame.origin.x = (labelFrame.size.width - textLabel_.frame.size.width) / 2 + inFrame.size.height / 2;
     labelFrame.origin.y = 0;
     textLabel_.frame = labelFrame;
+    
+    imageView.frame = CGRectMake(5, 5, inFrame.size.height - 10, inFrame.size.height - 10);
 }
 
 /*!
@@ -152,11 +166,43 @@
     //do nothing
 }
 
+#pragma mark -
+#pragma mark UIAlertView delegate methods
+
+-(void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [[PhotoSubmitterManager sharedInstance] restart];
+            [self updateLabel];
+            break;
+        case 1:
+            [[PhotoSubmitterManager sharedInstance] cancel];
+            [self updateLabel];
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark PhotoSubmitterManager delegate methods
+
 /*!
- * PhotoSubmitterManager delegate
+ * PhotoSubmitterManager delegate did operation added
  */
 - (void)photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation{
     operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
     [self updateLabel];
 }
+
+/*!
+ * PhotoSubmitterManager delegate did operation canceled
+ */
+- (void) didOperationCanceled{
+    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+    [self updateLabel];
+    if(operationCount_ == 0 && isVisible_){
+        [self hide];
+    }
+}
+
 @end
