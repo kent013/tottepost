@@ -2,7 +2,8 @@
 =========================================
 <img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
  alt="Tottepost logo" title="tottepost" align="right" />
- 
+
+[English](https://github.com/kent013/tottepost/blob/master/README.md)
 tottepostはシンプルさ、写真を撮ってソーシャルサービスやクラウドサービスにアップロードするために必要な操作の少なさにフォーカスしたiOS用のカメラアプリケーションです。
 
 このアプリケーションは、Instagramのような写真にエフェクトをつけて楽しむカメラアプリケーションではありません。  
