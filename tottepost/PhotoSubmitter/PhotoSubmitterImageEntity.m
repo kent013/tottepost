@@ -27,6 +27,7 @@
 @implementation PhotoSubmitterImageEntity
 @synthesize data = data_;
 @synthesize timestamp = timestamp_;
+@synthesize path = path_;
 @synthesize comment;
 @synthesize location;
 
@@ -151,6 +152,7 @@
 - (void)encodeWithCoder:(NSCoder*)coder {
     [coder encodeObject:data_ forKey:@"data"];
     [coder encodeObject:timestamp_ forKey:@"timestamp"];
+    [coder encodeObject:path_ forKey:@"path"];
 }
 
 /*!
@@ -161,6 +163,7 @@
     if (self) {
         data_ = [coder decodeObjectForKey:@"data"]; 
         timestamp_ = [coder decodeObjectForKey:@"timestamp"];
+        path_ = [coder decodeObjectForKey:@"path"];
         resizedImages_ = [[NSMutableDictionary alloc] init];
     }
     return self;

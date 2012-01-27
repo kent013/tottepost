@@ -174,6 +174,20 @@
 }
 
 /*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.md5;
+    OFFlickrAPIRequest *request = (OFFlickrAPIRequest *)[self requestForPhoto:hash];
+    [request cancel];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:request];
+}
+
+/*!
  * login to flickr
  */
 -(void)login{

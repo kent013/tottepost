@@ -95,4 +95,11 @@
         [self performSelector:@selector(peek) withObject:nil afterDelay:interval];
     });
 }
+
+/*!
+ * if current operation did canceled
+ */
+- (void)photoSubmitterOperationDidCanceled:(PhotoSubmitterOperation *)operation{
+    [queue_ removeAllObjects];
+}
 @end

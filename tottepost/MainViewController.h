@@ -41,6 +41,7 @@
     BOOL refreshCameraNeeded_;
     BOOL settingViewPresented_;
     BOOL isConnected_;
+    BOOL isFeedbackButtonPressed_;
 }
 
 @property (nonatomic, readonly) BOOL refreshCameraNeeded;

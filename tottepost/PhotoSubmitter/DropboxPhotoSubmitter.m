@@ -162,6 +162,7 @@
     NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     NSString *path = [dir stringByAppendingString:filename];
+    photo.path = path;
 
     [photo.data writeToFile:path atomically:NO];
     [self addRequest:restClient];
@@ -171,6 +172,19 @@
     [self photoSubmitter:self willStartUpload:path];
 }    
 
+/*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.path;
+    DBRestClient *request = (DBRestClient *)[self requestForPhoto:hash];
+    [request cancelFileUpload:hash];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:request];
+}
 
 /*!
  * login to Dropbox

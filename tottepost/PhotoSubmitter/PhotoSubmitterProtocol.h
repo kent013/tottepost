@@ -48,6 +48,7 @@ typedef enum {
 - (void) logout;
 - (void) disable;
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
+- (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo;
 - (BOOL) isProcessableURL:(NSURL *)url;
 - (BOOL) didOpenURL:(NSURL *)url;
 - (void) addPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)photoDelegate;
@@ -77,6 +78,7 @@ typedef enum {
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash;
 @end
 
 /*!
@@ -84,6 +86,7 @@ typedef enum {
  */
 @protocol PhotoSubmitterPhotoOperationDelegate <NSObject>
 - (void) photoSubmitterDidOperationFinished:(BOOL)suceeded;
+- (void) photoSubmitterDidOperationCanceled;
 @end
 
 /*!

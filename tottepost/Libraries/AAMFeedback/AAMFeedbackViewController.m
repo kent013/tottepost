@@ -92,7 +92,7 @@
 {
     [super loadView];
     self.title = NSLocalizedString(@"AAMFeedbackTitle", nil);
-    //self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelDidPress:)]autorelease];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelDidPress:)]autorelease];
     
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"AAMFeedbackButtonMail", nil) style:UIBarButtonItemStyleDone target:self action:@selector(nextDidPress:)]autorelease];
 }
@@ -298,7 +298,7 @@
     
     [picker setSubject:[self _feedbackSubject]];
     [picker setMessageBody:[self _feedbackBody] isHTML:NO];
-    [self.navigationController pushViewController: picker animated:YES];
+    [self presentModalViewController:picker animated:YES];
     [picker release];
 }
 

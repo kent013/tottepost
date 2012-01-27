@@ -338,6 +338,13 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     //NSLog(@"progress:%f", progress);
 }
 
+/*!
+ * upload canceled
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
+    
+}
+
 #pragma mark -
 #pragma mark operation delegate
 /*!
@@ -347,6 +354,12 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     if(suceeeded){
         [operations_ removeObjectForKey:[NSNumber numberWithInt:operation.hash]];
     }
+}
+
+/*!
+ * operation canceled
+ */
+- (void)photoSubmitterOperationDidCanceled:(PhotoSubmitterOperation *)operation{
 }
 
 #pragma mark -
@@ -387,18 +400,22 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (void) pause{
     [operationQueue_ cancelAllOperations];
+    for(NSNumber *key in operations_){
+        PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
+        [operation pause];
+    }
+    for(NSNumber *key in sequencialOperationQueues_){
+        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
+        [queue cancel];
+    }
 }
 
 /*!
  * cancel
  */
 - (void) cancel{
-    [operations_ removeAllObjects];
-    for(NSNumber *key in sequencialOperationQueues_){
-        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
-        [queue cancel];
-    }
     [operationQueue_ cancelAllOperations];
+    [operations_ removeAllObjects];
     for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
         [delegate didOperationCanceled];
     }
@@ -406,7 +423,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 
 #pragma mark -
 #pragma mark PhotoSubmitterSequencialOperationQueue delegate
-- (void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation{
+- (void)sequencialOperationQueue:(PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueue didPeeked:(PhotoSubmitterOperation *)operation{    
+    if(operation.isCancelled){
+        return;
+    }
     [operationQueue_ addOperation:operation];
 }
 
