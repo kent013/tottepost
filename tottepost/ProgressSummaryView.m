@@ -186,7 +186,7 @@
 clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [[PhotoSubmitterManager sharedInstance] restart];
+            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:1];
             [self updateLabel];
             break;
         case 1:
