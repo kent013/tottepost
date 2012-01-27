@@ -26,7 +26,8 @@
     textView_ = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 20, 200)];
     textView_.text = [TTLang lstr:@"AboutText"];
     textView_.backgroundColor = [UIColor clearColor];
-    textView_.userInteractionEnabled = NO;
+    textView_.dataDetectorTypes = UIDataDetectorTypeLink;
+    textView_.editable = NO;
     feedbackButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [feedbackButton_ setTitle: [TTLang lstr:@"AAMFeedbackTitle"] forState:UIControlStateNormal];
     [feedbackButton_ addTarget:self action:@selector(handleFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
