@@ -1,6 +1,8 @@
 Simple Camera Application for iOS
 =========================================
 
+[日本語](https://github.com/kent013/tottepost/blob/master/README.ja.md)
+
 <img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
  alt="Tottepost logo" title="tottepost" align="right" />
 
