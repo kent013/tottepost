@@ -42,8 +42,7 @@
  * initializer
  */
 -(void)setupInitialState{
-    DBSession* dbSession =
-    [[DBSession alloc] initWithAppKey:PHOTO_SUBMITTER_DROPBOX_API_KEY appSecret:PHOTO_SUBMITTER_DROPBOX_API_SECRET root:kDBRootAppFolder];
+    DBSession* dbSession = [[DBSession alloc] initWithAppKey:PHOTO_SUBMITTER_DROPBOX_API_KEY appSecret:PHOTO_SUBMITTER_DROPBOX_API_SECRET root:kDBRootAppFolder];
     dbSession.delegate = self;
     [DBSession setSharedSession:dbSession];
     

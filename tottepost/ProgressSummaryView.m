@@ -36,6 +36,7 @@
     textLabel_.textColor = [UIColor blackColor];
     textLabel_.font = [UIFont systemFontOfSize:10.0];
     textLabel_.backgroundColor = [UIColor clearColor];
+    textLabel_.textAlignment = UITextAlignmentCenter;
     [self addSubview:textLabel_];
 
     cancelImage = [UIImage imageNamed:@"cancel.png"];
@@ -54,12 +55,12 @@
  * update Label
  */
 - (void)updateLabel{
-    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
-    if(isUploading == false && imageView.image == cancelImage){
-        imageView.image = retryImage;
-    }else if(isUploading && imageView.image == retryImage){
-        imageView.image = cancelImage;
-    }
+//    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
+//    if(isUploading == false && imageView.image == cancelImage){
+//        imageView.image = retryImage;
+//    }else if(isUploading && imageView.image == retryImage){
+//        imageView.image = cancelImage;
+//    }
     if(operationCount_ == 0){
         textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
     }else{
@@ -109,12 +110,9 @@
  */
 - (void)updateWithFrame:(CGRect)inFrame{
     self.frame = inFrame;
-    CGRect labelFrame = inFrame;
-    labelFrame.origin.x = (labelFrame.size.width - textLabel_.frame.size.width) / 2 + inFrame.size.height / 2;
-    labelFrame.origin.y = 0;
-    textLabel_.frame = labelFrame;
-    
     imageView.frame = CGRectMake(5, 5, inFrame.size.height - 10, inFrame.size.height - 10);
+    CGRect labelFrame = CGRectMake(imageView.frame.size.width, 0, inFrame.size.width - imageView.frame.size.width, inFrame.size.height);
+    textLabel_.frame = labelFrame;    
 }
 
 /*!
