@@ -207,6 +207,7 @@
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
     NSString *hash = photo.md5;
     [self setPhotoHash:hash forRequest:request];
+    [self addRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [self photoSubmitter:self willStartUpload:hash];    
 }
