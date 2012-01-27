@@ -480,7 +480,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                      forHash:imageHash 
-                                                     message:msg delay:2];
+                                                     message:msg delay:0];
     });
     
 }
