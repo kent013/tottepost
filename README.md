@@ -3,13 +3,12 @@ Simple Camera Application for iOS
 
 <img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
  alt="Tottepost logo" title="tottepost" align="right" />
- 
-Camera application for iOS devices, focusing on simplicity, minimam operation to take photo and post it to social apps.
 
-This application is not similer to Instagram or other kind of camera application that offer users to add effects to photo. They are very good application to share nice looking photos, but they are messy to select effects if you want to share photos instantly.
+Camera application for iOS devices, focusing on simplicity, minimum operation to take photo and post it to social apps.
 
-Tottepost is focusing on simplicity, thus we will not provide effects, cropping or decorating photo functionality. We provide features to take photo and share the photo in social applications or cloud services.
+This application is not similar to Instagram or other kind of camera application that offer users to add effects to photo. These applications are very good when sharing nice looking photos, but often feel messy to select the effects if you want to share photos instantly.
 
+Tottepost is focusing on simplicity, thus we will not provide effects, cropping or decorating photo functionality. We provide features to take photo and share the photo to social applications or cloud services in least one tap.
 
 FEATURE LIST
 ------------------------------------
