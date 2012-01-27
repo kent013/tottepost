@@ -166,6 +166,13 @@
     //do nothing
 }
 
+/*!
+ * PhotoSubmitterPhotoDelegate did cancel
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
+    //do nothing
+}
+
 #pragma mark -
 #pragma mark UIAlertView delegate methods
 

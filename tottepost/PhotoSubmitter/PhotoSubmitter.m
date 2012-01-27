@@ -101,6 +101,15 @@
     }    
 }
 
+/*!
+ * call did photo submitter canceled delegate methods
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
+    for(id<PhotoSubmitterPhotoDelegate> delegate in photoDelegates_){
+        [delegate photoSubmitter:photoSubmitter didCanceled:imageHash];
+    }        
+}
+
 #pragma mark -
 #pragma mark operation delegates
 /*!
@@ -148,6 +157,17 @@
  */
 - (NSString *)photoForRequest:(NSObject *)request{
     return [photos_ objectForKey:[NSNumber numberWithInt:request.hash]];
+}
+
+/*!
+ * get request
+ */
+- (NSObject *)requestForPhoto:(NSString *)photoHash{
+    NSArray *key = [photos_ allKeysForObject:photoHash];
+    if(key.count == 0){
+        return nil;
+    }
+    return [requests_ objectForKey:[key lastObject]];
 }
 
 #pragma mark -

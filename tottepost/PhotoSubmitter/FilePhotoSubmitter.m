@@ -87,6 +87,13 @@
 }
 
 /*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    //do not cancel
+}
+
+/*!
  * login to file
  */
 -(void)login{

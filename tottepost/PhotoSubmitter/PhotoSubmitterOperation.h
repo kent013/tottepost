@@ -17,6 +17,8 @@
 @interface PhotoSubmitterOperation : NSOperation<NSCoding, PhotoSubmitterPhotoOperationDelegate>{
     BOOL isExecuting;
     BOOL isFinished;
+    BOOL isCanceled;
+    BOOL isFailed;
     NSMutableArray *delegates_;
 }
 @property (strong, nonatomic) id<PhotoSubmitterProtocol> submitter;
@@ -26,6 +28,7 @@
 - (void) addDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (void) removeDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (void) clearDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
+- (void) pause;
 
 - (id)initWithSubmitter:(id<PhotoSubmitterProtocol>)submitter photo:(PhotoSubmitterImageEntity *)photo;
 + (id)operationWithOperation:(PhotoSubmitterOperation *)operation;
@@ -36,4 +39,5 @@
  */
 @protocol PhotoSubmitterOperationDelegate <NSObject>
 - (void) photoSubmitterOperation:(PhotoSubmitterOperation *)operation didFinished:(BOOL)suceeeded;
+- (void) photoSubmitterOperationDidCanceled:(PhotoSubmitterOperation *)operation;
 @end

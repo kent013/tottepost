@@ -46,11 +46,13 @@
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash;
 
 //photo hash methods
 - (void) setPhotoHash:(NSString *)photoHash forRequest:(NSObject *)request;
 - (void) removePhotoForRequest:(NSObject *)request;
 - (NSString*) photoForRequest:(NSObject *)request;
+- (NSObject*) requestForPhoto:(NSString *)photoHash;
 
 //util
 - (void) clearRequest: (NSObject *)request;

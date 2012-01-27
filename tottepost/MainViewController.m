@@ -469,6 +469,22 @@
     });
 }
 
+/*!
+ * photo submitter did canceled
+ */
+- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{   
+    NSString *msg = @"canceled";
+    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressTableViewController_ removeProgressWithType:photoSubmitter.type
+                                                     forHash:imageHash 
+                                                     message:msg delay:2];
+    });
+    
+}
+
 #pragma mark -
 #pragma mark PreviewPhotoVieww delegate
 /*!

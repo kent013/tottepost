@@ -64,6 +64,9 @@
     do {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                  beforeDate:[NSDate distantFuture]];
+        if(isCanceled){
+            [self.submitter cancelPhotoSubmit: self.photo];
+        }
     } while (isExecuting);
 	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
 }
@@ -127,9 +130,22 @@
  */
 - (void)photoSubmitterDidOperationFinished:(BOOL)suceeded{
     [self finishOperation];
+    if(suceeded == NO){
+        [self setValue:[NSNumber numberWithBool:YES] forKey:@"isFailed"];
+    }
     for(id<PhotoSubmitterOperationDelegate> delegate in delegates_){
         [delegate photoSubmitterOperation:self didFinished:suceeded];
     }
+}
+
+/*!
+ * submitter operation delegate
+ */
+- (void)photoSubmitterDidOperationCanceled{
+    [self finishOperation];
+    for(id<PhotoSubmitterOperationDelegate> delegate in delegates_){
+        [delegate photoSubmitterOperationDidCanceled:self];
+    }    
 }
 
 /*!
@@ -165,5 +181,12 @@
  */
 - (void)clearDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
     [delegates_ removeAllObjects];
+}
+
+/*!
+ * pause
+ */
+- (void)pause{
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isCanceled"];
 }
 @end

@@ -101,6 +101,9 @@
  */
 - (void)removeProgressCell:(UploadProgressEntity *)entity{
     int index = [self indexForProgress:entity];
+    if(progresses_.count <= index){
+        return;
+    }
     [progresses_ removeObjectAtIndex:index];
     [cells_ removeObjectForKey:entity.progressHash];
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
@@ -186,6 +189,9 @@
  */
 - (void)addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash{
     UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type photoHash:hash];
+    if(entity == nil){
+        return;
+    }
     [progresses_ addObject:entity];
     [self.tableView reloadData];
 }
@@ -195,6 +201,9 @@
  */
 - (void)updateProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash progress:(CGFloat)progress{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+    if(entity == nil){
+        return;
+    }
     entity.progress = progress;
     
     ProgressTableViewCell *cell = [cells_ objectForKey:entity.progressHash];
@@ -206,6 +215,9 @@
  */
 - (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+    if(entity == nil){
+        return;
+    }
     [self showText:entity text:message];
     [self performSelector:@selector(removeProgressCell:) withObject:entity afterDelay:delay];
 }
