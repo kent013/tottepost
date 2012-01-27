@@ -137,12 +137,12 @@
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
     NSString *hash = photo.md5;
     NSURLConnection *connection = (NSURLConnection *)[self requestForPhoto:hash];
-    [self clearRequest:connection];
     [connection cancel];
     
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
     [operationDelegate photoSubmitterDidOperationCanceled];
     [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:connection];
 }
 
 /*!

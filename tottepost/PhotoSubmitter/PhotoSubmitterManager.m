@@ -307,6 +307,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  */
 - (void)restart{
     [operationQueue_ cancelAllOperations];
+    operationQueue_ = [[NSOperationQueue alloc] init];
+    operationQueue_.maxConcurrentOperationCount = 6;
     NSMutableDictionary *ops = operations_;
     operations_ = [[NSMutableDictionary alloc] init];
     for(NSNumber *key in ops){
