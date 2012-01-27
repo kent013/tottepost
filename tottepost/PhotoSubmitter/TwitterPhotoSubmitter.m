@@ -55,6 +55,9 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
+    if(hash == nil){
+        return;
+    }
     [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
     [operationDelegate photoSubmitterDidOperationFinished:YES];
@@ -120,6 +123,7 @@
         
         if(connection){
             [self setPhotoHash:imageHash forRequest:connection];
+            [self addRequest:connection];
             [self setOperationDelegate:delegate forRequest:connection];
             [self photoSubmitter:self willStartUpload:imageHash];
         }
