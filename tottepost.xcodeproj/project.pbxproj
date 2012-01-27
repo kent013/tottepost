@@ -107,6 +107,10 @@
 		798058B714CE98E4006E3817 /* FBNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058B614CE98E4006E3817 /* FBNetworkReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		798058BB14CFD317006E3817 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		798058BE14CFD452006E3817 /* PhotoSubmitterSequencialOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */; };
+		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79823CDC14D2BDBA0094389D /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */; };
+		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
 		EA01E8A014D26176005E27F1 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = EA01E89E14D26176005E27F1 /* cancel.png */; };
@@ -321,6 +325,13 @@
 		798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "Libraries/ios-queue-object/NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		798058BC14CFD450006E3817 /* PhotoSubmitterSequencialOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterSequencialOperationQueue.h; path = PhotoSubmitter/PhotoSubmitterSequencialOperationQueue.h; sourceTree = "<group>"; };
 		798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterSequencialOperationQueue.m; path = PhotoSubmitter/PhotoSubmitterSequencialOperationQueue.m; sourceTree = "<group>"; };
+		79823CD314D2BCDE0094389D /* AAMFeedbackTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackTopicsViewController.h; sourceTree = "<group>"; };
+		79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackTopicsViewController.m; sourceTree = "<group>"; };
+		79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
+		79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
+		79823CD914D2BDB90094389D /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutSettingViewController.h; sourceTree = "<group>"; };
+		79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutSettingViewController.m; sourceTree = "<group>"; };
+		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
 		EA01E89E14D26176005E27F1 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancel.png; path = Resources/Images/cancel.png; sourceTree = "<group>"; };
@@ -350,6 +361,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */,
 				37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */,
 				37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */,
 				7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */,
@@ -418,6 +430,8 @@
 				7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */,
 				37FB64E71496384800387490 /* FacebookSettingTableViewController.h */,
 				37FB64E81496384800387490 /* FacebookSettingTableViewController.m */,
+				79823CD914D2BDB90094389D /* AboutSettingViewController.h */,
+				79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -499,6 +513,7 @@
 				37F58A1A14A361FE005C7700 /* DropboxSDK.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
 				37F0D26B14A710F900680F8A /* ImageIO.framework */,
+				79823CDE14D2C3A40094389D /* MessageUI.framework */,
 				376A8B3514A05F8000637B68 /* QuartzCore.framework */,
 				37F58A1C14A3633A005C7700 /* Security.framework */,
 				376E15541494C47800A34E7D /* SenTestingKit.framework */,
@@ -694,6 +709,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				798058B814CFD2E4006E3817 /* ios-queue-object */,
 				798058B414CE98D0006E3817 /* FBNetworkReachability */,
 				7980589614CAA7B5006E3817 /* UIImage-categories */,
@@ -785,6 +801,18 @@
 				798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */,
 			);
 			name = "ios-queue-object";
+			sourceTree = "<group>";
+		};
+		79823CD214D2BCDE0094389D /* AAMFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				79823CD314D2BCDE0094389D /* AAMFeedbackTopicsViewController.h */,
+				79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */,
+				79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */,
+				79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */,
+			);
+			name = AAMFeedback;
+			path = Libraries/AAMFeedback;
 			sourceTree = "<group>";
 		};
 		79D8073E14D0F78500064CB3 /* Images */ = {
@@ -1023,6 +1051,9 @@
 				798058BB14CFD317006E3817 /* NSMutableArray+QueueAdditions.m in Sources */,
 				798058BE14CFD452006E3817 /* PhotoSubmitterSequencialOperationQueue.m in Sources */,
 				EA76226F14D0312100C54159 /* FlashButton.m in Sources */,
+				79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */,
+				79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */,
+				79823CDC14D2BDBA0094389D /* AboutSettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
