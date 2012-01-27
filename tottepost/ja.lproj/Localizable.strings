@@ -19,6 +19,7 @@
 "Settings_Section_Accounts_Footer" = "サービス名をタップすると\n詳細画面へ移動します。";
 "Settings_Row_Comment" = "コメント";
 "Settings_Row_GPSTagging" = "位置情報";
+"Settings_Row_About" = "アプリについて / フィードバック";
 "Detail_Section_Account" = "アカウント";
 "Detail_Section_Album" = "アルバム選択";
 "Facebook_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを追加したい場合にはfacebookで行ってください。";
@@ -38,3 +39,43 @@
 "Alert_Message" = "すべてのアップロードを中止しますか？";
 "Alert_OK" =  "はい";
 "Alert_Cancel" =  "いいえ";
+
+"AboutText" = "Copyright (c) 2011, ISHITOYA Kentaro.
+Copyright (c) 2011, WATANABE Ken. 
+
+このアプリはgithubでソースコードが公開されています。
+https://github.com/kent013/tottepost
+たくさんのOSSライブラリを使っています。
+githubに権利情報が書いてありますのでご覧ください。
+
+要望や質問があれば下のボタンからお気軽に。
+（メールアカウントが必要です）
+";
+
+/* 
+ Localizable.strings
+ AAMFeedbackViewController
+ 
+ Created by Takayuki Fukatsu on 11/11/30.
+ Copyright (c) 2011年 Art & Mobile. All rights reserved.
+ */
+
+"AAMFeedbackTitle" = "フィードバック";
+"AAMFeedbackTopicsTitle" = "トピック";
+
+"AAMFeedbackButtonMail" = "メール";
+"AAMFeedbackDescriptionPlaceholder" = "詳細をお願いいたします。";
+
+//Table Headers
+"AAMFeedbackTableHeaderTopics" = "入力事項";
+"AAMFeedbackTableHeaderBasicInfo" = "動作環境の情報";
+
+//Topics Options
+"AAMFeedbackTopicsQuestion" = "質問";
+"AAMFeedbackTopicsRequest" = "リクエスト";
+"AAMFeedbackTopicsBugReport" = "バグ報告";
+"AAMFeedbackTopicsMedia" = "マスメディア";
+"AAMFeedbackTopicsBusiness" = "ビジネス";
+"AAMFeedbackTopicsOther" = "その他";
+
+"AAMFeedbackMailDidFinishWithError" = "送信に失敗しました。しばらく時間をおいてからもう一度お試しください。";

@@ -13,9 +13,12 @@
 #define SV_SECTION_GENERAL  0
 #define SV_SECTION_ACCOUNTS 1
 
+#define SV_GENERAL_COUNT 3
 #define SV_GENERAL_COMMENT 0
 #define SV_GENERAL_GPS 1
+#define SV_GENERAL_ABOUT 2
 
+#define SV_ACCOUNTS_COUNT 5
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
@@ -53,6 +56,7 @@
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
+    aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
@@ -73,8 +77,8 @@
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case SV_SECTION_GENERAL: return 2;
-        case SV_SECTION_ACCOUNTS: return 5;
+        case SV_SECTION_GENERAL: return SV_GENERAL_COUNT;
+        case SV_SECTION_ACCOUNTS: return SV_ACCOUNTS_COUNT;
     }
     return 0;
 }
@@ -86,6 +90,7 @@
     switch (section) {
         case SV_SECTION_GENERAL : return [TTLang lstr:@"Settings_Section_General"]; break;
         case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts"]; break;
+        case SV_GENERAL_ABOUT   : return [TTLang lstr:@"Settings_Section_About"]; break;
     }
     return nil;
 }
@@ -123,6 +128,9 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     UISwitch *s = nil;
     switch (tag) {
+        case SV_GENERAL_ABOUT:
+            cell.textLabel.text = [TTLang lstr:@"Settings_Row_About"];
+            break;
         case SV_GENERAL_COMMENT:
             cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
             s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
@@ -166,7 +174,13 @@
  * on row selected
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == SV_SECTION_ACCOUNTS){
+    if(indexPath.section == SV_SECTION_GENERAL){
+        switch (indexPath.row) {
+            case SV_GENERAL_ABOUT: 
+                [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
+                break;
+        }        
+    }else if(indexPath.section == SV_SECTION_ACCOUNTS){
         switch (indexPath.row) {
             case SV_ACCOUNTS_FACEBOOK: 
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].isEnabled){
