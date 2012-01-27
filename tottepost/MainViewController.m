@@ -123,6 +123,11 @@
         isConnected_ = YES;
     }
     [[FBNetworkReachability sharedInstance] startNotifier];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+        [self.view addSubview:launchImageView_];
+    }
 }
 
 /*!
@@ -202,16 +207,6 @@
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
     flexSpace_.width = frame.size.width / 2 - MAINVIEW_CAMERA_BUTTON_WIDTH/2 - MAINVIEW_COMMENT_BUTTON_WIDTH - MAINVIEW_COMMENT_BUTTON_PADDING; 
-
-    /*if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        CGAffineTransform transform = CGAffineTransformIdentity;
-        if(orientation_ == UIInterfaceOrientationPortraitUpsideDown){
-            transform = CGAffineTransformMakeRotation(M_PI);
-        }else if(orientation_ == UIInterfaceOrientationPortrait){
-            transform = CGAffineTransformMakeRotation(0);
-        }
-        [imagePicker_ setCameraViewTransform:transform];
-    }*/
     
     if([TottePostSettings getInstance].commentPostEnabled){
         UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
@@ -263,19 +258,6 @@
     }
     
     [manager submitPhoto:photo];
-    /*
-    if(manager.requiresNetwork == NO ||
-       (manager.requiresNetwork && isConnected_)){
-        [manager submitPhoto:photo];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoNetwork"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    if(manager.requiresNetwork && isConnected_ == NO &&
-       [manager submitterForType:PhotoSubmitterTypeFile].isEnabled){
-        [[manager submitterForType:PhotoSubmitterTypeFile] submitPhoto:photo andOperationDelegate:nil];
-    }*/
 }
 
 #pragma mark -
@@ -430,6 +412,12 @@
     }    
 }
 
+/*!
+ * dismiss launch image
+ */
+- (void)cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController{
+}
+
 #pragma mark -
 #pragma mark PhotoSubmitter delegate
 /*!
@@ -505,7 +493,7 @@
     }
     if(self.refreshCameraNeeded){
         refreshCameraNeeded_ = NO;
-        [self performSelector:@selector(updateCameraController) withObject:nil afterDelay:0.5];
+        //[self performSelector:@selector(updateCameraController) withObject:nil afterDelay:0.5];
     }else{
         [self updateCoordinates];
     }

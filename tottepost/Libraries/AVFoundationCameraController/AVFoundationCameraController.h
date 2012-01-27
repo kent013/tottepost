@@ -80,4 +80,6 @@
  */
 - (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data;
 - (void) cameraController:(AVFoundationCameraController *)cameraController didScaledTo:(CGFloat) scale viewRect:(CGRect)rect;
+@optional
+- (void) cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController;
 @end

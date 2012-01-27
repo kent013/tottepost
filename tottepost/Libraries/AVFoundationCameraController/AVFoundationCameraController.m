@@ -36,6 +36,7 @@
  */
 -(void)setupInitialState:(CGRect)frame{
     self.view.frame = frame;
+    self.view.backgroundColor = [UIColor clearColor];
     pointOfInterest_ = CGPointMake(frame.size.width / 2, frame.size.height / 2);
     defaultBounds_ = frame;
     scale_ = 1.0;
@@ -136,6 +137,9 @@
     [self.view.layer addSublayer:indicatorLayer_];
     viewOrientation_ = UIDeviceOrientationPortrait;
     [self deviceOrientationDidChange];
+    if([self.delegate respondsToSelector:@selector(cameraControllerDidInitialized:)]){
+        [self.delegate cameraControllerDidInitialized:self];
+    }
 }
 
 /*!

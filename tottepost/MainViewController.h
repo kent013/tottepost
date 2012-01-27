@@ -35,8 +35,7 @@
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
     __strong SettingIndicatorView *settingIndicatorView_;
-    __strong NSData *photoData;
-    __strong NSDictionary *photoMetaData;
+    __strong UIImageView *launchImageView_;
     UIInterfaceOrientation orientation_;
     UIInterfaceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;
