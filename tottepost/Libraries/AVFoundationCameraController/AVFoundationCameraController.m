@@ -12,6 +12,17 @@
 #import "UIImage+Resize.h"
 #import "UIImage+AutoRotation.h"
 
+#define INDICATOR_RECT_SIZE 50.0
+#define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
+#define PICKER_PADDING_X 10
+#define PICKER_PADDING_Y 10
+#define PICKER_SHUTTER_BUTTON_WIDTH 60
+#define PICKER_SHUTTER_BUTTON_HEIGHT 30
+#define PICKER_FLASHMODE_BUTTON_WIDTH 60
+#define PICKER_FLASHMODE_BUTTON_HEIGHT 30
+#define PICKER_CAMERADEVICE_BUTTON_WIDTH 60
+#define PICKER_CAMERADEVICE_BUTTON_HEIGHT 30
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -159,7 +170,7 @@
         [self.view addSubview: shutterButton_];
     }
     if(showsFlashModeButton_ && [flashModeButton_ isDescendantOfView:self.view] == NO){
-        flashModeButton_.frame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
+        [flashModeButton_ setFrame:CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT)];
         [self.view addSubview: flashModeButton_];
     }
     if(showsCameraDeviceButton_ && [cameraDeviceButton_ isDescendantOfView:self.view] == NO){        cameraDeviceButton_.frame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);

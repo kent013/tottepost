@@ -38,7 +38,9 @@
     textLabel_.backgroundColor = [UIColor clearColor];
     [self addSubview:textLabel_];
 
-    imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cancel.png"]];
+    cancelImage = [UIImage imageNamed:@"cancel.png"];
+    retryImage = [UIImage imageNamed:@"retry.png"];
+    imageView = [[UIImageView alloc] initWithImage:cancelImage];
     [self addSubview:imageView];
     
     self.alpha = 0.0f;
@@ -52,6 +54,12 @@
  * update Label
  */
 - (void)updateLabel{
+    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
+    if(isUploading == false && imageView.image == cancelImage){
+        imageView.image = retryImage;
+    }else if(isUploading && imageView.image == retryImage){
+        imageView.image = cancelImage;
+    }
     if(operationCount_ == 0){
         textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
     }else{
@@ -149,10 +157,10 @@
  * PhotoSubmitterPhotoDelegate did submitted
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
+    [self updateLabel];
     if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
         operationCount_--;
         enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
-        [self updateLabel];
         if(operationCount_ <= 0 && isVisible_){
             [self hide];
         }

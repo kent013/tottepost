@@ -13,6 +13,8 @@
 @interface ProgressSummaryView : UIView<PhotoSubmitterPhotoDelegate,PhotoSubmitterManagerDelegate,UIAlertViewDelegate>{
     __strong UILabel *textLabel_;
     __strong UIImageView *imageView;
+    __strong UIImage *cancelImage;
+    __strong UIImage *retryImage;
     int operationCount_;
     int enabledAppCount_;
     BOOL isVisible_;

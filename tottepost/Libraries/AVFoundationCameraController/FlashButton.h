@@ -9,19 +9,18 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-#define FLASHIMAGE_PADDING_X 8
-#define FLASHIMAGE_PADDING_Y 8
-#define FLASHIMAGE_WIDTH 15
-#define FLASHIMAGE_HEIGHT 15
-
 @protocol FlashButtonDelegate;
 
 @interface FlashButton : UIButton{
     __strong UILabel* label;
     __strong UIImageView* flashImageView_;
+    __strong UIButton* onButton_;
+    __strong UIButton* offButton_;
+    __strong UIButton* autoButton_;
     __strong NSUserDefaults* ud;
     __weak id<FlashButtonDelegate> delegate_;
 
+    int closedWidth_;
     AVCaptureFlashMode flashMode_;
     BOOL isOpen_;
 }
