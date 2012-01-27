@@ -162,6 +162,7 @@
     NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     NSString *path = [dir stringByAppendingString:filename];
+    photo.path = path;
 
     [photo.data writeToFile:path atomically:NO];
     [self addRequest:restClient];
