@@ -13,6 +13,7 @@
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
 #import "UIColor-Expanded.h"
+#import "AAMFeedbackViewController.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -483,7 +484,6 @@
  * did dismiss setting view
  */
 - (void)didDismissSettingTableViewController{
-    [UIApplication sharedApplication].statusBarHidden = YES;
     //for iphone heck
     if(self.view.frame.origin.y == MAINVIEW_STATUS_BAR_HEIGHT){
         CGRect frame = self.view.frame;
@@ -498,6 +498,13 @@
         [self updateCoordinates];
     }
     settingViewPresented_ = NO;
+}
+
+/*!
+ * feedback button pressed
+ */
+- (void)didFeedbackButtonPressed{
+    isFeedbackButtonPressed_ = YES;
 }
 
 #pragma mark -
@@ -521,8 +528,18 @@
  */
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [UIApplication sharedApplication].statusBarHidden = YES;
     if(imagePicker_ == nil){
-        [self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
+        [self createCameraController];
+        //[self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
+    }
+    if(isFeedbackButtonPressed_){
+        isFeedbackButtonPressed_ = NO;
+        AAMFeedbackViewController *fv = [[AAMFeedbackViewController alloc] init];
+        fv.toRecipients = [NSArray arrayWithObject:@"kentaro.ishitoya@gmail.com"];
+        fv.bccRecipients = [NSArray arrayWithObject:@"ken45000@gmail.com"];
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fv];
+        [self presentModalViewController:nvc animated:YES];
     }
 }
 @end

@@ -32,9 +32,6 @@
     [feedbackButton_ setTitle: [TTLang lstr:@"AAMFeedbackTitle"] forState:UIControlStateNormal];
     [feedbackButton_ addTarget:self action:@selector(handleFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     feedbackButton_.frame = CGRectMake((self.view.frame.size.width - 150) / 2, textView_.frame.origin.y + textView_.frame.size.height + 20, 150, 30);
-    feetbackViewController_ = [[AAMFeedbackViewController alloc] init];
-    feetbackViewController_.toRecipients = [NSArray arrayWithObject:@"kentaro.ishitoya@gmail.com"];
-    feetbackViewController_.bccRecipients = [NSArray arrayWithObject:@"ken45000@gmail.com"];
     [self.view addSubview:textView_];
     [self.view addSubview:feedbackButton_];
 }
@@ -43,7 +40,7 @@
  * handle feedback button tapped
  */
 - (void)handleFeedbackButtonTapped:(UIButton *)sender{
-    [self.navigationController pushViewController:feetbackViewController_ animated:YES];
+    [self.delegate didFeedbackButtonPressed];
 }
 @end
 
@@ -51,6 +48,7 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation AboutSettingViewController
+@synthesize delegate;
 /*!
  * initialize
  */

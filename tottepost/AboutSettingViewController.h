@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AAMFeedbackViewController.h"
+
+@protocol AboutSettingViewControllerDelegate;
 
 @interface AboutSettingViewController : UIViewController{
     __strong UITextView *textView_;
     __strong UIButton *feedbackButton_;
-    __strong AAMFeedbackViewController *feetbackViewController_;
 }
+@property (nonatomic, assign) id<AboutSettingViewControllerDelegate> delegate;
+@end
+
+@protocol AboutSettingViewControllerDelegate <NSObject>
+- (void) didFeedbackButtonPressed;
 @end

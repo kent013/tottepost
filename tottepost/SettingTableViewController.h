@@ -17,7 +17,7 @@
 /*!
  * setting view controller
  */
-@interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate>{
+@interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate, AboutSettingViewControllerDelegate>{
 @protected
     __strong FacebookSettingTableViewController *facebookSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *twitterSettingViewController_;
@@ -33,4 +33,5 @@
 
 @protocol SettingTableViewControllerDelegate <NSObject>
 - (void) didDismissSettingTableViewController;
+- (void) didFeedbackButtonPressed;
 @end

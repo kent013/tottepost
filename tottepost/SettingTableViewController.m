@@ -57,6 +57,7 @@
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
+    aboutSettingViewController_.delegate = self;
     
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
@@ -348,6 +349,12 @@
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:SV_GENERAL_COMMENT inSection:SV_SECTION_GENERAL], nil] withRowAnimation:NO];
 }
 
+#pragma mark -
+#pragma mark AboutSettingViewController delegate
+- (void)didFeedbackButtonPressed{
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate didFeedbackButtonPressed];
+}
 
 #pragma mark -
 #pragma mark UIView delegate
