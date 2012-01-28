@@ -18,11 +18,12 @@
     BOOL isExecuting;
     BOOL isFinished;
     BOOL isCanceled;
-    BOOL isFailed;
+    BOOL isFailed_;
     NSMutableArray *delegates_;
 }
 @property (strong, nonatomic) id<PhotoSubmitterProtocol> submitter;
 @property (strong, nonatomic) PhotoSubmitterImageEntity *photo;
+@property (assign, nonatomic) BOOL isFailed;
 @property (readonly, nonatomic) NSMutableArray *delegates;
 
 - (void) addDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;

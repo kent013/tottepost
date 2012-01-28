@@ -10,6 +10,9 @@
 #import "ProgressSummaryView.h"
 #import "PhotoSubmitterManager.h"
 #import "TTLang.h"
+#import "FBNetworkReachability.h"
+
+#define PSV_RETRY_INTERVAL 2
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -55,12 +58,14 @@
  * update Label
  */
 - (void)updateLabel{
-//    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
-//    if(isUploading == false && imageView.image == cancelImage){
-//        imageView.image = retryImage;
-//    }else if(isUploading && imageView.image == retryImage){
-//        imageView.image = cancelImage;
-//    }
+    imageView.image = cancelImage;
+    /*
+    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
+    if(isUploading == false && imageView.image == cancelImage){
+        imageView.image = retryImage;
+    }else if(isUploading && imageView.image == retryImage){
+        imageView.image = cancelImage;
+    }*/
     if(operationCount_ == 0){
         textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
     }else{
@@ -82,10 +87,6 @@
                      cancelButtonTitle:[TTLang lstr:@"Alert_Cancel"]
                      otherButtonTitles:[TTLang lstr:@"Alert_OK"], nil];
     [alert show];
-//    if([PhotoSubmitterManager sharedInstance].isUploading){
-//        return;
-//    }
-//    [[PhotoSubmitterManager sharedInstance] restart];
 }
 @end
 
@@ -186,8 +187,11 @@
 clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:1];
-            [self updateLabel];
+            if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
+                break;
+            }
+            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
+            [self updateLabel];            
             break;
         case 1:
             [[PhotoSubmitterManager sharedInstance] cancel];
@@ -210,7 +214,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 /*!
  * PhotoSubmitterManager delegate did operation canceled
  */
-- (void) didOperationCanceled{
+- (void) didUploadCanceled{
     operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
     [self updateLabel];
     if(operationCount_ == 0 && isVisible_){
