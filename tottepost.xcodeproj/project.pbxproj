@@ -1130,8 +1130,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					JSON.h,
@@ -1165,6 +1165,8 @@
 					Frameworks/objectiveflickr/Source,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1176,8 +1178,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				COPY_PHASE_STRIP = YES;
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					JSON.h,
@@ -1205,6 +1207,8 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1229,8 +1233,8 @@
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A24AAB4C-2F6D-44E7-8185-3500CC682AD0";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A24AAB4C-2F6D-44E7-8185-3500CC682AD0";
+				PROVISIONING_PROFILE = "70C02827-72F5-4E43-8E28-E75E5013DB39";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70C02827-72F5-4E43-8E28-E75E5013DB39";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1293,6 +1297,90 @@
 			};
 			name = Release;
 		};
+		79CF53B814D448860035032D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				COPY_PHASE_STRIP = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					JSON.h,
+					SBJSON.h,
+					SBJSON.m,
+					SBJsonBase.h,
+					SBJsonBase.m,
+					SBJsonParser.h,
+					SBJsonParser.m,
+					SBJsonWriter.h,
+					SBJsonWriter.m,
+					"NSObject+SBJSON.h",
+					"NSObject+SBJSON.m",
+					"NSString+SBJSON.h",
+					"NSString+SBJSON.m",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					Frameworks/objectiveflickr/LFWebAPIKit,
+					Frameworks/objectiveflickr/Source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		79CF53B914D448860035032D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					Frameworks/objectiveflickr/LFWebAPIKit,
+					Frameworks/objectiveflickr/Source,
+				);
+				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
+		79CF53BA14D448860035032D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tottepost.app/tottepost";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Distribution;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1301,27 +1389,30 @@
 			buildConfigurations = (
 				376E15631494C47800A34E7D /* Debug */,
 				376E15641494C47800A34E7D /* Release */,
+				79CF53B814D448860035032D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 		376E15651494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				376E15661494C47800A34E7D /* Debug */,
 				376E15671494C47800A34E7D /* Release */,
+				79CF53B914D448860035032D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 		376E15681494C47800A34E7D /* Build configuration list for PBXNativeTarget "tottepostTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				376E15691494C47800A34E7D /* Debug */,
 				376E156A1494C47800A34E7D /* Release */,
+				79CF53BA14D448860035032D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 /* End XCConfigurationList section */
 	};
