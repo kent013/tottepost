@@ -27,6 +27,9 @@
 "Detail_Row_Logout" = "ログアウト";
 "Detail_Row_LogoutButtonTitle" = "ログアウト";
 
+"ProgressCell_Completed" = "アップロード完了";
+"ProgressCell_Canceled" = "中断";
+
 "Progress_Completed" = "アップロード完了";
 "Progress_Uploading" = "残り: %d";
 "Progress_Finished" = "残り: %d";

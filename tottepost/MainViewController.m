@@ -440,7 +440,7 @@
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
     
-    NSString *msg = @"Upload completed";
+    NSString *msg = [TTLang lstr:@"ProgressCell_Completed"];
     int delay = TOTTEPOST_PROGRESS_REMOVE_DELAY;
     if(photoSubmitter.type == PhotoSubmitterTypeFile){
         return;
@@ -473,7 +473,7 @@
  * photo submitter did canceled
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{   
-    NSString *msg = @"canceled";
+    NSString *msg = [TTLang lstr:@"ProgressCell_Canceled"];
     if(photoSubmitter.type == PhotoSubmitterTypeFile){
         return;
     }
