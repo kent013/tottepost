@@ -245,7 +245,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     if(operations_.count != 0){
         for(NSNumber *key in operations_){
             PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
-            if(operation.isExecuting){
+            if(operation.isExecuting && operation.isCancelled == NO && 
+               operation.isFailed == NO){
                 return YES;
             }
         }
@@ -253,6 +254,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     for(NSNumber *key in sequencialOperationQueues_){
         PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
         if(queue.count != 0){
+            
             return YES;
         }
     }
@@ -353,6 +355,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void)photoSubmitterOperation:(PhotoSubmitterOperation *)operation didFinished:(BOOL)suceeeded{
     if(suceeeded){
         [operations_ removeObjectForKey:[NSNumber numberWithInt:operation.hash]];
+    }else if(self.isUploading == NO){
+        for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
+            [delegate didUploadCanceled];
+        }
     }
 }
 
@@ -360,6 +366,11 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * operation canceled
  */
 - (void)photoSubmitterOperationDidCanceled:(PhotoSubmitterOperation *)operation{
+    if(self.isUploading == NO){
+        for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
+            [delegate didUploadCanceled];
+        }
+    }
 }
 
 #pragma mark -
@@ -417,7 +428,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     [operationQueue_ cancelAllOperations];
     [operations_ removeAllObjects];
     for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
-        [delegate didOperationCanceled];
+        [delegate didUploadCanceled];
     }
 }
 

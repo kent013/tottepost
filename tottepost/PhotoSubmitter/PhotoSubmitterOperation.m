@@ -88,6 +88,7 @@
 @synthesize submitter;
 @synthesize photo;
 @synthesize delegates = delegates_;
+@synthesize isFailed = isFailed_;
 
 /*!
  * initialize with data
