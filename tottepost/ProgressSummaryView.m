@@ -55,12 +55,12 @@
  * update Label
  */
 - (void)updateLabel{
-//    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
-//    if(isUploading == false && imageView.image == cancelImage){
-//        imageView.image = retryImage;
-//    }else if(isUploading && imageView.image == retryImage){
-//        imageView.image = cancelImage;
-//    }
+    bool isUploading = [[PhotoSubmitterManager sharedInstance] isUploading];
+    if(isUploading == false && imageView.image == cancelImage){
+        imageView.image = retryImage;
+    }else if(isUploading && imageView.image == retryImage){
+        imageView.image = cancelImage;
+    }
     if(operationCount_ == 0){
         textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
     }else{
@@ -186,7 +186,7 @@
 clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:1];
+            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:2];
             [self updateLabel];
             break;
         case 1:
