@@ -1218,8 +1218,8 @@
 		376E15661494C47800A34E7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kentaro ISHITOYA (3EBZA8D84J)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kentaro ISHITOYA (3EBZA8D84J)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1233,8 +1233,8 @@
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70C02827-72F5-4E43-8E28-E75E5013DB39";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70C02827-72F5-4E43-8E28-E75E5013DB39";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1242,8 +1242,8 @@
 		376E15671494C47800A34E7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kentaro ISHITOYA (3EBZA8D84J)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kentaro ISHITOYA (3EBZA8D84J)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1257,8 +1257,8 @@
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A24AAB4C-2F6D-44E7-8185-3500CC682AD0";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0C903C55-EB71-46F6-8529-4E8E416A3144";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
