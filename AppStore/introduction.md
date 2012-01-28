@@ -1,12 +1,9 @@
 Single tap to share photo - tottepost
 =========================================
 
-tottepost is a photo sharing application,  sharing photo as easy as winking!
-You can post the photo to pre-configured cloud services, such as twitter, facebook and dropbox, with single tap on camera button.
- 
-Often feel messy takeing photo and sharing them with your friends.
-tottepost is simple, single tap to take photo and share. 
-Let's share something funny in outside, great dishes in restaurants, events or shows with tottepost!
+tottepost is a photo sharing application, sharing photo as easy as winking! You can post the photo to pre-configured cloud services, such as twitter, facebook and dropbox, with only a single tap on camera button.
+
+Often feel messy taking photo and sharing them with your friends. tottepost is simple, just one single tap to take photo and share. Let's share something funny outside, great dishes in restaurants, events or shows with tottepost!
 
 *We are forcusing on simplicity, thus we do not support effects, cropping images.
 
