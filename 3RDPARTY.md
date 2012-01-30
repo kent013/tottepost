@@ -46,7 +46,7 @@
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
 
-Third party icons
+3rd Party Icons
 -----------------
  * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)     
     Copyright (c) 2007-2011 ~pierocksmysocks. All Rights Reserved.
