@@ -1,10 +1,18 @@
 Simple Camera Application for iOS
 =========================================
 
-[日本語](https://github.com/kent013/tottepost/blob/master/README.ja.md)
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot1.png"
+ alt="ScreenShot1" title="ScreenShot1" height = 240 /> 
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot2_en.png"
+ alt="ScreenShot2" title="ScreenShot2" height = 240 />
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot3_en.png"
+ alt="ScreenShot3" title="ScreenShot3" height = 240 >
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot4_en.png"
+ alt="ScreenShot4" title="ScreenShot4" height = 240 />
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot5_en.png"
+ alt="ScreenShot5" title="ScreenShot5" height = 240 />
 
-<img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
- alt="Tottepost logo" title="tottepost" align="right" />
+[日本語](https://github.com/kent013/tottepost/blob/master/README.ja.md)
 
 Camera application for iOS devices, focusing on simplicity, minimum operation to take photo and post it to social apps.
 
