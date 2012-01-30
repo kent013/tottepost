@@ -1,4 +1,4 @@
-3rd Party Libraries and their Licenses
+3rd Party Libraries
 ----------------------------------
  * [Dropbox SDK](https://www.dropbox.com/developers/reference/sdk)  
     Dropbox SDK is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
