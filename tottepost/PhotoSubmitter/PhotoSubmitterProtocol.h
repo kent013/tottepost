@@ -13,7 +13,7 @@
  * Submitter Types
  */
 typedef enum {
-    PhotoSubmitterTypeFacebook,
+    PhotoSubmitterTypeFacebook = 0,
     PhotoSubmitterTypeTwitter,
     PhotoSubmitterTypeFlickr,
     PhotoSubmitterTypeDropbox,
