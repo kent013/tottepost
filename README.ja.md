@@ -1,7 +1,15 @@
 1タップでポストできるカメラアプリケーション tottepost
 =========================================
-<img src="http://github.com/kent013/tottepost/raw/master/tottepost/Resources/Images/icon@2x.png"
- alt="Tottepost logo" title="tottepost" align="right" />
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot1.png"
+ alt="ScreenShot1" title="ScreenShot1" height = 240 /> 
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot2_ja.png"
+ alt="ScreenShot2" title="ScreenShot2" height = 240 />
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot3_ja.png"
+ alt="ScreenShot3" title="ScreenShot3" height = 240 >
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot4_ja.png"
+ alt="ScreenShot4" title="ScreenShot4" height = 240 />
+<img src="http://github.com/kent013/tottepost/raw/master/AppStore/screenshot5_ja.png"
+ alt="ScreenShot5" title="ScreenShot5" height = 240 />
 
 [English](https://github.com/kent013/tottepost/blob/master/README.md)
 

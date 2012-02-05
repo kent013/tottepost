@@ -36,7 +36,7 @@
     BOOL geoTaggingEnabled_;
 }
 
-@property (nonatomic, readonly) NSArray* supportedTypes;
+@property (nonatomic, strong) NSArray* supportedTypes;
 @property (nonatomic, assign) BOOL submitPhotoWithOperations;
 @property (nonatomic, readonly) int enabledSubmitterCount;
 @property (nonatomic, readonly) int uploadOperationCount;
@@ -52,6 +52,7 @@
 - (void) pause;
 - (void) cancel;
 - (void) restart;
+- (void) updateSupportTypeIndex;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
 - (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;

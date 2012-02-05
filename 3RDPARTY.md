@@ -1,4 +1,4 @@
-3rd Party Libraries and their Licenses
+3rd Party Libraries
 ----------------------------------
  * [Dropbox SDK](https://www.dropbox.com/developers/reference/sdk)  
     Dropbox SDK is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
@@ -46,7 +46,7 @@
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
 
-Third party icons
+3rd Party Icons
 -----------------
  * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)     
     Copyright (c) 2007-2011 ~pierocksmysocks. All Rights Reserved.

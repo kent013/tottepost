@@ -38,6 +38,7 @@
 - (PhotoSubmitterType) indexToSubmitterType:(int) index;
 - (int) submitterTypeToIndex:(PhotoSubmitterType) type;
 - (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on;
+- (void) sortSocialAppCell;
 
 @end
 
@@ -164,9 +165,9 @@
     cell.accessoryView = s;
     [switches_ setObject:s forKey:[NSNumber numberWithInt:tag]];
     if([submitter isLogined]){
-        [s setOn:YES animated:YES];
+        [s setOn:YES animated:NO];
     }else{
-        [s setOn:NO animated:YES];
+        [s setOn:NO animated:NO];
     }
     return cell;
 }
@@ -182,7 +183,7 @@
                 break;
         }        
     }else if(indexPath.section == SV_SECTION_ACCOUNTS){
-        switch (indexPath.row) {
+        switch ((int)[self indexToSubmitterType:indexPath.row]) {
             case SV_ACCOUNTS_FACEBOOK: 
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].isEnabled){
                     [self.navigationController pushViewController:facebookSettingViewController_ animated:YES]; 
@@ -208,6 +209,44 @@
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
 }
 
+/*!
+ * sort social app cell by switch state
+ */
+- (void) sortSocialAppCell{
+    NSArray* suportTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
+    NSMutableArray* newSupportTypes = [[NSMutableArray alloc] init];
+
+    NSMutableArray* onTypes = [[NSMutableArray alloc] init];
+    NSMutableArray* offTypes = [[NSMutableArray alloc] init];
+    for (int i = 0;i < switches_.count;i++) {
+        UISwitch* sw = (UISwitch*)[switches_ objectForKey:[NSNumber numberWithInt:i]]; 
+        if(sw.isOn){
+            [onTypes addObject:[NSNumber numberWithInt:(int)[self indexToSubmitterType:i]]];
+        }else{
+            [offTypes addObject:[NSNumber numberWithInt:(int)[self indexToSubmitterType:i]]];
+        }
+    }
+    for(NSNumber* i in onTypes){
+        [newSupportTypes addObject:i];
+    }
+    for(NSNumber* i in offTypes){
+        [newSupportTypes addObject:i];
+    }
+         
+    NSMutableDictionary* newSwitches = [[NSMutableDictionary alloc] init];
+    int i = 0;
+    for (id key in switches_) {
+        NSNumber* newKey = [NSNumber numberWithInt:[newSupportTypes indexOfObject:[suportTypes objectAtIndex:i]]];
+        [newSwitches setObject:[switches_ objectForKey:key] forKey:newKey];
+         i++;
+    }
+    switches_ = newSwitches;
+    
+    [PhotoSubmitterManager sharedInstance].supportedTypes = (NSArray*)newSupportTypes;
+    [[PhotoSubmitterManager sharedInstance] updateSupportTypeIndex];
+    [self.tableView reloadData];
+}
+
 #pragma mark -
 #pragma mark ui parts delegates
 /*!
@@ -230,6 +269,7 @@
     }else{
         [submitter disable];
     }
+    [self sortSocialAppCell];
 }
 
 /*!
@@ -265,6 +305,7 @@
  * convert index to PhotoSubmitterType
  */
 - (PhotoSubmitterType)indexToSubmitterType:(int)index{
+    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
     return (PhotoSubmitterType)[[accountTypes_ objectAtIndex:index] intValue];
 }
 
@@ -272,6 +313,7 @@
  * convert PhotoSubmitterType to index
  */
 - (int)submitterTypeToIndex:(PhotoSubmitterType)type{
+    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
     return [accountTypes_ indexOfObject:[NSNumber numberWithInt:type]]; 
 }
 @end
