@@ -108,29 +108,11 @@
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
-		79F746FA14DA585100C7BAD8 /* TBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746D914DA585100C7BAD8 /* TBinaryProtocol.m */; };
-		79F746FB14DA585100C7BAD8 /* TProtocolException.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746DC14DA585100C7BAD8 /* TProtocolException.m */; };
-		79F746FC14DA585100C7BAD8 /* TProtocolUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746DF14DA585100C7BAD8 /* TProtocolUtil.m */; };
-		79F746FD14DA585100C7BAD8 /* TSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746E214DA585100C7BAD8 /* TSocketServer.m */; };
-		79F746FE14DA585100C7BAD8 /* TApplicationException.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746E414DA585100C7BAD8 /* TApplicationException.m */; };
-		79F746FF14DA585100C7BAD8 /* TException.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746E614DA585100C7BAD8 /* TException.m */; };
-		79F7470014DA585100C7BAD8 /* THTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746EC14DA585100C7BAD8 /* THTTPClient.m */; };
-		79F7470114DA585100C7BAD8 /* TMemoryBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746EE14DA585100C7BAD8 /* TMemoryBuffer.m */; };
-		79F7470214DA585100C7BAD8 /* TNSFileHandleTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746F014DA585100C7BAD8 /* TNSFileHandleTransport.m */; };
-		79F7470314DA585100C7BAD8 /* TNSStreamTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746F214DA585100C7BAD8 /* TNSStreamTransport.m */; };
-		79F7470414DA585100C7BAD8 /* TSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746F414DA585100C7BAD8 /* TSocketClient.m */; };
-		79F7470514DA585100C7BAD8 /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746F714DA585100C7BAD8 /* TTransportException.m */; };
-		79F7470614DA585100C7BAD8 /* TSharedProcessorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F746F914DA585100C7BAD8 /* TSharedProcessorFactory.m */; };
 		79F7471214DA58FD00C7BAD8 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7470914DA58FD00C7BAD8 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79F7471314DA58FD00C7BAD8 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F7470B14DA58FD00C7BAD8 /* FBDialog.bundle */; };
 		79F7471414DA58FD00C7BAD8 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7470D14DA58FD00C7BAD8 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79F7471514DA58FD00C7BAD8 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7470F14DA58FD00C7BAD8 /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79F7471614DA58FD00C7BAD8 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7471114DA58FD00C7BAD8 /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79F7472214DA590800C7BAD8 /* Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7471914DA590800C7BAD8 /* Errors.m */; };
-		79F7472314DA590800C7BAD8 /* Limits.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7471B14DA590800C7BAD8 /* Limits.m */; };
-		79F7472414DA590800C7BAD8 /* NoteStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7471D14DA590800C7BAD8 /* NoteStore.m */; };
-		79F7472514DA590800C7BAD8 /* Types.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7471F14DA590800C7BAD8 /* Types.m */; };
-		79F7472614DA590800C7BAD8 /* UserStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7472114DA590800C7BAD8 /* UserStore.m */; };
 		EA01E8A014D26176005E27F1 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = EA01E89E14D26176005E27F1 /* cancel.png */; };
 		EA01E8A114D26176005E27F1 /* cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA01E89F14D26176005E27F1 /* cancel@2x.png */; };
 		EA01E8A414D26184005E27F1 /* retry.png in Resources */ = {isa = PBXBuildFile; fileRef = EA01E8A214D26184005E27F1 /* retry.png */; };
@@ -342,38 +324,6 @@
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
-		79F746D814DA585100C7BAD8 /* TBinaryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBinaryProtocol.h; sourceTree = "<group>"; };
-		79F746D914DA585100C7BAD8 /* TBinaryProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBinaryProtocol.m; sourceTree = "<group>"; };
-		79F746DA14DA585100C7BAD8 /* TProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocol.h; sourceTree = "<group>"; };
-		79F746DB14DA585100C7BAD8 /* TProtocolException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolException.h; sourceTree = "<group>"; };
-		79F746DC14DA585100C7BAD8 /* TProtocolException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TProtocolException.m; sourceTree = "<group>"; };
-		79F746DD14DA585100C7BAD8 /* TProtocolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolFactory.h; sourceTree = "<group>"; };
-		79F746DE14DA585100C7BAD8 /* TProtocolUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolUtil.h; sourceTree = "<group>"; };
-		79F746DF14DA585100C7BAD8 /* TProtocolUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TProtocolUtil.m; sourceTree = "<group>"; };
-		79F746E114DA585100C7BAD8 /* TSocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSocketServer.h; sourceTree = "<group>"; };
-		79F746E214DA585100C7BAD8 /* TSocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSocketServer.m; sourceTree = "<group>"; };
-		79F746E314DA585100C7BAD8 /* TApplicationException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TApplicationException.h; sourceTree = "<group>"; };
-		79F746E414DA585100C7BAD8 /* TApplicationException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TApplicationException.m; sourceTree = "<group>"; };
-		79F746E514DA585100C7BAD8 /* TException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TException.h; sourceTree = "<group>"; };
-		79F746E614DA585100C7BAD8 /* TException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TException.m; sourceTree = "<group>"; };
-		79F746E714DA585100C7BAD8 /* TObjective-C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TObjective-C.h"; sourceTree = "<group>"; };
-		79F746E814DA585100C7BAD8 /* TProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProcessor.h; sourceTree = "<group>"; };
-		79F746E914DA585100C7BAD8 /* TProcessorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProcessorFactory.h; sourceTree = "<group>"; };
-		79F746EB14DA585100C7BAD8 /* THTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTTPClient.h; sourceTree = "<group>"; };
-		79F746EC14DA585100C7BAD8 /* THTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THTTPClient.m; sourceTree = "<group>"; };
-		79F746ED14DA585100C7BAD8 /* TMemoryBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMemoryBuffer.h; sourceTree = "<group>"; };
-		79F746EE14DA585100C7BAD8 /* TMemoryBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMemoryBuffer.m; sourceTree = "<group>"; };
-		79F746EF14DA585100C7BAD8 /* TNSFileHandleTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TNSFileHandleTransport.h; sourceTree = "<group>"; };
-		79F746F014DA585100C7BAD8 /* TNSFileHandleTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TNSFileHandleTransport.m; sourceTree = "<group>"; };
-		79F746F114DA585100C7BAD8 /* TNSStreamTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TNSStreamTransport.h; sourceTree = "<group>"; };
-		79F746F214DA585100C7BAD8 /* TNSStreamTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TNSStreamTransport.m; sourceTree = "<group>"; };
-		79F746F314DA585100C7BAD8 /* TSocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSocketClient.h; sourceTree = "<group>"; };
-		79F746F414DA585100C7BAD8 /* TSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSocketClient.m; sourceTree = "<group>"; };
-		79F746F514DA585100C7BAD8 /* TTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTransport.h; sourceTree = "<group>"; };
-		79F746F614DA585100C7BAD8 /* TTransportException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTransportException.h; sourceTree = "<group>"; };
-		79F746F714DA585100C7BAD8 /* TTransportException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTransportException.m; sourceTree = "<group>"; };
-		79F746F814DA585100C7BAD8 /* TSharedProcessorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSharedProcessorFactory.h; sourceTree = "<group>"; };
-		79F746F914DA585100C7BAD8 /* TSharedProcessorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSharedProcessorFactory.m; sourceTree = "<group>"; };
 		79F7470814DA58FD00C7BAD8 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		79F7470914DA58FD00C7BAD8 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		79F7470A14DA58FD00C7BAD8 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -384,16 +334,6 @@
 		79F7470F14DA58FD00C7BAD8 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		79F7471014DA58FD00C7BAD8 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
 		79F7471114DA58FD00C7BAD8 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
-		79F7471814DA590800C7BAD8 /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
-		79F7471914DA590800C7BAD8 /* Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Errors.m; sourceTree = "<group>"; };
-		79F7471A14DA590800C7BAD8 /* Limits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Limits.h; sourceTree = "<group>"; };
-		79F7471B14DA590800C7BAD8 /* Limits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Limits.m; sourceTree = "<group>"; };
-		79F7471C14DA590800C7BAD8 /* NoteStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteStore.h; sourceTree = "<group>"; };
-		79F7471D14DA590800C7BAD8 /* NoteStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteStore.m; sourceTree = "<group>"; };
-		79F7471E14DA590800C7BAD8 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
-		79F7471F14DA590800C7BAD8 /* Types.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Types.m; sourceTree = "<group>"; };
-		79F7472014DA590800C7BAD8 /* UserStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserStore.h; sourceTree = "<group>"; };
-		79F7472114DA590800C7BAD8 /* UserStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserStore.m; sourceTree = "<group>"; };
 		EA01E89E14D26176005E27F1 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancel.png; path = Resources/Images/cancel.png; sourceTree = "<group>"; };
 		EA01E89F14D26176005E27F1 /* cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancel@2x.png"; path = "Resources/Images/cancel@2x.png"; sourceTree = "<group>"; };
 		EA01E8A214D26184005E27F1 /* retry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = retry.png; path = Resources/Images/retry.png; sourceTree = "<group>"; };
@@ -754,7 +694,6 @@
 			children = (
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
-				79F7471714DA590800C7BAD8 /* evernoteSDK */,
 				79F7470714DA58FD00C7BAD8 /* FBConnect */,
 				798058B414CE98D0006E3817 /* FBNetworkReachability */,
 				376A8B3714A060B700637B68 /* FBProgressView */,
@@ -762,7 +701,6 @@
 				37F26D0A149F8A90000172EF /* Reachability */,
 				37FB659E149C4F3200387490 /* RegexKitLite */,
 				37F58A0314A35D06005C7700 /* SBJSON */,
-				79F746D614DA585100C7BAD8 /* thirft */,
 				7980247014B1075000989368 /* uicolor-expanded */,
 				7980589614CAA7B5006E3817 /* UIImage-categories */,
 			);
@@ -869,70 +807,6 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		79F746D614DA585100C7BAD8 /* thirft */ = {
-			isa = PBXGroup;
-			children = (
-				79F746D714DA585100C7BAD8 /* protocol */,
-				79F746E014DA585100C7BAD8 /* server */,
-				79F746E314DA585100C7BAD8 /* TApplicationException.h */,
-				79F746E414DA585100C7BAD8 /* TApplicationException.m */,
-				79F746E514DA585100C7BAD8 /* TException.h */,
-				79F746E614DA585100C7BAD8 /* TException.m */,
-				79F746E714DA585100C7BAD8 /* TObjective-C.h */,
-				79F746E814DA585100C7BAD8 /* TProcessor.h */,
-				79F746E914DA585100C7BAD8 /* TProcessorFactory.h */,
-				79F746EA14DA585100C7BAD8 /* transport */,
-				79F746F814DA585100C7BAD8 /* TSharedProcessorFactory.h */,
-				79F746F914DA585100C7BAD8 /* TSharedProcessorFactory.m */,
-			);
-			name = thirft;
-			path = Frameworks/thirft;
-			sourceTree = SOURCE_ROOT;
-		};
-		79F746D714DA585100C7BAD8 /* protocol */ = {
-			isa = PBXGroup;
-			children = (
-				79F746D814DA585100C7BAD8 /* TBinaryProtocol.h */,
-				79F746D914DA585100C7BAD8 /* TBinaryProtocol.m */,
-				79F746DA14DA585100C7BAD8 /* TProtocol.h */,
-				79F746DB14DA585100C7BAD8 /* TProtocolException.h */,
-				79F746DC14DA585100C7BAD8 /* TProtocolException.m */,
-				79F746DD14DA585100C7BAD8 /* TProtocolFactory.h */,
-				79F746DE14DA585100C7BAD8 /* TProtocolUtil.h */,
-				79F746DF14DA585100C7BAD8 /* TProtocolUtil.m */,
-			);
-			path = protocol;
-			sourceTree = "<group>";
-		};
-		79F746E014DA585100C7BAD8 /* server */ = {
-			isa = PBXGroup;
-			children = (
-				79F746E114DA585100C7BAD8 /* TSocketServer.h */,
-				79F746E214DA585100C7BAD8 /* TSocketServer.m */,
-			);
-			path = server;
-			sourceTree = "<group>";
-		};
-		79F746EA14DA585100C7BAD8 /* transport */ = {
-			isa = PBXGroup;
-			children = (
-				79F746EB14DA585100C7BAD8 /* THTTPClient.h */,
-				79F746EC14DA585100C7BAD8 /* THTTPClient.m */,
-				79F746ED14DA585100C7BAD8 /* TMemoryBuffer.h */,
-				79F746EE14DA585100C7BAD8 /* TMemoryBuffer.m */,
-				79F746EF14DA585100C7BAD8 /* TNSFileHandleTransport.h */,
-				79F746F014DA585100C7BAD8 /* TNSFileHandleTransport.m */,
-				79F746F114DA585100C7BAD8 /* TNSStreamTransport.h */,
-				79F746F214DA585100C7BAD8 /* TNSStreamTransport.m */,
-				79F746F314DA585100C7BAD8 /* TSocketClient.h */,
-				79F746F414DA585100C7BAD8 /* TSocketClient.m */,
-				79F746F514DA585100C7BAD8 /* TTransport.h */,
-				79F746F614DA585100C7BAD8 /* TTransportException.h */,
-				79F746F714DA585100C7BAD8 /* TTransportException.m */,
-			);
-			path = transport;
-			sourceTree = "<group>";
-		};
 		79F7470714DA58FD00C7BAD8 /* FBConnect */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,24 +823,6 @@
 			);
 			name = FBConnect;
 			path = Frameworks/FBConnect;
-			sourceTree = SOURCE_ROOT;
-		};
-		79F7471714DA590800C7BAD8 /* evernoteSDK */ = {
-			isa = PBXGroup;
-			children = (
-				79F7471814DA590800C7BAD8 /* Errors.h */,
-				79F7471914DA590800C7BAD8 /* Errors.m */,
-				79F7471A14DA590800C7BAD8 /* Limits.h */,
-				79F7471B14DA590800C7BAD8 /* Limits.m */,
-				79F7471C14DA590800C7BAD8 /* NoteStore.h */,
-				79F7471D14DA590800C7BAD8 /* NoteStore.m */,
-				79F7471E14DA590800C7BAD8 /* Types.h */,
-				79F7471F14DA590800C7BAD8 /* Types.m */,
-				79F7472014DA590800C7BAD8 /* UserStore.h */,
-				79F7472114DA590800C7BAD8 /* UserStore.m */,
-			);
-			name = evernoteSDK;
-			path = Frameworks/evernoteSDK;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -1195,28 +1051,10 @@
 				79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */,
 				79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */,
 				79823CDC14D2BDBA0094389D /* AboutSettingViewController.m in Sources */,
-				79F746FA14DA585100C7BAD8 /* TBinaryProtocol.m in Sources */,
-				79F746FB14DA585100C7BAD8 /* TProtocolException.m in Sources */,
-				79F746FC14DA585100C7BAD8 /* TProtocolUtil.m in Sources */,
-				79F746FD14DA585100C7BAD8 /* TSocketServer.m in Sources */,
-				79F746FE14DA585100C7BAD8 /* TApplicationException.m in Sources */,
-				79F746FF14DA585100C7BAD8 /* TException.m in Sources */,
-				79F7470014DA585100C7BAD8 /* THTTPClient.m in Sources */,
-				79F7470114DA585100C7BAD8 /* TMemoryBuffer.m in Sources */,
-				79F7470214DA585100C7BAD8 /* TNSFileHandleTransport.m in Sources */,
-				79F7470314DA585100C7BAD8 /* TNSStreamTransport.m in Sources */,
-				79F7470414DA585100C7BAD8 /* TSocketClient.m in Sources */,
-				79F7470514DA585100C7BAD8 /* TTransportException.m in Sources */,
-				79F7470614DA585100C7BAD8 /* TSharedProcessorFactory.m in Sources */,
 				79F7471214DA58FD00C7BAD8 /* Facebook.m in Sources */,
 				79F7471414DA58FD00C7BAD8 /* FBDialog.m in Sources */,
 				79F7471514DA58FD00C7BAD8 /* FBLoginDialog.m in Sources */,
 				79F7471614DA58FD00C7BAD8 /* FBRequest.m in Sources */,
-				79F7472214DA590800C7BAD8 /* Errors.m in Sources */,
-				79F7472314DA590800C7BAD8 /* Limits.m in Sources */,
-				79F7472414DA590800C7BAD8 /* NoteStore.m in Sources */,
-				79F7472514DA590800C7BAD8 /* Types.m in Sources */,
-				79F7472614DA590800C7BAD8 /* UserStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
