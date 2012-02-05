@@ -269,7 +269,6 @@
     }else{
         [submitter disable];
     }
-    [self sortSocialAppCell];
 }
 
 /*!
@@ -358,6 +357,7 @@
     int index = [self submitterTypeToIndex:type];
     UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
     [s setOn:YES animated:YES];
+    [self sortSocialAppCell];
 }
 
 /*!
@@ -367,6 +367,7 @@
     int index = [self submitterTypeToIndex:type];
     UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
     [s setOn:NO animated:YES];    
+    [self sortSocialAppCell];
 }
 
 /*!
