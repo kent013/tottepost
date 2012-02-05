@@ -270,8 +270,8 @@
  * on post button tapped
  */
 - (void) didPostButtonTapped:(id)sender{
-    [self postPhoto:previewImageView_.photo];
     [self closePreview];
+    [self postPhoto:previewImageView_.photo];
 }
 
 /*!
