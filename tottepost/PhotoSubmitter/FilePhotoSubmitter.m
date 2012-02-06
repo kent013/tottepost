@@ -99,6 +99,7 @@
  */
 -(void)login{
     [self setSetting:@"enabled" forKey:PS_FILE_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
 }
 
 /*!
