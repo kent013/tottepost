@@ -129,6 +129,7 @@
 - (void)logout{  
     [evernote_ logout];
     [self clearCredentials];
+    [self removeSettingForKey:PS_EVERNOTE_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -331,6 +332,7 @@
 - (void)evernoteDidLogin{
     [self setSetting:@"enabled" forKey:PS_EVERNOTE_ENABLED];
     [evernote_ saveCredential]; 
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
 }
 
 /*!
@@ -338,6 +340,7 @@
  */
 - (void)evernoteDidNotLogin{
     [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
