@@ -340,6 +340,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     for(int i = 0;i < supportedTypes_.count;i++){
         [defaults setInteger:[[supportedTypes_ objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
     }
+    [defaults synchronize];
 }
 
 #pragma mark -
