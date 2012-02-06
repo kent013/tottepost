@@ -215,9 +215,9 @@
     CGFloat diff = (pinchScale - lastPinchScale_) * 2;
     CGFloat scale = scale_;
     if(diff > 0){
-        scale += 0.05;
+        scale += 0.08;
     }else{
-        scale -= 0.05;
+        scale -= 0.08;
     }
     if(scale > PICKER_MAXIMUM_ZOOM_SCALE){
         scale = PICKER_MAXIMUM_ZOOM_SCALE;
@@ -411,12 +411,12 @@
     }
     
     viewOrientation_ = deviceOrientation;
-    if (previewLayer_) {
-        previewLayer_.orientation = [[UIDevice currentDevice] orientation];
-        previewLayer_.frame = self.view.bounds;
-        scale_ = 1.0;
-        croppedViewRect_ = CGRectZero;
-    }
+//    if (previewLayer_) {
+//        previewLayer_.orientation = [[UIDevice currentDevice] orientation];
+//        previewLayer_.frame = self.view.bounds;
+//        scale_ = 1.0;
+//        croppedViewRect_ = CGRectZero;
+//    }
 }
 
 /*
