@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 coctomo. All rights reserved.
 //
 
-#import "DropboxPhotoSubmitter.h"
-
 #import "PhotoSubmitterAPIKey.h"
 #import "DropboxPhotoSubmitter.h"
 #import "UIImage+Digest.h"

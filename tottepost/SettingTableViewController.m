@@ -18,12 +18,13 @@
 #define SV_GENERAL_GPS 1
 #define SV_GENERAL_ABOUT 2
 
-#define SV_ACCOUNTS_COUNT 5
+#define SV_ACCOUNTS_COUNT 6
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
 #define SV_ACCOUNTS_DROPBOX 3
-#define SV_ACCOUNTS_FILE 4
+#define SV_ACCOUNTS_EVERNOTE 4
+#define SV_ACCOUNTS_FILE 5
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -56,6 +57,7 @@
     facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
+    evernoteSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
@@ -202,6 +204,11 @@
             case SV_ACCOUNTS_DROPBOX: 
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox].isEnabled){
                     [self.navigationController pushViewController:dropboxSettingViewController_ animated:YES]; 
+                }
+                break;
+            case SV_ACCOUNTS_EVERNOTE: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote].isEnabled){
+                    [self.navigationController pushViewController:evernoteSettingViewController_ animated:YES]; 
                 }
                 break;
         }

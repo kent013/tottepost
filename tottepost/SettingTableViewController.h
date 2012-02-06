@@ -23,6 +23,7 @@
     __strong PhotoSubmitterSettingTableViewController *twitterSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *flickrSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
+    __strong PhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSArray *accountTypes_;

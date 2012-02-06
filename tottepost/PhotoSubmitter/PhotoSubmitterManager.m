@@ -40,6 +40,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeTwitter] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeTwitter]];
     [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeFlickr] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeFlickr]];
     [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeDropbox] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeDropbox]];
+    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeEvernote] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeEvernote]];
     [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeFile] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeFile]];
     [defaults registerDefaults:defaultValue];
     [defaults synchronize];
@@ -49,7 +50,8 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
                        [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex1"]],
                        [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex2"]],
                        [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex3"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex4"]], nil];
+                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex4"]],
+                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex5"]], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
@@ -129,6 +131,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             break;
         case PhotoSubmitterTypeDropbox:
             submitter = [[DropboxPhotoSubmitter alloc] init];
+            break;
+        case PhotoSubmitterTypeEvernote:
+            submitter = [[EvernotePhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeFile:
             submitter = [[FilePhotoSubmitter alloc] init];

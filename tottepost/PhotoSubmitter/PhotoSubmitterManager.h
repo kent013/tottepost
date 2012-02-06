@@ -13,6 +13,7 @@
 #import "FlickrPhotoSubmitter.h"
 #import "TwitterPhotoSubmitter.h"
 #import "DropboxPhotoSubmitter.h"
+#import "EvernotePhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
