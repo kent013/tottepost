@@ -81,14 +81,16 @@
     
     EDAMResource *photoResource = 
     [request createResourceFromImageData:photo.data andMime:@"image/jpeg"];
-
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
     NSString *hash = photo.md5;
     [self addRequest:request];
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [request createNoteInNotebook:notebook 
-                            title:photo.comment
-                          content:@"" 
+                            title:[df stringFromDate:[NSDate date]]
+                          content:photo.comment 
                              tags:nil
                      andResources:[NSArray arrayWithObject:photoResource]];
     
