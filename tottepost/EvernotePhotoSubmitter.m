@@ -88,13 +88,12 @@
     [self addRequest:request];
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:hash];
     [request createNoteInNotebook:notebook 
                             title:[df stringFromDate:[NSDate date]]
                           content:photo.comment 
                              tags:nil
                      andResources:[NSArray arrayWithObject:photoResource]];
-    
-    [self photoSubmitter:self willStartUpload:hash];
 }    
 
 /*!
@@ -103,7 +102,7 @@
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
     NSString *hash = photo.path;
     EvernoteRequest *request = (EvernoteRequest *)[self requestForPhoto:hash];
-    //[request cancelFileUpload:hash];
+    [request abort];
     
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
     [operationDelegate photoSubmitterDidOperationCanceled];
@@ -300,6 +299,9 @@
  * Evernote delegate, upload finished
  */
 - (void)request:(EvernoteRequest *)request didLoad:(id)result{
+    if([request.method isEqualToString:@"createNote"] == NO){
+        return;
+    }
     NSString *hash = [self photoForRequest:request];
     [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
     
@@ -313,6 +315,9 @@
  * Evernote delegate, upload failed
  */
 - (void)request:(EvernoteRequest *)request didFailWithError:(NSError *)error{
+    if([request.method isEqualToString:@"createNote"] == NO){
+        return;
+    }
     NSString *hash = [self photoForRequest:request];
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
@@ -324,8 +329,13 @@
  * Evernote delegate, upload progress
  */
 - (void)request:(EvernoteRequest *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
+    if([request.method isEqualToString:@"createNote"] == NO){
+        return;
+    }
+
+    CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
     NSString *hash = [self photoForRequest:request];
-    [self photoSubmitter:self didProgressChanged:hash progress:(float)totalBytesWritten / (float)totalBytesExpectedToWrite];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
 /*!

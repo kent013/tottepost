@@ -17,11 +17,14 @@
     BOOL isExecuting_;
 }
 
+@property(nonatomic, strong) NSString *method;
 @property(nonatomic, weak) id<EvernoteHTTPClientDelegate> delegate;
+@property(nonatomic, readonly) NSURL *url;
 
 - (void) fetchAsync;
 - (id)initWithURL:(NSURL *)aURL andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 - (id)initWithURL:(NSURL *)aURL userAgent:(NSString *)userAgent timeout:(int)timeout andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
+- (void) abort;
 @end
 
 @protocol EvernoteHTTPClientDelegate <NSObject>

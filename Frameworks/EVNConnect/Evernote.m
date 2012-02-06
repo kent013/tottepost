@@ -10,8 +10,8 @@
 #import "EvernoteRequest.h"
 #import "EvernoteAuthOAuthConsumer.h"
 #import "EvernoteHTTPClient.h"
+#import "EvernoteBinaryProtocol.h"
 #import "PDKeychainBindings.h"
-#import "TBinaryProtocol.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -46,7 +46,7 @@
     @try {
         NSURL *noteStoreUri =  [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@note/%@", [self baseURL].absoluteURL, authConsumer_.shardId]];
         EvernoteHTTPClient *noteStoreHttpClient = [[EvernoteHTTPClient alloc] initWithURL:noteStoreUri];
-        TBinaryProtocol *noteStoreProtocol = [[TBinaryProtocol alloc] initWithTransport:noteStoreHttpClient];
+        EvernoteBinaryProtocol *noteStoreProtocol = [[EvernoteBinaryProtocol alloc] initWithTransport:noteStoreHttpClient];
         EDAMNoteStoreClient *noteStore = [[EDAMNoteStoreClient alloc] initWithProtocol:noteStoreProtocol];
         
         if (noteStore) {

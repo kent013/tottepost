@@ -124,6 +124,7 @@
 		791BF31D14E02C5B00697E05 /* evernote_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31914E02C5700697E05 /* evernote_16@2x.png */; };
 		791BF31E14E02C5B00697E05 /* evernote_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31A14E02C5800697E05 /* evernote_32.png */; };
 		791BF31F14E02C5B00697E05 /* evernote_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31B14E02C5900697E05 /* evernote_32@2x.png */; };
+		791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */; };
 		797E392714AC63D900F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392514AC63D900F17AC4 /* Localizable.strings */; };
 		797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392814AC63ED00F17AC4 /* InfoPlist.strings */; };
 		797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392A14AC63ED00F17AC4 /* Localizable.strings */; };
@@ -432,6 +433,8 @@
 		791BF31914E02C5700697E05 /* evernote_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "evernote_16@2x.png"; path = "PhotoSubmitter/Images/evernote_16@2x.png"; sourceTree = "<group>"; };
 		791BF31A14E02C5800697E05 /* evernote_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernote_32.png; path = PhotoSubmitter/Images/evernote_32.png; sourceTree = "<group>"; };
 		791BF31B14E02C5900697E05 /* evernote_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "evernote_32@2x.png"; path = "PhotoSubmitter/Images/evernote_32@2x.png"; sourceTree = "<group>"; };
+		791BF33614E05BA700697E05 /* EvernoteBinaryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteBinaryProtocol.h; sourceTree = "<group>"; };
+		791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteBinaryProtocol.m; sourceTree = "<group>"; };
 		797E392614AC63D900F17AC4 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797E392914AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		797E392B14AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1092,6 +1095,8 @@
 				791BF30714E01FE400697E05 /* EvernoteAuthOAuthConsumer.m */,
 				791BF30814E01FE400697E05 /* EvernoteHTTPClient.h */,
 				791BF30914E01FE400697E05 /* EvernoteHTTPClient.m */,
+				791BF33614E05BA700697E05 /* EvernoteBinaryProtocol.h */,
+				791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */,
 				791BF30A14E01FE400697E05 /* EvernoteProtocol.h */,
 				791BF30B14E01FE400697E05 /* EvernoteRequest.h */,
 				791BF30C14E01FE400697E05 /* EvernoteRequest.m */,
@@ -1490,6 +1495,7 @@
 				791BF31114E01FE400697E05 /* EvernoteHTTPClient.m in Sources */,
 				791BF31214E01FE400697E05 /* EvernoteRequest.m in Sources */,
 				791BF31714E0228000697E05 /* EvernotePhotoSubmitter.m in Sources */,
+				791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
