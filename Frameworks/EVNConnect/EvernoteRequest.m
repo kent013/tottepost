@@ -41,6 +41,9 @@
  * convert clear text to ENML
  */
 - (NSString *)clearTextToENMLString:(NSString *)text{
+    if(text == nil){
+        text = @"";
+    }
     text = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note>%@</en-note>", text];
     return text;
 }
@@ -380,24 +383,33 @@
         return nil;
     }
     @try {
+        if(title == nil){
+            @throw [NSException exceptionWithName: @"IllegalArgument"
+                                           reason: @"title is nil"
+                                         userInfo: nil];
+        }
         EDAMNote *newNote = [[EDAMNote alloc] init];
         [newNote setNotebookGuid:notebook.guid];
         [newNote setTitle:title];
-        newNote.tagGuids = [[NSMutableArray alloc] init];
-        newNote.tagNames = [[NSMutableArray alloc] init];
-        for(id tag in tags){
-            if([tag isKindOfClass:[EDAMTag class]]){
-                [newNote.tagGuids addObject:tag];
-            }else if([tag isKindOfClass:[NSString class]]){
-                [newNote.tagNames addObject:tag];
+        if(tags != nil){
+            newNote.tagGuids = [[NSMutableArray alloc] init];
+            newNote.tagNames = [[NSMutableArray alloc] init];
+            for(id tag in tags){
+                if([tag isKindOfClass:[EDAMTag class]]){
+                    [newNote.tagGuids addObject:tag];
+                }else if([tag isKindOfClass:[NSString class]]){
+                    [newNote.tagNames addObject:tag];
+                }
             }
         }
         
-        for(id resource in resources){
-            if([resource isKindOfClass:[EDAMResource class]] == NO){
-                @throw [NSException exceptionWithName: @"IllegalArgument"
-                                               reason: @"resource must be EDAMResource"
-                                             userInfo: nil];
+        if(resources != nil){
+            for(id resource in resources){
+                if([resource isKindOfClass:[EDAMResource class]] == NO){
+                    @throw [NSException exceptionWithName: @"IllegalArgument"
+                                                   reason: @"resource must be EDAMResource"
+                                                 userInfo: nil];
+                }
             }
         }
         
