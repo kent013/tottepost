@@ -239,9 +239,10 @@
 
     NSMutableArray* onTypes = [[NSMutableArray alloc] init];
     NSMutableArray* offTypes = [[NSMutableArray alloc] init];
-    for (int i = 0;i < switches_.count;i++) {
-        UISwitch* sw = (UISwitch*)[switches_ objectForKey:[NSNumber numberWithInt:i]]; 
-        if(sw.isOn){
+    for (int i = 0;i < accountTypeIndexes_.count;i++) {
+        PhotoSubmitterType type = (PhotoSubmitterType)[[accountTypeIndexes_ objectAtIndex:i] intValue];
+        id<PhotoSubmitterProtocol> submitter = [[PhotoSubmitterManager sharedInstance] submitterForType:type];
+        if([submitter isLogined]){
             [onTypes addObject:[NSNumber numberWithInt:(int)[self indexToSubmitterType:i]]];
         }else{
             [offTypes addObject:[NSNumber numberWithInt:(int)[self indexToSubmitterType:i]]];
