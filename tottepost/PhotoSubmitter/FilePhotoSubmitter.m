@@ -13,7 +13,6 @@
 #import "NSData+Digest.h"
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
-#import "TTLang.h"
 
 #define PS_FILE_ENABLED @"PSFileEnabled"
 
@@ -156,7 +155,7 @@
  * name
  */
 - (NSString *)name{
-    return [TTLang lstr:@"FilePhoto_Name"];
+    return @"File";
 }
 
 /*!
