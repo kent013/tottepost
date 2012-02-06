@@ -34,24 +34,14 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     operations_ = [[NSMutableDictionary alloc] init];
     delegates_ = [[NSMutableArray alloc] init];
     sequencialOperationQueues_ = [[NSMutableDictionary alloc] init];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeFacebook] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeFacebook]];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeTwitter] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeTwitter]];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeFlickr] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeFlickr]];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeDropbox] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeDropbox]];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeEvernote] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeEvernote]];
-    [defaultValue setObject:[NSNumber numberWithInt:PhotoSubmitterTypeFile] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",PhotoSubmitterTypeFile]];
-    [defaults registerDefaults:defaultValue];
-    [defaults synchronize];
 
     supportedTypes_ = [NSMutableArray arrayWithObjects:
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex0"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex1"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex2"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex3"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex4"]],
-                       [NSNumber numberWithInt:[defaults integerForKey:@"SupportedTypeIndex5"]], nil];
+                       [NSNumber numberWithInt:PhotoSubmitterTypeFacebook],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeTwitter],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeFlickr],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeDropbox],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeEvernote],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeFile], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
@@ -252,7 +242,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     return geoTaggingEnabled_; 
 }
 
-
 /*!
  * check is uploading
  */
@@ -330,17 +319,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
         [self addOperation:operation];
     }
-}
-
-/*!
- * upldate support type index
- */
-- (void) updateSupportTypeIndex{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for(int i = 0;i < supportedTypes_.count;i++){
-        [defaults setInteger:[[supportedTypes_ objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
-    }
-    [defaults synchronize];
 }
 
 #pragma mark -

@@ -40,7 +40,7 @@
 - (int) submitterTypeToIndex:(PhotoSubmitterType) type;
 - (UISwitch *)createSwitchWithTag:(int)tag on:(BOOL)on;
 - (void) sortSocialAppCell;
-
+- (void) updateSupportTypeIndex;
 @end
 
 #pragma mark -
@@ -53,7 +53,6 @@
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
     
-    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
     facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
@@ -61,6 +60,21 @@
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
+    NSArray* supportedTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
+    for (int i = 0; i < supportedTypes.count; i++) {
+        [defaultValue setObject:[NSNumber numberWithInt:(int)[supportedTypes objectAtIndex:i]] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
+    }
+    [defaults registerDefaults:defaultValue];
+    [defaults synchronize];
+
+    accountTypeIndexes_ = [[NSMutableArray alloc] init];
+    for (int i = 0; i < supportedTypes.count; i++) {
+        PhotoSubmitterType type = [defaults integerForKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
+        [accountTypeIndexes_ addObject:[NSNumber numberWithInt:type]];
+    }
     
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
@@ -249,9 +263,20 @@
     }
     switches_ = newSwitches;
     
-    [PhotoSubmitterManager sharedInstance].supportedTypes = (NSArray*)newSupportTypes;
-    [[PhotoSubmitterManager sharedInstance] updateSupportTypeIndex];
+    accountTypeIndexes_ = (NSMutableArray*)newSupportTypes;
+    [self updateSupportTypeIndex];
     [self.tableView reloadData];
+}
+
+/*!
+ * upldate support type index
+ */
+- (void) updateSupportTypeIndex{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for(int i = 0;i < accountTypeIndexes_.count;i++){
+        [defaults setInteger:[[accountTypeIndexes_ objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
+    }
+    [defaults synchronize];
 }
 
 #pragma mark -
@@ -311,16 +336,14 @@
  * convert index to PhotoSubmitterType
  */
 - (PhotoSubmitterType)indexToSubmitterType:(int)index{
-    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
-    return (PhotoSubmitterType)[[accountTypes_ objectAtIndex:index] intValue];
+    return (PhotoSubmitterType)[[accountTypeIndexes_ objectAtIndex:index] intValue];
 }
 
 /*!
  * convert PhotoSubmitterType to index
  */
 - (int)submitterTypeToIndex:(PhotoSubmitterType)type{
-    accountTypes_ = [PhotoSubmitterManager sharedInstance].supportedTypes;
-    return [accountTypes_ indexOfObject:[NSNumber numberWithInt:type]]; 
+    return [accountTypeIndexes_ indexOfObject:[NSNumber numberWithInt:type]]; 
 }
 @end
 
@@ -346,7 +369,7 @@
  * update social app switches
  */
 - (void)updateSocialAppSwitches{
-    for(NSNumber *num in accountTypes_){
+    for(NSNumber *num in accountTypeIndexes_){
         PhotoSubmitterType type = [num intValue];
         int index = [self submitterTypeToIndex:type];
         UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];

@@ -26,7 +26,7 @@
     __strong PhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong NSMutableDictionary *switches_;
-    __strong NSArray *accountTypes_;
+    __strong NSMutableArray *accountTypeIndexes_;
 }
 - (void) updateSocialAppSwitches;
 @property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;
