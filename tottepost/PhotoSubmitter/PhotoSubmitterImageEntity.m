@@ -16,9 +16,48 @@
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface PhotoSubmitterImageEntity(PrivateImplementatio)
+- (void) applyMetadata:(NSData *)data;
 @end
 
 @implementation PhotoSubmitterImageEntity(PrivateImplementation)
+- (void)applyMetadata:(NSData *)data{
+    CGImageSourceRef img = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+	NSMutableDictionary* exifDict = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary* locDict = [[NSMutableDictionary alloc] init];
+	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+	NSString* datetime = [dateFormatter stringFromDate:timestamp_];
+	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
+	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
+    if(self.comment != nil){
+        [exifDict setObject:self.comment forKey:(NSString*)kCGImagePropertyExifUserComment];
+    }
+    if(self.location != nil){
+        [locDict setObject:self.location.timestamp forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
+        if (self.location.coordinate.latitude <0.0){ 
+            [locDict setObject:@"S" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
+        }else{ 
+            [locDict setObject:@"N" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
+        } 
+        [locDict setObject:[NSNumber numberWithFloat:self.location.coordinate.latitude] forKey:(NSString*)kCGImagePropertyGPSLatitude];
+        if (self.location.coordinate.longitude < 0.0){ 
+            [locDict setObject:@"W" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
+        }else{ 
+            [locDict setObject:@"E" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
+        } 
+        [locDict setObject:[NSNumber numberWithFloat:self.location.coordinate.longitude] forKey:(NSString*)kCGImagePropertyGPSLongitude];
+    }
+	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)data_, CGImageSourceGetType(img), 1, NULL);
+    
+    NSMutableDictionary *metadata = 
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     locDict,  (NSString*)kCGImagePropertyGPSDictionary,
+     exifDict, (NSString*)kCGImagePropertyExifDictionary, nil];
+	CGImageDestinationAddImageFromSource(dest, img, 0, (__bridge CFDictionaryRef)metadata);
+	CGImageDestinationFinalize(dest);
+	CFRelease(img);
+	CFRelease(dest);
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -48,42 +87,7 @@
  * apply metadata
  */
 - (void)applyMetadata{
-    CGImageSourceRef img = CGImageSourceCreateWithData((__bridge CFDataRef)data_, NULL);
-	NSMutableDictionary* exifDict = [[NSMutableDictionary alloc] init];
-	NSMutableDictionary* locDict = [[NSMutableDictionary alloc] init];
-	NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-	NSString* datetime = [dateFormatter stringFromDate:timestamp_];
-	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
-	[exifDict setObject:datetime forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
-    if(comment != nil){
-        [exifDict setObject:comment forKey:(NSString*)kCGImagePropertyExifUserComment];
-    }
-    if(location != nil){
-        [locDict setObject:location.timestamp forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
-        if (location.coordinate.latitude <0.0){ 
-            [locDict setObject:@"S" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
-        }else{ 
-            [locDict setObject:@"N" forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
-        } 
-        [locDict setObject:[NSNumber numberWithFloat:location.coordinate.latitude] forKey:(NSString*)kCGImagePropertyGPSLatitude];
-        if (location.coordinate.longitude < 0.0){ 
-            [locDict setObject:@"W" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
-        }else{ 
-            [locDict setObject:@"E" forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
-        } 
-        [locDict setObject:[NSNumber numberWithFloat:location.coordinate.longitude] forKey:(NSString*)kCGImagePropertyGPSLongitude];
-    }
-	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)data_, CGImageSourceGetType(img), 1, NULL);
-    
-    NSMutableDictionary *metadata = 
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     locDict,  (NSString*)kCGImagePropertyGPSDictionary,
-     exifDict, (NSString*)kCGImagePropertyExifDictionary, nil];
-	CGImageDestinationAddImageFromSource(dest, img, 0, (__bridge CFDictionaryRef)metadata);
-	CGImageDestinationFinalize(dest);
-	CFRelease(img);
-	CFRelease(dest);
+    [self applyMetadata:data_];
 }
 
 /*!
@@ -118,7 +122,7 @@
     }
     
     resized = [[self.image resizedImage:size
-                  interpolationQuality:kCGInterpolationHigh] fixOrientation];
+                   interpolationQuality:kCGInterpolationHigh] fixOrientation];
     
     NSData *resizedData = UIImageJPEGRepresentation(resized, 1.0);
     CGImageSourceRef resizedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)resizedData, NULL);
@@ -137,6 +141,22 @@
 }
 
 /*!
+ * populate resized image 
+ */
+- (NSData *) autoRotatedData{    
+    if(autoRotatedData_){
+        return autoRotatedData_;
+    }
+    UIImage *rotatedImage = [[UIImage imageWithData:data_] fixOrientation];
+    NSData *rotatedData = UIImageJPEGRepresentation(rotatedImage, 1.0);
+    
+    [self applyMetadata: rotatedData];
+    
+    autoRotatedData_ = rotatedData;
+    return rotatedData;
+}
+
+/*!
  * extract metadata from image data
  */
 - (NSMutableDictionary *)metadata{
@@ -144,6 +164,13 @@
     NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
     CFRelease(cfImage);
     return [NSMutableDictionary dictionaryWithDictionary:metadata];
+}
+
+/*!
+ * clone and auto rotate image
+ */
+- (PhotoSubmitterImageEntity *)autoRotatedImageEntity{
+    return nil;
 }
 
 /*!

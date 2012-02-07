@@ -137,26 +137,30 @@
  * PhotoSubmitterPhotoDelegate will start upload
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
-    enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
-    [self updateLabel];
-    if(operationCount_ != 0 && isVisible_ == NO){
-        [self show];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+        enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+        [self updateLabel];
+        if(operationCount_ != 0 && isVisible_ == NO){
+            [self show];
+        }
+    });
 }
 
 /*!
  * PhotoSubmitterPhotoDelegate did submitted
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
-    [self updateLabel];
-    if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
-        operationCount_--;
-        enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
-        if(operationCount_ <= 0 && isVisible_){
-            [self hide];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateLabel];
+        if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
+            operationCount_--;
+            enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+            if(operationCount_ <= 0 && isVisible_){
+                [self hide];
+            }
         }
-    }
+    });
 }
 
 /*!
@@ -187,8 +191,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             [self updateLabel];            
             break;
         case 1:
-            [[PhotoSubmitterManager sharedInstance] cancel];
-            [self updateLabel];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[PhotoSubmitterManager sharedInstance] cancel];
+                [self updateLabel];
+            });
             break;
     }
 }
@@ -200,19 +206,23 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
  * PhotoSubmitterManager delegate did operation added
  */
 - (void)photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation{
-    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
-    [self updateLabel];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+        [self updateLabel];
+    });
 }
 
 /*!
  * PhotoSubmitterManager delegate did operation canceled
  */
 - (void) didUploadCanceled{
-    operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
-    [self updateLabel];
-    if(operationCount_ == 0 && isVisible_){
-        [self hide];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+        [self updateLabel];
+        if(operationCount_ == 0 && isVisible_){
+            [self hide];
+        }
+    });
 }
 
 @end

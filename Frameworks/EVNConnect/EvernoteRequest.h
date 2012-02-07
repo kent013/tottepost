@@ -19,13 +19,15 @@
 @interface EvernoteRequest : NSObject<EvernoteHTTPClientDelegate> {
 	EDAMNoteStoreClient	*noteStoreClient_;
     __strong NSString *authToken_;
-    id<EvernoteContextDelegate> contextDelegate_;
+    __weak id<EvernoteContextDelegate> contextDelegate_;
+    __weak id<EvernoteNoteStoreClientFactoryDelegate> noteStoreClientFactory_;
 }
+
 @property (nonatomic, weak) id<EvernoteRequestDelegate> delegate;
 @property (nonatomic, readonly) NSURL *url;
 @property (nonatomic, readonly) NSString *method;
 
--(id) initWithAuthToken:(NSString *)authToken noteStoreClient:(EDAMNoteStoreClient *)client delegate:(id<EvernoteRequestDelegate>) delegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate;
+-(id) initWithAuthToken:(NSString *)authToken noteStoreClientFactory:(id<EvernoteNoteStoreClientFactoryDelegate>)noteStoreClientFactory delegate:(id<EvernoteRequestDelegate>) delegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate;
 -(void) abort;
 #pragma mark - resource
 - (EDAMResource *) createResourceFromUIImage:(UIImage *)image;

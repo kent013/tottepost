@@ -60,14 +60,14 @@
 /*!
  * initialize
  */
-- (id)initWithAuthToken:(NSString *)authToken noteStoreClient:(EDAMNoteStoreClient *)client delegate:(id<EvernoteRequestDelegate>)inDelegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate{
+- (id)initWithAuthToken:(NSString *)authToken noteStoreClientFactory:(id<EvernoteNoteStoreClientFactoryDelegate>)noteStoreClientFactory delegate:(id<EvernoteRequestDelegate>)inDelegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate{
     self = [super init];
     if(self){
         authToken_ = authToken;
-        noteStoreClient_ = client;
-        noteStoreClient_.httpClient.delegate = self;
+        noteStoreClientFactory_ = noteStoreClientFactory;
         contextDelegate_ = contextDelegate;
         self.delegate = inDelegate;
+        noteStoreClient_ = [noteStoreClientFactory_ createNoteStoreClientWithDelegate:self];
     }
     return self;
 }

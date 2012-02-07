@@ -11,6 +11,7 @@
 
 @interface PhotoSubmitterImageEntity : NSObject<NSCoding>{
     __strong NSData *data_;
+    __strong NSData *autoRotatedData_;
     __strong NSDate *timestamp_;
     __strong NSString *path_;
     __strong UIImage *image_;
@@ -28,4 +29,5 @@
 - (id) initWithData:(NSData *)data;
 - (void) applyMetadata;
 - (UIImage *) resizedImage: (CGSize) size;
+- (NSData *) autoRotatedData;
 @end

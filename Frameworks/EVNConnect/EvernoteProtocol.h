@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 /*!
  * endpoint urls
  */
@@ -31,6 +30,8 @@ static NSString *kEvernoteUserId = @"evernoteUserId";
 static NSString *kEvernoteShardId = @"evernoteShardId";
 
 @class EvernoteRequest;
+@class EvernoteHTTPClient;
+@class EDAMNoteStoreClient;
 
 /*!
  * enum for consumer engine
@@ -47,6 +48,22 @@ typedef enum {
 - (void)evernoteDidLogin;
 - (void)evernoteDidNotLogin;
 - (void)evernoteDidLogout;
+@end
+
+@protocol EvernoteHTTPClientDelegate <NSObject>
+- (void)clientLoading:(EvernoteHTTPClient*)client;
+- (void)client:(EvernoteHTTPClient*)client didReceiveResponse:(NSURLResponse*)response;
+- (void)client:(EvernoteHTTPClient*)client didFailWithError:(NSError*)error;
+- (void)client:(EvernoteHTTPClient*)client didLoad:(id)result;
+- (void)client:(EvernoteHTTPClient*)client didLoadRawResponse:(NSData*)data;
+- (void)client:(EvernoteHTTPClient*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
+@end
+
+/*!
+ * delegate for create EDAMNoteStore
+ */
+@protocol EvernoteNoteStoreClientFactoryDelegate <NSObject>
+- (EDAMNoteStoreClient *)createNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)deleagete;
 @end
 
 /*!

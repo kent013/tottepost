@@ -1087,6 +1087,7 @@
 		791BF30114E01FE400697E05 /* EVNConnect */ = {
 			isa = PBXGroup;
 			children = (
+				791BF30A14E01FE400697E05 /* EvernoteProtocol.h */,
 				791BF30214E01FE400697E05 /* Evernote.h */,
 				791BF30314E01FE400697E05 /* Evernote.m */,
 				791BF30414E01FE400697E05 /* EvernoteAuth.h */,
@@ -1097,7 +1098,6 @@
 				791BF30914E01FE400697E05 /* EvernoteHTTPClient.m */,
 				791BF33614E05BA700697E05 /* EvernoteBinaryProtocol.h */,
 				791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */,
-				791BF30A14E01FE400697E05 /* EvernoteProtocol.h */,
 				791BF30B14E01FE400697E05 /* EvernoteRequest.h */,
 				791BF30C14E01FE400697E05 /* EvernoteRequest.m */,
 				791BF30D14E01FE400697E05 /* EVNConnect.h */,

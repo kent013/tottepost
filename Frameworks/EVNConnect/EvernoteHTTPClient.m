@@ -16,6 +16,17 @@
 @dynamic url;
 
 /*!
+ * KVO key setting
+ */
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString*)key {
+    if ([key isEqualToString:@"isExecuting"] || 
+        [key isEqualToString:@"isCancelled"]) {
+        return YES;
+    }
+    return [super automaticallyNotifiesObserversForKey:key];
+}
+
+/*!
  * initialize
  */
 - (id)initWithURL:(NSURL *)aURL andDelegate:(id<EvernoteHTTPClientDelegate>)inDelegate{
@@ -41,17 +52,18 @@
         [self.delegate clientLoading:self];
     }
     [mRequest setHTTPBody: mRequestData];
+    
     NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchAsync) object:nil];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [queue addOperation:operation];
-    [queue waitUntilAllOperationsAreFinished];
+    [operation waitUntilFinished];
     
     // phew!
     [mRequestData setLength: 0];
     mResponseDataOffset = 0;
     mResponseData = data_;
     data_ = nil;
-    if (mResponseData == nil) {
+    if (mResponseData == nil && isCancelled == NO) {
         @throw [TTransportException exceptionWithName: @"TTransportException"
                                                reason: @"Could not make HTTP request"
                                                 error: error_];
@@ -67,18 +79,31 @@
 /*!
  * request with asynchronus
  */
-- (void)fetchAsync{
-    // make the HTTP request
-    connection_ = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self];
-    if(connection_ == nil){
-        isExecuting_ = NO;
+- (void)fetchAsync{    
+    if ([NSThread isMainThread] == NO)
+    {
+        [self performSelectorOnMainThread:@selector(fetchAsync) withObject:nil waitUntilDone:YES];
         return;
     }
-    isExecuting_ = YES;
-    while(isExecuting_){
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate distantFuture]];
+
+    // make the HTTP request
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self startImmediately:NO];
+    if(connection == nil){
+        [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
     }
+    NSLog(@"operation will call, %@", self.hash);
+    [connection start];
+    do{
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+        //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
+        //                         beforeDate:[NSDate distantFuture]];
+        if(isCancelled){
+            [self finish];
+            break;
+        }
+    } while (isExecuting);
+    NSLog(@"operation did called %@", self.hash);
 }
 
 #pragma - NSURLConnection delegates
@@ -124,7 +149,7 @@
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
     error_ = error;
-    [self abort];
+    [self finish];
     if([self.delegate respondsToSelector:@selector(client:didFailWithError:)]){
         [self.delegate client:self didFailWithError:error];
     }
@@ -135,14 +160,22 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
-    [self abort];
+    [self finish];
+}
+
+/*!
+ * finish operation
+ */
+- (void)finish{
+    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
 }
 
 /*!
  * cancel operation
  */
 - (void)abort{
-    isExecuting_ = NO;
+    //[operation_ abort];
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isCancelled"];
 }
 
 /*!

@@ -18,7 +18,6 @@
 //-----------------------------------------------------------------------------
 @interface Evernote(PrivateImplementation)
 - (NSURL *)baseURL;
-- (EDAMNoteStoreClient *)createNoteStoreClient;
 @end
 
 @implementation Evernote(PrivateImplementation)
@@ -32,34 +31,6 @@
         url = kEvernoteSandboxBaseURL;
     }
     return [NSURL URLWithString:url];
-}
-
-
-/*!
- * get note Store Client
- */
-- (EDAMNoteStoreClient *)createNoteStoreClient {
-	if ([authConsumer_ isSessionValid] == NO) {
-        return nil;
-    }
-    
-    @try {
-        NSURL *noteStoreUri =  [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@note/%@", [self baseURL].absoluteURL, authConsumer_.shardId]];
-        EvernoteHTTPClient *noteStoreHttpClient = [[EvernoteHTTPClient alloc] initWithURL:noteStoreUri];
-        EvernoteBinaryProtocol *noteStoreProtocol = [[EvernoteBinaryProtocol alloc] initWithTransport:noteStoreHttpClient];
-        EDAMNoteStoreClient *noteStore = [[EDAMNoteStoreClient alloc] initWithProtocol:noteStoreProtocol];
-        
-        if (noteStore) {
-            return noteStore;
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"main: Caught %@: %@", [exception name], [exception reason]);
-        [self logout];
-    }
-    @finally {
-    }
-    return nil;
 }
 @end
 
@@ -94,7 +65,7 @@
  * create request with delegate
  */
 - (EvernoteRequest *)requestWithDelegate:(id<EvernoteRequestDelegate>)delegate{
-    return [[EvernoteRequest alloc] initWithAuthToken:authConsumer_.authToken noteStoreClient:[self createNoteStoreClient] delegate:delegate andContextDelegate:self];
+    return [[EvernoteRequest alloc] initWithAuthToken:authConsumer_.authToken noteStoreClientFactory:self delegate:delegate andContextDelegate:self];
 }
 
 #pragma mark - oauth, authentication
@@ -176,5 +147,39 @@
  */
 - (void)request:(EvernoteRequest *)request didFailWithException:(NSException *)exception{
     [self logout];
+}
+
+#pragma mark - EvernoteNoteStoreClientFactoryDelegate
+/*!
+ * create notestore
+ */
+
+
+/*!
+ * get note Store Client
+ */
+- (EDAMNoteStoreClient *)createNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegete{
+	if ([authConsumer_ isSessionValid] == NO) {
+        return nil;
+    }
+    
+    @try {
+        NSURL *noteStoreUri =  [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@note/%@", [self baseURL].absoluteURL, authConsumer_.shardId]];
+        EvernoteHTTPClient *noteStoreHttpClient = [[EvernoteHTTPClient alloc] initWithURL:noteStoreUri];
+        noteStoreHttpClient.delegate = delegete;
+        EvernoteBinaryProtocol *noteStoreProtocol = [[EvernoteBinaryProtocol alloc] initWithTransport:noteStoreHttpClient];
+        EDAMNoteStoreClient *noteStore = [[EDAMNoteStoreClient alloc] initWithProtocol:noteStoreProtocol];
+        
+        if (noteStore) {
+            return noteStore;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"main: Caught %@: %@", [exception name], [exception reason]);
+        [self logout];
+    }
+    @finally {
+    }
+    return nil;
 }
 @end

@@ -73,35 +73,38 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    EvernoteRequest *request = [evernote_ requestWithDelegate:self];
-    EDAMNotebook *notebook = [request notebookNamed:@"tottepost"];
+    EvernoteRequest *request1 = [evernote_ requestWithDelegate:self];
+    EDAMNotebook *notebook = [request1 notebookNamed:@"tottepost"];
     if(notebook == nil){
-        notebook = [request createNotebookWithTitle:@"tottepost"];
+        notebook = [request1 createNotebookWithTitle:@"tottepost"];
     }
-    
-    EDAMResource *photoResource = 
-    [request createResourceFromImageData:photo.data andMime:@"image/jpeg"];
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
+    EvernoteRequest *request = [evernote_ requestWithDelegate:self];
     NSString *hash = photo.md5;
     [self addRequest:request];
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [self photoSubmitter:self willStartUpload:hash];
-    [request createNoteInNotebook:notebook 
-                            title:[df stringFromDate:[NSDate date]]
-                          content:photo.comment 
-                             tags:nil
-                     andResources:[NSArray arrayWithObject:photoResource]];
+    
+    dispatch_async(dispatch_get_current_queue(), ^{
+        EDAMResource *photoResource = 
+        [request createResourceFromImageData:photo.autoRotatedData andMime:@"image/jpeg"];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
+        [request createNoteInNotebook:notebook 
+                                title:[df stringFromDate:[NSDate date]]
+                              content:photo.comment 
+                                 tags:nil
+                         andResources:[NSArray arrayWithObject:photoResource]];
+    });
 }    
 
 /*!
  * cancel photo upload
  */
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.path;
+    NSString *hash = photo.md5;
     EvernoteRequest *request = (EvernoteRequest *)[self requestForPhoto:hash];
+    NSLog(@"%@", request.description);
     [request abort];
     
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
