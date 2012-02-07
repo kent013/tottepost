@@ -14,18 +14,18 @@
 #import "DDXML.h"
 
 //-----------------------------------------------------------------------------
-//EDAMNoteStoreClient delegate to set delegate to EvernoteHTTPClient
+//EDAMNoteStoreClient category for get http client
 //-----------------------------------------------------------------------------
 @interface EDAMNoteStoreClient(SetDelegate)
-- (void) setHTTPClientDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
+@property (nonatomic, readonly) EvernoteHTTPClient *httpClient;
 @end
 @implementation EDAMNoteStoreClient(SetDelegate)
 /*!
- * set delegate to http client
+ * get httpclient
  */
-- (void)setHTTPClientDelegate:(id<EvernoteHTTPClientDelegate>)delegate{
+- (EvernoteHTTPClient *)httpClient{
     EvernoteHTTPClient *client = (EvernoteHTTPClient *)[outProtocol transport];
-    client.delegate = delegate;
+    return client;
 }
 @end
 
@@ -54,6 +54,8 @@
 //-----------------------------------------------------------------------------
 @implementation EvernoteRequest
 @synthesize delegate;
+@dynamic url;
+@dynamic method;
 
 /*!
  * initialize
@@ -63,12 +65,34 @@
     if(self){
         authToken_ = authToken;
         noteStoreClient_ = client;
-        [noteStoreClient_ setHTTPClientDelegate:self];
+        noteStoreClient_.httpClient.delegate = self;
         contextDelegate_ = contextDelegate;
         self.delegate = inDelegate;
     }
     return self;
 }
+
+/*!
+ * cancel operation
+ */
+-(void)abort{
+    [noteStoreClient_.httpClient abort];
+}
+
+/*!
+ * get url
+ */
+- (NSURL *)url{
+    return noteStoreClient_.httpClient.url;
+}
+
+/*!
+ * get method
+ */
+- (NSString *)method{
+    return noteStoreClient_.httpClient.method;
+}
+
 #pragma mark - tags
 /*!
  * list tags

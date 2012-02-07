@@ -12,6 +12,8 @@
 
 @implementation EvernoteHTTPClient
 @synthesize delegate;
+@synthesize method;
+@dynamic url;
 
 /*!
  * initialize
@@ -122,7 +124,7 @@
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
     error_ = error;
-    isExecuting_ = NO;
+    [self abort];
     if([self.delegate respondsToSelector:@selector(client:didFailWithError:)]){
         [self.delegate client:self didFailWithError:error];
     }
@@ -133,7 +135,20 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
+    [self abort];
+}
+
+/*!
+ * cancel operation
+ */
+- (void)abort{
     isExecuting_ = NO;
 }
 
+/*!
+ * url
+ */
+- (NSURL *)url{
+    return mURL;
+}
 @end
