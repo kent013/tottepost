@@ -73,29 +73,28 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    EvernoteRequest *request1 = [evernote_ requestWithDelegate:self];
-    EDAMNotebook *notebook = [request1 notebookNamed:@"tottepost"];
+    EDAMNotebook *notebook = [evernote_ notebookNamed:@"tottepost"];
     if(notebook == nil){
-        notebook = [request1 createNotebookWithTitle:@"tottepost"];
+        notebook = [evernote_ createNotebookWithTitle:@"tottepost"];
     }
-    EvernoteRequest *request = [evernote_ requestWithDelegate:self];
+    
+    EDAMResource *photoResource = 
+    [evernote_ createResourceFromImageData:photo.autoRotatedData andMime:@"image/jpeg"];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
+    EvernoteRequest *request = 
+      [evernote_ createNoteInNotebook:notebook 
+                                title:[df stringFromDate:[NSDate date]]
+                              content:photo.comment 
+                                 tags:nil
+                            resources:[NSArray arrayWithObject:photoResource]
+                          andDelegate:self];    
     NSString *hash = photo.md5;
     [self addRequest:request];
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [self photoSubmitter:self willStartUpload:hash];
     
-    dispatch_async(dispatch_get_current_queue(), ^{
-        EDAMResource *photoResource = 
-        [request createResourceFromImageData:photo.autoRotatedData andMime:@"image/jpeg"];
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
-        [request createNoteInNotebook:notebook 
-                                title:[df stringFromDate:[NSDate date]]
-                              content:photo.comment 
-                                 tags:nil
-                         andResources:[NSArray arrayWithObject:photoResource]];
-    });
 }    
 
 /*!

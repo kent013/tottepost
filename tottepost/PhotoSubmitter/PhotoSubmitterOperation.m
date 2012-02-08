@@ -62,8 +62,7 @@
     [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
     [self.submitter submitPhoto:self.photo andOperationDelegate:self];
     do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate distantFuture]];
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
         if(isCanceled){
             [self.submitter cancelPhotoSubmit: self.photo];
         }

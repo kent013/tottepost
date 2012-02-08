@@ -10,6 +10,12 @@
 #import "TTransportException.h"
 #import "TObjective-C.h"
 
+typedef enum EvernoteConnectionStatus {
+    EvernoteConnectionStatusReady,
+    EvernoteConnectionStatusConnecting,
+    EvernoteConnectionStatusDidFinish
+} EvernoteConnectionStatus;
+
 @implementation EvernoteHTTPClient
 @synthesize delegate;
 @synthesize method;
@@ -45,65 +51,33 @@
 }
 
 /*!
+ * set target
+ */
+- (void)setTarget:(id)target action:(SEL)action{
+    target_ = target;
+    action_ = action;
+}
+
+/*!
  * flush
  */
 - (void)flush{
+    /*if ([NSThread isMainThread] == NO)
+    {
+        [self performSelectorOnMainThread:@selector(flush) withObject:nil waitUntilDone:YES];
+        return;
+    }*/
     if([self.delegate respondsToSelector:@selector(clientLoading:)]){
         [self.delegate clientLoading:self];
     }
     [mRequest setHTTPBody: mRequestData];
     
-    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchAsync) object:nil];
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
-    [operation waitUntilFinished];
-    
-    // phew!
-    [mRequestData setLength: 0];
-    mResponseDataOffset = 0;
-    mResponseData = data_;
-    data_ = nil;
-    if (mResponseData == nil && isCancelled == NO) {
-        @throw [TTransportException exceptionWithName: @"TTransportException"
-                                               reason: @"Could not make HTTP request"
-                                                error: error_];
-    }
-    if([self.delegate respondsToSelector:@selector(client:didLoad:)]){
-        [self.delegate client:self didLoad:mResponseData];
-    }
-    if([self.delegate respondsToSelector:@selector(client:didLoadRawResponse:)]){
-        [self.delegate client:self didLoadRawResponse:mResponseData];
-    }
-}
-
-/*!
- * request with asynchronus
- */
-- (void)fetchAsync{    
-    if ([NSThread isMainThread] == NO)
-    {
-        [self performSelectorOnMainThread:@selector(fetchAsync) withObject:nil waitUntilDone:YES];
-        return;
-    }
-
-    // make the HTTP request
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self startImmediately:NO];
-    if(connection == nil){
+    connection_ = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self startImmediately:NO];
+    if(connection_ == nil){
         [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
     }
-    NSLog(@"operation will call, %@", self.hash);
-    [connection start];
-    do{
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-        //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
-        //                         beforeDate:[NSDate distantFuture]];
-        if(isCancelled){
-            [self finish];
-            break;
-        }
-    } while (isExecuting);
-    NSLog(@"operation did called %@", self.hash);
+
+    [connection_ start];
 }
 
 #pragma - NSURLConnection delegates
@@ -149,7 +123,6 @@
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
     error_ = error;
-    [self finish];
     if([self.delegate respondsToSelector:@selector(client:didFailWithError:)]){
         [self.delegate client:self didFailWithError:error];
     }
@@ -160,22 +133,27 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
-    [self finish];
-}
-
-/*!
- * finish operation
- */
-- (void)finish{
-    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
+    [mRequestData setLength: 0];
+    mResponseDataOffset = 0;
+    mResponseData = data_;
+    data_ = nil;
+    if (mResponseData == nil) {
+        @throw [TTransportException exceptionWithName: @"TTransportException"
+                                               reason: @"Could not make HTTP request"
+                                                error: error_];
+    }
+    
+    [target_ performSelector:action_ withObject:data_];
+    if([self.delegate respondsToSelector:@selector(client:didLoadRawResponse:)]){
+        [self.delegate client:self didLoadRawResponse:mResponseData];
+    }
 }
 
 /*!
  * cancel operation
  */
 - (void)abort{
-    //[operation_ abort];
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isCancelled"];
+    [connection_ cancel];
 }
 
 /*!

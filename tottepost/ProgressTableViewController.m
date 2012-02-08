@@ -208,6 +208,7 @@
     
     ProgressTableViewCell *cell = [cells_ objectForKey:entity.progressHash];
     cell.progressView.progress = progress;
+    [cell.progressView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
 
 /*! 

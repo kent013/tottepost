@@ -10,19 +10,19 @@
 #import "EvernoteProtocol.h"
 
 @interface EvernoteHTTPClient : THTTPClient<NSURLConnectionDelegate, NSURLConnectionDataDelegate>{
-    NSMutableData *data_;
-    NSError *error_;
-    BOOL isExecuting;
-    BOOL isCancelled;
+    __strong NSMutableData *data_;
+    __strong NSURLConnection *connection_;
+    __strong NSError *error_;
+    __weak id target_;
+    SEL action_;
 }
 
 @property(nonatomic, strong) NSString *method;
 @property(nonatomic, weak) id<EvernoteHTTPClientDelegate> delegate;
 @property(nonatomic, readonly) NSURL *url;
 
-- (void) fetchAsync;
+- (void) setTarget:(id)target action:(SEL)action;
 - (id)initWithURL:(NSURL *)aURL andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 - (id)initWithURL:(NSURL *)aURL userAgent:(NSString *)userAgent timeout:(int)timeout andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
-- (void) finish;
 - (void) abort;
 @end

@@ -32,6 +32,7 @@ static NSString *kEvernoteShardId = @"evernoteShardId";
 @class EvernoteRequest;
 @class EvernoteHTTPClient;
 @class EDAMNoteStoreClient;
+@class EvernoteNoteStoreClient;
 
 /*!
  * enum for consumer engine
@@ -63,7 +64,8 @@ typedef enum {
  * delegate for create EDAMNoteStore
  */
 @protocol EvernoteNoteStoreClientFactoryDelegate <NSObject>
-- (EDAMNoteStoreClient *)createNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)deleagete;
+- (EDAMNoteStoreClient *)createSynchronousNoteStoreClient;
+- (EvernoteNoteStoreClient *)createAsynchronousNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 @end
 
 /*!
@@ -76,7 +78,7 @@ typedef enum {
 - (void)request:(EvernoteRequest*)request didFailWithError:(NSError*)error;
 - (void)request:(EvernoteRequest*)request didLoad:(id)result;
 - (void)request:(EvernoteRequest*)request didLoadRawResponse:(NSData*)data;
-- (void)request:(EvernoteRequest*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
+- (void)request:(EvernoteRequest*)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end
 
 /*!
