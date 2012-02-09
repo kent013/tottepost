@@ -35,8 +35,7 @@ tottepostはシンプルさにフォーカスしています。
    * Twitter
    * Flickr
    * Dropbox
-     * フル解像度
-   * Google Plus (予定)
+   * Evernote (リポジトリでサポート）
  * ローカルのカメラロールに保存
  * コメント入力あり/なしの切り替え
  * ジオタグ埋め込みの切り替え
