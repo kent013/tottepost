@@ -29,7 +29,7 @@ FEATURE LIST
    * Twitter
    * Flickr
    * Dropbox
-   * Evernote
+   * Evernote (supported in source code)
  * Save image to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location
