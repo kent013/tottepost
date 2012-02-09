@@ -35,7 +35,7 @@ tottepostはシンプルさにフォーカスしています。
    * Twitter
    * Flickr
    * Dropbox
-   * Evernote
+   * Evernote (リポジトリでサポート）
  * ローカルのカメラロールに保存
  * コメント入力あり/なしの切り替え
  * ジオタグ埋め込みの切り替え
