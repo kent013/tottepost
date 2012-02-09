@@ -39,7 +39,7 @@
                            consumerKey:EVERNOTE_SUBMITTER_API_KEY
                         consumerSecret:EVERNOTE_SUBMITTER_API_SECRET
                         callbackScheme:PS_EVERNOTE_AUTH_URL
-                            useSandBox:YES 
+                            useSandBox:EVERNOTE_SUBMITTER_API_SANDBOX 
                            andDelegate:self];
     [evernote_ loadCredential];
 }
