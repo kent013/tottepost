@@ -142,8 +142,10 @@ typedef enum EvernoteConnectionStatus {
                                                reason: @"Could not make HTTP request"
                                                 error: error_];
     }
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [target_ performSelector:action_ withObject:data_];
+#pragma clang diagnostic pop
     if([self.delegate respondsToSelector:@selector(client:didLoadRawResponse:)]){
         [self.delegate client:self didLoadRawResponse:mResponseData];
     }
