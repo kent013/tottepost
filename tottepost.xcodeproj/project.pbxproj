@@ -119,7 +119,6 @@
 		791BF31114E01FE400697E05 /* EvernoteHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF30914E01FE400697E05 /* EvernoteHTTPClient.m */; };
 		791BF31214E01FE400697E05 /* EvernoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF30C14E01FE400697E05 /* EvernoteRequest.m */; };
 		791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 791BF31314E020A200697E05 /* libxml2.dylib */; };
-		791BF31714E0228000697E05 /* EvernotePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF31614E0227D00697E05 /* EvernotePhotoSubmitter.m */; };
 		791BF31C14E02C5B00697E05 /* evernote_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31814E02C5500697E05 /* evernote_16.png */; };
 		791BF31D14E02C5B00697E05 /* evernote_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31914E02C5700697E05 /* evernote_16@2x.png */; };
 		791BF31E14E02C5B00697E05 /* evernote_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31A14E02C5800697E05 /* evernote_32.png */; };
@@ -127,6 +126,7 @@
 		791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */; };
 		791BF34414E2999900697E05 /* EvernoteNoteStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF34314E2999800697E05 /* EvernoteNoteStoreClient.m */; };
 		791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */; };
+		791BF36E14E3FDC100697E05 /* EvernotePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */; };
 		797E392714AC63D900F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392514AC63D900F17AC4 /* Localizable.strings */; };
 		797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392814AC63ED00F17AC4 /* InfoPlist.strings */; };
 		797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392A14AC63ED00F17AC4 /* Localizable.strings */; };
@@ -429,8 +429,6 @@
 		791BF30C14E01FE400697E05 /* EvernoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteRequest.m; sourceTree = "<group>"; };
 		791BF30D14E01FE400697E05 /* EVNConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVNConnect.h; sourceTree = "<group>"; };
 		791BF31314E020A200697E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		791BF31514E0227C00697E05 /* EvernotePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernotePhotoSubmitter.h; sourceTree = "<group>"; };
-		791BF31614E0227D00697E05 /* EvernotePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernotePhotoSubmitter.m; sourceTree = "<group>"; };
 		791BF31814E02C5500697E05 /* evernote_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernote_16.png; path = PhotoSubmitter/Images/evernote_16.png; sourceTree = "<group>"; };
 		791BF31914E02C5700697E05 /* evernote_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "evernote_16@2x.png"; path = "PhotoSubmitter/Images/evernote_16@2x.png"; sourceTree = "<group>"; };
 		791BF31A14E02C5800697E05 /* evernote_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = evernote_32.png; path = PhotoSubmitter/Images/evernote_32.png; sourceTree = "<group>"; };
@@ -443,6 +441,8 @@
 		791BF36314E3EE6D00697E05 /* EDAMUserStoreClient+PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDAMUserStoreClient+PrivateMethods.h"; sourceTree = "<group>"; };
 		791BF36414E3EE7B00697E05 /* EvernoteUserStoreClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteUserStoreClient.h; sourceTree = "<group>"; };
 		791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteUserStoreClient.m; sourceTree = "<group>"; };
+		791BF36C14E3FDBE00697E05 /* EvernotePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EvernotePhotoSubmitter.h; path = PhotoSubmitter/EvernotePhotoSubmitter.h; sourceTree = "<group>"; };
+		791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EvernotePhotoSubmitter.m; path = PhotoSubmitter/EvernotePhotoSubmitter.m; sourceTree = "<group>"; };
 		797E392614AC63D900F17AC4 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797E392914AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		797E392B14AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -840,8 +840,8 @@
 				37FB657E1498CF0200387490 /* FlickrPhotoSubmitter.m */,
 				3751175214A3672E001909AB /* DropboxPhotoSubmitter.h */,
 				3751175314A3672E001909AB /* DropboxPhotoSubmitter.m */,
-				791BF31514E0227C00697E05 /* EvernotePhotoSubmitter.h */,
-				791BF31614E0227D00697E05 /* EvernotePhotoSubmitter.m */,
+				791BF36C14E3FDBE00697E05 /* EvernotePhotoSubmitter.h */,
+				791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */,
 				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
 				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 			);
@@ -1508,10 +1508,10 @@
 				791BF31014E01FE400697E05 /* EvernoteAuthOAuthConsumer.m in Sources */,
 				791BF31114E01FE400697E05 /* EvernoteHTTPClient.m in Sources */,
 				791BF31214E01FE400697E05 /* EvernoteRequest.m in Sources */,
-				791BF31714E0228000697E05 /* EvernotePhotoSubmitter.m in Sources */,
 				791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */,
 				791BF34414E2999900697E05 /* EvernoteNoteStoreClient.m in Sources */,
 				791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */,
+				791BF36E14E3FDC100697E05 /* EvernotePhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
