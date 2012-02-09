@@ -12,6 +12,7 @@
 #import "EvernoteHTTPClient.h"
 #import "EvernoteBinaryProtocol.h"
 #import "EvernoteNoteStoreClient.h"
+#import "EvernoteUserStoreClient.h"
 #import "RegexKitLite.h"
 #import "PDKeychainBindings.h"
 #import "UIImage+Digest.h"
@@ -24,7 +25,7 @@
 @interface Evernote(PrivateImplementation)
 - (NSURL *)baseURL;
 - (NSString *) clearTextToENMLString:(NSString *)text;
-- (EDAMNote*)createEDAMNoteWithNotebook:(EDAMNotebook *)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags andResources:(NSArray *)resources;
+- (EDAMNote*)createEDAMNoteWithNotebook:(id)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags andResources:(NSArray *)resources;
 - (EvernoteRequest *) requestWithDelegate:(id<EvernoteRequestDelegate>)delegate;
 @end
 
@@ -60,14 +61,18 @@
  * @param array of tag, can be EDAMTag or NSString
  * @param array of resource, each item must be instance of EDAMResource.
  */
-- (EDAMNote*)createEDAMNoteWithNotebook:(EDAMNotebook *)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags andResources:(NSArray *)resources{
+- (EDAMNote*)createEDAMNoteWithNotebook:(id)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags andResources:(NSArray *)resources{
     if(title == nil){
         @throw [NSException exceptionWithName: @"IllegalArgument"
                                        reason: @"title is nil"
                                      userInfo: nil];
     }
     EDAMNote *newNote = [[EDAMNote alloc] init];
-    [newNote setNotebookGuid:notebook.guid];
+    if([notebook isKindOfClass:[EDAMNotebook class]]){
+        [newNote setNotebookGuid:((EDAMNotebook *)notebook).guid];
+    }else{
+        [newNote setNotebookGuid:(NSString *)notebook];        
+    }
     [newNote setTitle:title];
     if(tags != nil){
         newNote.tagGuids = [[NSMutableArray alloc] init];
@@ -136,6 +141,13 @@
         self.sessionDelegate = delegate;
     }
     return self;
+}
+
+/*!
+ * get uesr name
+ */
+- (NSString *)username{
+    return authConsumer_.userId;
 }
 
 #pragma mark - oauth, authentication
@@ -275,7 +287,118 @@
     return nil;
 }
 
+/*!
+ * create asyncronous note Store Client
+ */
+- (EvernoteUserStoreClient *)createAsynchronousUserStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate{
+	if ([authConsumer_ isSessionValid] == NO) {
+        return nil;
+    }
+    
+    @try {
+        NSURL *userStoreUri =  [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@user", [self baseURL].absoluteURL]];
+        EvernoteHTTPClient *userStoreHttpClient = [[EvernoteHTTPClient alloc] initWithURL:userStoreUri];
+        userStoreHttpClient.delegate = delegate;
+        EvernoteBinaryProtocol *userStoreProtocol = [[EvernoteBinaryProtocol alloc] initWithTransport:userStoreHttpClient];
+        EvernoteUserStoreClient *userStore = [[EvernoteUserStoreClient alloc] initWithProtocol:userStoreProtocol];
+        
+        if (userStore) {
+            return userStore;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"main: Caught %@: %@", [exception name], [exception reason]);
+        [self logout];
+    }
+    @finally {
+    }
+    return nil;
+}
+
+/*!
+ * create syncronous note Store Client
+ */
+- (EDAMUserStoreClient *)createSynchronousUserStoreClient{
+	if ([authConsumer_ isSessionValid] == NO) {
+        return nil;
+    }
+    
+    @try {
+        NSURL *userStoreUri =  [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@user", [self baseURL].absoluteURL]];
+        THTTPClient *userStoreHttpClient = [[THTTPClient alloc] initWithURL:userStoreUri];
+        TBinaryProtocol *userStoreProtocol = [[TBinaryProtocol alloc] initWithTransport:userStoreHttpClient];
+        EDAMUserStoreClient *userStore = [[EDAMUserStoreClient alloc] initWithProtocol:userStoreProtocol];
+        
+        if (userStore) {
+            return userStore;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"main: Caught %@: %@", [exception name], [exception reason]);
+        [self logout];
+    }
+    @finally {
+    }
+    return nil;
+}
+
 #pragma mark - async methods
+#pragma mark - user
+/*!
+ * get user info
+ */
+- (EvernoteRequest *)userWithDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+    [request.userStoreClient getUser:authConsumer_.authToken andDelegate:request];
+    return request;
+}
+
+#pragma mark - tags
+/*!
+ * tags
+ */
+- (EvernoteRequest *)tagsWithDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+    [request.noteStoreClient listTags:authConsumer_.authToken andDelegate:request];
+    return request;
+}
+
+/*!
+ * create tag with name
+ */
+- (EvernoteRequest *)createTagWithName: (NSString *)name andDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+    
+    EDAMTag *tag = [[EDAMTag alloc] init];
+    tag.name = name;
+    [request.noteStoreClient createTag: authConsumer_.authToken :tag andDelegate:request];
+    return request;    
+}
+
+#pragma mark - notebooks
+/*!
+ * notebooks
+ */
+- (EvernoteRequest *)notebooksWithDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+
+    [request.noteStoreClient listNotebooks:authConsumer_.authToken andDelegate:request];
+    return request;    
+}
+
+/*!
+ * create notebook with title
+ */
+- (EvernoteRequest *)createNotebookWithTitle:(NSString*)title andDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+    EDAMNotebook *newNotebook = [[EDAMNotebook alloc] init];
+    [newNotebook setName:title];
+    
+    [request.noteStoreClient createNotebook:authConsumer_.authToken :newNotebook andDelegate:request];
+    return request;
+}
+
+#pragma mark - notes
 /*!
  * create note in notebook with resource asynchronously
  * @param target notebook
@@ -285,11 +408,33 @@
  * @param array of resource, each item must be instance of EDAMResource.
  * @param request delegate
  */
-- (EvernoteRequest *)createNoteInNotebook:(EDAMNotebook *)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags resources:(NSArray *)resources andDelegate:(id<EvernoteRequestDelegate>)delegate{
+- (EvernoteRequest *)createNoteInNotebook:(id)notebook title:(NSString *)title content:(NSString *)content tags:(NSArray *)tags resources:(NSArray *)resources andDelegate:(id<EvernoteRequestDelegate>)delegate{
     EvernoteRequest *request = [self requestWithDelegate:delegate];
     EDAMNote *note = [self createEDAMNoteWithNotebook:notebook title:title content:content tags:tags andResources:resources];
+    
     [request.noteStoreClient createNote:authConsumer_.authToken :note andDelegate:request];
     return request;
+}
+
+/*!
+ * update note
+ */
+- (EvernoteRequest *) updateNote: (EDAMNote *)note andDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+    
+    [request.noteStoreClient updateNote:authConsumer_.authToken :note andDelegate:request];
+    return request;    
+}
+
+/*!
+ * list notes
+ */
+- (EvernoteRequest *)notesForNotebook:(EDAMNotebook *)notebook andDelegate:(id<EvernoteRequestDelegate>)delegate{
+    EvernoteRequest *request = [self requestWithDelegate:delegate];
+	EDAMNoteFilter *filter = [[EDAMNoteFilter alloc] initWithOrder:NoteSortOrder_CREATED ascending:YES words:nil notebookGuid:notebook.guid tagGuids:nil timeZone:nil inactive:NO];	
+    
+    [request.noteStoreClient findNotes:authConsumer_.authToken :filter :0 :[EDAMLimitsConstants EDAM_USER_NOTES_MAX] andDelegate:request];
+	return request;
 }
 
 #pragma mark - sync methods

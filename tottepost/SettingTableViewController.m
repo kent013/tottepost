@@ -53,10 +53,10 @@
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
     
-    facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
+    facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
-    evernoteSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
+    evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;

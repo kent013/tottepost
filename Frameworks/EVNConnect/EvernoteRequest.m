@@ -22,45 +22,76 @@
 //Public Implementations
 //-----------------------------------------------------------------------------
 @implementation EvernoteRequest
-@synthesize noteStoreClient = noteStoreClient_;
 @synthesize delegate;
 @dynamic url;
 @dynamic method;
+@dynamic noteStoreClient;
+@dynamic userStoreClient;
 
 /*!
  * initialize
  */
-- (id)initWithAuthToken:(NSString *)authToken noteStoreClientFactory:(id<EvernoteNoteStoreClientFactoryDelegate>)noteStoreClientFactory delegate:(id<EvernoteRequestDelegate>)inDelegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate{
+- (id)initWithAuthToken:(NSString *)authToken noteStoreClientFactory:(id<EvernoteStoreClientFactoryDelegate>)storeClientFactory delegate:(id<EvernoteRequestDelegate>)inDelegate andContextDelegate:(id<EvernoteContextDelegate>)contextDelegate{
     self = [super init];
     if(self){
         authToken_ = authToken;
-        noteStoreClientFactory_ = noteStoreClientFactory;
+        storeClientFactory_ = storeClientFactory;
         contextDelegate_ = contextDelegate;
         self.delegate = inDelegate;
-        noteStoreClient_ = [noteStoreClientFactory_ createAsynchronousNoteStoreClientWithDelegate:self];
     }
     return self;
+}
+
+/*!
+ * get EvernoteNoteStoreClient
+ */
+- (EvernoteNoteStoreClient *)noteStoreClient{
+    if(noteStoreClient_ == nil){
+        noteStoreClient_ = [storeClientFactory_ createAsynchronousNoteStoreClientWithDelegate:self];
+    }
+    return noteStoreClient_;
+}
+
+/*!
+ * get EvernoteUserStoreClient
+ */
+- (EvernoteUserStoreClient *) userStoreClient{
+    if(userStoreClient_ == nil){
+        userStoreClient_ = [storeClientFactory_ createAsynchronousUserStoreClientWithDelegate:self];
+    }
+    return userStoreClient_;
 }
 
 /*!
  * cancel operation
  */
 -(void)abort{
-    [noteStoreClient_.httpClient abort];
+    if(noteStoreClient_){
+        [noteStoreClient_.httpClient abort];
+    }
+    if(userStoreClient_){
+        [userStoreClient_.httpClient abort];
+    }
 }
 
 /*!
  * get url
  */
 - (NSURL *)url{
-    return noteStoreClient_.httpClient.url;
+    if(noteStoreClient_){
+        return noteStoreClient_.httpClient.url;
+    }
+    return userStoreClient_.httpClient.url;
 }
 
 /*!
  * get method
  */
 - (NSString *)method{
-    return noteStoreClient_.httpClient.method;
+    if(noteStoreClient_){
+        return noteStoreClient_.httpClient.method;
+    }
+    return userStoreClient_.httpClient.method;
 }
 
 #pragma mark - EvernoteHTTPClientDelegate
@@ -92,7 +123,7 @@
 }
 
 /*!
- * client did faild with error
+ * client did failed with error
  */
 - (void)client:(EvernoteHTTPClient *)client didFailWithError:(NSError *)error{
     if([self.delegate respondsToSelector:@selector(request:didFailWithError:)]){
@@ -100,6 +131,14 @@
     }    
 }
 
+/*!
+ * client did failed with exception
+ */
+- (void)client:(EvernoteHTTPClient *)client didFailWithException:(NSException *)exception{
+    if([self.delegate respondsToSelector:@selector(request:didFailWithException:)]){
+        [self.delegate request:self didFailWithException:exception];
+    }        
+}
 /*!
  * did load
  */

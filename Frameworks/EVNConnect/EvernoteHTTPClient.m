@@ -62,11 +62,6 @@ typedef enum EvernoteConnectionStatus {
  * flush
  */
 - (void)flush{
-    /*if ([NSThread isMainThread] == NO)
-    {
-        [self performSelectorOnMainThread:@selector(flush) withObject:nil waitUntilDone:YES];
-        return;
-    }*/
     if([self.delegate respondsToSelector:@selector(clientLoading:)]){
         [self.delegate clientLoading:self];
     }
@@ -142,6 +137,7 @@ typedef enum EvernoteConnectionStatus {
                                                reason: @"Could not make HTTP request"
                                                 error: error_];
     }
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [target_ performSelector:action_ withObject:data_];

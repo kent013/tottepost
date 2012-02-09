@@ -1,12 +1,12 @@
 //
-//  FacebookSettingViewController.m
+//  AlbumPhotoSubmitterSettingViewController.m
 //  tottepost
 //
 //  Created by ISHITOYA Kentaro on 11/12/12.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
-#import "FacebookSettingTableViewController.h"
+#import "AlbumPhotoSubmitterSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
 #import "PhotoSubmitterAlbumEntity.h"
 #import "RegexKitLite.h"
@@ -21,11 +21,11 @@
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface FacebookSettingTableViewController(PrivateImplementation)
+@interface AlbumPhotoSubmitterSettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
 @end
 
-@implementation FacebookSettingTableViewController(PrivateImplementation)
+@implementation AlbumPhotoSubmitterSettingTableViewController(PrivateImplementation)
 /*!
  * initialize
  */
@@ -37,18 +37,7 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
-@implementation FacebookSettingTableViewController
-/*!
- * initialize
- */
-- (id)init{
-    self = [super initWithType:PhotoSubmitterTypeFacebook];
-    if(self){
-        [self setupInitialState];
-    }
-    return self;
-}
-
+@implementation AlbumPhotoSubmitterSettingTableViewController
 /*!
  * albums
  */
@@ -73,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case FSV_SECTION_ALBUMS: return [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].albumList.count;
+        case FSV_SECTION_ALBUMS: return self.submitter.albumList.count;
     }
     return [super tableView:tableView numberOfRowsInSection:section];
 }
@@ -93,7 +82,7 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     switch (section){
-        case FSV_SECTION_ALBUMS: return [TTLang lstr:@"Facebook_Detail_Section_Album_Footer"];
+        case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Facebook_Detail_Section_Album_Footer"], self.submitter.name];
     }
     return [super tableView:tableView titleForFooterInSection:section];;
 }
@@ -106,7 +95,11 @@
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     if(indexPath.section == FSV_SECTION_ALBUMS){
         PhotoSubmitterAlbumEntity *album = [self.submitter.albumList objectAtIndex:indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
+        if(album.privacy != nil && [album.privacy isEqualToString:@""] == NO){
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
+        }else{
+            cell.textLabel.text = album.name;
+        }
         if([album.albumId isEqualToString: self.submitter.targetAlbum.albumId]){
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
@@ -120,14 +113,13 @@
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == FSV_SECTION_ALBUMS){
-        id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         if(selectedAlbumIndex_ != indexPath.row){
             cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedAlbumIndex_ inSection:FSV_SECTION_ALBUMS]];
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        submitter.targetAlbum = [submitter.albumList objectAtIndex:indexPath.row];
+        self.submitter.targetAlbum = [self.submitter.albumList objectAtIndex:indexPath.row];
         selectedAlbumIndex_ = indexPath.row;
     }
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];

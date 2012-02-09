@@ -13,12 +13,12 @@
     __strong NSMutableData *data_;
     __strong NSURLConnection *connection_;
     __strong NSError *error_;
-    __weak id target_;
+    id target_;
     SEL action_;
 }
 
 @property(nonatomic, strong) NSString *method;
-@property(nonatomic, weak) id<EvernoteHTTPClientDelegate> delegate;
+@property(nonatomic, assign) id<EvernoteHTTPClientDelegate> delegate;
 @property(nonatomic, readonly) NSURL *url;
 
 - (void) setTarget:(id)target action:(SEL)action;

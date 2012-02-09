@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FacebookSettingTableViewController.h"
+#import "AlbumPhotoSubmitterSettingTableViewController.h"
 #import "PhotoSubmitterSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
 #import "AboutSettingViewController.h"
@@ -19,11 +19,11 @@
  */
 @interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate, AboutSettingViewControllerDelegate>{
 @protected
-    __strong FacebookSettingTableViewController *facebookSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *facebookSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *twitterSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *flickrSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
-    __strong PhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSMutableArray *accountTypeIndexes_;

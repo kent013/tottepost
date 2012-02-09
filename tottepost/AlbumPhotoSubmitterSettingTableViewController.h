@@ -1,5 +1,5 @@
 //
-//  FacebookSettingViewController.h
+//  AlbumPhotoSubmitterSettingViewController.h
 //  tottepost
 //
 //  Created by ISHITOYA Kentaro on 11/12/12.
@@ -11,7 +11,7 @@
 #import "PhotoSubmitterProtocol.h"
 #import "PhotoSubmitterSettingTableViewController.h"
 
-@interface FacebookSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
+@interface AlbumPhotoSubmitterSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
     int selectedAlbumIndex_;
 }
 @end

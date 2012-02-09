@@ -2,7 +2,7 @@
 //  EDAMNoteStoreClient+PrivateMethods.h
 //  Category to show hidden send_*, recv_* methods
 //
-//  Created by conv.php on 2012/02/09 02:26:04.
+//  Created by conv.php on 2012/02/09 21:05:08.
 //  Copyright (c) 2012 Kentaro ISHITOYA. All rights reserved.
 //
 

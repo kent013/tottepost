@@ -32,7 +32,9 @@ static NSString *kEvernoteShardId = @"evernoteShardId";
 @class EvernoteRequest;
 @class EvernoteHTTPClient;
 @class EDAMNoteStoreClient;
+@class EDAMUserStoreClient;
 @class EvernoteNoteStoreClient;
+@class EvernoteUserStoreClient;
 
 /*!
  * enum for consumer engine
@@ -55,6 +57,7 @@ typedef enum {
 - (void)clientLoading:(EvernoteHTTPClient*)client;
 - (void)client:(EvernoteHTTPClient*)client didReceiveResponse:(NSURLResponse*)response;
 - (void)client:(EvernoteHTTPClient*)client didFailWithError:(NSError*)error;
+- (void)client:(EvernoteHTTPClient*)client didFailWithException:(NSException*)exception;
 - (void)client:(EvernoteHTTPClient*)client didLoad:(id)result;
 - (void)client:(EvernoteHTTPClient*)client didLoadRawResponse:(NSData*)data;
 - (void)client:(EvernoteHTTPClient*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
@@ -63,9 +66,11 @@ typedef enum {
 /*!
  * delegate for create EDAMNoteStore
  */
-@protocol EvernoteNoteStoreClientFactoryDelegate <NSObject>
+@protocol EvernoteStoreClientFactoryDelegate <NSObject>
 - (EDAMNoteStoreClient *)createSynchronousNoteStoreClient;
 - (EvernoteNoteStoreClient *)createAsynchronousNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
+- (EDAMUserStoreClient *)createSynchronousUserStoreClient;
+- (EvernoteUserStoreClient *)createAsynchronousUserStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 @end
 
 /*!
@@ -76,6 +81,7 @@ typedef enum {
 - (void)requestLoading:(EvernoteRequest*)request;
 - (void)request:(EvernoteRequest*)request didReceiveResponse:(NSURLResponse*)response;
 - (void)request:(EvernoteRequest*)request didFailWithError:(NSError*)error;
+- (void)request:(EvernoteRequest*)request didFailWithException:(NSException*)exception;
 - (void)request:(EvernoteRequest*)request didLoad:(id)result;
 - (void)request:(EvernoteRequest*)request didLoadRawResponse:(NSData*)data;
 - (void)request:(EvernoteRequest*)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;

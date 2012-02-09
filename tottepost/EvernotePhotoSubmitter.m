@@ -16,6 +16,8 @@
 #define PS_EVERNOTE_ENABLED @"PSEvernoteEnabled"
 #define PS_EVERNOTE_AUTH_URL @"photosubmitter://auth/evernote"
 #define PS_EVERNOTE_SETTING_USERNAME @"EvernoteUserName"
+#define PS_EVERNOTE_SETTING_ALBUMS @"EvernoteAlbums"
+#define PS_EVERNOTE_SETTING_TARGET_ALBUM @"EvernoteTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -47,6 +49,9 @@
  */
 - (void)clearCredentials{
     [evernote_ clearCredential];
+    [self removeSettingForKey:PS_EVERNOTE_SETTING_USERNAME];
+    [self removeSettingForKey:PS_EVERNOTE_SETTING_ALBUMS];
+    [self removeSettingForKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
 }
 @end
 
@@ -73,17 +78,25 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    EDAMNotebook *notebook = [evernote_ notebookNamed:@"tottepost"];
-    if(notebook == nil){
-        notebook = [evernote_ createNotebookWithTitle:@"tottepost"];
-    }
     
     EDAMResource *photoResource = 
     [evernote_ createResourceFromImageData:photo.autoRotatedData andMime:@"image/jpeg"];
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat  = @"yyyy/MM/dd HH:mm:ss.SSSS";
+    
+    NSString *notebookGuid;
+    if(self.targetAlbum != nil){
+        notebookGuid = self.targetAlbum.albumId;
+    }else{
+        EDAMNotebook *notebook = [evernote_ notebookNamed:@"tottepost"];
+        if(notebook == nil){
+            notebook = [evernote_ createNotebookWithTitle:@"tottepost"];
+        }
+        notebookGuid = notebook.guid;
+    }
+    
     EvernoteRequest *request = 
-      [evernote_ createNoteInNotebook:notebook 
+      [evernote_ createNoteInNotebook:notebookGuid
                                 title:[df stringFromDate:[NSDate date]]
                               content:photo.comment 
                                  tags:nil
@@ -230,7 +243,7 @@
  * albumlist
  */
 - (NSArray *)albumList{
-    return nil;
+    return [self complexSettingForKey:PS_EVERNOTE_SETTING_ALBUMS];
 }
 
 /*!
@@ -238,21 +251,22 @@
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //do nothing
+    EvernoteRequest *request = [evernote_ notebooksWithDelegate:self];
+    [self addRequest:request];
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
+    return [self complexSettingForKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
+    [self setComplexSetting:targetAlbum forKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
 }
 
 /*!
@@ -260,7 +274,8 @@
  */
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //do nothing
+    EvernoteRequest *request = [evernote_ userWithDelegate:self];
+    [self addRequest:request];
 }
 
 /*!
@@ -296,21 +311,34 @@
 }
 
 #pragma mark -
-#pragma mark Evernote delegate methods
+#pragma mark EvernoteRequestDelegate methods
 /*!
  * Evernote delegate, upload finished
  */
 - (void)request:(EvernoteRequest *)request didLoad:(id)result{
-    if([request.method isEqualToString:@"createNote"] == NO){
-        return;
+    if([request.method isEqualToString:@"createNote"]){
+        NSString *hash = [self photoForRequest:request];
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+        [operationDelegate photoSubmitterDidOperationFinished:YES];
+    }else if([request.method isEqualToString:@"listNotebooks"]){
+        NSArray *as = (NSArray *)result;
+        NSMutableArray *albums = [[NSMutableArray alloc] init];
+        for(EDAMNotebook *a in as){
+            PhotoSubmitterAlbumEntity *album = 
+            [[PhotoSubmitterAlbumEntity alloc] initWithId:a.guid name:a.name privacy:@""];
+            [albums addObject:album];
+        }
+        [self setComplexSetting:albums forKey:PS_EVERNOTE_SETTING_ALBUMS];
+        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    }else if([request.method isEqualToString:@"getUser"]){
+        EDAMUser *user = (EDAMUser *)result;
+        [self setSetting:user.name forKey:PS_EVERNOTE_SETTING_USERNAME];
+        [self.dataDelegate photoSubmitter:self didUsernameUpdated:user.name];
     }
-    NSString *hash = [self photoForRequest:request];
-    [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationFinished:YES];
     
     [self clearRequest:request];
+    NSLog(@"%@", request.method);
 }
 
 /*!
@@ -322,6 +350,21 @@
     }
     NSString *hash = [self photoForRequest:request];
     [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationFinished:NO];
+    [self clearRequest:request];
+}
+
+/*!
+ * Evernote delegate, failed with exception
+ */
+- (void)request:(EvernoteRequest *)request didFailWithException:(NSException *)exception{
+    if([request.method isEqualToString:@"createNote"] == NO){
+        return;
+    }
+    NSString *hash = [self photoForRequest:request];
+    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:exception.description];
+    NSLog(@"%s, %@", __PRETTY_FUNCTION__, exception.description);
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
     [operationDelegate photoSubmitterDidOperationFinished:NO];
     [self clearRequest:request];
@@ -340,6 +383,7 @@
     [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
+#pragma mark - EvernoteSessionDelegate methods
 /*!
  * Evernote delegate, account info loaded
  */

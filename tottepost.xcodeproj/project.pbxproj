@@ -55,7 +55,7 @@
 		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
-		37FB64E91496384800387490 /* FacebookSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* FacebookSettingTableViewController.m */; };
+		37FB64E91496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
@@ -126,6 +126,7 @@
 		791BF31F14E02C5B00697E05 /* evernote_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791BF31B14E02C5900697E05 /* evernote_32@2x.png */; };
 		791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF33714E05BA800697E05 /* EvernoteBinaryProtocol.m */; };
 		791BF34414E2999900697E05 /* EvernoteNoteStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF34314E2999800697E05 /* EvernoteNoteStoreClient.m */; };
+		791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */; };
 		797E392714AC63D900F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392514AC63D900F17AC4 /* Localizable.strings */; };
 		797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392814AC63ED00F17AC4 /* InfoPlist.strings */; };
 		797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392A14AC63ED00F17AC4 /* Localizable.strings */; };
@@ -295,8 +296,8 @@
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
-		37FB64E71496384800387490 /* FacebookSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookSettingTableViewController.h; sourceTree = "<group>"; };
-		37FB64E81496384800387490 /* FacebookSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookSettingTableViewController.m; sourceTree = "<group>"; };
+		37FB64E71496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65491497313500387490 /* PhotoSubmitterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterManager.h; path = PhotoSubmitter/PhotoSubmitterManager.h; sourceTree = "<group>"; };
@@ -439,6 +440,9 @@
 		791BF34314E2999800697E05 /* EvernoteNoteStoreClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteNoteStoreClient.m; sourceTree = "<group>"; };
 		791BF34514E299C500697E05 /* EvernoteNoteStoreClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteNoteStoreClient.h; sourceTree = "<group>"; };
 		791BF34714E2A26D00697E05 /* EDAMNoteStoreClient+PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDAMNoteStoreClient+PrivateMethods.h"; sourceTree = "<group>"; };
+		791BF36314E3EE6D00697E05 /* EDAMUserStoreClient+PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDAMUserStoreClient+PrivateMethods.h"; sourceTree = "<group>"; };
+		791BF36414E3EE7B00697E05 /* EvernoteUserStoreClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteUserStoreClient.h; sourceTree = "<group>"; };
+		791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteUserStoreClient.m; sourceTree = "<group>"; };
 		797E392614AC63D900F17AC4 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797E392914AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		797E392B14AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -595,8 +599,8 @@
 				7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */,
 				7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */,
 				7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */,
-				37FB64E71496384800387490 /* FacebookSettingTableViewController.h */,
-				37FB64E81496384800387490 /* FacebookSettingTableViewController.m */,
+				37FB64E71496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.h */,
+				37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */,
 				79823CD914D2BDB90094389D /* AboutSettingViewController.h */,
 				79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */,
 			);
@@ -1093,6 +1097,7 @@
 			children = (
 				791BF30A14E01FE400697E05 /* EvernoteProtocol.h */,
 				791BF34714E2A26D00697E05 /* EDAMNoteStoreClient+PrivateMethods.h */,
+				791BF36314E3EE6D00697E05 /* EDAMUserStoreClient+PrivateMethods.h */,
 				791BF30214E01FE400697E05 /* Evernote.h */,
 				791BF30314E01FE400697E05 /* Evernote.m */,
 				791BF30414E01FE400697E05 /* EvernoteAuth.h */,
@@ -1101,6 +1106,8 @@
 				791BF30714E01FE400697E05 /* EvernoteAuthOAuthConsumer.m */,
 				791BF34514E299C500697E05 /* EvernoteNoteStoreClient.h */,
 				791BF34314E2999800697E05 /* EvernoteNoteStoreClient.m */,
+				791BF36414E3EE7B00697E05 /* EvernoteUserStoreClient.h */,
+				791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */,
 				791BF30814E01FE400697E05 /* EvernoteHTTPClient.h */,
 				791BF30914E01FE400697E05 /* EvernoteHTTPClient.m */,
 				791BF33614E05BA700697E05 /* EvernoteBinaryProtocol.h */,
@@ -1407,7 +1414,7 @@
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
 				37FB64D71496237500387490 /* SettingTableViewController.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
-				37FB64E91496384800387490 /* FacebookSettingTableViewController.m in Sources */,
+				37FB64E91496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
 				37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */,
 				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
@@ -1504,6 +1511,7 @@
 				791BF31714E0228000697E05 /* EvernotePhotoSubmitter.m in Sources */,
 				791BF33814E05BA800697E05 /* EvernoteBinaryProtocol.m in Sources */,
 				791BF34414E2999900697E05 /* EvernoteNoteStoreClient.m in Sources */,
+				791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
