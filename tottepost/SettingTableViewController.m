@@ -18,13 +18,14 @@
 #define SV_GENERAL_GPS 1
 #define SV_GENERAL_ABOUT 2
 
-#define SV_ACCOUNTS_COUNT 6
+#define SV_ACCOUNTS_COUNT 7
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
 #define SV_ACCOUNTS_DROPBOX 3
 #define SV_ACCOUNTS_EVERNOTE 4
-#define SV_ACCOUNTS_FILE 5
+#define SV_ACCOUNTS_PICASA 5
+#define SV_ACCOUNTS_FILE 6
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -56,8 +57,9 @@
     facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
-    evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
+    evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
+    picasaSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypePicasa];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
     
@@ -224,7 +226,12 @@
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote].isEnabled){
                     [self.navigationController pushViewController:evernoteSettingViewController_ animated:YES]; 
                 }
-                break;
+                break;  
+            case SV_ACCOUNTS_PICASA: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypePicasa].isEnabled){
+                    [self.navigationController pushViewController:picasaSettingViewController_ animated:YES]; 
+                }
+                break;   
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];

@@ -26,6 +26,8 @@ typedef enum {
 @protocol PhotoSubmitterPhotoDelegate;
 @protocol PhotoSubmitterPhotoOperationDelegate;
 @protocol PhotoSubmitterDataDelegate;
+@protocol PhotoSubmitterOAuthControllerDelegate;
+
 
 /*!
  * protocol for submitter
@@ -97,4 +99,11 @@ typedef enum {
 @protocol PhotoSubmitterDataDelegate <NSObject>
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated: (NSMutableArray *)albums;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didUsernameUpdated: (NSString *)username;
+@end
+
+/*!
+ * protocol for request oauth authentication view
+ */
+@protocol PhotoSubmitterOAuthControllerDelegate <NSObject>
+- (UINavigationController *) requestNavigationControllerToPresentAuthenticationView;
 @end

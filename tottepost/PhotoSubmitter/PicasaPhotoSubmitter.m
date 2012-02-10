@@ -15,7 +15,7 @@
 #import "GTMOAuth2ViewControllerTouch.h"
 
 #define PS_PICASA_ENABLED @"PSPicasaEnabled"
-#define PS_PICASA_AUTH_URL @"photosubmitter://auth/evernote"
+#define PS_PICASA_AUTH_URL @"photosubmitter://auth/picasa"
 #define PS_PICASA_SCOPE @"https://picasaweb.google.com/data/"
 #define PS_PICASA_KEYCHAIN_NAME @"PSPicasaKeychain"
 #define PS_PICASA_SETTING_USERNAME @"PSPicasaUserName"
@@ -160,8 +160,7 @@
                  clientID:GOOGLE_SUBMITTER_API_KEY
                  clientSecret:GOOGLE_SUBMITTER_API_SECRET];*/
         SEL finishedSel = @selector(viewController:finishedWithAuth:error:);        
-        GTMOAuth2ViewControllerTouch *viewController;
-        viewController = 
+        GTMOAuth2ViewControllerTouch *viewController = 
         [GTMOAuth2ViewControllerTouch controllerWithScope:PS_PICASA_SCOPE
                                                  clientID:GOOGLE_SUBMITTER_API_KEY
                                              clientSecret:GOOGLE_SUBMITTER_API_SECRET
@@ -169,7 +168,7 @@
                                                  delegate:self
                                          finishedSelector:finishedSel];
         
-        //[[self navigationController] pushViewController:viewController animated:YES];
+        [[[PhotoSubmitterManager sharedInstance].oAuthControllerDelegate requestNavigationControllerToPresentAuthenticationView] pushViewController:viewController animated:YES];
     }
 }
 
@@ -234,9 +233,9 @@
  * on open url finished
  */
 - (BOOL)didOpenURL:(NSURL *)url{
-/*    [evernote_ handleOpenURL:url];
+/*    [picasa_ handleOpenURL:url];
     BOOL result = NO;
-    if([evernote_ isSessionValid]){
+    if([picasa_ isSessionValid]){
         [self setSetting:@"enabled" forKey:PS_PICASA_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         result = YES;
@@ -259,14 +258,14 @@
  * icon image
  */
 - (UIImage *)icon{
-    return [UIImage imageNamed:@"evernote_32.png"];
+    return [UIImage imageNamed:@"picasa_32.png"];
 }
 
 /*!
  * small icon image
  */
 - (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"evernote_16.png"];
+    return [UIImage imageNamed:@"picasa_16.png"];
 }
 
 /*!
@@ -288,7 +287,7 @@
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //PicasaRequest *request = [evernote_ notebooksWithDelegate:self];
+    //PicasaRequest *request = [picasa_ notebooksWithDelegate:self];
     //[self addRequest:request];
 }
 
@@ -311,7 +310,7 @@
  */
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //PicasaRequest *request = [evernote_ userWithDelegate:self];
+    //PicasaRequest *request = [picasa_ userWithDelegate:self];
     //[self addRequest:request];
 }
 

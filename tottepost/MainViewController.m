@@ -50,6 +50,7 @@
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:self];
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
+    [PhotoSubmitterManager sharedInstance].oAuthControllerDelegate = self;
     
     //setting view
     settingViewController_ = 
@@ -524,6 +525,14 @@
  */
 - (void)didFeedbackButtonPressed{
     isFeedbackButtonPressed_ = YES;
+}
+
+#pragma mark - PhotoSubmitterOAuthControllerDelegate
+/*!
+ * request UINavigationController to present authentication view
+ */
+- (UINavigationController *) requestNavigationControllerToPresentAuthenticationView{
+    return settingNavigationController_;
 }
 
 #pragma mark -
