@@ -73,6 +73,43 @@
 		37FB65DD149D028500387490 /* facebook_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DA149D028500387490 /* facebook_32.png */; };
 		37FB65DE149D028500387490 /* flickr_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DB149D028500387490 /* flickr_32.png */; };
 		37FB65DF149D028500387490 /* twitter_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB65DC149D028500387490 /* twitter_32.png */; };
+		790C766D14E499BD0056DAEA /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C761F14E499BD0056DAEA /* NSObject+SBJson.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C766E14E499BD0056DAEA /* SBJson-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 790C762014E499BD0056DAEA /* SBJson-LICENSE.txt */; };
+		790C766F14E499BD0056DAEA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762314E499BD0056DAEA /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767014E499BD0056DAEA /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762514E499BD0056DAEA /* SBJsonStreamParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767114E499BD0056DAEA /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762714E499BD0056DAEA /* SBJsonStreamParserAccumulator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767214E499BD0056DAEA /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762914E499BD0056DAEA /* SBJsonStreamParserAdapter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767314E499BD0056DAEA /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762B14E499BD0056DAEA /* SBJsonStreamParserState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767414E499BD0056DAEA /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762D14E499BD0056DAEA /* SBJsonStreamWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767514E499BD0056DAEA /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C762F14E499BD0056DAEA /* SBJsonStreamWriterAccumulator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767614E499BD0056DAEA /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763114E499BD0056DAEA /* SBJsonStreamWriterState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767714E499BD0056DAEA /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763314E499BD0056DAEA /* SBJsonTokeniser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767814E499BD0056DAEA /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763514E499BD0056DAEA /* SBJsonUTF8Stream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767914E499BD0056DAEA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763714E499BD0056DAEA /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767A14E499BD0056DAEA /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763A14E499BD0056DAEA /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767B14E499BD0056DAEA /* Mixi.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763C14E499BD0056DAEA /* Mixi.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767C14E499BD0056DAEA /* MixiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C763F14E499BD0056DAEA /* MixiConfig.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767D14E499BD0056DAEA /* MixiRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C764214E499BD0056DAEA /* MixiRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767E14E499BD0056DAEA /* MixiURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C764614E499BD0056DAEA /* MixiURLConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C767F14E499BD0056DAEA /* MixiURLDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C764814E499BD0056DAEA /* MixiURLDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768114E499BD0056DAEA /* mixi_map_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C764B14E499BD0056DAEA /* mixi_map_bg.png */; };
+		790C768214E499BD0056DAEA /* mixi_map_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C764C14E499BD0056DAEA /* mixi_map_bg@2x.png */; };
+		790C768314E499BD0056DAEA /* mixi_map_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C764D14E499BD0056DAEA /* mixi_map_list.png */; };
+		790C768414E499BD0056DAEA /* mixi_map_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C764E14E499BD0056DAEA /* mixi_map_list@2x.png */; };
+		790C768514E499BD0056DAEA /* mixi_map_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C764F14E499BD0056DAEA /* mixi_map_logo.png */; };
+		790C768614E499BD0056DAEA /* mixi_map_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C765014E499BD0056DAEA /* mixi_map_logo@2x.png */; };
+		790C768714E499BD0056DAEA /* mixi_map_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C765114E499BD0056DAEA /* mixi_map_search.png */; };
+		790C768814E499BD0056DAEA /* mixi_map_search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790C765214E499BD0056DAEA /* mixi_map_search@2x.png */; };
+		790C768914E499BD0056DAEA /* MixiRefreshTokenURLDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C765714E499BD0056DAEA /* MixiRefreshTokenURLDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768A14E499BD0056DAEA /* MixiReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C765914E499BD0056DAEA /* MixiReporter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768B14E499BD0056DAEA /* MixiUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C765B14E499BD0056DAEA /* MixiUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768C14E499BD0056DAEA /* MixiADBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C765E14E499BD0056DAEA /* MixiADBannerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768D14E499BD0056DAEA /* MixiImageButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C766014E499BD0056DAEA /* MixiImageButtonView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768E14E499BD0056DAEA /* MixiDownloadWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C766314E499BD0056DAEA /* MixiDownloadWebViewDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C768F14E499BD0056DAEA /* MixiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C766614E499BD0056DAEA /* MixiViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C769014E499BD0056DAEA /* MixiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790C766714E499BD0056DAEA /* MixiViewController.xib */; };
+		790C769114E499BD0056DAEA /* MixiWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790C766914E499BD0056DAEA /* MixiWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		790C769214E499BD0056DAEA /* MixiWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790C766A14E499BD0056DAEA /* MixiWebViewController.xib */; };
 		791BF27014E01FBB00697E05 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF27114E01FBB00697E05 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26F14E01FBB00697E05 /* PDKeychainBindingsController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF29D14E01FC500697E05 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF27514E01FC500697E05 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -327,6 +364,76 @@
 		37FB65DA149D028500387490 /* facebook_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = facebook_32.png; path = PhotoSubmitter/Images/facebook_32.png; sourceTree = "<group>"; };
 		37FB65DB149D028500387490 /* flickr_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr_32.png; path = PhotoSubmitter/Images/flickr_32.png; sourceTree = "<group>"; };
 		37FB65DC149D028500387490 /* twitter_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_32.png; path = PhotoSubmitter/Images/twitter_32.png; sourceTree = "<group>"; };
+		790C761E14E499BD0056DAEA /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
+		790C761F14E499BD0056DAEA /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
+		790C762014E499BD0056DAEA /* SBJson-LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SBJson-LICENSE.txt"; sourceTree = "<group>"; };
+		790C762114E499BD0056DAEA /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
+		790C762214E499BD0056DAEA /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		790C762314E499BD0056DAEA /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		790C762414E499BD0056DAEA /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
+		790C762514E499BD0056DAEA /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
+		790C762614E499BD0056DAEA /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
+		790C762714E499BD0056DAEA /* SBJsonStreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAccumulator.m; sourceTree = "<group>"; };
+		790C762814E499BD0056DAEA /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
+		790C762914E499BD0056DAEA /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
+		790C762A14E499BD0056DAEA /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
+		790C762B14E499BD0056DAEA /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
+		790C762C14E499BD0056DAEA /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
+		790C762D14E499BD0056DAEA /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
+		790C762E14E499BD0056DAEA /* SBJsonStreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterAccumulator.h; sourceTree = "<group>"; };
+		790C762F14E499BD0056DAEA /* SBJsonStreamWriterAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterAccumulator.m; sourceTree = "<group>"; };
+		790C763014E499BD0056DAEA /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
+		790C763114E499BD0056DAEA /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
+		790C763214E499BD0056DAEA /* SBJsonTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonTokeniser.h; sourceTree = "<group>"; };
+		790C763314E499BD0056DAEA /* SBJsonTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonTokeniser.m; sourceTree = "<group>"; };
+		790C763414E499BD0056DAEA /* SBJsonUTF8Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonUTF8Stream.h; sourceTree = "<group>"; };
+		790C763514E499BD0056DAEA /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
+		790C763614E499BD0056DAEA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		790C763714E499BD0056DAEA /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		790C763914E499BD0056DAEA /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		790C763A14E499BD0056DAEA /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		790C763B14E499BD0056DAEA /* Mixi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixi.h; sourceTree = "<group>"; };
+		790C763C14E499BD0056DAEA /* Mixi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mixi.m; sourceTree = "<group>"; };
+		790C763D14E499BD0056DAEA /* MixiApiType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiApiType.h; sourceTree = "<group>"; };
+		790C763E14E499BD0056DAEA /* MixiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiConfig.h; sourceTree = "<group>"; };
+		790C763F14E499BD0056DAEA /* MixiConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiConfig.m; sourceTree = "<group>"; };
+		790C764014E499BD0056DAEA /* MixiDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiDelegate.h; sourceTree = "<group>"; };
+		790C764114E499BD0056DAEA /* MixiRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiRequest.h; sourceTree = "<group>"; };
+		790C764214E499BD0056DAEA /* MixiRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiRequest.m; sourceTree = "<group>"; };
+		790C764314E499BD0056DAEA /* MixiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiSDK.h; sourceTree = "<group>"; };
+		790C764514E499BD0056DAEA /* MixiURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiURLConnection.h; sourceTree = "<group>"; };
+		790C764614E499BD0056DAEA /* MixiURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiURLConnection.m; sourceTree = "<group>"; };
+		790C764714E499BD0056DAEA /* MixiURLDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiURLDelegate.h; sourceTree = "<group>"; };
+		790C764814E499BD0056DAEA /* MixiURLDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiURLDelegate.m; sourceTree = "<group>"; };
+		790C764B14E499BD0056DAEA /* mixi_map_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixi_map_bg.png; sourceTree = "<group>"; };
+		790C764C14E499BD0056DAEA /* mixi_map_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mixi_map_bg@2x.png"; sourceTree = "<group>"; };
+		790C764D14E499BD0056DAEA /* mixi_map_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixi_map_list.png; sourceTree = "<group>"; };
+		790C764E14E499BD0056DAEA /* mixi_map_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mixi_map_list@2x.png"; sourceTree = "<group>"; };
+		790C764F14E499BD0056DAEA /* mixi_map_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixi_map_logo.png; sourceTree = "<group>"; };
+		790C765014E499BD0056DAEA /* mixi_map_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mixi_map_logo@2x.png"; sourceTree = "<group>"; };
+		790C765114E499BD0056DAEA /* mixi_map_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixi_map_search.png; sourceTree = "<group>"; };
+		790C765214E499BD0056DAEA /* mixi_map_search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mixi_map_search@2x.png"; sourceTree = "<group>"; };
+		790C765414E499BD0056DAEA /* MixiConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiConstants.h; sourceTree = "<group>"; };
+		790C765514E499BD0056DAEA /* MixiErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiErrorCodes.h; sourceTree = "<group>"; };
+		790C765614E499BD0056DAEA /* MixiRefreshTokenURLDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiRefreshTokenURLDelegate.h; sourceTree = "<group>"; };
+		790C765714E499BD0056DAEA /* MixiRefreshTokenURLDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiRefreshTokenURLDelegate.m; sourceTree = "<group>"; };
+		790C765814E499BD0056DAEA /* MixiReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiReporter.h; sourceTree = "<group>"; };
+		790C765914E499BD0056DAEA /* MixiReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiReporter.m; sourceTree = "<group>"; };
+		790C765A14E499BD0056DAEA /* MixiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiUtils.h; sourceTree = "<group>"; };
+		790C765B14E499BD0056DAEA /* MixiUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiUtils.m; sourceTree = "<group>"; };
+		790C765D14E499BD0056DAEA /* MixiADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiADBannerView.h; sourceTree = "<group>"; };
+		790C765E14E499BD0056DAEA /* MixiADBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiADBannerView.m; sourceTree = "<group>"; };
+		790C765F14E499BD0056DAEA /* MixiImageButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiImageButtonView.h; sourceTree = "<group>"; };
+		790C766014E499BD0056DAEA /* MixiImageButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiImageButtonView.m; sourceTree = "<group>"; };
+		790C766214E499BD0056DAEA /* MixiDownloadWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiDownloadWebViewDelegate.h; sourceTree = "<group>"; };
+		790C766314E499BD0056DAEA /* MixiDownloadWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiDownloadWebViewDelegate.m; sourceTree = "<group>"; };
+		790C766414E499BD0056DAEA /* MixiOrientationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiOrientationDelegate.h; sourceTree = "<group>"; };
+		790C766514E499BD0056DAEA /* MixiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiViewController.h; sourceTree = "<group>"; };
+		790C766614E499BD0056DAEA /* MixiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiViewController.m; sourceTree = "<group>"; };
+		790C766714E499BD0056DAEA /* MixiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixiViewController.xib; sourceTree = "<group>"; };
+		790C766814E499BD0056DAEA /* MixiWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiWebViewController.h; sourceTree = "<group>"; };
+		790C766914E499BD0056DAEA /* MixiWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiWebViewController.m; sourceTree = "<group>"; };
+		790C766A14E499BD0056DAEA /* MixiWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixiWebViewController.xib; sourceTree = "<group>"; };
 		791BF26C14E01FBB00697E05 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindings.h; sourceTree = "<group>"; };
 		791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
 		791BF26E14E01FBB00697E05 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
@@ -870,6 +977,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				790C761714E499BD0056DAEA /* MixiSDK */,
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				791BF2C614E01FDD00697E05 /* Evernote */,
@@ -897,6 +1005,148 @@
 				37FB65A0149C4F5300387490 /* RegexKitLite.m */,
 			);
 			name = RegexKitLite;
+			sourceTree = "<group>";
+		};
+		790C761714E499BD0056DAEA /* MixiSDK */ = {
+			isa = PBXGroup;
+			children = (
+				790C763B14E499BD0056DAEA /* Mixi.h */,
+				790C763C14E499BD0056DAEA /* Mixi.m */,
+				790C763D14E499BD0056DAEA /* MixiApiType.h */,
+				790C763E14E499BD0056DAEA /* MixiConfig.h */,
+				790C763F14E499BD0056DAEA /* MixiConfig.m */,
+				790C764014E499BD0056DAEA /* MixiDelegate.h */,
+				790C764114E499BD0056DAEA /* MixiRequest.h */,
+				790C764214E499BD0056DAEA /* MixiRequest.m */,
+				790C764314E499BD0056DAEA /* MixiSDK.h */,
+				790C761914E499BD0056DAEA /* Ext */,
+				790C764414E499BD0056DAEA /* Networking */,
+				790C764A14E499BD0056DAEA /* Resources */,
+				790C765314E499BD0056DAEA /* Util */,
+				790C765C14E499BD0056DAEA /* View */,
+				790C766114E499BD0056DAEA /* ViewController */,
+			);
+			name = MixiSDK;
+			path = Frameworks/MixiSDK;
+			sourceTree = SOURCE_ROOT;
+		};
+		790C761914E499BD0056DAEA /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				790C761D14E499BD0056DAEA /* SBJson */,
+				790C763814E499BD0056DAEA /* SFHFKeychainUtils */,
+			);
+			path = Ext;
+			sourceTree = "<group>";
+		};
+		790C761D14E499BD0056DAEA /* SBJson */ = {
+			isa = PBXGroup;
+			children = (
+				790C761E14E499BD0056DAEA /* NSObject+SBJson.h */,
+				790C761F14E499BD0056DAEA /* NSObject+SBJson.m */,
+				790C762014E499BD0056DAEA /* SBJson-LICENSE.txt */,
+				790C762114E499BD0056DAEA /* SBJson.h */,
+				790C762214E499BD0056DAEA /* SBJsonParser.h */,
+				790C762314E499BD0056DAEA /* SBJsonParser.m */,
+				790C762414E499BD0056DAEA /* SBJsonStreamParser.h */,
+				790C762514E499BD0056DAEA /* SBJsonStreamParser.m */,
+				790C762614E499BD0056DAEA /* SBJsonStreamParserAccumulator.h */,
+				790C762714E499BD0056DAEA /* SBJsonStreamParserAccumulator.m */,
+				790C762814E499BD0056DAEA /* SBJsonStreamParserAdapter.h */,
+				790C762914E499BD0056DAEA /* SBJsonStreamParserAdapter.m */,
+				790C762A14E499BD0056DAEA /* SBJsonStreamParserState.h */,
+				790C762B14E499BD0056DAEA /* SBJsonStreamParserState.m */,
+				790C762C14E499BD0056DAEA /* SBJsonStreamWriter.h */,
+				790C762D14E499BD0056DAEA /* SBJsonStreamWriter.m */,
+				790C762E14E499BD0056DAEA /* SBJsonStreamWriterAccumulator.h */,
+				790C762F14E499BD0056DAEA /* SBJsonStreamWriterAccumulator.m */,
+				790C763014E499BD0056DAEA /* SBJsonStreamWriterState.h */,
+				790C763114E499BD0056DAEA /* SBJsonStreamWriterState.m */,
+				790C763214E499BD0056DAEA /* SBJsonTokeniser.h */,
+				790C763314E499BD0056DAEA /* SBJsonTokeniser.m */,
+				790C763414E499BD0056DAEA /* SBJsonUTF8Stream.h */,
+				790C763514E499BD0056DAEA /* SBJsonUTF8Stream.m */,
+				790C763614E499BD0056DAEA /* SBJsonWriter.h */,
+				790C763714E499BD0056DAEA /* SBJsonWriter.m */,
+			);
+			path = SBJson;
+			sourceTree = "<group>";
+		};
+		790C763814E499BD0056DAEA /* SFHFKeychainUtils */ = {
+			isa = PBXGroup;
+			children = (
+				790C763914E499BD0056DAEA /* SFHFKeychainUtils.h */,
+				790C763A14E499BD0056DAEA /* SFHFKeychainUtils.m */,
+			);
+			path = SFHFKeychainUtils;
+			sourceTree = "<group>";
+		};
+		790C764414E499BD0056DAEA /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				790C764514E499BD0056DAEA /* MixiURLConnection.h */,
+				790C764614E499BD0056DAEA /* MixiURLConnection.m */,
+				790C764714E499BD0056DAEA /* MixiURLDelegate.h */,
+				790C764814E499BD0056DAEA /* MixiURLDelegate.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		790C764A14E499BD0056DAEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				790C764B14E499BD0056DAEA /* mixi_map_bg.png */,
+				790C764C14E499BD0056DAEA /* mixi_map_bg@2x.png */,
+				790C764D14E499BD0056DAEA /* mixi_map_list.png */,
+				790C764E14E499BD0056DAEA /* mixi_map_list@2x.png */,
+				790C764F14E499BD0056DAEA /* mixi_map_logo.png */,
+				790C765014E499BD0056DAEA /* mixi_map_logo@2x.png */,
+				790C765114E499BD0056DAEA /* mixi_map_search.png */,
+				790C765214E499BD0056DAEA /* mixi_map_search@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		790C765314E499BD0056DAEA /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				790C765414E499BD0056DAEA /* MixiConstants.h */,
+				790C765514E499BD0056DAEA /* MixiErrorCodes.h */,
+				790C765614E499BD0056DAEA /* MixiRefreshTokenURLDelegate.h */,
+				790C765714E499BD0056DAEA /* MixiRefreshTokenURLDelegate.m */,
+				790C765814E499BD0056DAEA /* MixiReporter.h */,
+				790C765914E499BD0056DAEA /* MixiReporter.m */,
+				790C765A14E499BD0056DAEA /* MixiUtils.h */,
+				790C765B14E499BD0056DAEA /* MixiUtils.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		790C765C14E499BD0056DAEA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				790C765D14E499BD0056DAEA /* MixiADBannerView.h */,
+				790C765E14E499BD0056DAEA /* MixiADBannerView.m */,
+				790C765F14E499BD0056DAEA /* MixiImageButtonView.h */,
+				790C766014E499BD0056DAEA /* MixiImageButtonView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		790C766114E499BD0056DAEA /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				790C766214E499BD0056DAEA /* MixiDownloadWebViewDelegate.h */,
+				790C766314E499BD0056DAEA /* MixiDownloadWebViewDelegate.m */,
+				790C766414E499BD0056DAEA /* MixiOrientationDelegate.h */,
+				790C766514E499BD0056DAEA /* MixiViewController.h */,
+				790C766614E499BD0056DAEA /* MixiViewController.m */,
+				790C766714E499BD0056DAEA /* MixiViewController.xib */,
+				790C766814E499BD0056DAEA /* MixiWebViewController.h */,
+				790C766914E499BD0056DAEA /* MixiWebViewController.m */,
+				790C766A14E499BD0056DAEA /* MixiWebViewController.xib */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		791BF26B14E01FBB00697E05 /* PDKeychainBindingsController */ = {
@@ -1376,6 +1626,17 @@
 				791BF31D14E02C5B00697E05 /* evernote_16@2x.png in Resources */,
 				791BF31E14E02C5B00697E05 /* evernote_32.png in Resources */,
 				791BF31F14E02C5B00697E05 /* evernote_32@2x.png in Resources */,
+				790C766E14E499BD0056DAEA /* SBJson-LICENSE.txt in Resources */,
+				790C768114E499BD0056DAEA /* mixi_map_bg.png in Resources */,
+				790C768214E499BD0056DAEA /* mixi_map_bg@2x.png in Resources */,
+				790C768314E499BD0056DAEA /* mixi_map_list.png in Resources */,
+				790C768414E499BD0056DAEA /* mixi_map_list@2x.png in Resources */,
+				790C768514E499BD0056DAEA /* mixi_map_logo.png in Resources */,
+				790C768614E499BD0056DAEA /* mixi_map_logo@2x.png in Resources */,
+				790C768714E499BD0056DAEA /* mixi_map_search.png in Resources */,
+				790C768814E499BD0056DAEA /* mixi_map_search@2x.png in Resources */,
+				790C769014E499BD0056DAEA /* MixiViewController.xib in Resources */,
+				790C769214E499BD0056DAEA /* MixiWebViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1512,6 +1773,32 @@
 				791BF34414E2999900697E05 /* EvernoteNoteStoreClient.m in Sources */,
 				791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */,
 				791BF36E14E3FDC100697E05 /* EvernotePhotoSubmitter.m in Sources */,
+				790C766D14E499BD0056DAEA /* NSObject+SBJson.m in Sources */,
+				790C766F14E499BD0056DAEA /* SBJsonParser.m in Sources */,
+				790C767014E499BD0056DAEA /* SBJsonStreamParser.m in Sources */,
+				790C767114E499BD0056DAEA /* SBJsonStreamParserAccumulator.m in Sources */,
+				790C767214E499BD0056DAEA /* SBJsonStreamParserAdapter.m in Sources */,
+				790C767314E499BD0056DAEA /* SBJsonStreamParserState.m in Sources */,
+				790C767414E499BD0056DAEA /* SBJsonStreamWriter.m in Sources */,
+				790C767514E499BD0056DAEA /* SBJsonStreamWriterAccumulator.m in Sources */,
+				790C767614E499BD0056DAEA /* SBJsonStreamWriterState.m in Sources */,
+				790C767714E499BD0056DAEA /* SBJsonTokeniser.m in Sources */,
+				790C767814E499BD0056DAEA /* SBJsonUTF8Stream.m in Sources */,
+				790C767914E499BD0056DAEA /* SBJsonWriter.m in Sources */,
+				790C767A14E499BD0056DAEA /* SFHFKeychainUtils.m in Sources */,
+				790C767B14E499BD0056DAEA /* Mixi.m in Sources */,
+				790C767C14E499BD0056DAEA /* MixiConfig.m in Sources */,
+				790C767D14E499BD0056DAEA /* MixiRequest.m in Sources */,
+				790C767E14E499BD0056DAEA /* MixiURLConnection.m in Sources */,
+				790C767F14E499BD0056DAEA /* MixiURLDelegate.m in Sources */,
+				790C768914E499BD0056DAEA /* MixiRefreshTokenURLDelegate.m in Sources */,
+				790C768A14E499BD0056DAEA /* MixiReporter.m in Sources */,
+				790C768B14E499BD0056DAEA /* MixiUtils.m in Sources */,
+				790C768C14E499BD0056DAEA /* MixiADBannerView.m in Sources */,
+				790C768D14E499BD0056DAEA /* MixiImageButtonView.m in Sources */,
+				790C768E14E499BD0056DAEA /* MixiDownloadWebViewDelegate.m in Sources */,
+				790C768F14E499BD0056DAEA /* MixiViewController.m in Sources */,
+				790C769114E499BD0056DAEA /* MixiWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
