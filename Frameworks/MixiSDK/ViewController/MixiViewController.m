@@ -13,7 +13,7 @@
 #import "MixiOrientationDelegate.h"
 #import "MixiRequest.h"
 #import "MixiUtils.h"
-#import "SBJson.h"
+#import "JSON.h"
 
 
 @implementation MixiViewController
@@ -37,7 +37,7 @@
     NSString *jsonString = [[url fragment] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSError *error = nil;
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    NSDictionary *json = [parser objectWithString:jsonString error:&error];
+    NSDictionary *json = [parser objectWithString:jsonString];
     MixiRequest *request = [MixiRequest postRequestWithEndpoint:[url path] params:json]; 
     NSString *result = [self.mixi rawSendSynchronousRequest:request error:&error];
     if (self.delegate && [self.delegate respondsToSelector:@selector(mixi:didFinishLoading:)]) {

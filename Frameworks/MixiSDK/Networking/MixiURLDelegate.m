@@ -8,7 +8,7 @@
 #import "MixiURLDelegate.h"
 #import "MixiDelegate.h"
 #import "MixiErrorCodes.h"
-#import "SBJson.h"
+#import "JSON.h"
 
 /** \cond PRIVATE */
 @interface MixiURLDelegate (Private)
@@ -62,7 +62,7 @@
     
     NSError *error = nil;
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    NSDictionary *json = [parser objectWithString:result error:&error];
+    NSDictionary *json = [parser objectWithString:result];
     if (error) {
         if ([self.delegate respondsToSelector:@selector(mixi:didFailWithError:)]) {
             [self.delegate mixi:self.mixi didFailWithError:error];

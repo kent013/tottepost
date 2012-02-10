@@ -20,7 +20,7 @@
 #import "MixiUtils.h"
 #import "MixiViewController.h"
 #import "Reachability.h"
-#import "SBJson.h"
+#import "JSON.h"
 #import "SFHFKeychainUtils.h"
 
 #define kMixiKeychainServiceName @"MixiSDK"
@@ -342,7 +342,7 @@ static Mixi *sharedMixi = nil;
         return NO;
     }
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    NSDictionary *json = [parser objectWithString:jsonString error:error];
+    NSDictionary *json = [parser objectWithString:jsonString];
     if (error != nil && *error != nil) {
         return NO;
     }
@@ -525,7 +525,7 @@ static Mixi *sharedMixi = nil;
     }
     
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    NSDictionary *json = [parser objectWithString:result error:error];
+    NSDictionary *json = [parser objectWithString:result];
     if (error != nil && *error != nil) {
         return nil;
     }
