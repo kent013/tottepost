@@ -27,6 +27,7 @@ tottepostはシンプルさにフォーカスしています。
 [KISS](http://en.wikipedia.org/wiki/KISS_principle).
 
 <a href="http://itunes.apple.com/jp/app/1tappude-xie-zhen-gong-you/id498769617?mt=8&uo=4" target="itunes_store"><img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" alt="1タップで写真共有 - tottepost - ISHITOYA Kentaro" style="border: 0;"/></a>
+- [@kent013によるリリース記事](http://d.hatena.ne.jp/kent013/20120211/1328939226)
 
 できること一覧
 ------------------------------------
