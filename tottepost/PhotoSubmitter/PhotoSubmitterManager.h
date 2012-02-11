@@ -16,6 +16,7 @@
 #import "EvernotePhotoSubmitter.h"
 #import "PicasaPhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
+#import "MixiPhotoSubmitter.h"
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
 #import "PhotoSubmitterSequencialOperationQueue.h"

@@ -42,6 +42,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
                        [NSNumber numberWithInt:PhotoSubmitterTypeDropbox],
                        [NSNumber numberWithInt:PhotoSubmitterTypeEvernote],
                        [NSNumber numberWithInt:PhotoSubmitterTypePicasa],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeMixi],
                        [NSNumber numberWithInt:PhotoSubmitterTypeFile], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
@@ -129,6 +130,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             break;
         case PhotoSubmitterTypePicasa:
             submitter = [[PicasaPhotoSubmitter alloc] init];
+            break;
+        case PhotoSubmitterTypeMixi:
+            submitter = [[MixiPhotoSubmitter alloc]init];
             break;
         case PhotoSubmitterTypeFile:
             submitter = [[FilePhotoSubmitter alloc] init];
