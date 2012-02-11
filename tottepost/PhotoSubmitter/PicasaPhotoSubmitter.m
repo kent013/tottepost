@@ -41,6 +41,14 @@
  * initializer
  */
 -(void)setupInitialState{
+    GTMOAuth2Authentication *auth = 
+    [GTMOAuth2ViewControllerTouch 
+     authForGoogleFromKeychainForName:PS_PICASA_KEYCHAIN_NAME
+     clientID:GOOGLE_SUBMITTER_API_KEY
+     clientSecret:GOOGLE_SUBMITTER_API_SECRET];
+    if([auth canAuthorize]){
+        auth_ = auth;
+    }
 }
 
 /*!
@@ -73,6 +81,7 @@
         [self clearCredentials];
     } else {
         auth_ = auth;
+        [self setSetting:@"enabled" forKey:PS_PICASA_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type]; 
     }
@@ -149,7 +158,7 @@
  * login to Picasa
  */
 -(void)login{
-    if ([self isLogined]) {
+    if ([auth_ canAuthorize]) {
         [self setSetting:@"enabled" forKey:PS_PICASA_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         return;
@@ -223,9 +232,7 @@
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:PS_PICASA_AUTH_URL]){
-        return YES;    
-    }
+    //do nothing
     return NO;
 }
 
@@ -233,17 +240,7 @@
  * on open url finished
  */
 - (BOOL)didOpenURL:(NSURL *)url{
-/*    [picasa_ handleOpenURL:url];
-    BOOL result = NO;
-    if([picasa_ isSessionValid]){
-        [self setSetting:@"enabled" forKey:PS_PICASA_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-        result = YES;
-    }else{
-        [self.authDelegate photoSubmitter:self didLogout:self.type];
-    }
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
-    return result;*/
+    //do nothing
     return NO;
 }
 
