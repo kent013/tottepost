@@ -7,6 +7,7 @@
 //
 
 #import "TottePostSettings.h"
+#import "PhotoSubmitterManager.h"
 
 /*!
  * singleton instance
@@ -15,20 +16,21 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 
 #define TPS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
 #define TPS_KEY_GPS_ENABLED @"gpsEnabled"
+#define TPS_KEY_SUPPORTED_TYPE_INDEXES @"supportedTypeIndexes"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface TottePostSettings(PrivateImplementation)
-- (void) writeSetting:(NSString *)key value:(NSValue *)value;
-- (NSValue *)readSetting:(NSString *)key;
+- (void) writeSetting:(NSString *)key value:(id)value;
+- (id)readSetting:(NSString *)key;
 @end
 
 @implementation TottePostSettings(PrivateImplementation)
 /*!
  * write settings to user defaults
  */
-- (void)writeSetting:(NSString *)key value:(NSValue *)value{
+- (void)writeSetting:(NSString *)key value:(id)value{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:value forKey:key];
     [defaults synchronize];
@@ -37,7 +39,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 /*!
  * read settings from user defaults
  */
-- (NSValue *)readSetting:(NSString *)key{
+- (id)readSetting:(NSString *)key{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults valueForKey:key];
 }
@@ -47,6 +49,20 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 //Public Implementations
 //----------------------------------------------------------------------------
 @implementation TottePostSettings
+
+- (id)init{
+    self = [super init];
+    if(self){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
+        NSArray* supportedTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
+        [defaultValue setObject:supportedTypes forKey:TPS_KEY_SUPPORTED_TYPE_INDEXES];
+        [defaults registerDefaults:defaultValue];
+        [defaults synchronize];
+        
+    }
+    return self;
+}
 #pragma mark -
 #pragma mark values
 /*!
@@ -83,6 +99,20 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  */
 - (void)setGpsEnabled:(BOOL)gpsEnabled{
     [self writeSetting:TPS_KEY_GPS_ENABLED value:[NSNumber numberWithBool:gpsEnabled]];
+}
+
+/*!
+ * get supported type indexes
+ */
+- (NSArray *)supportedTypeIndexes{
+    return [self readSetting:TPS_KEY_SUPPORTED_TYPE_INDEXES];
+}
+
+/*!
+ * set supported type indexes
+ */
+- (void)setSupportedTypeIndexes:(NSArray *)supportedTypeIndexes{
+    [self writeSetting:TPS_KEY_SUPPORTED_TYPE_INDEXES value:supportedTypeIndexes];
 }
 
 #pragma mark -

@@ -63,21 +63,11 @@
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
-    NSArray* supportedTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
-    for (int i = 0; i < supportedTypes.count; i++) {
-        [defaultValue setObject:[NSNumber numberWithInt:(int)[supportedTypes objectAtIndex:i]] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
+    if([TottePostSettings getInstance].supportedTypeIndexes.count != SV_ACCOUNTS_COUNT){
+        [TottePostSettings getInstance].supportedTypeIndexes =
+        [PhotoSubmitterManager sharedInstance].supportedTypes;
     }
-    [defaults registerDefaults:defaultValue];
-    [defaults synchronize];
-
-    accountTypeIndexes_ = [[NSMutableArray alloc] init];
-    for (int i = 0; i < supportedTypes.count; i++) {
-        PhotoSubmitterType type = [defaults integerForKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
-        [accountTypeIndexes_ addObject:[NSNumber numberWithInt:type]];
-    }
-    
+    accountTypeIndexes_ = [NSMutableArray arrayWithArray:[TottePostSettings getInstance].supportedTypeIndexes];
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
 
@@ -280,11 +270,7 @@
  * upldate support type index
  */
 - (void) updateSupportTypeIndex{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for(int i = 0;i < accountTypeIndexes_.count;i++){
-        [defaults setInteger:[[accountTypeIndexes_ objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
-    }
-    [defaults synchronize];
+    [TottePostSettings getInstance].supportedTypeIndexes = accountTypeIndexes_;
 }
 
 #pragma mark -
