@@ -17,6 +17,7 @@
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeEvernote]
  */
 @interface PicasaPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
+    __strong GDataServiceGooglePhotos *service_;
     __strong GTMOAuth2Authentication *auth_;
 }
 @end
