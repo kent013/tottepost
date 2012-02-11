@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 /*!
  * endpoint urls
  */
@@ -31,6 +30,11 @@ static NSString *kEvernoteUserId = @"evernoteUserId";
 static NSString *kEvernoteShardId = @"evernoteShardId";
 
 @class EvernoteRequest;
+@class EvernoteHTTPClient;
+@class EDAMNoteStoreClient;
+@class EDAMUserStoreClient;
+@class EvernoteNoteStoreClient;
+@class EvernoteUserStoreClient;
 
 /*!
  * enum for consumer engine
@@ -49,6 +53,26 @@ typedef enum {
 - (void)evernoteDidLogout;
 @end
 
+@protocol EvernoteHTTPClientDelegate <NSObject>
+- (void)clientLoading:(EvernoteHTTPClient*)client;
+- (void)client:(EvernoteHTTPClient*)client didReceiveResponse:(NSURLResponse*)response;
+- (void)client:(EvernoteHTTPClient*)client didFailWithError:(NSError*)error;
+- (void)client:(EvernoteHTTPClient*)client didFailWithException:(NSException*)exception;
+- (void)client:(EvernoteHTTPClient*)client didLoad:(id)result;
+- (void)client:(EvernoteHTTPClient*)client didLoadRawResponse:(NSData*)data;
+- (void)client:(EvernoteHTTPClient*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
+@end
+
+/*!
+ * delegate for create EDAMNoteStore
+ */
+@protocol EvernoteStoreClientFactoryDelegate <NSObject>
+- (EDAMNoteStoreClient *)createSynchronousNoteStoreClient;
+- (EvernoteNoteStoreClient *)createAsynchronousNoteStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
+- (EDAMUserStoreClient *)createSynchronousUserStoreClient;
+- (EvernoteUserStoreClient *)createAsynchronousUserStoreClientWithDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
+@end
+
 /*!
  * delegate for evernote request
  */
@@ -57,9 +81,10 @@ typedef enum {
 - (void)requestLoading:(EvernoteRequest*)request;
 - (void)request:(EvernoteRequest*)request didReceiveResponse:(NSURLResponse*)response;
 - (void)request:(EvernoteRequest*)request didFailWithError:(NSError*)error;
+- (void)request:(EvernoteRequest*)request didFailWithException:(NSException*)exception;
 - (void)request:(EvernoteRequest*)request didLoad:(id)result;
 - (void)request:(EvernoteRequest*)request didLoadRawResponse:(NSData*)data;
-- (void)request:(EvernoteRequest*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
+- (void)request:(EvernoteRequest*)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end
 
 /*!

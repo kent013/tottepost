@@ -93,6 +93,9 @@
 //Public Implementations
 //----------------------------------------------------------------------------
 @implementation EvernoteAuthOAuthConsumer
+@dynamic authToken;
+@dynamic userId;
+
 /*!
  * initialize
  */

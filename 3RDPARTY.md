@@ -11,6 +11,20 @@
     LFWebAPIKit Copyright (c) 2007-2009 Lukhnos D. Liu and Lithoglyph Inc.      
     Both objectiveflickr and LFWebAPIKit is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
+ * [Evernote API](http://www.evernote.com/about/developer/api/)  
+Copyright (c) 2007-2011 by Evernote Corporation, All rights reserved.  
+Evernote API's License is [here](https://github.com/kent013/EVNConnect/blob/master/Libraries/Evernote/evernote/LICENSE.txt)
+ 
+ * [Apache Thrift](http://thrift.apache.org/)  
+Apache thrift is Licensed under Apache License 2.0. You can read full text of the license [here](https://github.com/kent013/EVNConnect/blob/master/Libraries/Evernote/thrift/APACHE-LICENSE-2.0.txt)  
+
+ * [OAuthConsumer](http://code.google.com/p/oauthconsumer/)  
+OAuthConsumer is Licensed under [MIT License](http://www.opensource.org/licenses/mit-license.php).
+   
+ * [PDKeychainBindingsController](https://github.com/carlbrown/PDKeychainBindingsController)  
+Copyright (C) 2010-2011 by Carl Brown of PDAgent, LLC.  
+PDKeychainBindingsController is licensed under MIT license. You can read full text of the license [here](https://github.com/carlbrown/PDKeychainBindingsController/blob/master/LICENSE).
+
  * [FBProgressView](https://github.com/dev5tec/FBProgressView)  
     Copyright (c) 2011 Five-technology Co.,Ltd.  
     FBProgressView is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
@@ -43,13 +57,19 @@
     Copyright (c) 2011, ISHITOYA Kentaro.  
     AVFoundationCameraController is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
 
+ * [EVNConnect](https://github.com/kent013/EVNConnect)  
+Copyright (c) 2011, ISHITOYA Kentaro. 
+EVNConnect is licensed under new BSD License.  
+You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
+
+ * [KissXML](https://github.com/ddeville/KissXML)  
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
 
 3rd Party Icons
 -----------------
- * [Mobile Device Icons](http://pierocksmysocks.deviantart.com/#/d13iauj)     
-    Copyright (c) 2007-2011 ~pierocksmysocks. All Rights Reserved.
+ * [500 Free Icons: WPZOOM Social Networking Icon Set](http://creativecommons.org/licenses/by-sa/3.0/)     
+    WPZOOM Social Networking Icon Set by [WPZOOM](http://www.wpzoom.com/) is licensed under a [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/).
 
  * [Social Bookmarks Icon Set](http://www.yootheme.com/icons/freebies)  
     This icon set is licensed under the YOOtheme GmbH.   

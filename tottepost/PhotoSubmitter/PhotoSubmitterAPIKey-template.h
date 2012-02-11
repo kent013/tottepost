@@ -30,3 +30,16 @@
  */
 #define EVERNOTE_SUBMITTER_API_KEY         @""
 #define EVERNOTE_SUBMITTER_API_SECRET      @""
+#define EVERNOTE_SUBMITTER_API_SANDBOX     YES
+
+/*!
+ * api key and secret for mixi
+ */
+#define MIXI_SUBMITTER_API_KEY             @""
+#define MXXI_SUBMITTER_API_SECRET          @""
+
+/*!
+ * api key and secret for google
+ */
+#define GOOGLE_SUBMITTER_API_KEY           @""
+#define GOOGLE_SUBMITTER_API_SECRET        @""

@@ -10,10 +10,27 @@
 #import "TTransportException.h"
 #import "TObjective-C.h"
 
+typedef enum EvernoteConnectionStatus {
+    EvernoteConnectionStatusReady,
+    EvernoteConnectionStatusConnecting,
+    EvernoteConnectionStatusDidFinish
+} EvernoteConnectionStatus;
+
 @implementation EvernoteHTTPClient
 @synthesize delegate;
 @synthesize method;
 @dynamic url;
+
+/*!
+ * KVO key setting
+ */
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString*)key {
+    if ([key isEqualToString:@"isExecuting"] || 
+        [key isEqualToString:@"isCancelled"]) {
+        return YES;
+    }
+    return [super automaticallyNotifiesObserversForKey:key];
+}
 
 /*!
  * initialize
@@ -34,6 +51,14 @@
 }
 
 /*!
+ * set target
+ */
+- (void)setTarget:(id)target action:(SEL)action{
+    target_ = target;
+    action_ = action;
+}
+
+/*!
  * flush
  */
 - (void)flush{
@@ -41,44 +66,13 @@
         [self.delegate clientLoading:self];
     }
     [mRequest setHTTPBody: mRequestData];
-    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchAsync) object:nil];
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
-    [queue waitUntilAllOperationsAreFinished];
     
-    // phew!
-    [mRequestData setLength: 0];
-    mResponseDataOffset = 0;
-    mResponseData = data_;
-    data_ = nil;
-    if (mResponseData == nil) {
-        @throw [TTransportException exceptionWithName: @"TTransportException"
-                                               reason: @"Could not make HTTP request"
-                                                error: error_];
-    }
-    if([self.delegate respondsToSelector:@selector(client:didLoad:)]){
-        [self.delegate client:self didLoad:mResponseData];
-    }
-    if([self.delegate respondsToSelector:@selector(client:didLoadRawResponse:)]){
-        [self.delegate client:self didLoadRawResponse:mResponseData];
-    }
-}
-
-/*!
- * request with asynchronus
- */
-- (void)fetchAsync{
-    // make the HTTP request
-    connection_ = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self];
+    connection_ = [[NSURLConnection alloc] initWithRequest:mRequest delegate:self startImmediately:NO];
     if(connection_ == nil){
-        isExecuting_ = NO;
-        return;
+        [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
     }
-    isExecuting_ = YES;
-    while(isExecuting_){
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate distantFuture]];
-    }
+
+    [connection_ start];
 }
 
 #pragma - NSURLConnection delegates
@@ -124,7 +118,6 @@
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
     error_ = error;
-    [self abort];
     if([self.delegate respondsToSelector:@selector(client:didFailWithError:)]){
         [self.delegate client:self didFailWithError:error];
     }
@@ -135,14 +128,30 @@
  */
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
-    [self abort];
+    [mRequestData setLength: 0];
+    mResponseDataOffset = 0;
+    mResponseData = data_;
+    data_ = nil;
+    if (mResponseData == nil) {
+        @throw [TTransportException exceptionWithName: @"TTransportException"
+                                               reason: @"Could not make HTTP request"
+                                                error: error_];
+    }
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    [target_ performSelector:action_ withObject:data_];
+#pragma clang diagnostic pop
+    if([self.delegate respondsToSelector:@selector(client:didLoadRawResponse:)]){
+        [self.delegate client:self didLoadRawResponse:mResponseData];
+    }
 }
 
 /*!
  * cancel operation
  */
 - (void)abort{
-    isExecuting_ = NO;
+    [connection_ cancel];
 }
 
 /*!

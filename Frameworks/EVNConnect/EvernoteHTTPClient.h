@@ -7,31 +7,22 @@
 //
 
 #import "THTTPClient.h"
-
-@protocol EvernoteHTTPClientDelegate;
+#import "EvernoteProtocol.h"
 
 @interface EvernoteHTTPClient : THTTPClient<NSURLConnectionDelegate, NSURLConnectionDataDelegate>{
-    NSMutableData *data_;
-    NSURLConnection *connection_;
-    NSError *error_;
-    BOOL isExecuting_;
+    __strong NSMutableData *data_;
+    __strong NSURLConnection *connection_;
+    __strong NSError *error_;
+    id target_;
+    SEL action_;
 }
 
 @property(nonatomic, strong) NSString *method;
-@property(nonatomic, weak) id<EvernoteHTTPClientDelegate> delegate;
+@property(nonatomic, assign) id<EvernoteHTTPClientDelegate> delegate;
 @property(nonatomic, readonly) NSURL *url;
 
-- (void) fetchAsync;
+- (void) setTarget:(id)target action:(SEL)action;
 - (id)initWithURL:(NSURL *)aURL andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 - (id)initWithURL:(NSURL *)aURL userAgent:(NSString *)userAgent timeout:(int)timeout andDelegate:(id<EvernoteHTTPClientDelegate>)delegate;
 - (void) abort;
-@end
-
-@protocol EvernoteHTTPClientDelegate <NSObject>
-- (void)clientLoading:(EvernoteHTTPClient*)client;
-- (void)client:(EvernoteHTTPClient*)client didReceiveResponse:(NSURLResponse*)response;
-- (void)client:(EvernoteHTTPClient*)client didFailWithError:(NSError*)error;
-- (void)client:(EvernoteHTTPClient*)client didLoad:(id)result;
-- (void)client:(EvernoteHTTPClient*)client didLoadRawResponse:(NSData*)data;
-- (void)client:(EvernoteHTTPClient*)client didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end

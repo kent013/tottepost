@@ -20,6 +20,9 @@ This application is not similar to Instagram or other kind of camera application
 
 Tottepost is focusing on simplicity, thus we will not provide effects, cropping or decorating photo functionality. We provide features to take photo and share the photo to social applications or cloud services in least one tap.
 
+
+<a href="http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8&uo=4" target="itunes_store"><img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" alt="Single tap to share photo - tottepost - ISHITOYA Kentaro" style="border: 0;"/></a>
+
 FEATURE LIST
 ------------------------------------
  * Upload image to social applications and cloud services
@@ -29,8 +32,7 @@ FEATURE LIST
    * Twitter
    * Flickr
    * Dropbox
-     * full resolution
-   * Google Plus (Planning)
+   * Evernote (supported in source code)
  * Save image to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location

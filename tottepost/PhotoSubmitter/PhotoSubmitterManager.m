@@ -41,6 +41,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
                        [NSNumber numberWithInt:PhotoSubmitterTypeFlickr],
                        [NSNumber numberWithInt:PhotoSubmitterTypeDropbox],
                        [NSNumber numberWithInt:PhotoSubmitterTypeEvernote],
+                       [NSNumber numberWithInt:PhotoSubmitterTypePicasa],
                        [NSNumber numberWithInt:PhotoSubmitterTypeFile], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
@@ -89,6 +90,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @synthesize submitPhotoWithOperations;
 @synthesize location = location_;
 @synthesize isUploading;
+@synthesize oAuthControllerDelegate;
 
 /*!
  * initializer
@@ -124,6 +126,9 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             break;
         case PhotoSubmitterTypeEvernote:
             submitter = [[EvernotePhotoSubmitter alloc] init];
+            break;
+        case PhotoSubmitterTypePicasa:
+            submitter = [[PicasaPhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeFile:
             submitter = [[FilePhotoSubmitter alloc] init];

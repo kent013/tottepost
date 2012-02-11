@@ -18,13 +18,14 @@
 #define SV_GENERAL_GPS 1
 #define SV_GENERAL_ABOUT 2
 
-#define SV_ACCOUNTS_COUNT 6
+#define SV_ACCOUNTS_COUNT 7
 #define SV_ACCOUNTS_FACEBOOK 0
 #define SV_ACCOUNTS_TWITTER 1
 #define SV_ACCOUNTS_FLICKR 2
 #define SV_ACCOUNTS_DROPBOX 3
 #define SV_ACCOUNTS_EVERNOTE 4
-#define SV_ACCOUNTS_FILE 5
+#define SV_ACCOUNTS_PICASA 5
+#define SV_ACCOUNTS_FILE 6
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -53,29 +54,20 @@
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
     
-    facebookSettingViewController_ = [[FacebookSettingTableViewController alloc] init];
+    facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
-    evernoteSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
+    evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
+    picasaSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypePicasa];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
-    NSArray* supportedTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
-    for (int i = 0; i < supportedTypes.count; i++) {
-        [defaultValue setObject:[NSNumber numberWithInt:(int)[supportedTypes objectAtIndex:i]] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
+    if([TottePostSettings getInstance].supportedTypeIndexes.count != SV_ACCOUNTS_COUNT){
+        [TottePostSettings getInstance].supportedTypeIndexes =
+        [PhotoSubmitterManager sharedInstance].supportedTypes;
     }
-    [defaults registerDefaults:defaultValue];
-    [defaults synchronize];
-
-    accountTypeIndexes_ = [[NSMutableArray alloc] init];
-    for (int i = 0; i < supportedTypes.count; i++) {
-        PhotoSubmitterType type = [defaults integerForKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
-        [accountTypeIndexes_ addObject:[NSNumber numberWithInt:type]];
-    }
-    
+    accountTypeIndexes_ = [NSMutableArray arrayWithArray:[TottePostSettings getInstance].supportedTypeIndexes];
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
 }
 
@@ -224,7 +216,12 @@
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote].isEnabled){
                     [self.navigationController pushViewController:evernoteSettingViewController_ animated:YES]; 
                 }
-                break;
+                break;  
+            case SV_ACCOUNTS_PICASA: 
+                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypePicasa].isEnabled){
+                    [self.navigationController pushViewController:picasaSettingViewController_ animated:YES]; 
+                }
+                break;   
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
@@ -273,11 +270,7 @@
  * upldate support type index
  */
 - (void) updateSupportTypeIndex{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for(int i = 0;i < accountTypeIndexes_.count;i++){
-        [defaults setInteger:[[accountTypeIndexes_ objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"SupportedTypeIndex%d",i]];
-    }
-    [defaults synchronize];
+    [TottePostSettings getInstance].supportedTypeIndexes = accountTypeIndexes_;
 }
 
 #pragma mark -

@@ -14,6 +14,7 @@
 #import "TwitterPhotoSubmitter.h"
 #import "DropboxPhotoSubmitter.h"
 #import "EvernotePhotoSubmitter.h"
+#import "PicasaPhotoSubmitter.h"
 #import "PhotoSubmitterOperation.h"
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
@@ -37,6 +38,7 @@
     BOOL geoTaggingEnabled_;
 }
 
+@property (nonatomic, assign) id<PhotoSubmitterOAuthControllerDelegate> oAuthControllerDelegate;
 @property (nonatomic, readonly) NSArray* supportedTypes;
 @property (nonatomic, assign) BOOL submitPhotoWithOperations;
 @property (nonatomic, readonly) int enabledSubmitterCount;

@@ -22,7 +22,7 @@
 "Settings_Row_About" = "アプリについて / フィードバック";
 "Detail_Section_Account" = "アカウント";
 "Detail_Section_Album" = "アルバム選択";
-"Facebook_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを追加したい場合にはfacebookで行ってください。";
+"Facebook_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを追加したい場合には%@で行ってください。";
 "Detail_Row_AccountName" = "アカウント名";
 "Detail_Row_Logout" = "ログアウト";
 "Detail_Row_LogoutButtonTitle" = "ログアウト";
