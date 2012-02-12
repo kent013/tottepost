@@ -60,6 +60,9 @@ ofTotalByteCount:(unsigned long long)dataLength;
     
     [service_ setShouldCacheResponseData:YES];
     [service_ setServiceShouldFollowNextLinks:YES];
+    
+    //-lObjC staff.
+    [GTMHTTPUploadFetcher alloc];
 }
 
 /*!
@@ -174,18 +177,14 @@ ofTotalByteCount:(unsigned long long)dataLength {
     SEL progressSel = @selector(ticket:hasDeliveredByteCount:ofTotalByteCount:);
     [service_ setServiceUploadProgressSelector:progressSel];
     
-    GTMHTTPUploadFetcher *fetcher = [[GTMHTTPUploadFetcher alloc] init];
     NSURL *uploadURL = [NSURL URLWithString:kGDataGooglePhotosDropBoxUploadURL];
-    // insert the entry into the album feed
     GDataServiceTicket *ticket = 
     [service_ fetchEntryByInsertingEntry:newEntry
                               forFeedURL:uploadURL
                                 delegate:self
                        didFinishSelector:@selector(addPhotoTicket:finishedWithEntry:error:)];
-    
-    // no need for future tickets to monitor progress
     [service_ setServiceUploadProgressSelector:nil];
-
+    
     [self addRequest:ticket];
     [self setPhotoHash:hash forRequest:ticket];
     [self setOperationDelegate:delegate forRequest:ticket];
@@ -359,6 +358,13 @@ ofTotalByteCount:(unsigned long long)dataLength {
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return NO;
+}
+
+/*!
+ * use NSOperation ??
+ */
+- (BOOL)useOperation{
     return YES;
 }
 

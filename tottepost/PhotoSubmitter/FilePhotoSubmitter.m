@@ -222,6 +222,13 @@
 }
 
 /*!
+ * use NSOperation ??
+ */
+- (BOOL)useOperation{
+    return NO;
+}
+
+/*!
  * is sequencial? if so, use SequencialQueue
  */
 - (BOOL)isSequencial{

@@ -154,7 +154,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     for(NSNumber *key in submitters_){
         id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
         if([submitter isLogined]){
-            if(self.submitPhotoWithOperations && submitter.isConcurrent){
+            if(self.submitPhotoWithOperations && submitter.useOperation){
                 PhotoSubmitterOperation *operation = [[PhotoSubmitterOperation alloc] initWithSubmitter:submitter photo:photo];
                 [self addOperation:operation];
             }else{
@@ -163,18 +163,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         }
     }
 }
-
-/*!
- * submit photo with filepath and comment
- */
-/*- (void)submitPhotoWithFilePath:(NSString *)path comment:(NSString *)comment{
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    if(self.enableGeoTagging){
-        data = [UIImage geoTaggedData:data withLocation:location_ andComment:comment];
-    }
-    NSDictionary *metadata = [UIImage extractMetadata:data];
-    [self submitPhotoWithData:data metadata:metadata comment:comment];
-}*/
 
 /*!
  * set authentication delegate to submitters

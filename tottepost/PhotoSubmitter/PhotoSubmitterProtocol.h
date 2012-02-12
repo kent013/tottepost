@@ -43,6 +43,7 @@ typedef enum {
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSArray *albumList;
 @property (nonatomic, readonly) BOOL isConcurrent;
+@property (nonatomic, readonly) BOOL useOperation;
 @property (nonatomic, readonly) BOOL isSequencial;
 @property (nonatomic, readonly) BOOL requiresNetwork;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
