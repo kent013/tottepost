@@ -197,6 +197,7 @@
  */
 - (void)viewWillAppear:(BOOL)animated {
     [titleField_ becomeFirstResponder];
+    titleField_.text = @"";
 }
 
 /*!

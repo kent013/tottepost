@@ -23,6 +23,8 @@
 #define PS_DROPBOX_API_UPLOAD_IMAGE @"upload_image"
 
 #define PS_DROPBOX_SETTING_USERNAME @"DropboxUserName"
+#define PS_DROPBOX_SETTING_ALBUMS @"DropboxAlbums"
+#define PS_DROPBOX_SETTING_TARGET_ALBUM @"DropboxTargetAlbum"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -125,6 +127,53 @@
     NSLog(@"%@", error.description);
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
+
+/*!
+ * when the metadata loaded
+ */
+- (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata{
+    NSMutableArray *albums = [[NSMutableArray alloc] init];
+    for (DBMetadata *m in metadata.contents){
+        if(m.isDirectory && m.isDeleted == NO){
+            PhotoSubmitterAlbumEntity *album = 
+            [[PhotoSubmitterAlbumEntity alloc] initWithId:m.hash name:m.path privacy:@""];
+            [albums addObject:album];
+        }
+    } 
+    PhotoSubmitterAlbumEntity *album = 
+    [[PhotoSubmitterAlbumEntity alloc] initWithId:@"/" name:@"/" privacy:@""];
+    [albums addObject:album];
+    
+    [self setComplexSetting:albums forKey:PS_DROPBOX_SETTING_ALBUMS];
+    [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+}
+
+/*!
+ * when the metadata load failed
+ */
+- (void)restClient:(DBRestClient *)client loadMetadataFailedWithError:(NSError *)error{
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];   
+}
+
+/*!
+ * create folder
+ */
+- (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder{
+    PhotoSubmitterAlbumEntity *album = 
+    [[PhotoSubmitterAlbumEntity alloc] initWithId:folder.hash name:folder.path privacy:@""];    
+    [self.albumDelegate photoSubmitter:self didAlbumCreated:album suceeded:YES withError:nil];
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+}
+
+/*!
+ * create folder failed
+ */
+- (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error{
+    [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
+    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -161,12 +210,17 @@
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     NSString *path = [dir stringByAppendingString:filename];
     photo.path = path;
+    
+    NSString *toPath = @"/";
+    if(self.targetAlbum){
+        toPath = self.targetAlbum.name;
+    }
 
     [photo.data writeToFile:path atomically:NO];
     [self addRequest:restClient];
     [self setPhotoHash:path forRequest:restClient];
     [self setOperationDelegate:delegate forRequest:restClient];
-    [restClient uploadFile:filename toPath:@"/" withParentRev:nil fromPath:path];
+    [restClient uploadFile:filename toPath:toPath withParentRev:nil fromPath:path];
     [self photoSubmitter:self willStartUpload:path];
 }    
 
@@ -301,20 +355,30 @@
  * is album supported
  */
 - (BOOL) isAlbumSupported{
-    return NO;
+    return YES;
 }
 
 /*!
  * create album
  */
 - (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-    //do nothing 
+    self.albumDelegate = delegate;
+    DBRestClient *restClient = 
+    [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
+    [restClient createFolder:[NSString stringWithFormat:@"/%@", title]];
+    [self addRequest:restClient];
 }
 
 /*!
  * albumlist
  */
 - (NSArray *)albumList{
+    id albums = [self complexSettingForKey:PS_DROPBOX_SETTING_ALBUMS];
+    if([albums isKindOfClass:[NSArray class]]){
+        return albums;
+    }
+    [self removeSettingForKey:PS_DROPBOX_SETTING_ALBUMS];
     return nil;
 }
 
@@ -323,21 +387,25 @@
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //do nothing
+    DBRestClient *restClient = 
+    [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
+    [restClient loadMetadata:@"/"];
+    [self addRequest:restClient];
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
+    return [self complexSettingForKey:PS_DROPBOX_SETTING_TARGET_ALBUM];
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
+    [self setComplexSetting:targetAlbum forKey:PS_DROPBOX_SETTING_TARGET_ALBUM];
 }
 
 /*!

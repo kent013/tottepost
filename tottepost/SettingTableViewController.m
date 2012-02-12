@@ -58,7 +58,7 @@
     facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
     twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
-    dropboxSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
+    dropboxSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     picasaSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypePicasa];
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];

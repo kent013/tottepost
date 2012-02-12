@@ -22,7 +22,7 @@
     __strong AlbumPhotoSubmitterSettingTableViewController *facebookSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *twitterSettingViewController_;
     __strong PhotoSubmitterSettingTableViewController *flickrSettingViewController_;
-    __strong PhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *picasaSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
