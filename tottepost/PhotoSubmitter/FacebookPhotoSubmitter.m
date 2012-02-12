@@ -128,7 +128,12 @@
         [operationDelegate photoSubmitterDidOperationFinished:YES];
         
         [self clearRequest:request];
-    }else if([request.url isMatchedByRegex:@"albums$"]){
+    }else if([request.url isMatchedByRegex:@"albums$"] && 
+             [request.httpMethod isEqualToString:@"POST"]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:YES withError:nil];
+        [self clearRequest:request];
+    }else if([request.url isMatchedByRegex:@"albums$"] && 
+             [request.httpMethod isEqualToString:@"GET"]){
         NSArray *as = [result objectForKey:@"data"];
         NSMutableArray *albums = [[NSMutableArray alloc] init];
         for(NSDictionary *a in as){
@@ -147,7 +152,12 @@
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%@, %@", request.url, error.description);
     if([request.url isMatchedByRegex:@"me$"]){
-    }else if([request.url isMatchedByRegex:@"albums$"]){
+    }else if([request.url isMatchedByRegex:@"albums$"] && 
+             [request.httpMethod isEqualToString:@"GET"]){
+    }else if([request.url isMatchedByRegex:@"albums$"] && 
+             [request.httpMethod isEqualToString:@"POST"]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
+        [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"photos$"]){
         NSString *hash = [self photoForRequest:request];
         [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
@@ -334,14 +344,22 @@
  * is album supported
  */
 - (BOOL) isAlbumSupported{
-    return NO;
+    return YES;
 }
 
 /*!
  * create album
  */
 - (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-   //do nothing 
+    self.albumDelegate = delegate;
+    NSMutableDictionary *params = 
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+     @"", @"message", 
+     title, @"name",
+     nil];
+    NSString *path = @"me/albums";
+    FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
+    [self addRequest:request];
 }
 
 /*!
