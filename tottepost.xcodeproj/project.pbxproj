@@ -1239,10 +1239,10 @@
 				791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */,
 				799CD6E914E5590000F8A0EC /* PicasaPhotoSubmitter.h */,
 				799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */,
-				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
-				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 				EAAC40ED14E70BA800CDC2CC /* MixiPhotoSubmitter.h */,
 				EAAC40EE14E70BA800CDC2CC /* MixiPhotoSubmitter.m */,
+				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
+				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 			);
 			name = PhotoSubmitter;
 			sourceTree = "<group>";
