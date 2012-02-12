@@ -36,6 +36,7 @@
     CGFloat lastPinchScale_;
     CGFloat scale_;
     CGRect croppedViewRect_;
+    CGRect layerRect_;
     
     AVCaptureVideoOrientation videoOrientation_;
     UIDeviceOrientation viewOrientation_;

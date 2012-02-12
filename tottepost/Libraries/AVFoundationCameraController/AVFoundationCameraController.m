@@ -13,7 +13,7 @@
 #import "UIImage+AutoRotation.h"
 
 #define INDICATOR_RECT_SIZE 50.0
-#define PICKER_MAXIMUM_ZOOM_SCALE 5.0 
+#define PICKER_MAXIMUM_ZOOM_SCALE 3 
 #define PICKER_PADDING_X 10
 #define PICKER_PADDING_Y 10
 #define PICKER_SHUTTER_BUTTON_WIDTH 60
@@ -252,6 +252,7 @@
     if(rect.origin.y + rect.size.height < defaultBounds_.size.height){
         rect.origin.y = defaultBounds_.size.height - rect.size.height;
     }
+    layerRect_ = rect;
     
     //calcurate indicator rect
     CGRect iframe = indicatorLayer_.frame;
@@ -318,6 +319,7 @@
     pointOfInterest_ = p;
     CGPoint pointOfInterest = CGPointMake(p.y / viewSize.height,
                                           1.0 - p.x / viewSize.width);
+    NSLog(@"DEBUG = %@",NSStringFromCGPoint(pointOfInterest_));
     
     NSError* error = nil;
     if ([device_ lockForConfiguration:&error] == NO) {
@@ -429,21 +431,35 @@
         return data;
     }
     
-    //calculate view -> image scale
     UIImage *image = [UIImage  imageWithData:data];
-    CGFloat ivScale = 1.0;
-    if(image.size.width > image.size.height){
-        ivScale = image.size.width / defaultBounds_.size.height;
-    }else{
-        ivScale = image.size.height / defaultBounds_.size.height;
-    }
-    //ivScale = scale_ / ivScale;
 
-    //crop image
-    CGRect rect = CGRectMake(viewRect.origin.x, viewRect.origin.y, image.size.width / scale, image.size.height / scale);
-    rect = [self normalizeCropRect:rect size:image.size];
+    double centerXRate =  pointOfInterest_.x / defaultBounds_.size.width;
+    double centerYRate = pointOfInterest_.y / defaultBounds_.size.height;
+    int w = image.size.width / scale;
+    int h = image.size.height / scale;
+    int x,y;
+    switch(videoOrientation_){
+        case AVCaptureVideoOrientationPortrait:
+            x = centerXRate * image.size.width - w / 2;
+            y = centerYRate * image.size.height - h / 2;
+            break;
+        case AVCaptureVideoOrientationLandscapeRight:
+            x = centerYRate * image.size.width - w / 2;
+            y = image.size.height - centerXRate * image.size.height - h / 2;
+            break;
+        case AVCaptureVideoOrientationLandscapeLeft:
+            x = image.size.width - centerYRate * image.size.width - w / 2;
+            y = centerXRate * image.size.height - h / 2;
+            break;
+        case AVCaptureVideoOrientationPortraitUpsideDown:
+            break;
+    }
+    if(x < 0 ) x = 0;
+    if(y < 0 ) y = 0;
+    if(x + w > image.size.width) x = image.size.width - w;
+    if(y + y > image.size.height) y = image.size.height - h;
+    CGRect rect = CGRectMake(x, y, w, h);
     
-    //image = [[[image fixOrientation] croppedImage:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
     image = [[image subImageWithRect:rect] resizedImage:image.size interpolationQuality:kCGInterpolationHigh];
     NSData *croppedData = UIImageJPEGRepresentation(image, 1.0);
     if(croppedData == nil){
