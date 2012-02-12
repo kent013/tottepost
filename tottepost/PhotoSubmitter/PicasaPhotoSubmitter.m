@@ -18,7 +18,8 @@
 #define PS_PICASA_ENABLED @"PSPicasaEnabled"
 #define PS_PICASA_AUTH_URL @"photosubmitter://auth/picasa"
 //#define PS_PICASA_SCOPE @"https://picasaweb.google.com/data/"
-#define  PS_PICASA_SCOPE @"https://photos.googleapis.com/data/"
+#define PS_PICASA_SCOPE @"https://photos.googleapis.com/data/"
+#define PS_PICASA_PROFILE_SCOPE @"https://www.googleapis.com/auth/userinfo.profile"
 #define PS_PICASA_KEYCHAIN_NAME @"PSPicasaKeychain"
 #define PS_PICASA_SETTING_USERNAME @"PSPicasaUserName"
 #define PS_PICASA_SETTING_ALBUMS @"PSPicasaAlbums"
@@ -132,6 +133,30 @@ ofTotalByteCount:(unsigned long long)dataLength {
     }
     [self clearRequest:ticket];
 }
+
+
+/*!
+ * album list fetch callback
+ */
+- (void)albumListFetchTicket:(GDataServiceTicket *)ticket
+            finishedWithFeed:(GDataFeedPhotoUser *)feed
+                       error:(NSError *)error {
+    if (error != nil) {
+        NSLog(@"%@", error.description);
+        return;
+    }    
+    
+        
+    NSMutableArray *albums = [[NSMutableArray alloc] init];
+    for (GDataEntryPhotoAlbum *a in feed) {
+        PhotoSubmitterAlbumEntity *album = 
+        [[PhotoSubmitterAlbumEntity alloc] initWithId:a.identifier name:[a.title stringValue] privacy:@""];
+        [albums addObject:album];
+    }
+    [self setComplexSetting:albums forKey:PS_PICASA_SETTING_ALBUMS];
+    [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    [self clearRequest:ticket];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -195,6 +220,14 @@ ofTotalByteCount:(unsigned long long)dataLength {
  * cancel photo upload
  */
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.md5;
+    GDataServiceTicket *ticket = (GDataServiceTicket *)[self requestForPhoto:hash];
+    [ticket cancelTicket];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:ticket];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:ticket];
 }
 
 /*!
@@ -207,13 +240,11 @@ ofTotalByteCount:(unsigned long long)dataLength {
         return;
     }else{
         [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        /*auth_ = [GTMOAuth2ViewControllerTouch 
-                 authForGoogleFromKeychainForName:PS_PICASA_KEYCHAIN_NAME
-                 clientID:GOOGLE_SUBMITTER_API_KEY
-                 clientSecret:GOOGLE_SUBMITTER_API_SECRET];*/
         SEL finishedSel = @selector(viewController:finishedWithAuth:error:);        
+        NSString *scope = [GTMOAuth2Authentication scopeWithStrings:PS_PICASA_SCOPE, PS_PICASA_PROFILE_SCOPE, nil];
+
         GTMOAuth2ViewControllerTouch *viewController = 
-        [GTMOAuth2ViewControllerTouch controllerWithScope:PS_PICASA_SCOPE
+        [GTMOAuth2ViewControllerTouch controllerWithScope:scope
                                                  clientID:GOOGLE_SUBMITTER_API_KEY
                                              clientSecret:GOOGLE_SUBMITTER_API_SECRET
                                          keychainItemName:PS_PICASA_KEYCHAIN_NAME
@@ -327,8 +358,21 @@ ofTotalByteCount:(unsigned long long)dataLength {
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //PicasaRequest *request = [picasa_ notebooksWithDelegate:self];
-    //[self addRequest:request];
+    
+    [service_ setAuthorizer:auth_];
+    
+    NSURL *feedURL = 
+    [GDataServiceGooglePhotos photoFeedURLForUserID:auth_.userEmail
+                                            albumID:nil
+                                          albumName:nil
+                                            photoID:nil
+                                               kind:nil
+                                             access:nil];
+    GDataServiceTicket *ticket = 
+    [service_ fetchFeedWithURL:feedURL
+                      delegate:self
+             didFinishSelector:@selector(albumListFetchTicket:finishedWithFeed:error:)];
+    [self addRequest:ticket];
 }
 
 /*!
@@ -350,8 +394,8 @@ ofTotalByteCount:(unsigned long long)dataLength {
  */
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //PicasaRequest *request = [picasa_ userWithDelegate:self];
-    //[self addRequest:request];
+    [self setSetting:auth_.userEmail forKey:PS_PICASA_SETTING_USERNAME];
+    [self.dataDelegate photoSubmitter:self didUsernameUpdated:auth_.userEmail];
 }
 
 /*!
