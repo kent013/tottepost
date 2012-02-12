@@ -19,6 +19,7 @@ typedef enum {
     PhotoSubmitterTypeDropbox,
     PhotoSubmitterTypeEvernote,
     PhotoSubmitterTypePicasa,
+    PhotoSubmitterTypeMixi,
     PhotoSubmitterTypeFile,
 } PhotoSubmitterType;
 
