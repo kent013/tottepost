@@ -81,6 +81,7 @@
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -269,6 +270,20 @@
         return twitterAccount.username;
     }
     return nil;
+}
+
+/*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return NO;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing 
 }
 
 /*!

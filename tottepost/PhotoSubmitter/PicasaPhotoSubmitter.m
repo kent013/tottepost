@@ -24,6 +24,7 @@
 #define PS_PICASA_SETTING_USERNAME @"PSPicasaUserName"
 #define PS_PICASA_SETTING_ALBUMS @"PSPicasaAlbums"
 #define PS_PICASA_SETTING_TARGET_ALBUM @"PSPicasaTargetAlbums"
+#define PS_PICASA_ALBUM_DROPBOX @"Drop Box"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -40,6 +41,7 @@ ofTotalByteCount:(unsigned long long)dataLength;
 - (void)addPhotoTicket:(GDataServiceTicket *)ticket
      finishedWithEntry:(GDataEntryPhoto *)photoEntry
                  error:(NSError *)error;
+- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album;
 @end
 
 @implementation PicasaPhotoSubmitter(PrivateImplementation)
@@ -128,6 +130,9 @@ ofTotalByteCount:(unsigned long long)dataLength {
         
         [self clearRequest:ticket];
     } else {
+        if(self.targetAlbum != nil){
+            [self removeSettingForKey:self.targetAlbum.albumId];
+        }
         [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
         [operationDelegate photoSubmitterDidOperationFinished:NO];
     }
@@ -142,19 +147,69 @@ ofTotalByteCount:(unsigned long long)dataLength {
             finishedWithFeed:(GDataFeedPhotoUser *)feed
                        error:(NSError *)error {
     if (error != nil) {
-        NSLog(@"%@", error.description);
         return;
     }    
     
-        
+    photoFeed_ = feed;
+    
     NSMutableArray *albums = [[NSMutableArray alloc] init];
-    for (GDataEntryPhotoAlbum *a in feed) {
+    for (GDataEntryPhotoAlbum *a in photoFeed_) {
         PhotoSubmitterAlbumEntity *album = 
-        [[PhotoSubmitterAlbumEntity alloc] initWithId:a.identifier name:[a.title stringValue] privacy:@""];
+        [[PhotoSubmitterAlbumEntity alloc] initWithId:a.identifier name:[a.title stringValue] privacy:a.access];
         [albums addObject:album];
+        [self fetchSelectedAlbum:a];
     }
     [self setComplexSetting:albums forKey:PS_PICASA_SETTING_ALBUMS];
     [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    [self clearRequest:ticket];
+}
+
+/*!
+ * album creation callback
+ */
+- (void)createAlbumTicket:(GDataServiceTicket *)ticket
+        finishedWithEntry:(GDataEntryPhotoAlbum *)entry
+                    error:(NSError *)error {
+    if(error == nil){
+        PhotoSubmitterAlbumEntity *album = 
+        [[PhotoSubmitterAlbumEntity alloc] initWithId:entry.identifier name:[entry.title stringValue] privacy:@""];
+        [self fetchSelectedAlbum:entry];
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:album suceeded:YES withError:nil];
+    }else{
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:nil];
+    }
+    [self clearRequest:ticket];    
+}
+
+/*!
+ * for the album selected in the top list, begin retrieving the list of
+ * photos
+ */
+- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album{
+        // fetch the photos feed
+    NSURL *feedURL = album.feedLink.URL;
+    if (feedURL) {
+        GDataServiceTicket *ticket;
+        ticket = [service_ fetchFeedWithURL:feedURL
+                                   delegate:self
+                          didFinishSelector:@selector(photosTicket:finishedWithFeed:error:)];
+        [self setPhotoHash:album.identifier forRequest:ticket];
+        [self addRequest:ticket];
+    }
+}
+
+/*!
+ * photo list fetch callback
+ */
+- (void)photosTicket:(GDataServiceTicket *)ticket
+    finishedWithFeed:(GDataFeedPhotoAlbum *)feed
+               error:(NSError *)error {
+    if(error){
+        return;
+    }
+    NSString *albumIdentifier = [self photoForRequest:ticket];
+    NSLog(@"%@, %@", feed.uploadLink.URL, feed.uploadLink.URL.absoluteString);
+    [self setSetting:feed.uploadLink.URL.absoluteString forKey:albumIdentifier];
     [self clearRequest:ticket];
 }
 @end
@@ -165,6 +220,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
 @implementation PicasaPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -195,14 +251,27 @@ ofTotalByteCount:(unsigned long long)dataLength {
     [newEntry setPhotoData:photo.data];
     
     NSString *hash = photo.md5;    
-    NSString *mimeType = @"image/jpeg";
-    [newEntry setPhotoMIMEType:mimeType];    
     [newEntry setUploadSlug:hash];
+    
+    NSString *mimeType = @"image/jpeg";
+    [newEntry setPhotoMIMEType:mimeType];
     
     SEL progressSel = @selector(ticket:hasDeliveredByteCount:ofTotalByteCount:);
     [service_ setServiceUploadProgressSelector:progressSel];
     
-    NSURL *uploadURL = [NSURL URLWithString:kGDataGooglePhotosDropBoxUploadURL];
+    NSURL *uploadURL = nil;
+    if(self.targetAlbum == nil || [self.targetAlbum.name isEqualToString:PS_PICASA_ALBUM_DROPBOX]){
+        uploadURL = [NSURL URLWithString:kGDataGooglePhotosDropBoxUploadURL];
+    }else{
+        NSString *url = [self settingForKey:self.targetAlbum.albumId];
+        if(url != nil){
+            uploadURL = [NSURL URLWithString:url];
+        }else{
+            [self updateAlbumListWithDelegate:nil];
+            //this will fail
+            uploadURL = [NSURL URLWithString:self.targetAlbum.albumId];
+        }
+    }
     GDataServiceTicket *ticket = 
     [service_ fetchEntryByInsertingEntry:newEntry
                               forFeedURL:uploadURL
@@ -346,6 +415,42 @@ ofTotalByteCount:(unsigned long long)dataLength {
     return [self settingForKey:PS_PICASA_SETTING_USERNAME];
 }
 
+/*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return YES;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    self.albumDelegate = delegate;
+    if(photoFeed_ == nil){
+        NSLog(@"photoFeed is nil, you must call updateAlbumListWithDelegate before creating album. %s", __PRETTY_FUNCTION__)
+        ;
+        return [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:nil];
+    }
+    NSString *description = [NSString stringWithFormat:@"Created %@",
+                                 [NSDate date]];
+        
+    NSString *access = kGDataPhotoAccessPrivate;
+        
+    GDataEntryPhotoAlbum *newAlbum = [GDataEntryPhotoAlbum albumEntry];
+    [newAlbum setTitleWithString:title];
+    [newAlbum setPhotoDescriptionWithString:description];
+    [newAlbum setAccess:access];
+    
+    NSURL *postLink = [photoFeed_ postLink].URL;        
+    GDataServiceTicket *ticket = 
+    [service_ fetchEntryByInsertingEntry:newAlbum
+                              forFeedURL:postLink
+                                delegate:self
+                       didFinishSelector:@selector(createAlbumTicket:finishedWithEntry:error:)];
+    [self addRequest:ticket];
+}
+ 
 /*!
  * albumlist
  */

@@ -173,6 +173,7 @@
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public PhotoSubmitter Protocol implementations
 /*!
@@ -327,6 +328,20 @@
  */
 - (NSString *)username{
     return [self settingForKey:PS_FACEBOOK_SETTING_USERNAME];
+}
+
+/*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return NO;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+   //do nothing 
 }
 
 /*!
