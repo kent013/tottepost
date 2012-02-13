@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PhotoSubmitterImageEntity.h"
+#import "HPGrowingTextView.h"
 
 @protocol PreviewPhotoViewDelegate;
 
-@interface PreviewPhotoView : UIView<UITextViewDelegate>{
-    __strong UITextView *commentTextView_;
+@interface PreviewPhotoView : UIView<HPGrowingTextViewDelegate>{
+    __strong HPGrowingTextView *commentTextView_;
     __strong UIView *commentBackgroundView_;
     __strong UILabel* textCountview_;
     __strong UIImageView *imageView_;
