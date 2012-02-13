@@ -79,6 +79,7 @@
 		790B8D3B14E57D1E00B286C3 /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3714E57D1E00B286C3 /* picasa_32@2x.png */; };
 		790B8D5B14E8297300B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */; };
 		790B8D6014E8368900B286C3 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B8D5E14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.m */; };
+		790B8D6814E9017D00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B8D6614E9017B00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m */; };
 		791BF27014E01FBB00697E05 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF27114E01FBB00697E05 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26F14E01FBB00697E05 /* PDKeychainBindingsController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF29D14E01FC500697E05 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF27514E01FC500697E05 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -352,6 +353,8 @@
 		790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAlbumPhotoSubmitterSettingViewController.m; sourceTree = "<group>"; };
 		790B8D5D14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		790B8D5E14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		790B8D6514E9017A00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		790B8D6614E9017B00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		791BF26C14E01FBB00697E05 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindings.h; sourceTree = "<group>"; };
 		791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
 		791BF26E14E01FBB00697E05 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
@@ -1006,6 +1009,8 @@
 				37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */,
 				790B8D5814E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.h */,
 				790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */,
+				790B8D6514E9017A00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.h */,
+				790B8D6614E9017B00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m */,
 				79823CD914D2BDB90094389D /* AboutSettingViewController.h */,
 				79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */,
 			);
@@ -2400,6 +2405,7 @@
 				EAAC40EF14E70BA800CDC2CC /* MixiPhotoSubmitter.m in Sources */,
 				790B8D5B14E8297300B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */,
 				790B8D6014E8368900B286C3 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
+				790B8D6814E9017D00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,10 @@
 #import "PhotoSubmitter.h"
 #import "PhotoSubmitterProtocol.h"
 
-@interface TwitterPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, NSURLConnectionDataDelegate, NSURLConnectionDelegate, UIAlertViewDelegate>
+@interface TwitterPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, NSURLConnectionDataDelegate, NSURLConnectionDelegate, UIAlertViewDelegate>{
+    ACAccountStore *accountStore_;
+}
 
+@property (nonatomic, readonly) NSArray *accounts;
+@property (nonatomic, assign) NSString *selectedAccountUsername;
 @end

@@ -56,7 +56,7 @@
     switches_ = [[NSMutableDictionary alloc] init];
     
     facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
-    twitterSettingViewController_ = [[SimplePhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
+    twitterSettingViewController_ = [[TwitterPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
     flickrSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
     dropboxSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];

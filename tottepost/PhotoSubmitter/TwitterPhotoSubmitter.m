@@ -11,6 +11,7 @@
 #import "UIImage+Digest.h"
 
 #define PS_TWITTER_ENABLED @"PSTwitterEnabled"
+#define PS_TWITTER_USERNAME @"PSTwitterUsername"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -18,6 +19,7 @@
 @interface TwitterPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (ACAccount *)selectedAccount;
 @end
 
 @implementation TwitterPhotoSubmitter(PrivateImplementation)
@@ -27,6 +29,7 @@
  * initializer
  */
 -(void)setupInitialState{
+    accountStore_ = [[ACAccountStore alloc] init];
 }
 
 /*!
@@ -73,6 +76,24 @@
     NSString *hash = [self photoForRequest:connection];
     [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
+
+/*!
+ * get selected account
+ */
+- (ACAccount *)selectedAccount{
+    NSArray *accountsArray = self.accounts;
+    for(ACAccount *account in accountsArray){
+        if([account.username isEqualToString:self.selectedAccountUsername]){
+            return account;
+        }
+    }
+    if(accountsArray.count != 0){
+        ACAccount *account = [accountsArray objectAtIndex:0];
+        self.selectedAccountUsername = account.username;
+        return account;
+    }
+    return nil;
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -99,36 +120,35 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-	
     if(photo.comment == nil){
         photo.comment = @"TottePost Photo";
     }
-    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-    if ([accountsArray count] > 0) {
-        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-        NSURL *url = 
-        [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
-        TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
-                                              requestMethod:TWRequestMethodPOST];
-        [request setAccount:twitterAccount];
-        [request addMultiPartData:photo.data 
-                         withName:@"media[]" type:@"multipart/form-data"];
-        [request addMultiPartData:[photo.comment dataUsingEncoding:NSUTF8StringEncoding] 
-                         withName:@"status" type:@"multipart/form-data"];
-        
-        NSURLConnection *connection = 
-          [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
-        NSString *imageHash = photo.md5;
-        
-        if(connection){
-            [self setPhotoHash:imageHash forRequest:connection];
-            [self addRequest:connection];
-            [self setOperationDelegate:delegate forRequest:connection];
-            [self photoSubmitter:self willStartUpload:imageHash];
-        }
-
+    
+    ACAccount *twitterAccount = [self selectedAccount];
+    if (twitterAccount == nil) {
+        return;
+    }
+    
+    NSURL *url = 
+    [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
+    TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
+                                          requestMethod:TWRequestMethodPOST];
+    
+    [request setAccount:twitterAccount];
+    [request addMultiPartData:photo.data 
+                     withName:@"media[]" type:@"multipart/form-data"];
+    [request addMultiPartData:[photo.comment dataUsingEncoding:NSUTF8StringEncoding] 
+                     withName:@"status" type:@"multipart/form-data"];
+    
+    NSURLConnection *connection = 
+    [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
+    NSString *imageHash = photo.md5;
+    
+    if(connection){
+        [self setPhotoHash:imageHash forRequest:connection];
+        [self addRequest:connection];
+        [self setOperationDelegate:delegate forRequest:connection];
+        [self photoSubmitter:self willStartUpload:imageHash];
     }
 }
 
@@ -151,12 +171,12 @@
  */
 -(void)login{
     [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+    ACAccountType *accountType = [accountStore_ accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    [accountStore_ requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
         if(granted) {
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-			if ([accountsArray count] > 0){
+            ACAccount *account = self.selectedAccount;
+            
+			if (account != nil){
                 [self setSetting:@"enabled" forKey:PS_TWITTER_ENABLED];                
                 [self.authDelegate photoSubmitter:self didLogin:self.type];
             }else{
@@ -260,16 +280,8 @@
 /*!
  * get username
  */
-- (NSString *)username{
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-	
-    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-    if ([accountsArray count] > 0) {
-        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-        return twitterAccount.username;
-    }
-    return nil;
+- (NSString *)username{ 
+    return self.selectedAccount.username;
 }
 
 /*!
@@ -349,6 +361,28 @@
  */
 - (BOOL)requiresNetwork{
     return YES;
+}
+
+/*!
+ * get account list
+ */
+- (NSArray *)accounts{
+    ACAccountType *accountType = [accountStore_ accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    return [accountStore_ accountsWithAccountType:accountType];    
+}
+
+/*!
+ * set selected username
+ */
+- (NSString *)selectedAccountUsername{
+    return [self settingForKey:PS_TWITTER_USERNAME];
+}
+
+/*!
+ * set selected username
+ */
+- (void)setSelectedAccountUsername:(NSString *)selectedAccountUsername{
+    return [self setSetting:selectedAccountUsername forKey:PS_TWITTER_USERNAME];
 }
 
 /*!
