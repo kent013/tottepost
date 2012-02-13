@@ -62,6 +62,12 @@ Copyright (c) 2011, ISHITOYA Kentaro.
 EVNConnect is licensed under new BSD License.  
 You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
 
+ * [GrawingTextView](https://github.com/kent013/EVNConnect)  
+Copyright (c) 2011 Hans Pinckaers. 
+GrawingTextView is licensed under MIT License.  
+You can see the full text of the license at [https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt](https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt)
+
+
  * [KissXML](https://github.com/ddeville/KissXML)  
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
