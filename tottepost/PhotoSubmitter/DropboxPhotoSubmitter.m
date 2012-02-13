@@ -216,6 +216,9 @@
         toPath = self.targetAlbum.name;
     }
 
+    if(delegate.isCancelled){
+        return;
+    }
     [photo.data writeToFile:path atomically:NO];
     [self addRequest:restClient];
     [self setPhotoHash:path forRequest:restClient];

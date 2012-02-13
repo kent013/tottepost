@@ -141,15 +141,18 @@
                      withName:@"status" type:@"multipart/form-data"];
     
     NSURLConnection *connection = 
-    [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
+    [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self startImmediately:NO];
     NSString *imageHash = photo.md5;
     
-    if(connection){
-        [self setPhotoHash:imageHash forRequest:connection];
-        [self addRequest:connection];
-        [self setOperationDelegate:delegate forRequest:connection];
-        [self photoSubmitter:self willStartUpload:imageHash];
+    if(connection == nil || delegate.isCancelled){
+        return;
     }
+    
+    [connection start];
+    [self setPhotoHash:imageHash forRequest:connection];
+    [self addRequest:connection];
+    [self setOperationDelegate:delegate forRequest:connection];
+    [self photoSubmitter:self willStartUpload:imageHash];
 }
 
 /*!

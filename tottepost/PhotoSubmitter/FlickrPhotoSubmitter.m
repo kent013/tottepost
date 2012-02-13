@@ -146,7 +146,6 @@
         
         [self performSelectorOnMainThread:@selector(addPhotoToPhotoSet:) withObject:photoId waitUntilDone:NO];
     }
-    NSLog(@"%@, %@", inRequest.sessionInfo, inResponseDictionary.description);
 }
 
 /*!
@@ -303,11 +302,14 @@
     OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
-    [self addRequest:request];
-    
+
+    if(delegate.isCancelled){
+        return;
+    }
     [request uploadImageStream:[NSInputStream inputStreamWithData:photo.data] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", photo.comment, @"title", nil]];
-	
+    
     NSString *hash = photo.md5;
+    [self addRequest:request];
     [self setPhotoHash:hash forRequest:request];
     [self setOperationDelegate:delegate forRequest:request];
     [self photoSubmitter:self willStartUpload:hash];

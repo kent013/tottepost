@@ -15,9 +15,9 @@
  * NSOperation subclass for submitting photo
  */
 @interface PhotoSubmitterOperation : NSOperation<NSCoding, PhotoSubmitterPhotoOperationDelegate>{
-    BOOL isExecuting;
-    BOOL isFinished;
-    BOOL isCanceled;
+    BOOL isExecuting_;
+    BOOL isFinished_;
+    BOOL isCancelled_;
     BOOL isFailed_;
     NSMutableArray *delegates_;
 }
@@ -26,6 +26,7 @@
 @property (assign, nonatomic) BOOL isFailed;
 @property (readonly, nonatomic) NSMutableArray *delegates;
 
+- (void) resume;
 - (void) addDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (void) removeDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;
 - (void) clearDelegate:(id<PhotoSubmitterOperationDelegate>)delegate;

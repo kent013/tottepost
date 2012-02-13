@@ -35,14 +35,14 @@ typedef enum {
  */
 @protocol PhotoSubmitterProtocol <NSObject>
 @required
-@property (nonatomic, readonly) BOOL isLogined;
-@property (nonatomic, readonly) BOOL isEnabled;
 @property (nonatomic, readonly) PhotoSubmitterType type;
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) UIImage *icon;
 @property (nonatomic, readonly) UIImage *smallIcon;
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSArray *albumList;
+@property (nonatomic, readonly) BOOL isLogined;
+@property (nonatomic, readonly) BOOL isEnabled;
 @property (nonatomic, readonly) BOOL isConcurrent;
 @property (nonatomic, readonly) BOOL useOperation;
 @property (nonatomic, readonly) BOOL isSequencial;
@@ -96,6 +96,7 @@ typedef enum {
 @protocol PhotoSubmitterPhotoOperationDelegate <NSObject>
 - (void) photoSubmitterDidOperationFinished:(BOOL)suceeded;
 - (void) photoSubmitterDidOperationCanceled;
+@property (nonatomic, readonly) BOOL isCancelled;
 @end
 
 /*!

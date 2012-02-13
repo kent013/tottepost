@@ -215,6 +215,10 @@
     if(self.targetAlbum != nil){
         path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
     }
+    
+    if(delegate.isCancelled){
+        return;
+    }
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
     NSString *hash = photo.md5;
     [self setPhotoHash:hash forRequest:request];

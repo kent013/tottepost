@@ -272,6 +272,10 @@ ofTotalByteCount:(unsigned long long)dataLength {
             uploadURL = [NSURL URLWithString:self.targetAlbum.albumId];
         }
     }
+    
+    if(delegate.isCancelled){
+        return;
+    }
     GDataServiceTicket *ticket = 
     [service_ fetchEntryByInsertingEntry:newEntry
                               forFeedURL:uploadURL

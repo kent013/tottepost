@@ -95,7 +95,10 @@
         }
         notebookGuid = notebook.guid;
     }
-    
+
+    if(delegate.isCancelled){
+        return;
+    }
     EvernoteRequest *request = 
       [evernote_ createNoteInNotebook:notebookGuid
                                 title:[df stringFromDate:[NSDate date]]

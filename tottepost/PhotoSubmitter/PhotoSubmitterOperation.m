@@ -29,21 +29,22 @@
  * return isExecuting
  */
 - (BOOL)isExecuting {
-    return isExecuting;
+    return isExecuting_;
 }
 
 /*!
  * return isFinished
  */
 - (BOOL)isFinished {
-    return isFinished;
+    return isFinished_;
 }
+
 /*!
  * KVO key setting
  */
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString*)key {
-    if ([key isEqualToString:@"isExecuting"] || 
-        [key isEqualToString:@"isFinished"]) {
+    if ([key isEqualToString:@"isExecuting_"] || 
+        [key isEqualToString:@"isFinished_"]) {
         return YES;
     }
     return [super automaticallyNotifiesObserversForKey:key];
@@ -59,15 +60,15 @@
         return;
     }
 
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting_"];
     [self.submitter submitPhoto:self.photo andOperationDelegate:self];
     do {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
-        if(isCanceled){
+        if(isCancelled_){
             [self.submitter cancelPhotoSubmit: self.photo];
         }
-    } while (isExecuting);
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
+    } while (isExecuting_);
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished_"];
 }
 
 #pragma mark -
@@ -76,7 +77,7 @@
  * finish operation
  */
 - (void) finishOperation{
-    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
+    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting_"];
 }
 @end
 
@@ -131,7 +132,7 @@
 - (void)photoSubmitterDidOperationFinished:(BOOL)suceeded{
     [self finishOperation];
     if(suceeded == NO){
-        [self setValue:[NSNumber numberWithBool:YES] forKey:@"isFailed"];
+        [self setValue:[NSNumber numberWithBool:YES] forKey:@"isFailed_"];
     }
     for(id<PhotoSubmitterOperationDelegate> delegate in delegates_){
         [delegate photoSubmitterOperation:self didFinished:suceeded];
@@ -187,6 +188,20 @@
  * pause
  */
 - (void)pause{
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isCanceled"];
+    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isCancelled_"];
+}
+
+/*!
+ * restart operation
+ */
+- (void)resume{
+    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isCancelled_"];
+}
+
+/*!
+ * return isCancelled
+ */
+- (BOOL)isCancelled{
+    return isCancelled_;
 }
 @end
