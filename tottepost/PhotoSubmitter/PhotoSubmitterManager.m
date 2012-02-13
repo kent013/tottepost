@@ -305,19 +305,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     return NO;
 }
 
-/*!
- * restart operations
- */
-- (void)restart{
-    [operationQueue_ cancelAllOperations];
-    NSMutableDictionary *ops = operations_;
-    operations_ = [[NSMutableDictionary alloc] init];
-    for(NSNumber *key in ops){
-        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
-        [self addOperation:operation];
-    }
-}
-
 #pragma mark -
 #pragma mark PhotoSubmitterPhotoDelegate methods
 /*!
@@ -426,12 +413,31 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * cancel
  */
 - (void) cancel{
+    for(NSNumber *key in sequencialOperationQueues_){
+        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
+        [queue cancel];
+    }
+    [sequencialOperationQueues_ removeAllObjects];
     [operationQueue_ cancelAllOperations];
     [operations_ removeAllObjects];
     for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
         [delegate didUploadCanceled];
     }
 }
+
+/*!
+ * restart operations
+ */
+- (void)restart{
+    [operationQueue_ cancelAllOperations];
+    NSMutableDictionary *ops = operations_;
+    operations_ = [[NSMutableDictionary alloc] init];
+    for(NSNumber *key in ops){
+        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
+        [self addOperation:operation];
+    }
+}
+
 
 #pragma mark -
 #pragma mark PhotoSubmitterSequencialOperationQueue delegate
