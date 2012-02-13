@@ -2,8 +2,8 @@
 //  MixiPhotoSubmitter.h
 //  tottepost
 //
-//  Created by 賢 渡辺 on 12/02/12.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by Ken Watanabe on 12/02/12.
+//  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
 #import "PhotoSubmitter.h"

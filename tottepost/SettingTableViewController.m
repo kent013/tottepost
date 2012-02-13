@@ -56,11 +56,13 @@
     switches_ = [[NSMutableDictionary alloc] init];
     
     facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
-    twitterSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
-    flickrSettingViewController_ = [[PhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
+    twitterSettingViewController_ = [[SimplePhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
+    flickrSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
     dropboxSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
     evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
     picasaSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypePicasa];
+    mixiSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeMixi];
+
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
     
@@ -224,9 +226,8 @@
                 }
                 break;   
             case SV_ACCOUNTS_MIXI:
-                //TODO:
                 if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeMixi].isEnabled){
-                    [self.navigationController pushViewController:picasaSettingViewController_ animated:YES]; 
+                    [self.navigationController pushViewController:mixiSettingViewController_ animated:YES]; 
                 }
                 break;   
         }
