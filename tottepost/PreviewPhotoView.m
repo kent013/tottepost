@@ -30,17 +30,23 @@
     [commentBackgroundView_.layer setBorderColor:[[UIColor colorWithWhite:0.8 alpha:0.8] CGColor]];
     [commentBackgroundView_.layer setBorderWidth:1.0];
     
-    //comment text view
-    commentTextView_ = [[UITextView alloc] initWithFrame:CGRectZero];
+    commentTextView_ = [[HPGrowingTextView alloc] initWithFrame:CGRectZero];
+//    commentTextView_.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    
+	commentTextView_.minNumberOfLines = 2;
+	commentTextView_.maxNumberOfLines = 9;
+	commentTextView_.returnKeyType = UIReturnKeyDone;
+	commentTextView_.delegate = self;
+    commentTextView_.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+    commentTextView_.internalTextView.backgroundColor = [UIColor clearColor];
     commentTextView_.backgroundColor = [UIColor clearColor];
-    commentTextView_.delegate = self;
-    commentTextView_.returnKeyType = UIReturnKeyDone;
+
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         commentTextView_.font = [UIFont systemFontOfSize:18];
     
     textCountview_ = [[UILabel alloc] initWithFrame:CGRectZero];
     textCountview_.backgroundColor = [UIColor clearColor];
-    textCountview_.textColor = [UIColor colorWithWhite:0.1 alpha:0.6];
+    textCountview_.textColor = [UIColor colorWithWhite:0.1 alpha:0.8];
     textCountview_.textAlignment = UITextAlignmentRight;
     textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -58,6 +64,7 @@
     [recognizer addTarget:self action:@selector(didImageViewTapped:)];
     recognizer.numberOfTapsRequired = 1;
     [imageView_ addGestureRecognizer:recognizer];
+    
 }
 
 #pragma mark -
@@ -66,6 +73,7 @@
  * keyboard shown
  */
 - (void)keyboardWillShow:(NSNotification *)aNotification {
+    commentBackgroundView_.backgroundColor = [UIColor colorWithWhite:0.95 alpha:0.9];
     CGRect tKeyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     tKeyboardRect = [self convertRect:tKeyboardRect fromView:nil];
     
@@ -84,12 +92,13 @@
  * keyboard hidden
  */
 - (void)keyboardWillHide:(NSNotification *)aNotification {
+    commentBackgroundView_.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];    
     NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     CGRect frame = commentBackgroundView_.frame;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y;
+        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - frame.size.height - MAINVIEW_PADDING_Y;
     else
-        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y;        
+        frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - frame.size.height - MAINVIEW_PADDING_Y;        
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
     commentBackgroundView_.frame = frame;
@@ -108,15 +117,17 @@
     {
         imageView_.frame = frame;
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
-        commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - 20);
+        commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
         textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 85, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD-30, 80, 30);
     }
     else
     {
         imageView_.frame = CGRectMake(-20, 0, frame.size.width + 40, frame.size.height);
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
-        commentTextView_.frame = CGRectMake(5, 10, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - 10, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - 20);
-        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - 53, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE -20, 50, 20);
+        commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
+        NSString *text = @"000"; 
+        CGSize size = [text sizeWithFont:textCountview_.font];
+        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - size.width -3, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE -size.height, size.width, size.height);
     }
 }
 
@@ -205,10 +216,9 @@
 /*!
  * text field delegate
  */
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-	
+- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
+        [growingTextView resignFirstResponder];
         return NO;
     }
 	return YES;
@@ -217,8 +227,24 @@
 /*!
  * did changed text in textView
  */
-- (void)textViewDidChange:(UITextView *)textView
-{
-    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
+    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];    
 }
+
+/*!
+ * did changed height in textView
+ */
+- (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height{
+    int dh =  height - commentBackgroundView_.frame.size.height;
+    if (dh == 0)return;
+    CGRect r = commentBackgroundView_.frame;
+
+    [UIView beginAnimations:@"ResizeHeight" context:nil];
+    commentBackgroundView_.frame = CGRectMake(r.origin.x, r.origin.y - dh, r.size.width,height);
+    NSString *text = @"000"; 
+    CGSize size = [text sizeWithFont:textCountview_.font];
+    textCountview_.frame = CGRectMake(r.size.width - size.width -3, height -size.height, size.width, size.height);
+    [UIView commitAnimations];
+}
+
 @end

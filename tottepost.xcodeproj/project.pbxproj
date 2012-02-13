@@ -218,6 +218,8 @@
 		EAAC40F614E72DD500CDC2CC /* mixi_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAC40F214E72DD500CDC2CC /* mixi_16@2x.png */; };
 		EAAC40F714E72DD500CDC2CC /* mixi_32.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAC40F314E72DD500CDC2CC /* mixi_32.png */; };
 		EAAC40F814E72DD500CDC2CC /* mixi_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAC40F414E72DD500CDC2CC /* mixi_32@2x.png */; };
+		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
+		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
 		EAAD435714B325AA0093E003 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435514B325AA0093E003 /* icon.png */; };
 		EAAD435814B325AA0093E003 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD435614B325AA0093E003 /* icon@2x.png */; };
 		EAAD436314B3490A0093E003 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD436114B3490A0093E003 /* Default.png */; };
@@ -920,6 +922,10 @@
 		EAAC40F214E72DD500CDC2CC /* mixi_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mixi_16@2x.png"; path = "PhotoSubmitter/Images/mixi_16@2x.png"; sourceTree = "<group>"; };
 		EAAC40F314E72DD500CDC2CC /* mixi_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mixi_32.png; path = PhotoSubmitter/Images/mixi_32.png; sourceTree = "<group>"; };
 		EAAC40F414E72DD500CDC2CC /* mixi_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mixi_32@2x.png"; path = "PhotoSubmitter/Images/mixi_32@2x.png"; sourceTree = "<group>"; };
+		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
+		EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPGrowingTextView.m; path = Libraries/HPGrowingTextView/HPGrowingTextView.m; sourceTree = "<group>"; };
+		EAAC412414E939AD00CDC2CC /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTextViewInternal.h; path = Libraries/HPGrowingTextView/HPTextViewInternal.h; sourceTree = "<group>"; };
+		EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPTextViewInternal.m; path = Libraries/HPGrowingTextView/HPTextViewInternal.m; sourceTree = "<group>"; };
 		EAAD435514B325AA0093E003 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/Images/icon.png; sourceTree = "<group>"; };
 		EAAD435614B325AA0093E003 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/Images/icon@2x.png"; sourceTree = "<group>"; };
 		EAAD436114B3490A0093E003 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Default.png; sourceTree = "<group>"; };
@@ -1284,9 +1290,6 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				799CD6D614E543A300F8A0EC /* objectiveflickr */,
-				792010D514E5400900D82D3D /* GData */,
-				79D783E214E4DEBB003ECCCA /* MixiSDK */,
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				791BF2C614E01FDD00697E05 /* Evernote */,
@@ -1294,9 +1297,13 @@
 				79F7470714DA58FD00C7BAD8 /* FBConnect */,
 				798058B414CE98D0006E3817 /* FBNetworkReachability */,
 				376A8B3714A060B700637B68 /* FBProgressView */,
+				792010D514E5400900D82D3D /* GData */,
+				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				798058B814CFD2E4006E3817 /* ios-queue-object */,
 				791BF2B114E01FCE00697E05 /* KissXML */,
+				79D783E214E4DEBB003ECCCA /* MixiSDK */,
 				791BF27214E01FC500697E05 /* oauthconsumer */,
+				799CD6D614E543A300F8A0EC /* objectiveflickr */,
 				791BF26B14E01FBB00697E05 /* PDKeychainBindingsController */,
 				37F26D0A149F8A90000172EF /* Reachability */,
 				37FB659E149C4F3200387490 /* RegexKitLite */,
@@ -2108,6 +2115,17 @@
 			path = Frameworks/FBConnect;
 			sourceTree = SOURCE_ROOT;
 		};
+		EAAC412014E9399400CDC2CC /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */,
+				EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */,
+				EAAC412414E939AD00CDC2CC /* HPTextViewInternal.h */,
+				EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */,
+			);
+			name = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2406,6 +2424,8 @@
 				790B8D5B14E8297300B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */,
 				790B8D6014E8368900B286C3 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
 				790B8D6814E9017D00B286C3 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
+				EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */,
+				EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
