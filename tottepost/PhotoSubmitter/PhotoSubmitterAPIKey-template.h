@@ -17,13 +17,11 @@
 #define PHOTO_SUBMITTER_FLICKR_API_KEY     @""
 #define PHOTO_SUBMITTER_FLICKR_API_SECRET  @""
 
-
 /*!
  * api key and secret for dropbox
  */
 #define PHOTO_SUBMITTER_DROPBOX_API_KEY    @""
 #define PHOTO_SUBMITTER_DROPBOX_API_SECRET @""
-
 
 /*!
  * api key and secret for evernote
@@ -36,7 +34,7 @@
  * api key and secret for mixi
  */
 #define MIXI_SUBMITTER_API_KEY             @""
-#define MXXI_SUBMITTER_API_SECRET          @""
+#define MIXI_SUBMITTER_API_SECRET          @""
 
 /*!
  * api key and secret for google

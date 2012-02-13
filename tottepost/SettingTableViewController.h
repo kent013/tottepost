@@ -20,11 +20,12 @@
 @interface SettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate, AboutSettingViewControllerDelegate>{
 @protected
     __strong AlbumPhotoSubmitterSettingTableViewController *facebookSettingViewController_;
-    __strong PhotoSubmitterSettingTableViewController *twitterSettingViewController_;
-    __strong PhotoSubmitterSettingTableViewController *flickrSettingViewController_;
-    __strong PhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
+    __strong SimplePhotoSubmitterSettingTableViewController *twitterSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *flickrSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *dropboxSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *evernoteSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *picasaSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *mixiSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSMutableArray *accountTypeIndexes_;

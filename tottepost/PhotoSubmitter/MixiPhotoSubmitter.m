@@ -2,20 +2,11 @@
 //  MixiPhotoSubmitter.m
 //  tottepost
 //
-//  Created by 賢 渡辺 on 12/02/12.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
-//
-
-#import "MixiPhotoSubmitter.h"
-
-//
-//  FlickrPhotoSubmitter.m
-//  tottepost
-//
-//  Created by ISHITOYA Kentaro on 11/12/14.
+//  Created by Ken Watanabe on 12/02/12.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import "MixiPhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
 #import "UIImage+Digest.h"
 #import "NSData+Digest.h"
@@ -24,18 +15,18 @@
 #import "PhotoSubmitterManager.h"
 #import "MixiSDK.h"
 
-#define PS_FLICKR_ENABLED @"PSFlickrEnabled"
+#define PS_MIXI_ENABLED @"PSMixiEnabled"
 
-#define PS_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
-#define PS_FLICKR_AUTH_TOKEN @"FlickrOAuthToken"
-#define PS_FLICKR_AUTH_TOKEN_SECRET @"FlickrOAuthTokenSecret"
+#define PS_MIXI_AUTH_URL @"photosubmitter://auth/mixi"
+#define PS_MIXI_AUTH_TOKEN @"MixiOAuthToken"
+#define PS_MIXI_AUTH_TOKEN_SECRET @"MixiOAuthTokenSecret"
 
-#define PS_FLICKR_API_CHECK_TOKEN @"check_token"
-#define PS_FLICKR_API_REQUEST_TOKEN @"request_token"
-#define PS_FLICKR_API_GET_TOKEN @"get_token"
-#define PS_FLICKR_API_UPLOAD_IMAGE @"upload_image"
+#define PS_MIXI_API_CHECK_TOKEN @"check_token"
+#define PS_MIXI_API_REQUEST_TOKEN @"request_token"
+#define PS_MIXI_API_GET_TOKEN @"get_token"
+#define PS_MIXI_API_UPLOAD_IMAGE @"upload_image"
 
-#define PS_FLICKR_SETTING_USERNAME @"FlickrUserName"
+#define PS_MIXI_SETTING_USERNAME @"MixiUserName"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -60,13 +51,13 @@
 }
 
 /*!
- * clear flickr access token key
+ * clear mixi access token key
  */
 - (void)clearCredentials{
 }
 
 #pragma mark -
-#pragma mark flickr delegate methods
+#pragma mark mixi delegate methods
 @end
 
 //-----------------------------------------------------------------------------
@@ -75,6 +66,7 @@
 @implementation MixiPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -108,7 +100,7 @@
 }
 
 /*!
- * logoff from flickr
+ * logoff from mixi
  */
 - (void)logout{  
     [self clearCredentials];
@@ -119,7 +111,7 @@
  * disable
  */
 - (void)disable{
-    [self removeSettingForKey:PS_FLICKR_ENABLED];
+    [self removeSettingForKey:PS_MIXI_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -130,7 +122,7 @@
     if(self.isEnabled == false){
         return NO;
     }
-    if ([self settingForKey:PS_FLICKR_AUTH_TOKEN]) {
+    if ([self settingForKey:PS_MIXI_AUTH_TOKEN]) {
         return YES;
     }
     return NO;
@@ -140,21 +132,21 @@
  * check is enabled
  */
 - (BOOL) isEnabled{
-    return [FlickrPhotoSubmitter isEnabled];
+    return [MixiPhotoSubmitter isEnabled];
 }
 
 /*!
  * return type
  */
 - (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFlickr;
+    return PhotoSubmitterTypeMixi;
 }
 
 /*!
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:PS_FLICKR_AUTH_URL]){
+    if([url.absoluteString isMatchedByRegex:PS_MIXI_AUTH_URL]){
         return YES;    
     }
     return NO;
@@ -171,13 +163,10 @@
         return NO;
     }
     else if ([apiType isEqualToString:kMixiAppApiTypeToken]) {
-        // 認可処理に成功しました
     }
     else if ([apiType isEqualToString:kMixiAppApiTypeRevoke]) {
-        // 認可解除処理に成功しました
     }
     else if ([apiType isEqualToString:kMixiAppApiTypeReceiveRequest]) {
-        // リクエストAPIによるリクエスト受け取り
     }
     
     return YES;
@@ -208,7 +197,21 @@
  * get username
  */
 - (NSString *)username{
-    return [self settingForKey:PS_FLICKR_SETTING_USERNAME];
+    return [self settingForKey:PS_MIXI_SETTING_USERNAME];
+}
+
+/*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return NO;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing 
 }
 
 /*!
@@ -256,6 +259,13 @@
 }
 
 /*!
+ * use NSOperation ?
+ */
+- (BOOL)useOperation{
+    return YES;
+}
+
+/*!
  * is sequencial? if so, use SequencialQueue
  */
 - (BOOL)isSequencial{
@@ -274,7 +284,7 @@
  */
 + (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FLICKR_ENABLED]) {
+    if ([defaults objectForKey:PS_MIXI_ENABLED]) {
         return YES;
     }
     return NO;

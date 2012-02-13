@@ -22,10 +22,23 @@
 "Settings_Row_About" = "アプリについて / フィードバック";
 "Detail_Section_Account" = "アカウント";
 "Detail_Section_Album" = "アルバム選択";
-"Facebook_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを追加したい場合には%@で行ってください。";
 "Detail_Row_AccountName" = "アカウント名";
 "Detail_Row_Logout" = "ログアウト";
 "Detail_Row_LogoutButtonTitle" = "ログアウト";
+
+
+"Album_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを削除、編集したい場合には%@で行ってください。";
+"Album_Detail_Section_Create_Album_Title" = "アルバム作成";
+
+"Create_Album_Navigation_Title" = "アルバム作成";
+"Create_Album_Section_Title" = "アルバム タイトル";
+"Create_Album_Placeholder" = "20XX年 月旅行";
+"Create_Album_Create_Button_Title" = "作成";
+"Create_Album_Alert_Creation_Empty_Title" = "エラー";
+"Create_Album_Alert_Creation_Empty_Message" = "タイトルを入力してください。";
+"Create_Album_Alert_Creation_Empty_Button_Title" = "OK";
+"Create_Album_Alert_Creation_Failed_Title" = "エラー";
+"Create_Album_Alert_Creation_Failed_Button_Title" = "OK";
 
 "ProgressCell_Completed" = "完了";
 "ProgressCell_Canceled" = "中断";

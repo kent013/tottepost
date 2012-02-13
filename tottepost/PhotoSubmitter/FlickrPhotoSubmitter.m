@@ -20,12 +20,21 @@
 #define PS_FLICKR_AUTH_TOKEN @"FlickrOAuthToken"
 #define PS_FLICKR_AUTH_TOKEN_SECRET @"FlickrOAuthTokenSecret"
 
-#define PS_FLICKR_API_CHECK_TOKEN @"check_token"
+#define PS_FLICKR_API_CHECK_TOKEN @"flickr.test.login"
 #define PS_FLICKR_API_REQUEST_TOKEN @"request_token"
 #define PS_FLICKR_API_GET_TOKEN @"get_token"
 #define PS_FLICKR_API_UPLOAD_IMAGE @"upload_image"
+#define PS_FLICKR_API_CREATE_PHOTOSET @"flickr.photosets.create"
+#define PS_FLICKR_API_PHOTOSET_LIST @"flickr.photosets.getList"
+#define PS_FLICKR_API_ADD_PHOTOSET_PHOTO @"flickr.photosets.addPhoto"
+#define PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO @"flickr.photosets.removePhoto"
+#define PS_FLICKR_API_RECENTLY_UPLOADED @"flickr.photos.recentlyUpdated"
 
 #define PS_FLICKR_SETTING_USERNAME @"FlickrUserName"
+#define PS_FLICKR_SETTING_DUMMY_PHOTO_ID @"FlickrDummyPrimaryPhotoId"
+#define PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID @"FlickerAlbumDummyPhotoId"
+#define PS_FLICKR_SETTING_ALBUMS @"FlickrAlbums"
+#define PS_FLICKR_SETTING_TARGET_ALBUM @"FlickrTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -33,6 +42,10 @@
 @interface FlickrPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) fetchDummyPrimaryPhoto;
+- (void) removeDummyPrimaryPhoto:(NSString*)photoId albumId:(NSString *)albumId;
+- (void) addPhotoToPhotoSet:(NSString *)photoId;
+- (NSString *) photosetDummyPhotoKey:(NSString*)photosetId;
 @end
 
 @implementation FlickrPhotoSubmitter(PrivateImplementation)
@@ -62,6 +75,10 @@
     [self removeSettingForKey:PS_FLICKR_AUTH_TOKEN];
     [self removeSettingForKey:PS_FLICKR_AUTH_TOKEN_SECRET];
     [self removeSettingForKey:PS_FLICKR_ENABLED];
+    [self removeSettingForKey:PS_FLICKR_SETTING_USERNAME];
+    [self removeSettingForKey:PS_FLICKR_SETTING_ALBUMS];
+    [self removeSettingForKey:PS_FLICKR_SETTING_TARGET_ALBUM];
+    [self removeSettingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID];
 }
 
 #pragma mark -
@@ -74,13 +91,62 @@
         NSString *username = [inResponseDictionary valueForKeyPath:@"user.username._text"];
         [self setSetting:username forKey:PS_FLICKR_SETTING_USERNAME];
         [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
+        
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_PHOTOSET_LIST]){
+        NSDictionary *photosets = [[inResponseDictionary objectForKey:@"photosets"] objectForKey:@"photoset"];
+        NSMutableArray *albums = [[NSMutableArray alloc] init];
+        for(NSDictionary *photoset in photosets){
+            PhotoSubmitterAlbumEntity *album = 
+            [[PhotoSubmitterAlbumEntity alloc] initWithId:[photoset objectForKey:@"id"] name:[[photoset objectForKey:@"title"] objectForKey:@"_text"] privacy:@""];
+            [albums addObject:album];
+        }
+        [self setComplexSetting:albums forKey:PS_FLICKR_SETTING_ALBUMS];
+        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+        [self clearRequest:inRequest];
+        
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_CREATE_PHOTOSET]){
+        NSDictionary *photoset = [inResponseDictionary objectForKey:@"photoset"];
+        PhotoSubmitterAlbumEntity *album = [[PhotoSubmitterAlbumEntity alloc] initWithId:[photoset objectForKey:@"id"] name:[photoset objectForKey:@"id"] privacy:@""];
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:album suceeded:YES withError:nil];
+        [self clearRequest:inRequest];
+        
+        [self setSetting:[self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] forKey:[self photosetDummyPhotoKey:album.albumId]];
+        
+    }else if([inRequest.sessionInfo isEqualToString:PS_FLICKR_API_ADD_PHOTOSET_PHOTO]){
+        NSString *albumId = self.targetAlbum.albumId;
+        NSString *photoId = [self settingForKey:[self photosetDummyPhotoKey:albumId]];
+        if(photoId){
+            [self removeDummyPrimaryPhoto:photoId albumId:albumId];
+        }
+        [self clearRequest:inRequest];
+        
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_RECENTLY_UPLOADED]){
+        NSArray *photos = [[inResponseDictionary objectForKey:@"photos"] objectForKey:@"photo"];
+        if(photos.count > 0){
+            NSString *photoId = [[photos objectAtIndex:0] objectForKey:@"id"];
+            [self setSetting:photoId forKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID];
+        }
+        [self clearRequest:inRequest];
+        
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO]){
+        [self clearRequest:inRequest];
+        [self removeSettingForKey:[self photosetDummyPhotoKey:self.targetAlbum.albumId]];
+        
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
         NSString *hash = [self photoForRequest:inRequest];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished:YES];
+        
+        NSString *photoId = [[inResponseDictionary objectForKey:@"photoid"] objectForKey:@"_text"];
+        if([self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] == nil){
+            [self setSetting:photoId forKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID];
+        }
         [self clearRequest:inRequest];
+        
+        [self performSelectorOnMainThread:@selector(addPhotoToPhotoSet:) withObject:photoId waitUntilDone:NO];
     }
+    NSLog(@"%@, %@", inRequest.sessionInfo, inResponseDictionary.description);
 }
 
 /*!
@@ -93,11 +159,23 @@
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
         [operationDelegate photoSubmitterDidOperationFinished:NO];   
         [self clearRequest:inRequest];
+    }else if([inRequest.sessionInfo isEqualToString:PS_FLICKR_API_ADD_PHOTOSET_PHOTO]){
+        [self clearRequest:inRequest];
+    }else if([inRequest.sessionInfo isEqualToString:PS_FLICKR_API_CREATE_PHOTOSET]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:inError];        
+        [self clearRequest:inRequest];
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_PHOTOSET_LIST]){
+        [self clearRequest:inRequest];
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_RECENTLY_UPLOADED]){
+        [self clearRequest:inRequest];
+    }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO]){
+        [self clearRequest:inRequest];
     }else{
         NSLog(@"flickr error:%@", inError);
         [self clearCredentials];
         [self.authDelegate photoSubmitter:self didLogout:self.type];
     }
+    NSLog(@"%@, %@, %s", inRequest.sessionInfo, inError.description, __PRETTY_FUNCTION__);
 }
 
 /*!
@@ -130,10 +208,71 @@
     [self setSetting:@"enabled" forKey:PS_FLICKR_ENABLED];
     
     authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
-    [authRequest_ callAPIMethodWithGET:@"flickr.test.login" arguments:nil];
+    [authRequest_ callAPIMethodWithGET:PS_FLICKR_API_CHECK_TOKEN arguments:nil];
     [self.authDelegate photoSubmitter:self didLogin:self.type];
     [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     
+    //fetch dummy primary photo id to create photoset
+    if([self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] == nil){
+        [self fetchDummyPrimaryPhoto];
+    }
+}
+
+/*!
+ * add photo to selected photoset 
+ */
+- (void)addPhotoToPhotoSet:(NSString *)photoId{
+    if(self.targetAlbum == nil){
+        return;
+    }
+    
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_ADD_PHOTOSET_PHOTO;
+    
+    NSDictionary *params = 
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     self.targetAlbum.albumId, @"photoset_id", 
+     photoId, @"photo_id", nil];
+    [request callAPIMethodWithPOST:PS_FLICKR_API_ADD_PHOTOSET_PHOTO arguments:params];
+    [self addRequest:request];
+}
+
+/*!
+ * get photo for dummy primary photo
+ */
+- (void)fetchDummyPrimaryPhoto{
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_RECENTLY_UPLOADED;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [request callAPIMethodWithGET:PS_FLICKR_API_RECENTLY_UPLOADED arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:[df stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]], @"min_date", @"1", @"per_page", @"page", @"1", nil]];
+    [self addRequest:request];
+}
+
+/*!
+ * remove primary photo from photoset
+ */
+- (void)removeDummyPrimaryPhoto:(NSString *)photoId albumId:(NSString *)albumId{
+    if(photoId == nil || albumId == nil){
+        return;
+    }
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO;
+    
+    [request callAPIMethodWithPOST:PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:albumId, @"photoset_id", photoId, @"photo_id", nil]];
+    [self addRequest:request];
+    
+}
+
+/*!
+ * get photoset dummy primary photo key
+ */
+- (NSString *)photosetDummyPhotoKey:(NSString *)photosetId{
+    return [NSString stringWithFormat:@"%@%@", PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID, photosetId];
 }
 @end
 
@@ -143,6 +282,7 @@
 @implementation FlickrPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -305,10 +445,39 @@
 }
 
 /*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return YES;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    if([self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] == nil){
+        NSLog(@"You needed to post one single photo before create albums.");
+    }
+    self.albumDelegate = delegate;
+    
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_CREATE_PHOTOSET;
+    [self addRequest:request];
+    NSDictionary *param = 
+      [NSDictionary dictionaryWithObjectsAndKeys:
+       title, @"title", 
+       [self settingForKey: PS_FLICKR_SETTING_DUMMY_PHOTO_ID], @"primary_photo_id",
+       nil];
+    [request callAPIMethodWithGET:PS_FLICKR_API_CREATE_PHOTOSET arguments:param];
+    [self addRequest:request];
+}
+
+/*!
  * albumlist
  */
 - (NSArray *)albumList{
-    return nil;
+    return [self complexSettingForKey:PS_FLICKR_SETTING_ALBUMS];
 }
 
 /*!
@@ -316,21 +485,29 @@
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
-    //do nothing
+    
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_PHOTOSET_LIST;
+    [self addRequest:request];
+    
+    [request callAPIMethodWithGET:PS_FLICKR_API_PHOTOSET_LIST arguments:nil];
+    
+    [self addRequest:request];
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
+    return [self complexSettingForKey:PS_FLICKR_SETTING_TARGET_ALBUM];
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
+    [self setComplexSetting:targetAlbum forKey:PS_FLICKR_SETTING_TARGET_ALBUM];
 }
 
 /*!
@@ -339,7 +516,7 @@
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
     authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
-    [authRequest_ callAPIMethodWithGET:@"flickr.test.login" arguments:nil];
+    [authRequest_ callAPIMethodWithGET:PS_FLICKR_API_CHECK_TOKEN arguments:nil];
     //do nothing
 }
 
@@ -347,6 +524,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * use NSOperation ?
+ */
+- (BOOL)useOperation{
     return YES;
 }
 

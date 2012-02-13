@@ -30,7 +30,7 @@
  * initialize
  */
 -(void)setupInitialState{
-
+    createAlbumViewController_ = [[CreateAlbumPhotoSubmitterSettingViewController alloc] initWithType:self.type];
 }
 @end
 
@@ -62,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case FSV_SECTION_ALBUMS: return self.submitter.albumList.count;
+        case FSV_SECTION_ALBUMS: return self.submitter.albumList.count + 1;
     }
     return [super tableView:tableView numberOfRowsInSection:section];
 }
@@ -82,7 +82,7 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     switch (section){
-        case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Facebook_Detail_Section_Album_Footer"], self.submitter.name];
+        case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Album_Detail_Section_Album_Footer"], self.submitter.name];
     }
     return [super tableView:tableView titleForFooterInSection:section];;
 }
@@ -94,14 +94,19 @@
 {    
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     if(indexPath.section == FSV_SECTION_ALBUMS){
-        PhotoSubmitterAlbumEntity *album = [self.submitter.albumList objectAtIndex:indexPath.row];
-        if(album.privacy != nil && [album.privacy isEqualToString:@""] == NO){
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
+        if(self.submitter.albumList.count == indexPath.row){
+            cell.textLabel.text = [TTLang lstr:@"Album_Detail_Section_Create_Album_Title"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else{
-            cell.textLabel.text = album.name;
-        }
-        if([album.albumId isEqualToString: self.submitter.targetAlbum.albumId]){
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            PhotoSubmitterAlbumEntity *album = [self.submitter.albumList objectAtIndex:indexPath.row];
+            if(album.privacy != nil && [album.privacy isEqualToString:@""] == NO){
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ (privacy:%@)", album.name, album.privacy];
+            }else{
+                cell.textLabel.text = album.name;
+            }
+            if([album.albumId isEqualToString: self.submitter.targetAlbum.albumId]){
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
         }
     }
     return cell;
@@ -114,12 +119,16 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == FSV_SECTION_ALBUMS){
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        if(selectedAlbumIndex_ != indexPath.row){
+        if(indexPath.row == self.submitter.albumList.count){
+            [self.navigationController pushViewController:createAlbumViewController_ animated:YES];
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            if(selectedAlbumIndex_ != indexPath.row){
             cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedAlbumIndex_ inSection:FSV_SECTION_ALBUMS]];
             cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            self.submitter.targetAlbum = [self.submitter.albumList objectAtIndex:indexPath.row];
         }
-        self.submitter.targetAlbum = [self.submitter.albumList objectAtIndex:indexPath.row];
         selectedAlbumIndex_ = indexPath.row;
     }
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];

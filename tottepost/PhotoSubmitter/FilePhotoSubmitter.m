@@ -47,6 +47,7 @@
 @implementation FilePhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -180,6 +181,20 @@
 }
 
 /*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return NO;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing 
+}
+
+/*!
  * albumlist
  */
 - (NSArray *)albumList{
@@ -218,6 +233,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return NO;
+}
+
+/*!
+ * use NSOperation ??
+ */
+- (BOOL)useOperation{
     return NO;
 }
 

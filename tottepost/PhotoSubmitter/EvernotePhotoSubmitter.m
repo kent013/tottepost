@@ -61,6 +61,7 @@
 @implementation EvernotePhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
+@synthesize albumDelegate;
 #pragma mark -
 #pragma mark public implementations
 /*!
@@ -240,6 +241,23 @@
 }
 
 /*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return NO;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    self.albumDelegate = delegate;
+    EvernoteRequest *request = 
+    [evernote_ createNotebookWithTitle:title andDelegate:self];
+    [self addRequest:request];
+}
+
+/*!
  * albumlist
  */
 - (NSArray *)albumList{
@@ -282,6 +300,13 @@
  * invoke method as concurrent?
  */
 - (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * use NSOperation ?
+ */
+- (BOOL)useOperation{
     return YES;
 }
 
@@ -331,6 +356,11 @@
         }
         [self setComplexSetting:albums forKey:PS_EVERNOTE_SETTING_ALBUMS];
         [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    }else if([request.method isEqualToString:@"createNotebook"]){
+        EDAMNotebook *notebook = (EDAMNotebook *)result;
+        PhotoSubmitterAlbumEntity *album = 
+        [[PhotoSubmitterAlbumEntity alloc] initWithId:notebook.guid name:notebook.name privacy:@""];
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:album suceeded:YES withError:nil];
     }else if([request.method isEqualToString:@"getUser"]){
         EDAMUser *user = (EDAMUser *)result;
         [self setSetting:user.name forKey:PS_EVERNOTE_SETTING_USERNAME];
@@ -345,6 +375,9 @@
  * Evernote delegate, upload failed
  */
 - (void)request:(EvernoteRequest *)request didFailWithError:(NSError *)error{
+    if([request.method isEqualToString:@"createNotebook"]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
+    }
     if([request.method isEqualToString:@"createNote"] == NO){
         return;
     }

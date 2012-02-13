@@ -28,7 +28,7 @@ typedef enum {
 @protocol PhotoSubmitterPhotoOperationDelegate;
 @protocol PhotoSubmitterDataDelegate;
 @protocol PhotoSubmitterOAuthControllerDelegate;
-
+@protocol PhotoSubmitterAlbumDelegate;
 
 /*!
  * protocol for submitter
@@ -44,10 +44,13 @@ typedef enum {
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSArray *albumList;
 @property (nonatomic, readonly) BOOL isConcurrent;
+@property (nonatomic, readonly) BOOL useOperation;
 @property (nonatomic, readonly) BOOL isSequencial;
+@property (nonatomic, readonly) BOOL isAlbumSupported;
 @property (nonatomic, readonly) BOOL requiresNetwork;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterDataDelegate> dataDelegate;
+@property (nonatomic, assign) id<PhotoSubmitterAlbumDelegate> albumDelegate;
 @property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;
 - (void) login;
 - (void) logout;
@@ -61,6 +64,7 @@ typedef enum {
 
 - (void) updateAlbumListWithDelegate: (id<PhotoSubmitterDataDelegate>) delegate;
 - (void) updateUsernameWithDelegate: (id<PhotoSubmitterDataDelegate>) delegate;
+- (void) createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate;
 + (BOOL) isEnabled;
 @end
 
@@ -95,11 +99,19 @@ typedef enum {
 @end
 
 /*!
- * protocol for album
+ * protocol for fetch data
  */
 @protocol PhotoSubmitterDataDelegate <NSObject>
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated: (NSMutableArray *)albums;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didUsernameUpdated: (NSString *)username;
+@end
+
+
+/*!
+ * protocol for album
+ */
+@protocol PhotoSubmitterAlbumDelegate <NSObject>
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumCreated: (PhotoSubmitterAlbumEntity *)album suceeded:(BOOL)suceeded withError:(NSError *)error;
 @end
 
 /*!

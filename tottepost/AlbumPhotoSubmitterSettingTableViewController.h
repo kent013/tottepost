@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 #import "PhotoSubmitterProtocol.h"
-#import "PhotoSubmitterSettingTableViewController.h"
+#import "SimplePhotoSubmitterSettingTableViewController.h"
+#import "CreateAlbumPhotoSubmitterSettingViewController.h"
 
-@interface AlbumPhotoSubmitterSettingTableViewController : PhotoSubmitterSettingTableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
+@interface AlbumPhotoSubmitterSettingTableViewController : SimplePhotoSubmitterSettingTableViewController{
     int selectedAlbumIndex_;
+    CreateAlbumPhotoSubmitterSettingViewController *createAlbumViewController_;
 }
 @end

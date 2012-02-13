@@ -11,9 +11,10 @@
 #import "PhotoSubmitterSettingTableViewProtocol.h"
 
 
-@interface PhotoSubmitterSettingTableViewController : UITableViewController<PhotoSubmitterSettingTableViewProtocol, PhotoSubmitterDataDelegate>{
+@interface PhotoSubmitterSettingTableViewController : UITableViewController<PhotoSubmitterSettingTableViewProtocol>{
     PhotoSubmitterType type_;
 }
 
 - (id)initWithType:(PhotoSubmitterType)type;
+@property (nonatomic, readonly) PhotoSubmitterType type;
 @end
