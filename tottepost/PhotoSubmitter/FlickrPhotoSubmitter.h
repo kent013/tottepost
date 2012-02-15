@@ -1,6 +1,6 @@
 //
 //  FlickrPhotoSubmitter.h
-//  tottepost
+//  PhotoSubmitter for Flickr
 //
 //  Created by ISHITOYA Kentaro on 11/12/14.
 //  Copyright (c) 2011 cocotomo. All rights reserved.

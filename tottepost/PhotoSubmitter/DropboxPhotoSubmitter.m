@@ -1,6 +1,6 @@
 //
 //  DropboxPhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Dropbox
 //
 //  Created by ISHITOYA Kentaro on 11/12/22.
 //  Copyright (c) 2011 coctomo. All rights reserved.
@@ -22,9 +22,9 @@
 #define PS_DROPBOX_API_GET_TOKEN @"get_token"
 #define PS_DROPBOX_API_UPLOAD_IMAGE @"upload_image"
 
-#define PS_DROPBOX_SETTING_USERNAME @"DropboxUserName"
-#define PS_DROPBOX_SETTING_ALBUMS @"DropboxAlbums"
-#define PS_DROPBOX_SETTING_TARGET_ALBUM @"DropboxTargetAlbum"
+#define PS_DROPBOX_SETTING_USERNAME @"PSDropboxUserName"
+#define PS_DROPBOX_SETTING_ALBUMS @"PSDropboxAlbums"
+#define PS_DROPBOX_SETTING_TARGET_ALBUM @"PSDropboxTargetAlbum"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -35,9 +35,8 @@
 - (void) cleanupCache;
 @end
 
+#pragma mark - private implementations
 @implementation DropboxPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
 /*!
  * initializer
  */
@@ -73,8 +72,8 @@
 }
 
 
-#pragma mark -
-#pragma mark Dropbox delegate methods
+#pragma mark - DBRestClientDelegate methods
+#pragma mark - upload file
 /*!
  * Dropbox delegate, upload finished
  */
@@ -110,6 +109,7 @@
     [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
+#pragma mark - load account info
 /*!
  * Dropbox delegate, account info loaded
  */
@@ -128,6 +128,7 @@
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
 }
 
+#pragma mark - load metadata
 /*!
  * when the metadata loaded
  */
@@ -157,6 +158,7 @@
     [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];   
 }
 
+#pragma mark - create folder
 /*!
  * create folder
  */
@@ -179,12 +181,11 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public implementations
 @implementation DropboxPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
 /*!
  * initialize
  */
@@ -196,51 +197,7 @@
     return self;
 }
 
-/*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    DBRestClient *restClient = 
-    [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    restClient.delegate = self;
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat  = @"yyyyMMddHHmmssSSSS";
-    NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
-    NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
-    NSString *path = [dir stringByAppendingString:filename];
-    photo.path = path;
-    
-    NSString *toPath = @"/";
-    if(self.targetAlbum){
-        toPath = self.targetAlbum.name;
-    }
-
-    if(delegate.isCancelled){
-        return;
-    }
-    [photo.data writeToFile:path atomically:NO];
-    [self addRequest:restClient];
-    [self setPhotoHash:path forRequest:restClient];
-    [self setOperationDelegate:delegate forRequest:restClient];
-    [restClient uploadFile:filename toPath:toPath withParentRev:nil fromPath:path];
-    [self photoSubmitter:self willStartUpload:path];
-}    
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.path;
-    DBRestClient *request = (DBRestClient *)[self requestForPhoto:hash];
-    [request cancelFileUpload:hash];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
-}
-
+#pragma mark - authorization
 /*!
  * login to Dropbox
  */
@@ -273,33 +230,6 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([[DBSession sharedSession] isLinked]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [DropboxPhotoSubmitter isEnabled];
-}
-
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeDropbox;
-}
-
-/*!
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
@@ -327,32 +257,111 @@
 }
 
 /*!
- * name
+ * check is logined
  */
-- (NSString *)name{
-    return @"Dropbox";
+- (BOOL)isLogined{
+    if(self.isEnabled == false){
+        return NO;
+    }
+    if ([[DBSession sharedSession] isLinked]) {
+        return YES;
+    }
+    return NO;
 }
 
 /*!
- * icon image
+ * check is enabled
  */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"dropbox_32.png"];
+- (BOOL) isEnabled{
+    return [DropboxPhotoSubmitter isEnabled];
 }
 
 /*!
- * small icon image
+ * isEnabled
  */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"dropbox_16.png"];
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_DROPBOX_ENABLED]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    DBRestClient *restClient = 
+    [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat  = @"yyyyMMddHHmmssSSSS";
+    NSString *dir = [NSString stringWithFormat:@"%@/tmp/", NSHomeDirectory()];
+    NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
+    NSString *path = [dir stringByAppendingString:filename];
+    photo.path = path;
+    
+    NSString *toPath = @"/";
+    if(self.targetAlbum){
+        toPath = self.targetAlbum.name;
+    }
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    [photo.data writeToFile:path atomically:NO];
+    [self addRequest:restClient];
+    [self setPhotoHash:path forRequest:restClient];
+    [self setOperationDelegate:delegate forRequest:restClient];
+    [restClient uploadFile:filename toPath:toPath withParentRev:nil fromPath:path];
+    [self photoSubmitter:self willStartUpload:path];
+}    
+
+/*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.path;
+    DBRestClient *request = (DBRestClient *)[self requestForPhoto:hash];
+    [request cancelFileUpload:hash];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:request];
 }
 
 /*!
- * get username
+ * invoke method as concurrent?
  */
-- (NSString *)username{
-    return [self settingForKey:PS_DROPBOX_SETTING_USERNAME];
+- (BOOL)isConcurrent{
+    return YES;
 }
+
+/*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return NO;
+}
+
+/*!
+ * use NSOperation?
+ */
+- (BOOL)useOperation{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return YES;
+}
+
+#pragma mark - album
 
 /*!
  * is album supported
@@ -411,6 +420,13 @@
     [self setComplexSetting:targetAlbum forKey:PS_DROPBOX_SETTING_TARGET_ALBUM];
 }
 
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_DROPBOX_SETTING_USERNAME];
+}
 /*!
  * update username
  */
@@ -418,7 +434,7 @@
     self.dataDelegate = delegate;
     if([DBSession sharedSession].isLinked){
         DBRestClient *restClient = 
-            [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
         restClient.delegate = self;
         [restClient loadAccountInfo];
         [self addRequest:restClient];
@@ -426,47 +442,36 @@
     //do nothing
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return YES;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeDropbox;
 }
 
 /*!
- * use NSOperation ?
+ * name
  */
-- (BOOL)useOperation{
-    return YES;
+- (NSString *)name{
+    return @"Dropbox";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return NO;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"dropbox_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return YES;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"dropbox_16.png"];
 }
 
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_DROPBOX_ENABLED]) {
-        return YES;
-    }
-    return NO;
-}
-
-#pragma mark -
-#pragma mark Dropbox delegate methods
+#pragma mark - DBSessionDelegate methods
 /*!
  * authorization failed
  */

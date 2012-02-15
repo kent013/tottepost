@@ -1,6 +1,6 @@
 //
 //  FacebookPhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Facebook
 //
 //  Created by ISHITOYA Kentaro on 11/12/13.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
@@ -15,11 +15,12 @@
 #import "UIImage+EXIF.h"
 
 #define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
-#define PS_FACEBOOK_AUTH_TOKEN @"FBAccessTokenKey"
-#define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"FBExpirationDateKey"
-#define PS_FACEBOOK_SETTING_USERNAME @"FBUsername"
-#define PS_FACEBOOK_SETTING_ALBUMS @"FBAlbums"
-#define PS_FACEBOOK_SETTING_TARGET_ALBUM @"FBTargetAlbums"
+#define PS_FACEBOOK_AUTH_TOKEN @"PSFacebookAccessTokenKey"
+#define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"PSFacebookExpirationDateKey"
+#define PS_FACEBOOK_SETTING_USERNAME @"PSFacebookUsername"
+#define PS_FACEBOOK_SETTING_ALBUMS @"PSFacebookAlbums"
+#define PS_FACEBOOK_SETTING_TARGET_ALBUM @"PSFacebookTargetAlbums"
+
 #define PS_FACEBOOK_PHOTO_WIDTH 960
 #define PS_FACEBOOK_PHOTO_HEIGHT 720
 
@@ -32,9 +33,8 @@
 - (void) getUserInfomation;
 @end
 
+#pragma mark - private implementations
 @implementation FacebookPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
 /*!
  * initializer
  */
@@ -68,8 +68,7 @@
     [facebook_ requestWithGraphPath:@"me" andDelegate:self];
 }
 
-#pragma mark -
-#pragma mark facebook delegates
+#pragma mark - FBSessionDelegate methods
 /*!
  * facebook delegate, did login suceeded
  */
@@ -100,6 +99,7 @@
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
+#pragma mark - FBRequestWithUploadProgressDelegate
 /*!
  * facebook request delegate, did receive response
  */
@@ -180,12 +180,11 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public PhotoSubmitter Protocol implementations
 @implementation FacebookPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public PhotoSubmitter Protocol implementations
 /*!
  * initialize
  */
@@ -197,6 +196,87 @@
     return self;
 }
 
+#pragma mark - authorization
+/*!
+ * login to facebook
+ */
+-(void)login{
+    if (![facebook_ isSessionValid]) {
+        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
+        NSArray *permissions = 
+        [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
+        [facebook_ authorize:permissions];
+    }else{
+        [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+    }
+}
+
+/*!
+ * logoff from facebook
+ */
+- (void)logout{
+    [facebook_ logout:self];   
+    [self clearCredentials];
+}
+
+/*!
+ * disable
+ */
+- (void)disable{
+    [self removeSettingForKey:PS_FACEBOOK_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * check url is processoble
+ */
+- (BOOL)isProcessableURL:(NSURL *)url{
+    if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+"]){
+        return YES;
+    }
+    return NO;
+}
+
+/*!
+ * on open url finished
+ */
+- (BOOL)didOpenURL:(NSURL *)url{
+    return [facebook_ handleOpenURL:url];
+}
+
+/*!
+ * check is logined
+ */
+- (BOOL)isLogined{
+    if(self.isEnabled == false){
+        return NO;
+    }
+    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
+        return YES;
+    }
+    return NO;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
+    return [FacebookPhotoSubmitter isEnabled];
+}
+
+/*!
+ * isEnabled
+ */
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_FACEBOOK_ENABLED]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - photo
 /*!
  * submit photo with data, comment and delegate
  */
@@ -242,108 +322,34 @@
 }
 
 /*!
- * login to facebook
+ * invoke method as concurrent?
  */
--(void)login{
-    if (![facebook_ isSessionValid]) {
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        NSArray *permissions = 
-        [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
-        [facebook_ authorize:permissions];
-    }else{
-        [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-    }
+- (BOOL)isConcurrent{
+    return YES;
 }
 
 /*!
- * logoff from facebook
+ * is sequencial? if so, use SequencialQueue
  */
-- (void)logout{
-    [facebook_ logout:self];   
-    [self clearCredentials];
-}
-
-/*!
- * disable
- */
-- (void)disable{
-    [self removeSettingForKey:PS_FACEBOOK_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-}
-
-/*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
-        return YES;
-    }
+- (BOOL)isSequencial{
     return NO;
 }
 
 /*!
- * check is enabled
+ * use NSOperation?
  */
-- (BOOL) isEnabled{
-    return [FacebookPhotoSubmitter isEnabled];
+- (BOOL)useOperation{
+    return YES;
 }
 
 /*!
- * return type
+ * requires network
  */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFacebook;
+- (BOOL)requiresNetwork{
+    return YES;
 }
 
-/*!
- * check url is processoble
- */
-- (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+"]){
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * on open url finished
- */
-- (BOOL)didOpenURL:(NSURL *)url{
-    return [facebook_ handleOpenURL:url];
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Facebook";
-}
-
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"facebook_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"facebook_16.png"];
-}
-
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_FACEBOOK_SETTING_USERNAME];
-}
-
+#pragma mark - albums
 /*!
  * is album supported
  */
@@ -395,6 +401,14 @@
     [self setComplexSetting:targetAlbum forKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
 }
 
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_FACEBOOK_SETTING_USERNAME];
+}
+
 /*!
  * update username
  */
@@ -403,45 +417,32 @@
     [self getUserInfomation];
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return YES;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeFacebook;
 }
 
 /*!
- * use NSOperation ??
+ * name
  */
-- (BOOL)useOperation{
-    return YES;
+- (NSString *)name{
+    return @"Facebook";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return NO;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"facebook_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return YES;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"facebook_16.png"];
 }
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FACEBOOK_ENABLED]) {
-        return YES;
-    }
-    return NO;
-}
-
-#pragma mark -
-#pragma mark Facebook information methods
 @end

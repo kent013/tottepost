@@ -1,6 +1,6 @@
 //
 //  FacebookPhotoSubmitter.h
-//  tottepost
+//  PhotoSubmitter for Facebook
 //
 //  Created by ISHITOYA Kentaro on 11/12/13.
 //  Copyright (c) 2011 cocotomo. All rights reserved.

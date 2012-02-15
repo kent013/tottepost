@@ -1,6 +1,6 @@
 //
 //  TwitterPhotoSubmitter.h
-//  tottepost
+//  PhotoSubmitter for Twitter
 //
 //  Created by ISHITOYA Kentaro on 11/12/17.
 //  Copyright (c) 2011 cocotomo. All rights reserved.

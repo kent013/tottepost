@@ -1,6 +1,6 @@
 //
 //  PicasaPhotoSubmitter.h
-//  tottepost
+//  PhotoSubmitter for Picasa
 //
 //  Created by Kentaro ISHITOYA on 12/02/10.
 //  Copyright (c) 2012 cocotomo. All rights reserved.
@@ -12,9 +12,9 @@
 #import "PhotoSubmitter.h"
 
 /*!
- * photo submitter for evernote.
+ * photo submitter for picasa.
  * get instance with using 
- * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeEvernote]
+ * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypePicasa]
  */
 @interface PicasaPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
     __strong GDataServiceGooglePhotos *service_;
