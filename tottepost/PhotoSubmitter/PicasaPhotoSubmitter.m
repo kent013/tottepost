@@ -1,6 +1,6 @@
 //
 //  PicasaPhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Picasa
 //
 //  Created by Kentaro ISHITOYA on 12/02/10.
 //  Copyright (c) 2012 cocotomo. All rights reserved.
@@ -16,14 +16,16 @@
 #import "GTMHTTPUploadFetcher.h"
 
 #define PS_PICASA_ENABLED @"PSPicasaEnabled"
+
 #define PS_PICASA_AUTH_URL @"photosubmitter://auth/picasa"
-//#define PS_PICASA_SCOPE @"https://picasaweb.google.com/data/"
-#define PS_PICASA_SCOPE @"https://photos.googleapis.com/data/"
-#define PS_PICASA_PROFILE_SCOPE @"https://www.googleapis.com/auth/userinfo.profile"
+
 #define PS_PICASA_KEYCHAIN_NAME @"PSPicasaKeychain"
 #define PS_PICASA_SETTING_USERNAME @"PSPicasaUserName"
 #define PS_PICASA_SETTING_ALBUMS @"PSPicasaAlbums"
 #define PS_PICASA_SETTING_TARGET_ALBUM @"PSPicasaTargetAlbums"
+
+#define PS_PICASA_SCOPE @"https://photos.googleapis.com/data/"
+#define PS_PICASA_PROFILE_SCOPE @"https://www.googleapis.com/auth/userinfo.profile"
 #define PS_PICASA_ALBUM_DROPBOX @"Drop Box"
 
 //-----------------------------------------------------------------------------
@@ -32,6 +34,7 @@
 @interface PicasaPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album;
 - (void) viewController:(GTMOAuth2ViewControllerTouch *)viewController
        finishedWithAuth:(GTMOAuth2Authentication *)auth
                   error:(NSError *)error;
@@ -41,12 +44,10 @@ ofTotalByteCount:(unsigned long long)dataLength;
 - (void)addPhotoTicket:(GDataServiceTicket *)ticket
      finishedWithEntry:(GDataEntryPhoto *)photoEntry
                  error:(NSError *)error;
-- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album;
 @end
 
 @implementation PicasaPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
+#pragma mark - private implementations
 /*!
  * initializer
  */
@@ -79,6 +80,23 @@ ofTotalByteCount:(unsigned long long)dataLength;
 }
 
 /*!
+ * fetch selected album information
+ */
+- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album{
+    // fetch the photos feed
+    NSURL *feedURL = album.feedLink.URL;
+    if (feedURL) {
+        GDataServiceTicket *ticket;
+        ticket = [service_ fetchFeedWithURL:feedURL
+                                   delegate:self
+                          didFinishSelector:@selector(photosTicket:finishedWithFeed:error:)];
+        [self setPhotoHash:album.identifier forRequest:ticket];
+        [self addRequest:ticket];
+    }
+}
+
+#pragma mark - GTMOAuth2ViewControllerTouch delegate
+/*!
  * on authenticated
  */
 - (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
@@ -104,6 +122,7 @@ ofTotalByteCount:(unsigned long long)dataLength;
     }
 }
 
+#pragma mark - GDataGoogleServicePhoto delegate methods
 /*!
  * gdata request delegate, progress
  */
@@ -182,23 +201,6 @@ ofTotalByteCount:(unsigned long long)dataLength {
 }
 
 /*!
- * for the album selected in the top list, begin retrieving the list of
- * photos
- */
-- (void)fetchSelectedAlbum: (GDataEntryPhotoAlbum *)album{
-        // fetch the photos feed
-    NSURL *feedURL = album.feedLink.URL;
-    if (feedURL) {
-        GDataServiceTicket *ticket;
-        ticket = [service_ fetchFeedWithURL:feedURL
-                                   delegate:self
-                          didFinishSelector:@selector(photosTicket:finishedWithFeed:error:)];
-        [self setPhotoHash:album.identifier forRequest:ticket];
-        [self addRequest:ticket];
-    }
-}
-
-/*!
  * photo list fetch callback
  */
 - (void)photosTicket:(GDataServiceTicket *)ticket
@@ -217,12 +219,11 @@ ofTotalByteCount:(unsigned long long)dataLength {
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public PhotoSubmitter Protocol implementations
 @implementation PicasaPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
 /*!
  * initialize
  */
@@ -234,71 +235,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
     return self;
 }
 
-/*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{    
-    [service_ setAuthorizer:auth_];
-    
-    GDataEntryPhoto *newEntry = [GDataEntryPhoto photoEntry];
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat  = @"yyyyMMddHHmmssSSSS";
-    [newEntry setTitleWithString:[df stringFromDate:photo.timestamp]];
-    [newEntry setPhotoDescriptionWithString:photo.comment];
-    [newEntry setTimestamp:[GDataPhotoTimestamp timestampWithDate:photo.timestamp]];
-    
-    [newEntry setPhotoData:photo.data];
-    
-    NSString *hash = photo.md5;    
-    [newEntry setUploadSlug:hash];
-    
-    NSString *mimeType = @"image/jpeg";
-    [newEntry setPhotoMIMEType:mimeType];
-    
-    SEL progressSel = @selector(ticket:hasDeliveredByteCount:ofTotalByteCount:);
-    [service_ setServiceUploadProgressSelector:progressSel];
-    
-    NSURL *uploadURL = nil;
-    if(self.targetAlbum == nil || [self.targetAlbum.name isEqualToString:PS_PICASA_ALBUM_DROPBOX]){
-        uploadURL = [NSURL URLWithString:kGDataGooglePhotosDropBoxUploadURL];
-    }else{
-        NSString *url = [self settingForKey:self.targetAlbum.albumId];
-        if(url != nil){
-            uploadURL = [NSURL URLWithString:url];
-        }else{
-            [self updateAlbumListWithDelegate:nil];
-            //this will fail
-            uploadURL = [NSURL URLWithString:self.targetAlbum.albumId];
-        }
-    }
-    GDataServiceTicket *ticket = 
-    [service_ fetchEntryByInsertingEntry:newEntry
-                              forFeedURL:uploadURL
-                                delegate:self
-                       didFinishSelector:@selector(addPhotoTicket:finishedWithEntry:error:)];
-    [service_ setServiceUploadProgressSelector:nil];
-    
-    [self addRequest:ticket];
-    [self setPhotoHash:hash forRequest:ticket];
-    [self setOperationDelegate:delegate forRequest:ticket];
-    [self photoSubmitter:self willStartUpload:hash];
-}    
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    GDataServiceTicket *ticket = (GDataServiceTicket *)[self requestForPhoto:hash];
-    [ticket cancelTicket];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:ticket];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:ticket];
-}
-
+#pragma mark - authorization
 /*!
  * login to Picasa
  */
@@ -345,6 +282,22 @@ ofTotalByteCount:(unsigned long long)dataLength {
 }
 
 /*!
+ * check url is processoble
+ */
+- (BOOL)isProcessableURL:(NSURL *)url{
+    //do nothing
+    return NO;
+}
+
+/*!
+ * on open url finished
+ */
+- (BOOL)didOpenURL:(NSURL *)url{
+    //do nothing
+    return NO;
+}
+
+/*!
  * check is logined
  */
 - (BOOL)isLogined{
@@ -365,56 +318,115 @@ ofTotalByteCount:(unsigned long long)dataLength {
 }
 
 /*!
- * return type
+ * isEnabled
  */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypePicasa;
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_PICASA_ENABLED]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{    
+    [service_ setAuthorizer:auth_];
+    
+    GDataEntryPhoto *newEntry = [GDataEntryPhoto photoEntry];
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat  = @"yyyyMMddHHmmssSSSS";
+    [newEntry setTitleWithString:[df stringFromDate:photo.timestamp]];
+    [newEntry setPhotoDescriptionWithString:photo.comment];
+    [newEntry setTimestamp:[GDataPhotoTimestamp timestampWithDate:photo.timestamp]];
+    
+    [newEntry setPhotoData:photo.data];
+    
+    NSString *hash = photo.md5;    
+    [newEntry setUploadSlug:hash];
+    
+    NSString *mimeType = @"image/jpeg";
+    [newEntry setPhotoMIMEType:mimeType];
+    
+    SEL progressSel = @selector(ticket:hasDeliveredByteCount:ofTotalByteCount:);
+    [service_ setServiceUploadProgressSelector:progressSel];
+    
+    NSURL *uploadURL = nil;
+    if(self.targetAlbum == nil || [self.targetAlbum.name isEqualToString:PS_PICASA_ALBUM_DROPBOX]){
+        uploadURL = [NSURL URLWithString:kGDataGooglePhotosDropBoxUploadURL];
+    }else{
+        NSString *url = [self settingForKey:self.targetAlbum.albumId];
+        if(url != nil){
+            uploadURL = [NSURL URLWithString:url];
+        }else{
+            [self updateAlbumListWithDelegate:nil];
+            //this will fail
+            uploadURL = [NSURL URLWithString:self.targetAlbum.albumId];
+        }
+    }
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    GDataServiceTicket *ticket = 
+    [service_ fetchEntryByInsertingEntry:newEntry
+                              forFeedURL:uploadURL
+                                delegate:self
+                       didFinishSelector:@selector(addPhotoTicket:finishedWithEntry:error:)];
+    [service_ setServiceUploadProgressSelector:nil];
+    
+    [self addRequest:ticket];
+    [self setPhotoHash:hash forRequest:ticket];
+    [self setOperationDelegate:delegate forRequest:ticket];
+    [self photoSubmitter:self willStartUpload:hash];
+}    
+
+/*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.md5;
+    GDataServiceTicket *ticket = (GDataServiceTicket *)[self requestForPhoto:hash];
+    [ticket cancelTicket];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:ticket];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:ticket];
 }
 
 /*!
- * check url is processoble
+ * invoke method as concurrent?
  */
-- (BOOL)isProcessableURL:(NSURL *)url{
-    //do nothing
+- (BOOL)isConcurrent{
     return NO;
 }
 
 /*!
- * on open url finished
+ * is sequencial? if so, use SequencialQueue
  */
-- (BOOL)didOpenURL:(NSURL *)url{
-    //do nothing
+- (BOOL)isSequencial{
     return NO;
 }
 
 /*!
- * name
+ * use NSOperation ?
  */
-- (NSString *)name{
-    return @"Picasa";
+- (BOOL)useOperation{
+    return YES;
 }
 
 /*!
- * icon image
+ * requires network
  */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"picasa_32.png"];
+- (BOOL)requiresNetwork{
+    return YES;
 }
 
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"picasa_16.png"];
-}
-
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_PICASA_SETTING_USERNAME];
-}
-
+#pragma mark - album
 /*!
  * is album supported
  */
@@ -433,10 +445,10 @@ ofTotalByteCount:(unsigned long long)dataLength {
         return [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:nil];
     }
     NSString *description = [NSString stringWithFormat:@"Created %@",
-                                 [NSDate date]];
-        
+                             [NSDate date]];
+    
     NSString *access = kGDataPhotoAccessPrivate;
-        
+    
     GDataEntryPhotoAlbum *newAlbum = [GDataEntryPhotoAlbum albumEntry];
     [newAlbum setTitleWithString:title];
     [newAlbum setPhotoDescriptionWithString:description];
@@ -450,7 +462,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
                        didFinishSelector:@selector(createAlbumTicket:finishedWithEntry:error:)];
     [self addRequest:ticket];
 }
- 
+
 /*!
  * albumlist
  */
@@ -494,6 +506,14 @@ ofTotalByteCount:(unsigned long long)dataLength {
     [self setComplexSetting:targetAlbum forKey:PS_PICASA_SETTING_TARGET_ALBUM];
 }
 
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_PICASA_SETTING_USERNAME];
+}
+
 /*!
  * update username
  */
@@ -503,42 +523,32 @@ ofTotalByteCount:(unsigned long long)dataLength {
     [self.dataDelegate photoSubmitter:self didUsernameUpdated:auth_.userEmail];
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return NO;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypePicasa;
 }
 
 /*!
- * use NSOperation ?
+ * name
  */
-- (BOOL)useOperation{
-    return YES;
+- (NSString *)name{
+    return @"Picasa";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return NO;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"picasa_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return YES;
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_PICASA_ENABLED]) {
-        return YES;
-    }
-    return NO;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"picasa_16.png"];
 }
 @end

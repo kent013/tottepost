@@ -1,6 +1,6 @@
 //
 //  DropboxPhotoSubmitter.h
-//  tottepost
+//  PhotoSubmitter for Dropbox
 //
 //  Created by ISHITOYA Kentaro on 11/12/22.
 //  Copyright (c) 2011 cocotomo. All rights reserved.

@@ -30,6 +30,7 @@
 "Detail_Row_Logout" = "ログアウト";
 "Detail_Row_LogoutButtonTitle" = "ログアウト";
 
+"Detail_Section_Twitter_Accounts" = "アカウント選択";
 
 "Album_Detail_Section_Album_Footer" = "選択されたアルバムが利用されます。\nアルバムを削除、編集したい場合には%@で行ってください。";
 "Album_Detail_Section_Create_Album_Title" = "アルバム作成";

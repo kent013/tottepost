@@ -23,6 +23,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void) setupInitialState;
 - (void) addOperation: (PhotoSubmitterOperation *)operation;
 - (PhotoSubmitterSequencialOperationQueue *) sequencialOperationQueueForType: (PhotoSubmitterType) type;
+- (void) pauseFinished;
 @end
 
 @implementation PhotoSubmitterManager(PrivateImplementation)
@@ -47,6 +48,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
+    isPausingOperation_ = NO;
     [self loadSubmitters];
 }
 
@@ -80,6 +82,14 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         [delegate photoSubmitterManager:self didOperationAdded:operation];
     }
 }
+
+/*!
+ * cancel operation finished
+ */
+- (void)pauseFinished{
+    isPausingOperation_ = NO;
+}
+ 
 @end
 
 //-----------------------------------------------------------------------------
@@ -91,6 +101,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @synthesize submitPhotoWithOperations;
 @synthesize location = location_;
 @synthesize isUploading;
+@synthesize isPausingOperation = isPausingOperation_;
 @synthesize oAuthControllerDelegate;
 
 /*!
@@ -305,19 +316,6 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     return NO;
 }
 
-/*!
- * restart operations
- */
-- (void)restart{
-    [operationQueue_ cancelAllOperations];
-    NSMutableDictionary *ops = operations_;
-    operations_ = [[NSMutableDictionary alloc] init];
-    for(NSNumber *key in ops){
-        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
-        [self addOperation:operation];
-    }
-}
-
 #pragma mark -
 #pragma mark PhotoSubmitterPhotoDelegate methods
 /*!
@@ -411,6 +409,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * pause
  */
 - (void) pause{
+    if(isPausingOperation_){
+        return;
+    }
+    isPausingOperation_ = YES;
     [operationQueue_ cancelAllOperations];
     for(NSNumber *key in operations_){
         PhotoSubmitterOperation *operation = [operations_ objectForKey:key];
@@ -420,18 +422,45 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
         [queue cancel];
     }
+    
+    [self performSelector:@selector(pauseFinished) withObject:nil afterDelay:2];
 }
 
 /*!
  * cancel
  */
 - (void) cancel{
+    for(NSNumber *key in sequencialOperationQueues_){
+        PhotoSubmitterSequencialOperationQueue *queue = [sequencialOperationQueues_ objectForKey:key];
+        [queue cancel];
+    }
+    [sequencialOperationQueues_ removeAllObjects];
     [operationQueue_ cancelAllOperations];
     [operations_ removeAllObjects];
     for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
         [delegate didUploadCanceled];
     }
 }
+
+/*!
+ * restart operations
+ */
+- (void)restart{
+    if(isPausingOperation_){
+        return;
+    }
+    [operationQueue_ cancelAllOperations];
+    operationQueue_ = [[NSOperationQueue alloc] init];
+    operationQueue_.maxConcurrentOperationCount = 6;
+    NSMutableDictionary *ops = operations_;
+    operations_ = [[NSMutableDictionary alloc] init];
+    for(NSNumber *key in ops){
+        PhotoSubmitterOperation *operation = [PhotoSubmitterOperation operationWithOperation:[ops objectForKey:key]];
+        [operation resume];
+        [self addOperation:operation];
+    }
+}
+
 
 #pragma mark -
 #pragma mark PhotoSubmitterSequencialOperationQueue delegate

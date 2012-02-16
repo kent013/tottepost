@@ -37,6 +37,7 @@
     __strong CLLocationManager *locationManager_;
     __strong CLLocation *location_;
     BOOL geoTaggingEnabled_;
+    BOOL isPausingOperation_;
 }
 
 @property (nonatomic, assign) id<PhotoSubmitterOAuthControllerDelegate> oAuthControllerDelegate;
@@ -48,6 +49,7 @@
 @property (nonatomic, readonly) CLLocation *location;
 @property (nonatomic, readonly) BOOL requiresNetwork;
 @property (nonatomic, readonly) BOOL isUploading;
+@property (nonatomic, readonly) BOOL isPausingOperation;
 
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) loadSubmitters;

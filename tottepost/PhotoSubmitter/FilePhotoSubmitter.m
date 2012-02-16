@@ -1,6 +1,6 @@
 //
 //  FilePhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Camera Roll
 //
 //  Created by ISHITOYA Kentaro on 11/12/24.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
@@ -25,8 +25,7 @@
 @end
 
 @implementation FilePhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
+#pragma mark - private implementations
 /*!
  * initializer
  */
@@ -34,7 +33,7 @@
 }
 
 /*!
- * clear defaults, on file we will not store access token.
+ * clear defaults
  */
 - (void)clearCredentials{
     [self removeSettingForKey:PS_FILE_NOT_ENABLED];
@@ -44,12 +43,11 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public PhotoSubmitter Protocol implementations
 @implementation FilePhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
 /*!
  * initialize
  */
@@ -61,39 +59,7 @@
     return self;
 }
 
-/*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *hash = photo.md5;
-        ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
-        [lib writeImageDataToSavedPhotosAlbum:photo.data
-                                 metadata:photo.metadata
-                          completionBlock:^(NSURL* url, NSError* error){
-                              [self photoSubmitter:self didProgressChanged:hash progress:0.75];
-                              if(error == nil){
-                                  [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-                              }else{
-                                  [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-                              }
-                              id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
-                              [operationDelegate photoSubmitterDidOperationFinished:YES];
-                              [self clearRequest:hash];
-                          }];
-        [self photoSubmitter:self willStartUpload:hash];
-        [self photoSubmitter:self didProgressChanged:hash progress:0.25];
-        [self setOperationDelegate:delegate forRequest:hash];
-    });
-}
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    //do not cancel
-}
-
+#pragma mark - authorization
 /*!
  * login to file
  */
@@ -118,27 +84,6 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    return self.isEnabled;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [FilePhotoSubmitter isEnabled];
-}
-
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFile;
-}
-
-/*!
  * check url is processoble, we will not use this method in file
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
@@ -153,33 +98,93 @@
 }
 
 /*!
- * name
+ * check is logined
  */
-- (NSString *)name{
-    return @"File";
+- (BOOL)isLogined{
+    return self.isEnabled;
 }
 
 /*!
- * icon image
+ * check is enabled
  */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"file_32.png"];
+- (BOOL) isEnabled{
+    return [FilePhotoSubmitter isEnabled];
 }
 
 /*!
- * small icon image
+ * isEnabled
  */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"file_16.png"];
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_FILE_NOT_ENABLED]) {
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *hash = photo.md5;
+        ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
+        [lib writeImageDataToSavedPhotosAlbum:photo.data
+                                     metadata:photo.metadata
+                              completionBlock:^(NSURL* url, NSError* error){
+                                  [self photoSubmitter:self didProgressChanged:hash progress:0.75];
+                                  if(error == nil){
+                                      [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+                                  }else{
+                                      [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+                                  }
+                                  id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
+                                  [operationDelegate photoSubmitterDidOperationFinished:YES];
+                                  [self clearRequest:hash];
+                              }];
+        [self photoSubmitter:self willStartUpload:hash];
+        [self photoSubmitter:self didProgressChanged:hash progress:0.25];
+        [self setOperationDelegate:delegate forRequest:hash];
+    });
 }
 
 /*!
- * get username
+ * cancel photo upload
  */
-- (NSString *)username{
-    return nil;
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    //do not cancel
 }
 
+/*!
+ * invoke method as concurrent?
+ */
+- (BOOL)isConcurrent{
+    return NO;
+}
+
+/*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return NO;
+}
+
+/*!
+ * use NSOperation?
+ */
+- (BOOL)useOperation{
+    return NO;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return NO;
+}
+
+#pragma mark - albums
 /*!
  * is album supported
  */
@@ -222,6 +227,14 @@
     //do nothing
 }
 
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return nil;
+}
+
 /*!
  * update username
  */
@@ -229,42 +242,32 @@
     //do nothing
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return NO;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeFile;
 }
 
 /*!
- * use NSOperation ??
+ * name
  */
-- (BOOL)useOperation{
-    return NO;
+- (NSString *)name{
+    return @"Camera Roll";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return NO;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"file_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return NO;
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FILE_NOT_ENABLED]) {
-        return NO;
-    }
-    return YES;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"file_16.png"];
 }
 @end

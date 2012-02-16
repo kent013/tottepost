@@ -15,7 +15,6 @@
 		376A8B3614A05F8100637B68 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376A8B3514A05F8000637B68 /* QuartzCore.framework */; };
 		376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B3914A0617400637B68 /* FBProgressView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5314A2068B00637B68 /* ProgressSummaryView.m */; };
-		376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5614A227F900637B68 /* TottePostSettings.m */; };
 		376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8D5C14A247A300637B68 /* PreviewPhotoView.m */; };
 		376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153C1494C47800A34E7D /* UIKit.framework */; };
 		376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376E153E1494C47800A34E7D /* Foundation.framework */; };
@@ -51,10 +50,8 @@
 		37F58A1B14A361FE005C7700 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F58A1A14A361FE005C7700 /* DropboxSDK.framework */; };
 		37F58A1D14A3633A005C7700 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F58A1C14A3633A005C7700 /* Security.framework */; };
 		37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7431C149D892E002EEADD /* UploadProgressEntity.m */; };
-		37FB64D71496237500387490 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64D61496237500387490 /* SettingTableViewController.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
 		37FB64E01496239700387490 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 37FB64DF1496239700387490 /* setting.png */; };
-		37FB64E91496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */; };
 		37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65481497313500387490 /* FacebookPhotoSubmitter.m */; };
 		37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB654A1497313500387490 /* PhotoSubmitterManager.m */; };
 		37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65621497AAD300387490 /* ProgressTableViewController.m */; };
@@ -77,8 +74,6 @@
 		790B8D3914E57D1E00B286C3 /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3514E57D1E00B286C3 /* picasa_16@2x.png */; };
 		790B8D3A14E57D1E00B286C3 /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3614E57D1E00B286C3 /* picasa_32.png */; };
 		790B8D3B14E57D1E00B286C3 /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3714E57D1E00B286C3 /* picasa_32@2x.png */; };
-		790B8D5B14E8297300B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */; };
-		790B8D6014E8368900B286C3 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B8D5E14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.m */; };
 		791BF27014E01FBB00697E05 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF27114E01FBB00697E05 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26F14E01FBB00697E05 /* PDKeychainBindingsController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF29D14E01FC500697E05 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF27514E01FC500697E05 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -150,7 +145,6 @@
 		797E394F14B00EE500F17AC4 /* twitter_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E394514B00EE500F17AC4 /* twitter_32@2x.png */; };
 		797E395114B00F2B00F17AC4 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797E395014B00F2B00F17AC4 /* setting@2x.png */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
-		7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */; };
 		7980247314B1076400989368 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
 		7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */; };
 		7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588C14C86D47006E3817 /* AVFoundation.framework */; };
@@ -165,10 +159,17 @@
 		798058BE14CFD452006E3817 /* PhotoSubmitterSequencialOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 798058BD14CFD451006E3817 /* PhotoSubmitterSequencialOperationQueue.m */; };
 		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79823CDC14D2BDBA0094389D /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */; };
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
 		799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */; };
 		799CD6EB14E5590000F8A0EC /* PicasaPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */; };
+		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
+		79D0EAE014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAD114ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m */; };
+		79D0EAE114ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAD314ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m */; };
+		79D0EAE214ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAD514ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m */; };
+		79D0EAE314ECB58700CDEF76 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAD814ECB58700CDEF76 /* SettingTableViewController.m */; };
+		79D0EAE414ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADA14ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m */; };
+		79D0EAE514ECB58700CDEF76 /* TottePostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */; };
+		79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */; };
 		79D7844514E4DEBB003ECCCA /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840514E4DEBB003ECCCA /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79D7844614E4DEBB003ECCCA /* Mixi.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840714E4DEBB003ECCCA /* Mixi.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79D7844714E4DEBB003ECCCA /* MixiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840A14E4DEBB003ECCCA /* MixiConfig.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -252,8 +253,6 @@
 		376A8B3914A0617400637B68 /* FBProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBProgressView.m; path = Libraries/FBProgressView/FBProgressView.m; sourceTree = "<group>"; };
 		376A8D5214A2068A00637B68 /* ProgressSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSummaryView.h; sourceTree = "<group>"; };
 		376A8D5314A2068B00637B68 /* ProgressSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSummaryView.m; sourceTree = "<group>"; };
-		376A8D5514A227F900637B68 /* TottePostSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TottePostSettings.h; sourceTree = "<group>"; };
-		376A8D5614A227F900637B68 /* TottePostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TottePostSettings.m; sourceTree = "<group>"; };
 		376A8D5B14A247A200637B68 /* PreviewPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewPhotoView.h; sourceTree = "<group>"; };
 		376A8D5C14A247A300637B68 /* PreviewPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewPhotoView.m; sourceTree = "<group>"; };
 		376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerConstants.h; sourceTree = "<group>"; };
@@ -309,13 +308,9 @@
 		37F58A1C14A3633A005C7700 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		37F7431B149D892E002EEADD /* UploadProgressEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadProgressEntity.h; sourceTree = "<group>"; };
 		37F7431C149D892E002EEADD /* UploadProgressEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadProgressEntity.m; sourceTree = "<group>"; };
-		37FB64D51496237500387490 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
-		37FB64D61496237500387490 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
 		37FB64DB1496238600387490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		37FB64DC1496238600387490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		37FB64DF1496239700387490 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = Resources/images/setting.png; sourceTree = "<group>"; };
-		37FB64E71496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
-		37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		37FB65471497313500387490 /* FacebookPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookPhotoSubmitter.h; path = PhotoSubmitter/FacebookPhotoSubmitter.h; sourceTree = "<group>"; };
 		37FB65481497313500387490 /* FacebookPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookPhotoSubmitter.m; path = PhotoSubmitter/FacebookPhotoSubmitter.m; sourceTree = "<group>"; };
 		37FB65491497313500387490 /* PhotoSubmitterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterManager.h; path = PhotoSubmitter/PhotoSubmitterManager.h; sourceTree = "<group>"; };
@@ -350,10 +345,6 @@
 		790B8D3514E57D1E00B286C3 /* picasa_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "picasa_16@2x.png"; path = "PhotoSubmitter/Images/picasa_16@2x.png"; sourceTree = "<group>"; };
 		790B8D3614E57D1E00B286C3 /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picasa_32.png; path = PhotoSubmitter/Images/picasa_32.png; sourceTree = "<group>"; };
 		790B8D3714E57D1E00B286C3 /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "picasa_32@2x.png"; path = "PhotoSubmitter/Images/picasa_32@2x.png"; sourceTree = "<group>"; };
-		790B8D5814E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAlbumPhotoSubmitterSettingViewController.h; sourceTree = "<group>"; };
-		790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAlbumPhotoSubmitterSettingViewController.m; sourceTree = "<group>"; };
-		790B8D5D14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
-		790B8D5E14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		791BF26C14E01FBB00697E05 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindings.h; sourceTree = "<group>"; };
 		791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
 		791BF26E14E01FBB00697E05 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
@@ -489,9 +480,6 @@
 		797E395014B00F2B00F17AC4 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting@2x.png"; path = "Resources/Images/setting@2x.png"; sourceTree = "<group>"; };
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
 		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
-		7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
-		7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
-		7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterSettingTableViewProtocol.h; sourceTree = "<group>"; };
 		7980247114B1076400989368 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor-Expanded.h"; path = "Libraries/uicolor-utilities/UIColor-Expanded.h"; sourceTree = "<group>"; };
 		7980247214B1076400989368 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor-Expanded.m"; path = "Libraries/uicolor-utilities/UIColor-Expanded.m"; sourceTree = "<group>"; };
 		7980588914C86CC9006E3817 /* AVFoundationCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationCameraController.h; path = Libraries/AVFoundationCameraController/AVFoundationCameraController.h; sourceTree = "<group>"; };
@@ -517,8 +505,6 @@
 		79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackTopicsViewController.m; sourceTree = "<group>"; };
 		79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
 		79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
-		79823CD914D2BDB90094389D /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutSettingViewController.h; sourceTree = "<group>"; };
-		79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutSettingViewController.m; sourceTree = "<group>"; };
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		799CD6D914E543A300F8A0EC /* LFHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFHTTPRequest.h; sourceTree = "<group>"; };
 		799CD6DA14E543A300F8A0EC /* LFSiteReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFSiteReachability.h; sourceTree = "<group>"; };
@@ -844,6 +830,23 @@
 		799CD97014E55BF200F8A0EC /* GTMOAuth2ViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2ViewControllerTouch.h; sourceTree = "<group>"; };
 		799CD97114E55BF200F8A0EC /* GTMReadMonitorInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMReadMonitorInputStream.h; sourceTree = "<group>"; };
 		799CD97214E55BF200F8A0EC /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutSettingViewController.h; path = TottePostSettings/AboutSettingViewController.h; sourceTree = "<group>"; };
+		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
+		79D0EAD014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/AlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		79D0EAD114ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/AlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79D0EAD214ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateAlbumPhotoSubmitterSettingViewController.h; path = TottePostSettings/CreateAlbumPhotoSubmitterSettingViewController.h; sourceTree = "<group>"; };
+		79D0EAD314ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateAlbumPhotoSubmitterSettingViewController.m; path = TottePostSettings/CreateAlbumPhotoSubmitterSettingViewController.m; sourceTree = "<group>"; };
+		79D0EAD414ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterSettingTableViewController.h; path = TottePostSettings/PhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		79D0EAD514ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterSettingTableViewController.m; path = TottePostSettings/PhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79D0EAD614ECB58700CDEF76 /* PhotoSubmitterSettingTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterSettingTableViewProtocol.h; path = TottePostSettings/PhotoSubmitterSettingTableViewProtocol.h; sourceTree = "<group>"; };
+		79D0EAD714ECB58700CDEF76 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingTableViewController.h; path = TottePostSettings/SettingTableViewController.h; sourceTree = "<group>"; };
+		79D0EAD814ECB58700CDEF76 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingTableViewController.m; path = TottePostSettings/SettingTableViewController.m; sourceTree = "<group>"; };
+		79D0EAD914ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimplePhotoSubmitterSettingTableViewController.h; path = TottePostSettings/SimplePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		79D0EADA14ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimplePhotoSubmitterSettingTableViewController.m; path = TottePostSettings/SimplePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79D0EADB14ECB58700CDEF76 /* TottePostSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TottePostSettings.h; path = TottePostSettings/TottePostSettings.h; sourceTree = "<group>"; };
+		79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TottePostSettings.m; path = TottePostSettings/TottePostSettings.m; sourceTree = "<group>"; };
+		79D0EADD14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/TwitterPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/TwitterPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		79D7840414E4DEBB003ECCCA /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		79D7840514E4DEBB003ECCCA /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		79D7840614E4DEBB003ECCCA /* Mixi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixi.h; sourceTree = "<group>"; };
@@ -999,21 +1002,23 @@
 		3704D5B01494CD7E00380D30 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				37FB64D51496237500387490 /* SettingTableViewController.h */,
-				37FB64D61496237500387490 /* SettingTableViewController.m */,
-				376A8D5514A227F900637B68 /* TottePostSettings.h */,
-				376A8D5614A227F900637B68 /* TottePostSettings.m */,
-				7980245014B0C97A00989368 /* PhotoSubmitterSettingTableViewProtocol.h */,
-				7980244D14B0C77500989368 /* PhotoSubmitterSettingTableViewController.h */,
-				7980244E14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m */,
-				790B8D5D14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.h */,
-				790B8D5E14E8368800B286C3 /* SimplePhotoSubmitterSettingTableViewController.m */,
-				37FB64E71496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.h */,
-				37FB64E81496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m */,
-				790B8D5814E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.h */,
-				790B8D5914E8297200B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m */,
-				79823CD914D2BDB90094389D /* AboutSettingViewController.h */,
-				79823CDA14D2BDBA0094389D /* AboutSettingViewController.m */,
+				79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */,
+				79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */,
+				79D0EAD014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.h */,
+				79D0EAD114ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m */,
+				79D0EAD214ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.h */,
+				79D0EAD314ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m */,
+				79D0EAD414ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.h */,
+				79D0EAD514ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m */,
+				79D0EAD614ECB58700CDEF76 /* PhotoSubmitterSettingTableViewProtocol.h */,
+				79D0EAD714ECB58700CDEF76 /* SettingTableViewController.h */,
+				79D0EAD814ECB58700CDEF76 /* SettingTableViewController.m */,
+				79D0EAD914ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.h */,
+				79D0EADA14ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m */,
+				79D0EADB14ECB58700CDEF76 /* TottePostSettings.h */,
+				79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */,
+				79D0EADD14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.h */,
+				79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2300,9 +2305,7 @@
 			files = (
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
-				37FB64D71496237500387490 /* SettingTableViewController.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
-				37FB64E91496384800387490 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 				37FB654C1497313500387490 /* FacebookPhotoSubmitter.m in Sources */,
 				37FB654D1497313500387490 /* PhotoSubmitterManager.m in Sources */,
 				37FB65631497AAD300387490 /* ProgressTableViewController.m in Sources */,
@@ -2317,7 +2320,6 @@
 				37F26D09149F856D000172EF /* PhotoSubmitterOperation.m in Sources */,
 				376A8B3414A05BB100637B68 /* ProgressTableViewCell.m in Sources */,
 				376A8D5414A2068B00637B68 /* ProgressSummaryView.m in Sources */,
-				376A8D5714A227FA00637B68 /* TottePostSettings.m in Sources */,
 				376A8D5D14A247A300637B68 /* PreviewPhotoView.m in Sources */,
 				37F589ED14A32910005C7700 /* PhotoSubmitterAlbumEntity.m in Sources */,
 				37FB65A1149C4F5300387490 /* RegexKitLite.m in Sources */,
@@ -2334,7 +2336,6 @@
 				37F0D26F14A7701900680F8A /* UIImage+EXIF.m in Sources */,
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
-				7980244F14B0C77500989368 /* PhotoSubmitterSettingTableViewController.m in Sources */,
 				7980247314B1076400989368 /* UIColor-Expanded.m in Sources */,
 				7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */,
 				7980589D14CAA7C7006E3817 /* UIImage+Alpha.m in Sources */,
@@ -2347,7 +2348,6 @@
 				EA76226F14D0312100C54159 /* FlashButton.m in Sources */,
 				79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */,
 				79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */,
-				79823CDC14D2BDBA0094389D /* AboutSettingViewController.m in Sources */,
 				79F7471214DA58FD00C7BAD8 /* Facebook.m in Sources */,
 				79F7471414DA58FD00C7BAD8 /* FBDialog.m in Sources */,
 				79F7471514DA58FD00C7BAD8 /* FBLoginDialog.m in Sources */,
@@ -2416,10 +2416,16 @@
 				79D7845C14E4DEBB003ECCCA /* MixiWebViewController.m in Sources */,
 				799CD6EB14E5590000F8A0EC /* PicasaPhotoSubmitter.m in Sources */,
 				EAAC40EF14E70BA800CDC2CC /* MixiPhotoSubmitter.m in Sources */,
-				790B8D5B14E8297300B286C3 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */,
-				790B8D6014E8368900B286C3 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
 				EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */,
 				EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */,
+				79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */,
+				79D0EAE014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m in Sources */,
+				79D0EAE114ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m in Sources */,
+				79D0EAE214ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m in Sources */,
+				79D0EAE314ECB58700CDEF76 /* SettingTableViewController.m in Sources */,
+				79D0EAE414ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
+				79D0EAE514ECB58700CDEF76 /* TottePostSettings.m in Sources */,
+				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

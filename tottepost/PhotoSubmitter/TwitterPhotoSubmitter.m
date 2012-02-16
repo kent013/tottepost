@@ -1,6 +1,6 @@
 //
 //  TwitterPhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Twitter
 //
 //  Created by ISHITOYA Kentaro on 11/12/17.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
@@ -11,6 +11,7 @@
 #import "UIImage+Digest.h"
 
 #define PS_TWITTER_ENABLED @"PSTwitterEnabled"
+#define PS_TWITTER_USERNAME @"PSTwitterUsername"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -18,15 +19,16 @@
 @interface TwitterPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (ACAccount *)selectedAccount;
 @end
 
+#pragma mark - private implementations
 @implementation TwitterPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
 /*!
  * initializer
  */
 -(void)setupInitialState{
+    accountStore_ = [[ACAccountStore alloc] init];
 }
 
 /*!
@@ -36,8 +38,24 @@
     [self removeSettingForKey:PS_TWITTER_ENABLED];
 }
 
-#pragma mark -
-#pragma mark NSURLConnection delegates
+/*!
+ * get selected account
+ */
+- (ACAccount *)selectedAccount{
+    NSArray *accountsArray = self.accounts;
+    for(ACAccount *account in accountsArray){
+        if([account.username isEqualToString:self.selectedAccountUsername]){
+            return account;
+        }
+    }
+    if(accountsArray.count != 0){
+        ACAccount *account = [accountsArray objectAtIndex:0];
+        self.selectedAccountUsername = account.username;
+        return account;
+    }
+    return nil;
+}
+#pragma mark - NSURLConnection delegates
 /*!
  * did fail
  */
@@ -78,12 +96,11 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public PhotoSubmitter Protocol implementations
 @implementation TwitterPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
 /*!
  * initialize
  */
@@ -95,68 +112,18 @@
     return self;
 }
 
-/*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-	
-    if(photo.comment == nil){
-        photo.comment = @"TottePost Photo";
-    }
-    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-    if ([accountsArray count] > 0) {
-        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-        NSURL *url = 
-        [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
-        TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
-                                              requestMethod:TWRequestMethodPOST];
-        [request setAccount:twitterAccount];
-        [request addMultiPartData:photo.data 
-                         withName:@"media[]" type:@"multipart/form-data"];
-        [request addMultiPartData:[photo.comment dataUsingEncoding:NSUTF8StringEncoding] 
-                         withName:@"status" type:@"multipart/form-data"];
-        
-        NSURLConnection *connection = 
-          [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self];
-        NSString *imageHash = photo.md5;
-        
-        if(connection){
-            [self setPhotoHash:imageHash forRequest:connection];
-            [self addRequest:connection];
-            [self setOperationDelegate:delegate forRequest:connection];
-            [self photoSubmitter:self willStartUpload:imageHash];
-        }
-
-    }
-}
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    NSURLConnection *connection = (NSURLConnection *)[self requestForPhoto:hash];
-    [connection cancel];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:connection];
-}
-
+#pragma mark - authorization
 /*!
  * login to twitter
  */
 -(void)login{
     [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+    ACAccountType *accountType = [accountStore_ accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    [accountStore_ requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
         if(granted) {
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-			if ([accountsArray count] > 0){
+            ACAccount *account = self.selectedAccount;
+            
+			if (account != nil){
                 [self setSetting:@"enabled" forKey:PS_TWITTER_ENABLED];                
                 [self.authDelegate photoSubmitter:self didLogin:self.type];
             }else{
@@ -202,27 +169,6 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    return self.isEnabled;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [TwitterPhotoSubmitter isEnabled];
-}
-
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeTwitter;
-}
-
-/*!
  * check url is processoble, we will not use this method in twitter
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
@@ -237,41 +183,135 @@
 }
 
 /*!
- * name
+ * get account list
  */
-- (NSString *)name{
-    return @"Twitter";
+- (NSArray *)accounts{
+    ACAccountType *accountType = [accountStore_ accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    return [accountStore_ accountsWithAccountType:accountType];    
 }
 
 /*!
- * icon image
+ * set selected username
  */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"twitter_32.png"];
+- (NSString *)selectedAccountUsername{
+    return [self settingForKey:PS_TWITTER_USERNAME];
 }
 
 /*!
- * small icon image
+ * set selected username
  */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"twitter_16.png"];
+- (void)setSelectedAccountUsername:(NSString *)selectedAccountUsername{
+    return [self setSetting:selectedAccountUsername forKey:PS_TWITTER_USERNAME];
 }
 
 /*!
- * get username
+ * check is logined
  */
-- (NSString *)username{
-	ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-	
-    NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-    if ([accountsArray count] > 0) {
-        ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-        return twitterAccount.username;
+- (BOOL)isLogined{
+    return self.isEnabled;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
+    return [TwitterPhotoSubmitter isEnabled];
+}
+
+/*!
+ * isEnabled
+ */
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_TWITTER_ENABLED]) {
+        return YES;
     }
-    return nil;
+    return NO;
 }
 
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    if(photo.comment == nil){
+        photo.comment = @"TottePost Photo";
+    }
+    
+    ACAccount *twitterAccount = [self selectedAccount];
+    if (twitterAccount == nil) {
+        return;
+    }
+    
+    NSURL *url = 
+    [NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"];
+    TWRequest *request = [[TWRequest alloc] initWithURL:url parameters:nil 
+                                          requestMethod:TWRequestMethodPOST];
+    
+    [request setAccount:twitterAccount];
+    [request addMultiPartData:photo.data 
+                     withName:@"media[]" type:@"multipart/form-data"];
+    [request addMultiPartData:[photo.comment dataUsingEncoding:NSUTF8StringEncoding] 
+                     withName:@"status" type:@"multipart/form-data"];
+    
+    NSURLConnection *connection = 
+    [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self startImmediately:NO];
+    NSString *imageHash = photo.md5;
+    
+    if(connection == nil || delegate.isCancelled){
+        return;
+    }
+    
+    [connection start];
+    [self setPhotoHash:imageHash forRequest:connection];
+    [self addRequest:connection];
+    [self setOperationDelegate:delegate forRequest:connection];
+    [self photoSubmitter:self willStartUpload:imageHash];
+}
+
+/*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.md5;
+    NSURLConnection *connection = (NSURLConnection *)[self requestForPhoto:hash];
+    [connection cancel];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:connection];
+}
+
+/*!
+ * invoke method as concurrent?
+ */
+- (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return YES;
+}
+
+/*!
+ * use NSOperation?
+ */
+- (BOOL)useOperation{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return YES;
+}
+
+#pragma mark - albums
 /*!
  * is album supported
  */
@@ -314,6 +354,13 @@
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
     //do nothing
 }
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{ 
+    return self.selectedAccount.username;
+}
 
 /*!
  * update username
@@ -323,42 +370,32 @@
     [self.dataDelegate photoSubmitter:self didUsernameUpdated:self.username];
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return YES;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeTwitter;
 }
 
 /*!
- * use NSOperation ?
+ * name
  */
-- (BOOL)useOperation{
-    return YES;
+- (NSString *)name{
+    return @"Twitter";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return YES;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"twitter_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return YES;
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_TWITTER_ENABLED]) {
-        return YES;
-    }
-    return NO;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"twitter_16.png"];
 }
 @end

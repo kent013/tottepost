@@ -1,6 +1,6 @@
 //
 //  FlickrPhotoSubmitter.m
-//  tottepost
+//  PhotoSubmitter for Flickr
 //
 //  Created by ISHITOYA Kentaro on 11/12/14.
 //  Copyright (c) 2011 cocotomo. All rights reserved.
@@ -17,8 +17,8 @@
 #define PS_FLICKR_ENABLED @"PSFlickrEnabled"
 
 #define PS_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"
-#define PS_FLICKR_AUTH_TOKEN @"FlickrOAuthToken"
-#define PS_FLICKR_AUTH_TOKEN_SECRET @"FlickrOAuthTokenSecret"
+#define PS_FLICKR_AUTH_TOKEN @"PSFlickrOAuthToken"
+#define PS_FLICKR_AUTH_TOKEN_SECRET @"PSFlickrOAuthTokenSecret"
 
 #define PS_FLICKR_API_CHECK_TOKEN @"flickr.test.login"
 #define PS_FLICKR_API_REQUEST_TOKEN @"request_token"
@@ -30,11 +30,11 @@
 #define PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO @"flickr.photosets.removePhoto"
 #define PS_FLICKR_API_RECENTLY_UPLOADED @"flickr.photos.recentlyUpdated"
 
-#define PS_FLICKR_SETTING_USERNAME @"FlickrUserName"
-#define PS_FLICKR_SETTING_DUMMY_PHOTO_ID @"FlickrDummyPrimaryPhotoId"
-#define PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID @"FlickerAlbumDummyPhotoId"
-#define PS_FLICKR_SETTING_ALBUMS @"FlickrAlbums"
-#define PS_FLICKR_SETTING_TARGET_ALBUM @"FlickrTargetAlbums"
+#define PS_FLICKR_SETTING_USERNAME @"PSFlickrUserName"
+#define PS_FLICKR_SETTING_DUMMY_PHOTO_ID @"PSFlickrDummyPrimaryPhotoId"
+#define PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID @"PSFlickerAlbumDummyPhotoId"
+#define PS_FLICKR_SETTING_ALBUMS @"PSFlickrAlbums"
+#define PS_FLICKR_SETTING_TARGET_ALBUM @"PSFlickrTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -42,15 +42,14 @@
 @interface FlickrPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) addPhotoToPhotoSet:(NSString *)photoId;
 - (void) fetchDummyPrimaryPhoto;
 - (void) removeDummyPrimaryPhoto:(NSString*)photoId albumId:(NSString *)albumId;
-- (void) addPhotoToPhotoSet:(NSString *)photoId;
 - (NSString *) photosetDummyPhotoKey:(NSString*)photosetId;
 @end
 
 @implementation FlickrPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
+#pragma mark - private implementations
 /*!
  * initializer
  */
@@ -81,8 +80,65 @@
     [self removeSettingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID];
 }
 
-#pragma mark -
-#pragma mark flickr delegate methods
+
+/*!
+ * add photo to selected photoset 
+ */
+- (void)addPhotoToPhotoSet:(NSString *)photoId{
+    if(self.targetAlbum == nil){
+        return;
+    }
+    
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_ADD_PHOTOSET_PHOTO;
+    
+    NSDictionary *params = 
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     self.targetAlbum.albumId, @"photoset_id", 
+     photoId, @"photo_id", nil];
+    [request callAPIMethodWithPOST:PS_FLICKR_API_ADD_PHOTOSET_PHOTO arguments:params];
+    [self addRequest:request];
+}
+
+/*!
+ * get photo for dummy primary photo
+ */
+- (void)fetchDummyPrimaryPhoto{
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_RECENTLY_UPLOADED;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [request callAPIMethodWithGET:PS_FLICKR_API_RECENTLY_UPLOADED arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:[df stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]], @"min_date", @"1", @"per_page", @"page", @"1", nil]];
+    [self addRequest:request];
+}
+
+/*!
+ * remove primary photo from photoset
+ */
+- (void)removeDummyPrimaryPhoto:(NSString *)photoId albumId:(NSString *)albumId{
+    if(photoId == nil || albumId == nil){
+        return;
+    }
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO;
+    
+    [request callAPIMethodWithPOST:PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:albumId, @"photoset_id", photoId, @"photo_id", nil]];
+    [self addRequest:request];
+    
+}
+
+/*!
+ * get photoset dummy primary photo key
+ */
+- (NSString *)photosetDummyPhotoKey:(NSString *)photosetId{
+    return [NSString stringWithFormat:@"%@%@", PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID, photosetId];
+}
+
+#pragma mark - OFFlickrAPIRequestDelegate methods
 /*!
  * on request compleded
  */
@@ -146,7 +202,6 @@
         
         [self performSelectorOnMainThread:@selector(addPhotoToPhotoSet:) withObject:photoId waitUntilDone:NO];
     }
-    NSLog(@"%@, %@", inRequest.sessionInfo, inResponseDictionary.description);
 }
 
 /*!
@@ -217,74 +272,16 @@
         [self fetchDummyPrimaryPhoto];
     }
 }
-
-/*!
- * add photo to selected photoset 
- */
-- (void)addPhotoToPhotoSet:(NSString *)photoId{
-    if(self.targetAlbum == nil){
-        return;
-    }
-    
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = PS_FLICKR_API_ADD_PHOTOSET_PHOTO;
-    
-    NSDictionary *params = 
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     self.targetAlbum.albumId, @"photoset_id", 
-     photoId, @"photo_id", nil];
-    [request callAPIMethodWithPOST:PS_FLICKR_API_ADD_PHOTOSET_PHOTO arguments:params];
-    [self addRequest:request];
-}
-
-/*!
- * get photo for dummy primary photo
- */
-- (void)fetchDummyPrimaryPhoto{
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = PS_FLICKR_API_RECENTLY_UPLOADED;
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    [request callAPIMethodWithGET:PS_FLICKR_API_RECENTLY_UPLOADED arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:[df stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]], @"min_date", @"1", @"per_page", @"page", @"1", nil]];
-    [self addRequest:request];
-}
-
-/*!
- * remove primary photo from photoset
- */
-- (void)removeDummyPrimaryPhoto:(NSString *)photoId albumId:(NSString *)albumId{
-    if(photoId == nil || albumId == nil){
-        return;
-    }
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO;
-    
-    [request callAPIMethodWithPOST:PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO arguments:[NSMutableDictionary dictionaryWithObjectsAndKeys:albumId, @"photoset_id", photoId, @"photo_id", nil]];
-    [self addRequest:request];
-    
-}
-
-/*!
- * get photoset dummy primary photo key
- */
-- (NSString *)photosetDummyPhotoKey:(NSString *)photosetId{
-    return [NSString stringWithFormat:@"%@%@", PS_FLICKR_SETTING_ALBUM_DUMMY_PHOTO_ID, photosetId];
-}
 @end
 
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
+#pragma mark - public implementations
 @implementation FlickrPhotoSubmitter
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
 /*!
  * initialize
  */
@@ -296,37 +293,7 @@
     return self;
 }
 
-/*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
-    request.delegate = self;
-    request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
-    [self addRequest:request];
-    
-    [request uploadImageStream:[NSInputStream inputStreamWithData:photo.data] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", photo.comment, @"title", nil]];
-	
-    NSString *hash = photo.md5;
-    [self setPhotoHash:hash forRequest:request];
-    [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:hash];
-}
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    OFFlickrAPIRequest *request = (OFFlickrAPIRequest *)[self requestForPhoto:hash];
-    [request cancel];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
-}
-
+#pragma mark - authorization
 /*!
  * login to flickr
  */
@@ -360,33 +327,6 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([self settingForKey:PS_FLICKR_AUTH_TOKEN]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [FlickrPhotoSubmitter isEnabled];
-}
-
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFlickr;
-}
-
-/*!
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
@@ -417,33 +357,100 @@
 }
 
 /*!
- * name
+ * check is logined
  */
-- (NSString *)name{
-    return @"Flickr";
+- (BOOL)isLogined{
+    if(self.isEnabled == false){
+        return NO;
+    }
+    if ([self settingForKey:PS_FLICKR_AUTH_TOKEN]) {
+        return YES;
+    }
+    return NO;
 }
 
 /*!
- * icon image
+ * check is enabled
  */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"flickr_32.png"];
+- (BOOL) isEnabled{
+    return [FlickrPhotoSubmitter isEnabled];
 }
 
 /*!
- * small icon image
+ * isEnabled
  */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"flickr_16.png"];
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_FLICKR_ENABLED]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    OFFlickrAPIRequest *request = [[OFFlickrAPIRequest alloc] initWithAPIContext:flickr_];
+    request.delegate = self;
+    request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    [request uploadImageStream:[NSInputStream inputStreamWithData:photo.data] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", photo.comment, @"title", nil]];
+    
+    NSString *hash = photo.md5;
+    [self addRequest:request];
+    [self setPhotoHash:hash forRequest:request];
+    [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:hash];
 }
 
 /*!
- * get username
+ * cancel photo upload
  */
-- (NSString *)username{
-    return [self settingForKey:PS_FLICKR_SETTING_USERNAME];
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    NSString *hash = photo.md5;
+    OFFlickrAPIRequest *request = (OFFlickrAPIRequest *)[self requestForPhoto:hash];
+    [request cancel];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:request];
 }
 
+/*!
+ * invoke method as concurrent?
+ */
+- (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return NO;
+}
+
+/*!
+ * use NSOperation?
+ */
+- (BOOL)useOperation{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return YES;
+}
+
+#pragma mark - albums
 /*!
  * is album supported
  */
@@ -465,10 +472,10 @@
     request.sessionInfo = PS_FLICKR_API_CREATE_PHOTOSET;
     [self addRequest:request];
     NSDictionary *param = 
-      [NSDictionary dictionaryWithObjectsAndKeys:
-       title, @"title", 
-       [self settingForKey: PS_FLICKR_SETTING_DUMMY_PHOTO_ID], @"primary_photo_id",
-       nil];
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     title, @"title", 
+     [self settingForKey: PS_FLICKR_SETTING_DUMMY_PHOTO_ID], @"primary_photo_id",
+     nil];
     [request callAPIMethodWithGET:PS_FLICKR_API_CREATE_PHOTOSET arguments:param];
     [self addRequest:request];
 }
@@ -510,6 +517,14 @@
     [self setComplexSetting:targetAlbum forKey:PS_FLICKR_SETTING_TARGET_ALBUM];
 }
 
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_FLICKR_SETTING_USERNAME];
+}
+
 /*!
  * update username
  */
@@ -520,42 +535,32 @@
     //do nothing
 }
 
+#pragma mark - other properties
 /*!
- * invoke method as concurrent?
+ * return type
  */
-- (BOOL)isConcurrent{
-    return YES;
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeFlickr;
 }
 
 /*!
- * use NSOperation ?
+ * name
  */
-- (BOOL)useOperation{
-    return YES;
+- (NSString *)name{
+    return @"Flickr";
 }
 
 /*!
- * is sequencial? if so, use SequencialQueue
+ * icon image
  */
-- (BOOL)isSequencial{
-    return NO;
+- (UIImage *)icon{
+    return [UIImage imageNamed:@"flickr_32.png"];
 }
 
 /*!
- * requires network
+ * small icon image
  */
-- (BOOL)requiresNetwork{
-    return YES;
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FLICKR_ENABLED]) {
-        return YES;
-    }
-    return NO;
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:@"flickr_16.png"];
 }
 @end
