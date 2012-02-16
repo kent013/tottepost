@@ -6,6 +6,10 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 */
 
+"FirstAlert_Title" = "ようこそtottepostへ！";
+"FirstAlert_Message" = "このアプリをご使用していただき\nありがとうございます。\n右下の歯車のアイコンをタップして\n投稿するサービスを選んで下さい。";
+"FirstAlert_OK" = "確認";
+
 "Alert_Error" = "エラー";
 "Alert_NoNetwork" = "ネットワークに接続していません。\nアップロードをキャンセルします。";
 "Alert_NoSubmittersEnabled" = "アップロード先のサービスが選択されていません。";

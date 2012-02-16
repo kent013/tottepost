@@ -32,6 +32,7 @@
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
 - (void) createCameraController;
+- (void) firstLaunched;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -129,6 +130,14 @@
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
         [self.view addSubview:launchImageView_];
+    }
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isNotFirstLaunched = [defaults boolForKey:@"IsNotFirstLaunched"];
+    if(isNotFirstLaunched == false)
+    {
+        [self firstLaunched];
+        [defaults setBool:YES forKey:@"IsNotFirstLaunched"];
     }
 }
 
@@ -354,6 +363,17 @@
     }
     [self updateCameraController];
 }
+
+/*!
+ * first launched
+ */
+- (void) firstLaunched{
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"FirstAlert_Title"] message:[TTLang lstr:@"FirstAlert_Message"]
+                              delegate:nil cancelButtonTitle:[TTLang lstr:@"FirstAlert_OK"] otherButtonTitles:nil];
+    [alert show];
+}
+
 @end
 
 //-----------------------------------------------------------------------------

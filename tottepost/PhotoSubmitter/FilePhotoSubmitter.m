@@ -14,7 +14,7 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
-#define PS_FILE_ENABLED @"PSFileEnabled"
+#define PS_FILE_NOT_ENABLED @"PSFileNotEnabled"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -37,7 +37,7 @@
  * clear defaults, on file we will not store access token.
  */
 - (void)clearCredentials{
-    [self removeSettingForKey:PS_FILE_ENABLED];
+    [self removeSettingForKey:PS_FILE_NOT_ENABLED];
 }
 @end
 
@@ -98,7 +98,7 @@
  * login to file
  */
 -(void)login{
-    [self setSetting:@"enabled" forKey:PS_FILE_ENABLED];
+    [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogin:self.type];
 }
 
@@ -113,7 +113,7 @@
  * disable
  */
 - (void)disable{
-    [self clearCredentials];
+    [self setSetting:@"notenabled" forKey:PS_FILE_NOT_ENABLED];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
@@ -262,9 +262,9 @@
  */
 + (BOOL)isEnabled{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FILE_ENABLED]) {
-        return YES;
+    if ([defaults objectForKey:PS_FILE_NOT_ENABLED]) {
+        return NO;
     }
-    return NO;
+    return YES;
 }
 @end
