@@ -43,7 +43,7 @@
  * initializer
  */
 -(void)setupInitialState{
-    mixi_ = [[Mixi sharedMixi] setupWithType:kMixiApiTypeSelectorMixiApp 
+    mixi_ = [[Mixi sharedMixi] setupWithType:kMixiApiTypeSelectorGraphApi
                                          clientId:MIXI_SUBMITTER_API_KEY
                                            secret:MIXI_SUBMITTER_API_SECRET];
     [mixi_ restore];
@@ -96,7 +96,7 @@
  * login to mixi
  */
 -(void)login{
-    [mixi_ authorize:@"mixi_apps2", nil];
+    [mixi_ authorize:@"r_photo", @"w_photo", nil];
 }
 
 /*!
