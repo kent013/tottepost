@@ -36,8 +36,9 @@
     __strong PreviewPhotoView *previewImageView_;
     __strong SettingIndicatorView *settingIndicatorView_;
     __strong UIImageView *launchImageView_;
-    UIInterfaceOrientation orientation_;
-    UIInterfaceOrientation lastOrientation_;
+    __strong UIImageView *cameraIconImageView_;
+    UIDeviceOrientation orientation_;
+    UIDeviceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;
     BOOL settingViewPresented_;
     BOOL isConnected_;

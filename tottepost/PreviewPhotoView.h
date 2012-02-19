@@ -29,5 +29,5 @@
 @end
 
 @protocol PreviewPhotoViewDelegate <NSObject>
-- (UIInterfaceOrientation) requestForOrientation;
+- (UIDeviceOrientation) requestForOrientation;
 @end

@@ -9,7 +9,7 @@
 #import "PhotoSubmitter.h"
 #import "MixiSDK.h"
 
-@interface MixiPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
+@interface MixiPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol,MixiDelegate>{
     __strong Mixi *mixi_;
 }
 @end

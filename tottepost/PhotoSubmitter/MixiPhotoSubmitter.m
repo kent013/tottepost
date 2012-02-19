@@ -34,6 +34,7 @@
 @interface MixiPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
 - (void) clearCredentials;
+- (void) getUserInfomation;
 @end
 
 @implementation MixiPhotoSubmitter(PrivateImplementation)
@@ -56,8 +57,19 @@
 - (void)clearCredentials{
 }
 
+- (void) getUserInfomation{
+    MixiRequest *request = [MixiRequest requestWithEndpoint:@"/people/@me"];
+    [mixi_ sendRequest:request delegate:self];
+}
+
 #pragma mark -
 #pragma mark mixi delegate methods
+
+- (void)mixi:(Mixi*)mixi didFinishLoading:(NSString*)data{
+    NSLog(@"********DEBUG********* = %@",data);
+
+}
+
 @end
 
 //-----------------------------------------------------------------------------
@@ -80,31 +92,19 @@
     return self;
 }
 
+#pragma mark - authorization
 /*!
- * submit photo with data, comment and delegate
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-}
-
-/*!
- * cancel photo upload
- */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-}
-
-/*!
- * login to mixi
+ * login to facebook
  */
 -(void)login{
-    [mixi_ authorize:@"r_photo", @"w_photo", nil];
+    [mixi_ authorize:@"r_profile",@"r_photo", @"w_photo", nil];
 }
 
 /*!
- * logoff from mixi
+ * logoff from facebook
  */
-- (void)logout{  
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
+- (void)logout{
+    //TODo
 }
 
 /*!
@@ -116,40 +116,11 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([self settingForKey:PS_MIXI_AUTH_TOKEN]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [MixiPhotoSubmitter isEnabled];
-}
-
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeMixi;
-}
-
-/*!
  * check url is processoble
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    if([url.absoluteString isMatchedByRegex:PS_MIXI_AUTH_URL]){
-        return YES;    
-    }
-    return NO;
+    // TODO
+    return YES;
 }
 
 /*!
@@ -173,6 +144,144 @@
 }
 
 /*!
+ * check is logined
+ */
+- (BOOL)isLogined{
+    if(self.isEnabled == false){
+        return NO;
+    }
+    if ([self settingExistsForKey:PS_MIXI_AUTH_TOKEN]) {
+        return YES;
+    }
+    return NO;
+}
+
+/*!
+ * check is enabled
+ */
+- (BOOL) isEnabled{
+    return [FacebookPhotoSubmitter isEnabled];
+}
+
+/*!
+ * isEnabled
+ */
++ (BOOL)isEnabled{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:PS_MIXI_ENABLED]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - photo
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    // TODO
+}
+
+/*!
+ * cancel photo upload
+ */
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    //TODO
+}
+
+/*!
+ * invoke method as concurrent?
+ */
+- (BOOL)isConcurrent{
+    return YES;
+}
+
+/*!
+ * is sequencial? if so, use SequencialQueue
+ */
+- (BOOL)isSequencial{
+    return NO;
+}
+
+/*!
+ * use NSOperation?
+ */
+- (BOOL)useOperation{
+    return YES;
+}
+
+/*!
+ * requires network
+ */
+- (BOOL)requiresNetwork{
+    return YES;
+}
+
+#pragma mark - albums
+/*!
+ * is album supported
+ */
+- (BOOL) isAlbumSupported{
+    return YES;
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+}
+
+/*!
+ * album list
+ */
+- (NSArray *)albumList{
+    return nil;
+}
+
+/*!
+ * update album list
+ */
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+}
+
+/*!
+ * selected album
+ */
+- (PhotoSubmitterAlbumEntity *)targetAlbum{
+    return nil;
+}
+
+/*!
+ * save selected album
+ */
+- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+}
+
+#pragma mark - username
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:PS_MIXI_SETTING_USERNAME];
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    [self getUserInfomation];
+}
+
+#pragma mark - other properties
+/*!
+ * return type
+ */
+- (PhotoSubmitterType) type{
+    return PhotoSubmitterTypeFacebook;
+}
+
+/*!
  * name
  */
 - (NSString *)name{
@@ -191,102 +300,5 @@
  */
 - (UIImage *)smallIcon{
     return [UIImage imageNamed:@"mixi_16.png"];
-}
-
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_MIXI_SETTING_USERNAME];
-}
-
-/*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return NO;
-}
-
-/*!
- * create album
- */
-- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-    //do nothing 
-}
-
-/*!
- * albumlist
- */
-- (NSArray *)albumList{
-    return nil;
-}
-
-/*!
- * update album list
- */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    self.dataDelegate = delegate;
-    //do nothing
-}
-
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
-}
-
-/*!
- * update username
- */
-- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    self.dataDelegate = delegate;
-    //do nothing
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return YES;
-}
-
-/*!
- * use NSOperation ?
- */
-- (BOOL)useOperation{
-    return YES;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return YES;
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_MIXI_ENABLED]) {
-        return YES;
-    }
-    return NO;
 }
 @end
