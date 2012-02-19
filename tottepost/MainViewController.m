@@ -73,17 +73,21 @@
     toolbar_.barStyle = UIBarStyleBlack;
     
     //camera button
-    UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, 39)];
-    [customView setBackgroundImage:[UIImage imageNamed:@"camera.png"]forState:UIControlStateNormal];
+    UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, MAINVIEW_CAMERA_BUTTON_HEIGHT)];
+    [customView setBackgroundImage:[UIImage imageNamed:@"button_template.png"]forState:UIControlStateNormal];
     [customView addTarget:self action:@selector(didCameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     cameraButton_ = [[UIBarButtonItem alloc]initWithCustomView:customView];
     cameraButton_.style = UIBarButtonItemStyleBordered;
+    UIImage *cameraIconImage = [UIImage imageNamed:@"camera.png"];
+    cameraIconImageView_ = [[UIImageView alloc] initWithImage:cameraIconImage];
+    cameraIconImageView_.frame = CGRectMake(MAINVIEW_CAMERA_BUTTON_WIDTH/2 - cameraIconImage.size.width/2, (MAINVIEW_CAMERA_BUTTON_HEIGHT - cameraIconImage.size.height)/2, cameraIconImage.size.width, cameraIconImage.size.height);
+    [customView addSubview:cameraIconImageView_];
     
     //comment button
     commentButton_ = [[UIBarButtonItem alloc] init];
         
     //setting button
-    settingButton_ = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting.png"] style:UIBarButtonItemStylePlain target:self action:@selector(didSettingButtonTapped:)];
+    settingButton_ = [[UIBarButtonItem alloc] init];
     
     //post button
     postButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang lstr:@"Main_Post"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
@@ -109,12 +113,14 @@
     [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
       [TottePostSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
-        orientation_ = UIInterfaceOrientationPortraitUpsideDown;
+        orientation_ = UIDeviceOrientationPortraitUpsideDown;
     }else{
-        orientation_ = UIInterfaceOrientationPortrait;
+        orientation_ = UIDeviceOrientationPortrait;
     }
     lastOrientation_ = orientation_;
-    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(didChangeNetworkReachability:)
@@ -160,25 +166,16 @@
 
 #pragma mark -
 #pragma mark coordinates
-/*!
- * did rotate
- */
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    imagePicker_.showsCameraControls = YES;
-}
 
-/*!
- * will rotate
- */
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)deviceOrientationDidChange
 {
-    imagePicker_.showsCameraControls = NO;
-    if(toInterfaceOrientation == UIInterfaceOrientationPortrait ||
-       toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
-       toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-       toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if(orientation == UIDeviceOrientationPortrait ||
+       orientation == UIDeviceOrientationPortraitUpsideDown ||
+       orientation == UIDeviceOrientationLandscapeLeft ||
+       orientation == UIDeviceOrientationLandscapeRight)
     {
-        orientation_ = toInterfaceOrientation;
+        orientation_ = orientation;
     }
     
     if(orientation_ == lastOrientation_)
@@ -195,12 +192,8 @@
 - (void)updateCoordinates{ 
     CGRect frame = self.view.frame;
     CGRect screen = [UIScreen mainScreen].bounds;
-    if(UIInterfaceOrientationIsLandscape(orientation_)){
-        frame = CGRectMake(0, 0, screen.size.height, screen.size.width);
-    }else if(UIInterfaceOrientationIsPortrait(orientation_)){
-        frame = CGRectMake(0, 0, screen.size.width, screen.size.height);
-    }
-    
+
+    frame = CGRectMake(0, 0, screen.size.width, screen.size.height);    
     [previewImageView_ updateWithFrame:frame];
     
     //progress view
@@ -221,18 +214,45 @@
     
     postButton_.width = MAINVIEW_POST_BUTTON_WIDTH;
     postCancelButton_.width = MAINVIEW_POSTCANCEL_BUTTON_WIDTH;
-    
-    if([TottePostSettings getInstance].commentPostEnabled){
-        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
-        [customView setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
-        [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        commentButton_.customView = customView;
-    }else{
-        UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_COMMENT_BUTTON_WIDTH, 33)];
-        [customView setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
-        [customView addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        commentButton_.customView = customView;
+
+    CGAffineTransform t;
+    switch (orientation_) {
+        case UIDeviceOrientationPortrait:
+            t = CGAffineTransformMakeRotation(0 * M_PI / 180);
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            t = CGAffineTransformMakeRotation(90 * M_PI / 180);
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            t = CGAffineTransformMakeRotation(270 * M_PI / 180);
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            t = CGAffineTransformMakeRotation(180 * M_PI / 180);
+            break;
+        default:
+            break;
     }
+    
+    UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
+    if([TottePostSettings getInstance].commentPostEnabled){
+        [commentButton setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
+    }else{
+        [commentButton setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
+    }
+    [commentButton addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    commentButton_.customView = commentButton;
+
+    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
+    [settingButton setBackgroundImage:[UIImage imageNamed:@"setting.png"]forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(didSettingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    settingButton_.customView = settingButton;
+
+    [UIView beginAnimations:@"RotateIcon" context:nil];
+    commentButton.transform = t;
+    settingButton.transform = t;
+    cameraIconImageView_.transform = t;
+    [UIView commitAnimations];
+    
 }
 
 #pragma mark -
@@ -514,7 +534,7 @@
 /*!
  * request for orientation
  */
-- (UIInterfaceOrientation)requestForOrientation{
+- (UIDeviceOrientation)requestForOrientation{
     return orientation_;
 }
 
@@ -562,10 +582,10 @@
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
-           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
-            return YES;
-        }
+//        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+//           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+//            return YES;
+//        }
         return NO;
     }
     return YES;
