@@ -44,6 +44,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
                        [NSNumber numberWithInt:PhotoSubmitterTypeEvernote],
                        [NSNumber numberWithInt:PhotoSubmitterTypePicasa],
                        [NSNumber numberWithInt:PhotoSubmitterTypeMixi],
+                       [NSNumber numberWithInt:PhotoSubmitterTypeFotolife],
                        [NSNumber numberWithInt:PhotoSubmitterTypeFile], nil];
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
@@ -102,7 +103,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @synthesize location = location_;
 @synthesize isUploading;
 @synthesize isPausingOperation = isPausingOperation_;
-@synthesize oAuthControllerDelegate;
+@synthesize authControllerDelegate;
 
 /*!
  * initializer
@@ -143,7 +144,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
             submitter = [[PicasaPhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeMixi:
-            submitter = [[MixiPhotoSubmitter alloc]init];
+            submitter = [[MixiPhotoSubmitter alloc] init];
+            break;
+        case PhotoSubmitterTypeFotolife:
+            submitter = [[FotolifePhotoSubmitter alloc] init];
             break;
         case PhotoSubmitterTypeFile:
             submitter = [[FilePhotoSubmitter alloc] init];

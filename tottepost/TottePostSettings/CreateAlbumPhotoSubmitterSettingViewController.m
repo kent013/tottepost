@@ -20,7 +20,6 @@
 @interface CreateAlbumPhotoSubmitterSettingViewController(PrivateImplementation)
 - (void) setupInitialState;
 - (void) handleCreateButtonTapped:(UIButton *)sender;
-- (id<PhotoSubmitterProtocol>)submitter;
 - (void) createAlbum:(NSString *)title;
 @end
 
@@ -70,22 +69,6 @@
         return;
     }
     [self.submitter createAlbum:title withDelegate:self];
-}
-
-#pragma mark -
-#pragma mark PhotoSubmitterSettingTableViewProtocol methods
-/*!
- * submitter
- */
-- (id<PhotoSubmitterProtocol>)submitter{
-    return [PhotoSubmitterManager submitterForType:type_];
-}
-
-/*!
- * type
- */
-- (PhotoSubmitterType)type{
-    return type_;
 }
 @end
 

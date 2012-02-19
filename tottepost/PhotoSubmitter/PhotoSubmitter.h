@@ -60,11 +60,17 @@
 //submit photo
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
 
-//write setting methods
+//setting methods
 - (void)setSetting:(id)value forKey:(NSString *)key;
 - (id)settingForKey:(NSString *)key;
 - (void) removeSettingForKey: (NSString *)key;
 - (BOOL) settingExistsForKey: (NSString *)key;
 - (void)setComplexSetting:(id)value forKey:(NSString *)key;
 - (id)complexSettingForKey:(NSString *)key;
+
+//secure setting methods
+- (void)setSecureSetting:(id)value forKey:(NSString *)key;
+- (id)secureSettingForKey:(NSString *)key;
+- (void) removeSecureSettingForKey: (NSString *)key;
+- (BOOL) secureSettingExistsForKey: (NSString *)key;
 @end

@@ -45,6 +45,12 @@
 "Create_Album_Alert_Creation_Failed_Title" = "エラー";
 "Create_Album_Alert_Creation_Failed_Button_Title" = "OK";
 
+"Account_Navigation_Title" = "認証";
+"Account_Section_Username" = "ユーザー名";
+"Account_Section_Password" = "パスワード";
+"Account_Section_Username_Placeholder" = "kentaro.ishitoya@gmail.com";
+"Account_Section_Password_Placeholder" = "password";
+
 "ProgressCell_Completed" = "完了";
 "ProgressCell_Canceled" = "中断";
 

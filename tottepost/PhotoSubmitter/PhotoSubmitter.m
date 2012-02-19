@@ -12,6 +12,7 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+Digest.h"
 #import "UIImage+EXIF.h"
+#import "PDKeychainBindings.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -189,8 +190,7 @@
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
 }
 
-#pragma mark -
-#pragma mark util methods
+#pragma mark - setting methods
 
 /*!
  * write setting to user defaults
@@ -244,5 +244,38 @@
  */
 - (BOOL)settingExistsForKey:(NSString *)key{
     return [self settingForKey:key] != nil;
+}
+
+#pragma mark - secure setting methods
+
+/*!
+ * write setting to user bindings
+ */
+- (void)setSecureSetting:(id)value forKey:(NSString *)key{
+    PDKeychainBindings *bindings = [PDKeychainBindings sharedKeychainBindings];
+    [bindings setObject:value forKey:key];
+}
+
+/*!
+ * read setting from user bindings
+ */
+- (id)secureSettingForKey:(NSString *)key{
+    PDKeychainBindings *bindings = [PDKeychainBindings sharedKeychainBindings];
+    return [bindings objectForKey:key];
+}
+
+/*!
+ * remove setting from user bindings
+ */
+- (void)removeSecureSettingForKey:(NSString *)key{
+    PDKeychainBindings *bindings = [PDKeychainBindings sharedKeychainBindings];
+    [bindings removeObjectForKey:key];
+}
+
+/*!
+ * setting exists
+ */
+- (BOOL)secureSettingExistsForKey:(NSString *)key{
+    return [self secureSettingForKey:key] != nil;
 }
 @end

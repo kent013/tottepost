@@ -20,6 +20,7 @@ typedef enum {
     PhotoSubmitterTypeEvernote,
     PhotoSubmitterTypePicasa,
     PhotoSubmitterTypeMixi,
+    PhotoSubmitterTypeFotolife,
     PhotoSubmitterTypeFile,
 } PhotoSubmitterType;
 
@@ -27,7 +28,7 @@ typedef enum {
 @protocol PhotoSubmitterPhotoDelegate;
 @protocol PhotoSubmitterPhotoOperationDelegate;
 @protocol PhotoSubmitterDataDelegate;
-@protocol PhotoSubmitterOAuthControllerDelegate;
+@protocol PhotoSubmitterAuthControllerDelegate;
 @protocol PhotoSubmitterAlbumDelegate;
 
 /*!
@@ -116,8 +117,15 @@ typedef enum {
 @end
 
 /*!
- * protocol for request oauth authentication view
+ * protocol for request authentication view
  */
-@protocol PhotoSubmitterOAuthControllerDelegate <NSObject>
+@protocol PhotoSubmitterAuthControllerDelegate <NSObject>
 - (UINavigationController *) requestNavigationControllerToPresentAuthenticationView;
+@end
+
+/*!
+ * protocol for request account info
+ */
+@protocol PhotoSubmitterPasswordAuthViewDelegate <NSObject>
+- (void) passwordAuthView: (UIViewController *)passwordAuthViewController didPresentUserId:(NSString *)userId password:(NSString *)password;
 @end

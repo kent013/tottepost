@@ -257,7 +257,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
                                                  delegate:self
                                          finishedSelector:finishedSel];
         
-        [[[PhotoSubmitterManager sharedInstance].oAuthControllerDelegate requestNavigationControllerToPresentAuthenticationView] pushViewController:viewController animated:YES];
+        [[[PhotoSubmitterManager sharedInstance].authControllerDelegate requestNavigationControllerToPresentAuthenticationView] pushViewController:viewController animated:YES];
     }
 }
 

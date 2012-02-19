@@ -129,6 +129,7 @@
 		791BF36614E3EE7E00697E05 /* EvernoteUserStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF36514E3EE7C00697E05 /* EvernoteUserStoreClient.m */; };
 		791BF36E14E3FDC100697E05 /* EvernotePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */; };
 		7920121914E5417900D82D3D /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7920121814E5417900D82D3D /* libObjectiveFlickr.a */; };
+		793EB6E514F0BC620018F220 /* libobjc-atompub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 793EB6E414F0BC620018F220 /* libobjc-atompub.a */; };
 		797E392714AC63D900F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392514AC63D900F17AC4 /* Localizable.strings */; };
 		797E392C14AC63ED00F17AC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392814AC63ED00F17AC4 /* InfoPlist.strings */; };
 		797E392D14AC63ED00F17AC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797E392A14AC63ED00F17AC4 /* Localizable.strings */; };
@@ -170,6 +171,8 @@
 		79D0EAE414ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADA14ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m */; };
 		79D0EAE514ECB58700CDEF76 /* TottePostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */; };
 		79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */; };
+		79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAF314EF616F00CDEF76 /* FotolifePhotoSubmitter.m */; };
+		79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAF614EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m */; };
 		79D7844514E4DEBB003ECCCA /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840514E4DEBB003ECCCA /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79D7844614E4DEBB003ECCCA /* Mixi.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840714E4DEBB003ECCCA /* Mixi.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79D7844714E4DEBB003ECCCA /* MixiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D7840A14E4DEBB003ECCCA /* MixiConfig.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -462,6 +465,33 @@
 		791BF36C14E3FDBE00697E05 /* EvernotePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EvernotePhotoSubmitter.h; path = PhotoSubmitter/EvernotePhotoSubmitter.h; sourceTree = "<group>"; };
 		791BF36D14E3FDBF00697E05 /* EvernotePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EvernotePhotoSubmitter.m; path = PhotoSubmitter/EvernotePhotoSubmitter.m; sourceTree = "<group>"; };
 		7920121814E5417900D82D3D /* libObjectiveFlickr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveFlickr.a; path = Frameworks/objectiveflickr/libObjectiveFlickr.a; sourceTree = "<group>"; };
+		793EB6C814F0BC410018F220 /* AtomCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomCategories.h; sourceTree = "<group>"; };
+		793EB6C914F0BC410018F220 /* AtomCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomCategory.h; sourceTree = "<group>"; };
+		793EB6CA14F0BC410018F220 /* AtomCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomCollection.h; sourceTree = "<group>"; };
+		793EB6CB14F0BC410018F220 /* AtomContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomContent.h; sourceTree = "<group>"; };
+		793EB6CC14F0BC410018F220 /* AtomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomControl.h; sourceTree = "<group>"; };
+		793EB6CD14F0BC410018F220 /* AtomCoreElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomCoreElement.h; sourceTree = "<group>"; };
+		793EB6CE14F0BC410018F220 /* AtomElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomElement.h; sourceTree = "<group>"; };
+		793EB6CF14F0BC410018F220 /* AtomEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomEntry.h; sourceTree = "<group>"; };
+		793EB6D014F0BC410018F220 /* AtomFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomFeed.h; sourceTree = "<group>"; };
+		793EB6D114F0BC410018F220 /* AtomGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomGenerator.h; sourceTree = "<group>"; };
+		793EB6D214F0BC410018F220 /* AtomLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomLink.h; sourceTree = "<group>"; };
+		793EB6D314F0BC410018F220 /* AtomNamespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomNamespace.h; sourceTree = "<group>"; };
+		793EB6D414F0BC410018F220 /* AtomPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomPerson.h; sourceTree = "<group>"; };
+		793EB6D514F0BC410018F220 /* Atompub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atompub.h; sourceTree = "<group>"; };
+		793EB6D614F0BC410018F220 /* AtompubCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtompubCache.h; sourceTree = "<group>"; };
+		793EB6D714F0BC410018F220 /* AtompubCacheStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtompubCacheStorage.h; sourceTree = "<group>"; };
+		793EB6D814F0BC410018F220 /* AtompubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtompubClient.h; sourceTree = "<group>"; };
+		793EB6D914F0BC410018F220 /* AtompubClientDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtompubClientDelegate.h; sourceTree = "<group>"; };
+		793EB6DA14F0BC410018F220 /* AtompubCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtompubCredential.h; sourceTree = "<group>"; };
+		793EB6DB14F0BC410018F220 /* AtomService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomService.h; sourceTree = "<group>"; };
+		793EB6DC14F0BC410018F220 /* AtomWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomWorkspace.h; sourceTree = "<group>"; };
+		793EB6DD14F0BC410018F220 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		793EB6DE14F0BC410018F220 /* BasicCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicCredential.h; sourceTree = "<group>"; };
+		793EB6DF14F0BC410018F220 /* W3CDTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = W3CDTF.h; sourceTree = "<group>"; };
+		793EB6E014F0BC410018F220 /* WSSECredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSSECredential.h; sourceTree = "<group>"; };
+		793EB6E114F0BC410018F220 /* WSSEUsernameToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSSEUsernameToken.h; sourceTree = "<group>"; };
+		793EB6E414F0BC620018F220 /* libobjc-atompub.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjc-atompub.a"; path = "tottepost/Libraries/objc-atompub/libobjc-atompub.a"; sourceTree = "<group>"; };
 		797E392614AC63D900F17AC4 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797E392914AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		797E392B14AC63ED00F17AC4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -847,6 +877,10 @@
 		79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TottePostSettings.m; path = TottePostSettings/TottePostSettings.m; sourceTree = "<group>"; };
 		79D0EADD14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/TwitterPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/TwitterPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79D0EAF214EF616F00CDEF76 /* FotolifePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FotolifePhotoSubmitter.h; path = PhotoSubmitter/FotolifePhotoSubmitter.h; sourceTree = "<group>"; };
+		79D0EAF314EF616F00CDEF76 /* FotolifePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FotolifePhotoSubmitter.m; path = PhotoSubmitter/FotolifePhotoSubmitter.m; sourceTree = "<group>"; };
+		79D0EAF514EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterAccountTableViewController.h; path = PhotoSubmitter/PhotoSubmitterAccountTableViewController.h; sourceTree = "<group>"; };
+		79D0EAF614EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterAccountTableViewController.m; path = PhotoSubmitter/PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
 		79D7840414E4DEBB003ECCCA /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		79D7840514E4DEBB003ECCCA /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		79D7840614E4DEBB003ECCCA /* Mixi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixi.h; sourceTree = "<group>"; };
@@ -959,6 +993,7 @@
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
 				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
 				799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */,
+				793EB6E514F0BC620018F220 /* libobjc-atompub.a in Frameworks */,
 				7920121914E5417900D82D3D /* libObjectiveFlickr.a in Frameworks */,
 				791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */,
 			);
@@ -1002,6 +1037,7 @@
 		3704D5B01494CD7E00380D30 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				79D0EAD614ECB58700CDEF76 /* PhotoSubmitterSettingTableViewProtocol.h */,
 				79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */,
 				79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */,
 				79D0EAD014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.h */,
@@ -1010,7 +1046,6 @@
 				79D0EAD314ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.m */,
 				79D0EAD414ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.h */,
 				79D0EAD514ECB58700CDEF76 /* PhotoSubmitterSettingTableViewController.m */,
-				79D0EAD614ECB58700CDEF76 /* PhotoSubmitterSettingTableViewProtocol.h */,
 				79D0EAD714ECB58700CDEF76 /* SettingTableViewController.h */,
 				79D0EAD814ECB58700CDEF76 /* SettingTableViewController.m */,
 				79D0EAD914ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.h */,
@@ -1109,6 +1144,7 @@
 				376E153C1494C47800A34E7D /* UIKit.framework */,
 				37FB65B5149C512A00387490 /* libicucore.dylib */,
 				799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */,
+				793EB6E414F0BC620018F220 /* libobjc-atompub.a */,
 				7920121814E5417900D82D3D /* libObjectiveFlickr.a */,
 				791BF31314E020A200697E05 /* libxml2.dylib */,
 			);
@@ -1236,6 +1272,8 @@
 				37F7431E149DA2BB002EEADD /* Images */,
 				37FB65841498D51800387490 /* PhotoSubmitterAPIKey.h */,
 				37FB654B1497313500387490 /* PhotoSubmitterProtocol.h */,
+				79D0EAF514EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.h */,
+				79D0EAF614EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m */,
 				37F589EB14A3290F005C7700 /* PhotoSubmitterAlbumEntity.h */,
 				37F589EC14A32910005C7700 /* PhotoSubmitterAlbumEntity.m */,
 				798058A614CBDF85006E3817 /* PhotoSubmitterImageEntity.h */,
@@ -1262,6 +1300,8 @@
 				799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */,
 				EAAC40ED14E70BA800CDC2CC /* MixiPhotoSubmitter.h */,
 				EAAC40EE14E70BA800CDC2CC /* MixiPhotoSubmitter.m */,
+				79D0EAF214EF616F00CDEF76 /* FotolifePhotoSubmitter.h */,
+				79D0EAF314EF616F00CDEF76 /* FotolifePhotoSubmitter.m */,
 				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
 				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 			);
@@ -1303,6 +1343,7 @@
 				791BF2B114E01FCE00697E05 /* KissXML */,
 				79D783E214E4DEBB003ECCCA /* MixiSDK */,
 				791BF27214E01FC500697E05 /* oauthconsumer */,
+				793EB6C614F0BC410018F220 /* objc-atompub */,
 				799CD6D614E543A300F8A0EC /* objectiveflickr */,
 				791BF26B14E01FBB00697E05 /* PDKeychainBindingsController */,
 				37F26D0A149F8A90000172EF /* Reachability */,
@@ -1553,6 +1594,48 @@
 			name = GData;
 			path = Frameworks/GData;
 			sourceTree = SOURCE_ROOT;
+		};
+		793EB6C614F0BC410018F220 /* objc-atompub */ = {
+			isa = PBXGroup;
+			children = (
+				793EB6C714F0BC410018F220 /* Headers */,
+			);
+			name = "objc-atompub";
+			path = "Libraries/objc-atompub";
+			sourceTree = "<group>";
+		};
+		793EB6C714F0BC410018F220 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				793EB6C814F0BC410018F220 /* AtomCategories.h */,
+				793EB6C914F0BC410018F220 /* AtomCategory.h */,
+				793EB6CA14F0BC410018F220 /* AtomCollection.h */,
+				793EB6CB14F0BC410018F220 /* AtomContent.h */,
+				793EB6CC14F0BC410018F220 /* AtomControl.h */,
+				793EB6CD14F0BC410018F220 /* AtomCoreElement.h */,
+				793EB6CE14F0BC410018F220 /* AtomElement.h */,
+				793EB6CF14F0BC410018F220 /* AtomEntry.h */,
+				793EB6D014F0BC410018F220 /* AtomFeed.h */,
+				793EB6D114F0BC410018F220 /* AtomGenerator.h */,
+				793EB6D214F0BC410018F220 /* AtomLink.h */,
+				793EB6D314F0BC410018F220 /* AtomNamespace.h */,
+				793EB6D414F0BC410018F220 /* AtomPerson.h */,
+				793EB6D514F0BC410018F220 /* Atompub.h */,
+				793EB6D614F0BC410018F220 /* AtompubCache.h */,
+				793EB6D714F0BC410018F220 /* AtompubCacheStorage.h */,
+				793EB6D814F0BC410018F220 /* AtompubClient.h */,
+				793EB6D914F0BC410018F220 /* AtompubClientDelegate.h */,
+				793EB6DA14F0BC410018F220 /* AtompubCredential.h */,
+				793EB6DB14F0BC410018F220 /* AtomService.h */,
+				793EB6DC14F0BC410018F220 /* AtomWorkspace.h */,
+				793EB6DD14F0BC410018F220 /* Base64.h */,
+				793EB6DE14F0BC410018F220 /* BasicCredential.h */,
+				793EB6DF14F0BC410018F220 /* W3CDTF.h */,
+				793EB6E014F0BC410018F220 /* WSSECredential.h */,
+				793EB6E114F0BC410018F220 /* WSSEUsernameToken.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
 		};
 		797E392314AC63A700F17AC4 /* en.lproj */ = {
 			isa = PBXGroup;
@@ -2426,6 +2509,8 @@
 				79D0EAE414ECB58700CDEF76 /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
 				79D0EAE514ECB58700CDEF76 /* TottePostSettings.m in Sources */,
 				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
+				79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */,
+				79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2623,6 +2708,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/GData\"",
 					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
+					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2674,6 +2760,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/GData\"",
 					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
+					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2695,7 +2782,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
-				OTHER_LDFLAGS = "-Objc";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -2713,7 +2800,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
-				OTHER_LDFLAGS = "-Objc";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -2805,6 +2892,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/GData\"",
 					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
+					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2827,7 +2915,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
-				OTHER_LDFLAGS = "-Objc";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

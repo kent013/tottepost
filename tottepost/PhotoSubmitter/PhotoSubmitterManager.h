@@ -18,6 +18,7 @@
 #import "PhotoSubmitterOperation.h"
 #import "MixiPhotoSubmitter.h"
 #import "FilePhotoSubmitter.h"
+#import "FotolifePhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
 #import "PhotoSubmitterSequencialOperationQueue.h"
 
@@ -40,7 +41,7 @@
     BOOL isPausingOperation_;
 }
 
-@property (nonatomic, assign) id<PhotoSubmitterOAuthControllerDelegate> oAuthControllerDelegate;
+@property (nonatomic, assign) id<PhotoSubmitterAuthControllerDelegate> authControllerDelegate;
 @property (nonatomic, readonly) NSArray* supportedTypes;
 @property (nonatomic, assign) BOOL submitPhotoWithOperations;
 @property (nonatomic, readonly) int enabledSubmitterCount;
