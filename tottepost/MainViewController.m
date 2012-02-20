@@ -118,8 +118,6 @@
         orientation_ = UIDeviceOrientationPortrait;
     }
     lastOrientation_ = orientation_;
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -166,25 +164,6 @@
 
 #pragma mark -
 #pragma mark coordinates
-
-- (void)deviceOrientationDidChange
-{
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if(orientation == UIDeviceOrientationPortrait ||
-       orientation == UIDeviceOrientationPortraitUpsideDown ||
-       orientation == UIDeviceOrientationLandscapeLeft ||
-       orientation == UIDeviceOrientationLandscapeRight)
-    {
-        orientation_ = orientation;
-    }
-    
-    if(orientation_ == lastOrientation_)
-    {
-        return;
-    }
-    lastOrientation_ = orientation_;
-    [self updateCoordinates];
-}
 
 /*!
  * update control coodinates
@@ -324,8 +303,7 @@
  */
 - (void)previewPhoto:(PhotoSubmitterImageEntity *)photo{
     [self.view addSubview:previewImageView_];
-    [previewImageView_ presentWithPhoto:photo];
-    
+    [previewImageView_ presentWithPhoto:photo videoOrientation:orientation_];
     [self.view bringSubviewToFront:toolbar_];
     [self changeCenterButtonTo:postButton_];
 }
@@ -464,6 +442,26 @@
 - (void)cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController{
 }
 
+/*
+ * did rotated device orientation
+ */
+- (void) didRotatedDeviceOrientation:(UIDeviceOrientation) orientation{
+    if(orientation == UIDeviceOrientationPortrait ||
+       orientation == UIDeviceOrientationPortraitUpsideDown ||
+       orientation == UIDeviceOrientationLandscapeLeft ||
+       orientation == UIDeviceOrientationLandscapeRight)
+    {
+        orientation_ = orientation;
+    }
+    
+    if(orientation_ == lastOrientation_)
+    {
+        return;
+    }
+    lastOrientation_ = orientation_;
+    [self updateCoordinates];
+}
+
 #pragma mark -
 #pragma mark PhotoSubmitter delegate
 /*!
@@ -584,11 +582,10 @@
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-//        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
-//           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
-//            return YES;
-//        }
-        return NO;
+        if(interfaceOrientation == UIInterfaceOrientationPortrait)
+            return YES;
+        else
+            return NO;
     }
     return YES;
 }
@@ -612,4 +609,5 @@
         [self presentModalViewController:nvc animated:YES];
     }
 }
+
 @end

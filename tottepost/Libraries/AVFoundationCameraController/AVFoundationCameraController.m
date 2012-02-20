@@ -11,6 +11,7 @@
 #import "AVFoundationCameraController.h"
 #import "UIImage+Resize.h"
 #import "UIImage+AutoRotation.h"
+#import "ScreenStatus.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 3 
@@ -22,6 +23,7 @@
 #define PICKER_FLASHMODE_BUTTON_HEIGHT 30
 #define PICKER_CAMERADEVICE_BUTTON_WIDTH 60
 #define PICKER_CAMERADEVICE_BUTTON_HEIGHT 30
+#define ACCELEROMETER_INTERVAL 0.4
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -36,7 +38,6 @@
 - (void) setFocus:(CGPoint)point;
 - (void) autofocus;
 - (void) updateCameraControls;
-- (void) deviceOrientationDidChange;
 - (NSData *) cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale;
 - (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
 @end
@@ -80,8 +81,8 @@
     }
     [self updateCameraControls];
     
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:ACCELEROMETER_INTERVAL];
+    [[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
 
 /*!
@@ -147,7 +148,6 @@
     indicatorLayer_.hidden = NO;
     [self.view.layer addSublayer:indicatorLayer_];
     viewOrientation_ = UIDeviceOrientationPortrait;
-    [self deviceOrientationDidChange];
     if([self.delegate respondsToSelector:@selector(cameraControllerDidInitialized:)]){
         [self.delegate cameraControllerDidInitialized:self];
     }
@@ -165,47 +165,17 @@
     }
     
     CGRect f = self.view.frame;
-    
-//    CGAffineTransform t;
-    CGRect flashFrame,cameraFrame;
-//    switch (viewOrientation_) {
-//        case UIDeviceOrientationPortrait:
-//            t = CGAffineTransformMakeRotation(0 * M_PI / 180);
-            cameraFrame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);
-            flashFrame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
-//           break;
-//        case UIDeviceOrientationLandscapeLeft:
-//            t = CGAffineTransformMakeRotation(90 * M_PI / 180);
-//            cameraFrame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_HEIGHT - PICKER_PADDING_Y, f.size.height - 50 - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_CAMERADEVICE_BUTTON_HEIGHT, PICKER_CAMERADEVICE_BUTTON_WIDTH);
-//            flashFrame = CGRectMake(f.size.width - PICKER_PADDING_Y - PICKER_FLASHMODE_BUTTON_HEIGHT, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_HEIGHT, PICKER_FLASHMODE_BUTTON_WIDTH);
-//            break;
-//        case UIDeviceOrientationLandscapeRight:
-//            t = CGAffineTransformMakeRotation(270 * M_PI / 180);
-//            cameraFrame = CGRectMake(PICKER_PADDING_Y, PICKER_PADDING_X, PICKER_CAMERADEVICE_BUTTON_HEIGHT, PICKER_CAMERADEVICE_BUTTON_WIDTH);
-//            flashFrame = CGRectMake(PICKER_PADDING_Y, f.size.height - 50 - PICKER_PADDING_X - PICKER_SHUTTER_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT, PICKER_FLASHMODE_BUTTON_WIDTH);
-//            break;
-//        case UIDeviceOrientationPortraitUpsideDown:
-//            t = CGAffineTransformMakeRotation(180 * M_PI / 180);
-//            cameraFrame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);
-//            flashFrame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
-//            break;
-//        default:
-//            break;
-//    }
-    
     if(showsShutterButton_ && [shutterButton_ isDescendantOfView:self.view] == NO){
         [shutterButton_ setFrame:CGRectMake((f.size.width - PICKER_SHUTTER_BUTTON_WIDTH) / 2    , f.size.height - PICKER_SHUTTER_BUTTON_HEIGHT - PICKER_PADDING_Y, PICKER_SHUTTER_BUTTON_WIDTH, PICKER_SHUTTER_BUTTON_HEIGHT)];
         [self.view addSubview: shutterButton_];
     }
     if(showsFlashModeButton_ && [flashModeButton_ isDescendantOfView:self.view] == NO){
-        //flashModeButton_.transform = t;
-        flashModeButton_.frame = flashFrame;
+        flashModeButton_.frame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
         [self.view addSubview: flashModeButton_];
     }
     
     if(showsCameraDeviceButton_ && [cameraDeviceButton_ isDescendantOfView:self.view] == NO){
-        //cameraDeviceButton_.transform = t;
-        cameraDeviceButton_.frame = cameraFrame;        
+        cameraDeviceButton_.frame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);        
         [self.view addSubview: cameraDeviceButton_];
     }
 }
@@ -351,8 +321,6 @@
     pointOfInterest_ = p;
     CGPoint pointOfInterest = CGPointMake(p.y / viewSize.height,
                                           1.0 - p.x / viewSize.width);
-    NSLog(@"DEBUG = %@",NSStringFromCGPoint(pointOfInterest_));
-    
     NSError* error = nil;
     if ([device_ lockForConfiguration:&error] == NO) {
         NSLog(@"%s|[ERROR] %@", __PRETTY_FUNCTION__, error); 
@@ -415,43 +383,6 @@
         [self initCamera:self.backCameraDevice];
     }
     [self updateCameraControls];
-}
-
-/*!
- * when the device rotated
- */
-- (void)deviceOrientationDidChange
-{   
-    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
-    if (deviceOrientation == UIDeviceOrientationPortrait){
-        videoOrientation_ = AVCaptureVideoOrientationPortrait;
-    }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
-        videoOrientation_ = AVCaptureVideoOrientationPortraitUpsideDown;
-    }else if (deviceOrientation == UIDeviceOrientationLandscapeLeft){        
-        videoOrientation_ = AVCaptureVideoOrientationLandscapeRight;
-    }else if (deviceOrientation == UIDeviceOrientationLandscapeRight){
-        videoOrientation_ = AVCaptureVideoOrientationLandscapeLeft;
-    }else{
-        return;
-    }
-    for (AVCaptureConnection* connection in imageOutput_.connections) {
-        connection.videoOrientation = videoOrientation_;
-    }
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-//        if(videoOrientation_ != AVCaptureVideoOrientationPortrait &&
-//           videoOrientation_ != AVCaptureVideoOrientationPortraitUpsideDown){
-//            return;
-//        }
-//    }
-    
-    viewOrientation_ = deviceOrientation;
-//    [self updateCameraControls];
-//    if (previewLayer_) {
-//        previewLayer_.orientation = [[UIDevice currentDevice] orientation];
-//        previewLayer_.frame = self.view.bounds;
-//        scale_ = 1.0;
-//        croppedViewRect_ = CGRectZero;
-//    }
 }
 
 /*
@@ -745,5 +676,37 @@
     [device lockForConfiguration:nil];    
     [device setFlashMode:mode];
     [device unlockForConfiguration];
+}
+
+#pragma mark - UIAccelerometerDelegate
+
+/*!
+ * Accelerometer delegate
+ */
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+{
+    UIDeviceOrientation deviceOrientation = [ScreenStatus orientation2:acceleration];
+    
+    if(deviceOrientation_ == deviceOrientation)
+        return;
+    deviceOrientation_ = deviceOrientation;
+    [delegate didRotatedDeviceOrientation:deviceOrientation];
+    
+    if (deviceOrientation == UIDeviceOrientationPortrait){
+        videoOrientation_ = AVCaptureVideoOrientationPortrait;
+    }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
+        videoOrientation_ = AVCaptureVideoOrientationPortraitUpsideDown;
+    }else if (deviceOrientation == UIDeviceOrientationLandscapeLeft){        
+        videoOrientation_ = AVCaptureVideoOrientationLandscapeRight;
+    }else if (deviceOrientation == UIDeviceOrientationLandscapeRight){
+        videoOrientation_ = AVCaptureVideoOrientationLandscapeLeft;
+    }else{
+        return;
+    }
+    for (AVCaptureConnection* connection in imageOutput_.connections) {
+        connection.videoOrientation = videoOrientation_;
+    }
+    
+    viewOrientation_ = deviceOrientation;
 }
 @end
