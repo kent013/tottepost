@@ -232,6 +232,8 @@
 		EAAD437414B34D310093E003 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD437214B34D310093E003 /* Default-Portrait.png */; };
 		EAADC3B414F0E97A00BEA9C2 /* button_template.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B214F0E97A00BEA9C2 /* button_template.png */; };
 		EAADC3B514F0E97A00BEA9C2 /* button_template@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B314F0E97A00BEA9C2 /* button_template@2x.png */; };
+		EAADC3C814F2877900BEA9C2 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */; };
+		EAADC3CB14F287D400BEA9C2 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3CA14F287D400BEA9C2 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -971,6 +973,10 @@
 		EAAD437214B34D310093E003 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "Resources/Images/Default-Portrait.png"; sourceTree = "<group>"; };
 		EAADC3B214F0E97A00BEA9C2 /* button_template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_template.png; path = Resources/Images/button_template.png; sourceTree = "<group>"; };
 		EAADC3B314F0E97A00BEA9C2 /* button_template@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_template@2x.png"; path = "Resources/Images/button_template@2x.png"; sourceTree = "<group>"; };
+		EAADC3C614F2877900BEA9C2 /* ScreenStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenStatus.h; path = Libraries/ScreenStatus/ScreenStatus.h; sourceTree = "<group>"; };
+		EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenStatus.m; path = Libraries/ScreenStatus/ScreenStatus.m; sourceTree = "<group>"; };
+		EAADC3C914F287D400BEA9C2 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Util/NSData+Base64.h"; sourceTree = "<group>"; };
+		EAADC3CA14F287D400BEA9C2 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Util/NSData+Base64.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1317,6 +1323,8 @@
 		37FB655A14978CA500387490 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				EAADC3C914F287D400BEA9C2 /* NSData+Base64.h */,
+				EAADC3CA14F287D400BEA9C2 /* NSData+Base64.m */,
 				37FB65C3149C53D000387490 /* FBRequest+UploadProgress.h */,
 				37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */,
 				37FB6586149C4E6D00387490 /* NSData+Digest.h */,
@@ -1336,6 +1344,7 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				791BF2C614E01FDD00697E05 /* Evernote */,
@@ -2215,6 +2224,15 @@
 			name = HPGrowingTextView;
 			sourceTree = "<group>";
 		};
+		EAADC3C414F2875B00BEA9C2 /* ScreenStatus */ = {
+			isa = PBXGroup;
+			children = (
+				EAADC3C614F2877900BEA9C2 /* ScreenStatus.h */,
+				EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */,
+			);
+			name = ScreenStatus;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2519,6 +2537,8 @@
 				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 				79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */,
 				79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */,
+				EAADC3C814F2877900BEA9C2 /* ScreenStatus.m in Sources */,
+				EAADC3CB14F287D400BEA9C2 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
