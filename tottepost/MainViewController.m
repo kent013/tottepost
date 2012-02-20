@@ -557,6 +557,7 @@
     }else{
         [self updateCoordinates];
     }
+    [settingIndicatorView_ update];
     settingViewPresented_ = NO;
 }
 
