@@ -8,22 +8,16 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "FotolifePhotoSubmitter.h"
-#import "UIImage+Digest.h"
-#import "RegexKitLite.h"
 #import "PhotoSubmitterAlbumEntity.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 #import "PhotoSubmitterAccountTableViewController.h"
 #import "Atompub.h"
 #import "AtomContent.h"
-#import "PDKeychainBindings.h"
 
 #define PS_FOTOLIFE_ENABLED @"PSFotolifeEnabled"
 #define PS_FOTOLIFE_AUTH_USERID @"PSFotolifeUserId"
 #define PS_FOTOLIFE_AUTH_PASSWORD @"PSFotolifePassword"
 #define PS_FOTOLIFE_SETTING_USERNAME @"PSFotolifeUsername"
-#define PS_FOTOLIFE_SETTING_ALBUMS @"PSFotolifeAlbums"
-#define PS_FOTOLIFE_SETTING_TARGET_ALBUM @"PSFotolifeTargetAlbums"
 
 #define PS_FOTOLIFE_PHOTO_WIDTH 960
 #define PS_FOTOLIFE_PHOTO_HEIGHT 720
@@ -56,8 +50,6 @@
         [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
         [self removeSettingForKey:PS_FOTOLIFE_SETTING_USERNAME];
-        [self removeSettingForKey:PS_FOTOLIFE_SETTING_ALBUMS];
-        [self removeSettingForKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
     } 
     [self disable];
 }
@@ -263,7 +255,7 @@
  * is album supported
  */
 - (BOOL) isAlbumSupported{
-    return YES;
+    return NO;
 }
 
 /*!
@@ -276,28 +268,28 @@
  * album list
  */
 - (NSArray *)albumList{
-    return [self complexSettingForKey:PS_FOTOLIFE_SETTING_ALBUMS];
+    return nil;
 }
 
 /*!
  * update album list
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    self.dataDelegate = delegate;
+    //do nothing
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return [self complexSettingForKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
+    return nil;
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    [self setComplexSetting:targetAlbum forKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
+    //do nothing
 }
 
 #pragma mark - username
@@ -346,10 +338,16 @@
 }
 
 #pragma mark - PhotoSubmitterPasswordAuthDelegate
+/*!
+ * did canceled
+ */
 - (void)didCancelPasswordAuthView:(UIViewController *)passwordAuthViewController{
     [self disable];
 }
 
+/*!
+ * did present user id
+ */
 - (void)passwordAuthView:(UIView *)passwordAuthView didPresentUserId:(NSString *)userId password:(NSString *)password{
     AtompubClient *client = [[AtompubClient alloc] init];
     client.tag = @"login";
@@ -363,6 +361,9 @@
 }
 
 #pragma mark - AtompubClientDelegate
+/*!
+ * did receive feed
+ */
 - (void)client:(AtompubClient *)client didReceiveFeed:(AtomFeed *)feed{
     if([client.tag isEqualToString:@"login"]){
         [self setSetting:@"enabled" forKey:PS_FOTOLIFE_ENABLED];
@@ -370,10 +371,15 @@
         [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
         userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         password_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
+    }else if([client.tag isEqualToString:@"album"]){
+        NSLog(@"%@", [feed stringValue]);
     }
     [self clearRequest:client];    
 }
 
+/*!
+ * create entry
+ */
 - (void)client:(AtompubClient *)client didCreateEntry:(AtomEntry *)entry withLocation:(NSURL *)location{
     if([client.tag isEqualToString:@"submitPhoto"]){
         NSString *hash = [self photoForRequest:client];
@@ -385,6 +391,9 @@
     [self clearRequest:client];
 }
 
+/*!
+ * failed with error
+ */
 - (void)client:(AtompubClient *)client didFailWithError:(NSError *)error{
     if([client.tag isEqualToString:@"login"]){
         [self clearCredentials];
@@ -397,6 +406,15 @@
     }
     NSLog(@"%@", error.description);
     [self clearRequest:client];
+}
+
+/*!
+ * progress
+ */
+- (void)client:(AtompubClient *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
+    CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+    NSString *hash = [self photoForRequest:request];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 @end
 

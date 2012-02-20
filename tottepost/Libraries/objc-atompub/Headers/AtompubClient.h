@@ -21,7 +21,7 @@ typedef enum {
 @class AtompubCacheStorage, AtomEntry;
 @protocol AtompubClientDelegate;
 
-@interface AtompubClient : NSObject {
+@interface AtompubClient : NSObject<NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
     NSObject <AtompubCredential> *credential;
     NSObject <AtompubClientDelegate> *delegate;
     NSTimeInterval timeoutInterval;
