@@ -7,8 +7,8 @@
  * If you're new to the project you may wish to read the "Getting Started" wiki.
  * https://github.com/robbiehanson/KissXML/wiki/GettingStarted
  * 
- * KissXML provides a drop-in replacement for Apple's NSXML class cluster.
- * The goal is to get the exact same behavior as the NSXML classes.
+ * KissXML provides a drop-in replacement for Apple's DDXML class cluster.
+ * The goal is to get the exact same behavior as the DDXML classes.
  * 
  * For API Reference, see Apple's excellent documentation,
  * either via Xcode's Mac OS X documentation, or via the web:
@@ -24,73 +24,73 @@
 
 #if TARGET_OS_IPHONE && 0 // Disabled by default
 
-// Since KissXML is a drop in replacement for NSXML,
+// Since KissXML is a drop in replacement for DDXML,
 // it may be desireable (when writing cross-platform code to be used on both Mac OS X and iOS)
-// to use the NSXML prefixes instead of the DDXML prefix.
+// to use the DDXML prefixes instead of the DDXML prefix.
 // 
-// This way, on Mac OS X it uses NSXML, and on iOS it uses KissXML.
+// This way, on Mac OS X it uses DDXML, and on iOS it uses KissXML.
 
-#ifndef NSXMLNode
-  #define NSXMLNode DDXMLNode
+#ifndef DDXMLNode
+  #define DDXMLNode DDXMLNode
 #endif
-#ifndef NSXMLElement
-  #define NSXMLElement DDXMLElement
+#ifndef DDXMLElement
+  #define DDXMLElement DDXMLElement
 #endif
-#ifndef NSXMLDocument
-  #define NSXMLDocument DDXMLDocument
-#endif
-
-#ifndef NSXMLInvalidKind
-  #define NSXMLInvalidKind DDXMLInvalidKind
-#endif
-#ifndef NSXMLDocumentKind
-  #define NSXMLDocumentKind DDXMLDocumentKind
-#endif
-#ifndef NSXMLElementKind
-  #define NSXMLElementKind DDXMLElementKind
-#endif
-#ifndef NSXMLAttributeKind
-  #define NSXMLAttributeKind DDXMLAttributeKind
-#endif
-#ifndef NSXMLNamespaceKind
-  #define NSXMLNamespaceKind DDXMLNamespaceKind
-#endif
-#ifndef NSXMLProcessingInstructionKind
-  #define NSXMLProcessingInstructionKind DDXMLProcessingInstructionKind
-#endif
-#ifndef NSXMLCommentKind
-  #define NSXMLCommentKind DDXMLCommentKind
-#endif
-#ifndef NSXMLTextKind
-  #define NSXMLTextKind DDXMLTextKind
-#endif
-#ifndef NSXMLDTDKind
-  #define NSXMLDTDKind DDXMLDTDKind
-#endif
-#ifndef NSXMLEntityDeclarationKind
-  #define NSXMLEntityDeclarationKind DDXMLEntityDeclarationKind
-#endif
-#ifndef NSXMLAttributeDeclarationKind
-  #define NSXMLAttributeDeclarationKind DDXMLAttributeDeclarationKind
-#endif
-#ifndef NSXMLElementDeclarationKind
-  #define NSXMLElementDeclarationKind DDXMLElementDeclarationKind
-#endif
-#ifndef NSXMLNotationDeclarationKind
-  #define NSXMLNotationDeclarationKind DDXMLNotationDeclarationKind
+#ifndef DDXMLDocument
+  #define DDXMLDocument DDXMLDocument
 #endif
 
-#ifndef NSXMLNodeOptionsNone
-  #define NSXMLNodeOptionsNone DDXMLNodeOptionsNone
+#ifndef DDXMLInvalidKind
+  #define DDXMLInvalidKind DDXMLInvalidKind
 #endif
-#ifndef NSXMLNodeExpandEmptyElement
-  #define NSXMLNodeExpandEmptyElement DDXMLNodeExpandEmptyElement
+#ifndef DDXMLDocumentKind
+  #define DDXMLDocumentKind DDXMLDocumentKind
 #endif
-#ifndef NSXMLNodeCompactEmptyElement
-  #define NSXMLNodeCompactEmptyElement DDXMLNodeCompactEmptyElement
+#ifndef DDXMLElementKind
+  #define DDXMLElementKind DDXMLElementKind
 #endif
-#ifndef NSXMLNodePrettyPrint
-  #define NSXMLNodePrettyPrint DDXMLNodePrettyPrint
+#ifndef DDXMLAttributeKind
+  #define DDXMLAttributeKind DDXMLAttributeKind
+#endif
+#ifndef DDXMLNamespaceKind
+  #define DDXMLNamespaceKind DDXMLNamespaceKind
+#endif
+#ifndef DDXMLProcessingInstructionKind
+  #define DDXMLProcessingInstructionKind DDXMLProcessingInstructionKind
+#endif
+#ifndef DDXMLCommentKind
+  #define DDXMLCommentKind DDXMLCommentKind
+#endif
+#ifndef DDXMLTextKind
+  #define DDXMLTextKind DDXMLTextKind
+#endif
+#ifndef DDXMLDTDKind
+  #define DDXMLDTDKind DDXMLDTDKind
+#endif
+#ifndef DDXMLEntityDeclarationKind
+  #define DDXMLEntityDeclarationKind DDXMLEntityDeclarationKind
+#endif
+#ifndef DDXMLAttributeDeclarationKind
+  #define DDXMLAttributeDeclarationKind DDXMLAttributeDeclarationKind
+#endif
+#ifndef DDXMLElementDeclarationKind
+  #define DDXMLElementDeclarationKind DDXMLElementDeclarationKind
+#endif
+#ifndef DDXMLNotationDeclarationKind
+  #define DDXMLNotationDeclarationKind DDXMLNotationDeclarationKind
+#endif
+
+#ifndef DDXMLNodeOptionsNone
+  #define DDXMLNodeOptionsNone DDXMLNodeOptionsNone
+#endif
+#ifndef DDXMLNodeExpandEmptyElement
+  #define DDXMLNodeExpandEmptyElement DDXMLNodeExpandEmptyElement
+#endif
+#ifndef DDXMLNodeCompactEmptyElement
+  #define DDXMLNodeCompactEmptyElement DDXMLNodeCompactEmptyElement
+#endif
+#ifndef DDXMLNodePrettyPrint
+  #define DDXMLNodePrettyPrint DDXMLNodePrettyPrint
 #endif
 
 #endif // #if TARGET_OS_IPHONE

@@ -8,21 +8,16 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "FotolifePhotoSubmitter.h"
-#import "UIImage+Digest.h"
-#import "RegexKitLite.h"
 #import "PhotoSubmitterAlbumEntity.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 #import "PhotoSubmitterAccountTableViewController.h"
 #import "Atompub.h"
-#import "PDKeychainBindings.h"
+#import "AtomContent.h"
 
 #define PS_FOTOLIFE_ENABLED @"PSFotolifeEnabled"
 #define PS_FOTOLIFE_AUTH_USERID @"PSFotolifeUserId"
 #define PS_FOTOLIFE_AUTH_PASSWORD @"PSFotolifePassword"
 #define PS_FOTOLIFE_SETTING_USERNAME @"PSFotolifeUsername"
-#define PS_FOTOLIFE_SETTING_ALBUMS @"PSFotolifeAlbums"
-#define PS_FOTOLIFE_SETTING_TARGET_ALBUM @"PSFotolifeTargetAlbums"
 
 #define PS_FOTOLIFE_PHOTO_WIDTH 960
 #define PS_FOTOLIFE_PHOTO_HEIGHT 720
@@ -34,6 +29,7 @@
 - (void) setupInitialState;
 - (void) clearCredentials;
 - (void) loadCredentials;
+- (WSSECredential *) credential;
 - (void) getUserInfomation;
 @end
 
@@ -43,6 +39,7 @@
  * initializer
  */
 -(void)setupInitialState{
+    [self loadCredentials];
 }
 
 /*!
@@ -53,8 +50,6 @@
         [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
         [self removeSettingForKey:PS_FOTOLIFE_SETTING_USERNAME];
-        [self removeSettingForKey:PS_FOTOLIFE_SETTING_ALBUMS];
-        [self removeSettingForKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
     } 
     [self disable];
 }
@@ -64,6 +59,10 @@
         userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         password_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
     }
+}
+
+- (WSSECredential *)credential{
+    return [WSSECredential credentialWithUsername:userId_ password:password_];
 }
 
 /*!
@@ -175,10 +174,39 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    CGSize size = CGSizeMake(PS_FOTOLIFE_PHOTO_WIDTH, PS_FOTOLIFE_PHOTO_HEIGHT);
-    if(photo.image.size.width < photo.image.size.height){
-        size = CGSizeMake(PS_FOTOLIFE_PHOTO_HEIGHT, PS_FOTOLIFE_PHOTO_WIDTH);
+    AtomEntry *entry = [AtomEntry entry];
+    if(photo.comment){
+        entry.title = photo.comment;
+    }else{
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat  = @"yyyy-MM-dd HH:mm:ss";
+        entry.title = [df stringFromDate:photo.timestamp];
     }
+    AtomContent *content = [AtomContent content];
+    content.type = @"image/jpeg";
+    content.mode = @"base64";
+    [content setBodyAsTextContent:photo.base64String];
+    entry.content = content;
+    
+    AtomGenerator *generator = [AtomGenerator generator];
+    generator.name = @"tottepost";
+    generator.version = @"1.0";
+    generator.url = [NSURL URLWithString:@"https://github.com/kent013/tottepost"];
+    //entry.generator = generator;
+        
+    AtompubClient *client = [[AtompubClient alloc] init];
+    //client.enableDebugOutput = YES;
+    client.tag = @"submitPhoto";
+    client.delegate = self;
+    [client setCredential:[self credential]];
+    
+    [client startCreatingEntry:entry withURL:[NSURL URLWithString:@"http://f.hatena.ne.jp/atom/post"]];
+    
+    NSString *hash = photo.md5;
+    [self setPhotoHash:hash forRequest:client];
+    [self addRequest:client];
+    [self setOperationDelegate:delegate forRequest:client];
+    [self photoSubmitter:self willStartUpload:hash];    
 }
 
 /*!
@@ -186,13 +214,12 @@
  */
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
     NSString *hash = photo.md5;
-    FBRequest *request = (FBRequest *)[self requestForPhoto:hash];
-    [request.connection cancel];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    AtompubClient *client = (AtompubClient *)[self requestForPhoto:hash];
+    //do some
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
     [operationDelegate photoSubmitterDidOperationCanceled];
     [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
+    [self clearRequest:client];
 }
 
 /*!
@@ -228,7 +255,7 @@
  * is album supported
  */
 - (BOOL) isAlbumSupported{
-    return YES;
+    return NO;
 }
 
 /*!
@@ -241,28 +268,28 @@
  * album list
  */
 - (NSArray *)albumList{
-    return [self complexSettingForKey:PS_FOTOLIFE_SETTING_ALBUMS];
+    return nil;
 }
 
 /*!
  * update album list
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    self.dataDelegate = delegate;
+    //do nothing
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return [self complexSettingForKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
+    return nil;
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    [self setComplexSetting:targetAlbum forKey:PS_FOTOLIFE_SETTING_TARGET_ALBUM];
+    //do nothing
 }
 
 #pragma mark - username
@@ -311,33 +338,83 @@
 }
 
 #pragma mark - PhotoSubmitterPasswordAuthDelegate
+/*!
+ * did canceled
+ */
+- (void)didCancelPasswordAuthView:(UIViewController *)passwordAuthViewController{
+    [self disable];
+}
+
+/*!
+ * did present user id
+ */
 - (void)passwordAuthView:(UIView *)passwordAuthView didPresentUserId:(NSString *)userId password:(NSString *)password{
     AtompubClient *client = [[AtompubClient alloc] init];
     client.tag = @"login";
     client.delegate = self;
+    //client.enableDebugOutput = YES;
     [client setCredential:[WSSECredential credentialWithUsername:userId password:password]];
     [self setSecureSetting:userId forKey:PS_FOTOLIFE_AUTH_USERID];
     [self setSecureSetting:password forKey:PS_FOTOLIFE_AUTH_PASSWORD];
     [self addRequest:client];
-    [client startLoadingFeedWithURL:[NSURL URLWithString:@"http://f.hatena.ne.jp/atom/feed"]];
+    [client startLoadingFeedWithURL:[NSURL URLWithString:@"http://f.hatena.ne.jp/atom"]];
 }
 
 #pragma mark - AtompubClientDelegate
+/*!
+ * did receive feed
+ */
 - (void)client:(AtompubClient *)client didReceiveFeed:(AtomFeed *)feed{
     if([client.tag isEqualToString:@"login"]){
         [self setSetting:@"enabled" forKey:PS_FOTOLIFE_ENABLED];
         [self.authDelegate photoSubmitter:self didLogin:self.type];
         [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+        userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
+        password_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
+    }else if([client.tag isEqualToString:@"album"]){
+        NSLog(@"%@", [feed stringValue]);
+    }
+    [self clearRequest:client];    
+}
+
+/*!
+ * create entry
+ */
+- (void)client:(AtompubClient *)client didCreateEntry:(AtomEntry *)entry withLocation:(NSURL *)location{
+    if([client.tag isEqualToString:@"submitPhoto"]){
+        NSString *hash = [self photoForRequest:client];
+        
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        [operationDelegate photoSubmitterDidOperationFinished:YES];
     }
     [self clearRequest:client];
 }
 
+/*!
+ * failed with error
+ */
 - (void)client:(AtompubClient *)client didFailWithError:(NSError *)error{
     if([client.tag isEqualToString:@"login"]){
         [self clearCredentials];
         [self.authDelegate photoSubmitter:self didLogout:self.type];
+    }else if([client.tag isEqualToString:@"submitPhoto"]){
+        NSString *hash = [self photoForRequest:client];
+        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
+        [operationDelegate photoSubmitterDidOperationFinished:NO];
     }
+    NSLog(@"%@", error.description);
     [self clearRequest:client];
+}
+
+/*!
+ * progress
+ */
+- (void)client:(AtompubClient *)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
+    CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+    NSString *hash = [self photoForRequest:request];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 @end
 

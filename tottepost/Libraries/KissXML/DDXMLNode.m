@@ -17,8 +17,8 @@
  * If you're new to the project you may wish to read the "Getting Started" wiki.
  * https://github.com/robbiehanson/KissXML/wiki/GettingStarted
  * 
- * KissXML provides a drop-in replacement for Apple's NSXML class cluster.
- * The goal is to get the exact same behavior as the NSXML classes.
+ * KissXML provides a drop-in replacement for Apple's DDXML class cluster.
+ * The goal is to get the exact same behavior as the DDXML classes.
  * 
  * For API Reference, see Apple's excellent documentation,
  * either via Xcode's Mac OS X documentation, or via the web:
@@ -64,7 +64,7 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 		xmlSetStructuredErrorFunc(NULL, MyErrorHandler);
 		
 		// Tell libxml not to keep ignorable whitespace (such as node indentation, formatting, etc).
-		// NSXML ignores such whitespace.
+		// DDXML ignores such whitespace.
 		// This also has the added benefit of taking up less RAM when parsing formatted XML documents.
 		xmlKeepBlanksDefault(0);
 		
@@ -160,6 +160,14 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 	if (text == NULL) return nil;
 	
 	return [[DDXMLNode alloc] initWithPrimitive:(xmlKindPtr)text owner:nil];
+}
+
++ (id)document {
+	return [(DDXMLDocument *)[DDXMLDocument alloc] initWithRootElement:nil];
+}
+
++ (id)documentWithRootElement:(DDXMLElement *)element {
+	return [(DDXMLDocument *)[DDXMLDocument alloc] initWithRootElement:element];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -674,7 +682,7 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 	
 	if (child == NULL)
 	{
-		// NSXML doesn't raise an exception if there are no children
+		// DDXML doesn't raise an exception if there are no children
 		return nil;
 	}
 	
@@ -689,7 +697,7 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 		child = child->next;
 	}
 	
-	// NSXML version uses this same assertion
+	// DDXML version uses this same assertion
 	DDXMLAssert(NO, @"index (%u) beyond bounds (%u)", (unsigned)index, (unsigned)i);
 	
 	return nil;
@@ -1182,7 +1190,7 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 	else
 	{
 		NSMutableString *resTmp = [NSMutableString stringWithUTF8String:(const char *)bufferPtr->content];
-		CFStringTrimWhitespace((__bridge CFMutableStringRef)resTmp);
+        CFStringTrimWhitespace((__bridge CFMutableStringRef)resTmp);
 		
 		xmlBufferFree(bufferPtr);
 		

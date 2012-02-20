@@ -406,6 +406,7 @@
     if(settingViewPresented_){
         [settingViewController_ updateSocialAppSwitches];
     }
+    [settingIndicatorView_ update];
 }
 
 /*!
@@ -555,6 +556,7 @@
     }else{
         [self updateCoordinates];
     }
+    [settingIndicatorView_ update];
     settingViewPresented_ = NO;
 }
 

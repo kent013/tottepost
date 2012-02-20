@@ -27,12 +27,13 @@ FEATURE LIST
 ------------------------------------
  * Upload image to social applications and cloud services
    * Facebook
-     * Album selection
-     * 960x720 resolution
    * Twitter
    * Flickr
    * Dropbox
    * Evernote (supported in source code)
+   * Picasa (supported in source code)
+   * Mixi (supported in source code)
+   * Fotolife (supported in source code)
  * Save image to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location

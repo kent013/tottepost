@@ -20,4 +20,5 @@
 - (void)clientDidDeleteMedia:(AtompubClient *)client;
 - (void)client:(AtompubClient *)client
 didFailWithError:(NSError *)error;
+- (void)client:(AtompubClient*)request didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end

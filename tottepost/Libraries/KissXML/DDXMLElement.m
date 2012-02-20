@@ -14,8 +14,8 @@
  * If you're new to the project you may wish to read the "Getting Started" wiki.
  * https://github.com/robbiehanson/KissXML/wiki/GettingStarted
  * 
- * KissXML provides a drop-in replacement for Apple's NSXML class cluster.
- * The goal is to get the exact same behavior as the NSXML classes.
+ * KissXML provides a drop-in replacement for Apple's DDXML class cluster.
+ * The goal is to get the exact same behavior as the DDXML classes.
  * 
  * For API Reference, see Apple's excellent documentation,
  * either via Xcode's Mac OS X documentation, or via the web:
@@ -309,7 +309,7 @@
 	DDXMLNotZombieAssert();
 #endif
 	
-	// NSXML version uses this same assertion
+	// DDXML version uses this same assertion
 	DDXMLAssert([attribute _hasParent] == NO, @"Cannot add an attribute with a parent; detach or copy first");
 	DDXMLAssert(IsXmlAttrPtr(attribute->genericPtr), @"Not an attribute");
 	
@@ -443,7 +443,7 @@
 
 - (void)_addNamespace:(DDXMLNode *)namespace
 {
-	// NSXML version uses this same assertion
+	// DDXML version uses this same assertion
 	DDXMLAssert([namespace _hasParent] == NO, @"Cannot add a namespace with a parent; detach or copy first");
 	DDXMLAssert(IsXmlNsPtr(namespace->genericPtr), @"Not a namespace");
 	
@@ -697,7 +697,7 @@
 	DDXMLNotZombieAssert();
 #endif
 	
-	// NSXML version uses these same assertions
+	// DDXML version uses these same assertions
 	DDXMLAssert([child _hasParent] == NO, @"Cannot add a child that has a parent; detach or copy first");
 	DDXMLAssert(IsXmlNodePtr(child->genericPtr),
 	            @"Elements can only have text, elements, processing instructions, and comments as children");
@@ -714,7 +714,7 @@
 	DDXMLNotZombieAssert();
 #endif
 	
-	// NSXML version uses these same assertions
+	// DDXML version uses these same assertions
 	DDXMLAssert([child _hasParent] == NO, @"Cannot add a child that has a parent; detach or copy first");
 	DDXMLAssert(IsXmlNodePtr(child->genericPtr),
 	            @"Elements can only have text, elements, processing instructions, and comments as children");
@@ -750,7 +750,7 @@
 		return;
 	}
 	
-	// NSXML version uses this same assertion
+	// DDXML version uses this same assertion
 	DDXMLAssert(NO, @"index (%u) beyond bounds (%u)", (unsigned)index, (unsigned)++i);
 }
 

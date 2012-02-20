@@ -21,6 +21,7 @@
 @property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) NSString *path;
 @property (readonly, nonatomic) NSData *data;
+@property (readonly, nonatomic) NSString *base64String;
 @property (readonly, nonatomic) NSMutableDictionary *metadata;
 @property (readonly, nonatomic) UIImage *image;
 @property (readonly, nonatomic) NSString *md5;

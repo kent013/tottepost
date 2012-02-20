@@ -6,11 +6,12 @@
 //  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
+#import <ImageIO/ImageIO.h>
 #import "PhotoSubmitterImageEntity.h"
 #import "NSData+Digest.h"
 #import "UIImage+Resize.h"
 #import "UIImage+AutoRotation.h"
-#import <ImageIO/ImageIO.h>
+#import "NSData+Base64.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -105,6 +106,14 @@
         image_ = [[UIImage imageWithData:self.data] fixOrientation];
     }
     return image_;
+}
+
+/*!
+ * populate base64 data
+ */
+- (NSString *)base64String{
+    NSString *base64 = [self.data base64EncodedString];
+    return [base64 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
 }
 
 /*!
