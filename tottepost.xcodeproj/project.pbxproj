@@ -232,7 +232,6 @@
 		EAAD437414B34D310093E003 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD437214B34D310093E003 /* Default-Portrait.png */; };
 		EAADC3B414F0E97A00BEA9C2 /* button_template.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B214F0E97A00BEA9C2 /* button_template.png */; };
 		EAADC3B514F0E97A00BEA9C2 /* button_template@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B314F0E97A00BEA9C2 /* button_template@2x.png */; };
-		EAADC3BE14F22AA700BEA9C2 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3BD14F22AA700BEA9C2 /* ScreenStatus.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -972,8 +971,6 @@
 		EAAD437214B34D310093E003 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "Resources/Images/Default-Portrait.png"; sourceTree = "<group>"; };
 		EAADC3B214F0E97A00BEA9C2 /* button_template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_template.png; path = Resources/Images/button_template.png; sourceTree = "<group>"; };
 		EAADC3B314F0E97A00BEA9C2 /* button_template@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_template@2x.png"; path = "Resources/Images/button_template@2x.png"; sourceTree = "<group>"; };
-		EAADC3BC14F22AA700BEA9C2 /* ScreenStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenStatus.h; sourceTree = "<group>"; };
-		EAADC3BD14F22AA700BEA9C2 /* ScreenStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenStatus.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1339,7 +1336,6 @@
 		37FB6585149C4D1500387490 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				EAADC3BB14F22AA700BEA9C2 /* ScreenStatus */,
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				791BF2C614E01FDD00697E05 /* Evernote */,
@@ -2219,16 +2215,6 @@
 			name = HPGrowingTextView;
 			sourceTree = "<group>";
 		};
-		EAADC3BB14F22AA700BEA9C2 /* ScreenStatus */ = {
-			isa = PBXGroup;
-			children = (
-				EAADC3BC14F22AA700BEA9C2 /* ScreenStatus.h */,
-				EAADC3BD14F22AA700BEA9C2 /* ScreenStatus.m */,
-			);
-			name = ScreenStatus;
-			path = Libraries/ScreenStatus;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2533,7 +2519,6 @@
 				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 				79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */,
 				79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */,
-				EAADC3BE14F22AA700BEA9C2 /* ScreenStatus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
