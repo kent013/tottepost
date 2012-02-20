@@ -54,6 +54,9 @@
     [self disable];
 }
 
+/*!
+ * load saved credentials
+ */
 - (void)loadCredentials{
     if([self secureSettingExistsForKey:PS_FOTOLIFE_AUTH_USERID]){
         userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
@@ -61,6 +64,9 @@
     }
 }
 
+/*!
+ * create credential object
+ */
 - (WSSECredential *)credential{
     return [WSSECredential credentialWithUsername:userId_ password:password_];
 }
@@ -215,7 +221,7 @@
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
     NSString *hash = photo.md5;
     AtompubClient *client = (AtompubClient *)[self requestForPhoto:hash];
-    //do some
+    [client cancel];
     id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
     [operationDelegate photoSubmitterDidOperationCanceled];
     [self photoSubmitter:self didCanceled:hash];

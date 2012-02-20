@@ -59,26 +59,94 @@
     [self disable];
 }
 
+/*!
+ * get user info
+ */
 - (void) getUserInfomation{
-    MixiRequest *request = [MixiRequest requestWithEndpoint:@"/people/@me"];
+    MixiRequest *request = [MixiRequest requestWithEndpoint:@"/people/@me/@self"];
     [mixi_ sendRequest:request delegate:self];
 }
 
 #pragma mark -
 #pragma mark mixi delegate methods
-
-- (void)mixi:(Mixi *)mixi didSuccessWithJson:(id)data{
-    if([data objectForKey:@"refresh_token"]){
+/*!
+ * request suceeded
+ */
+- (void)mixi:(Mixi *)mixi andConnection:(NSURLConnection *)connection didSuccessWithJson:(id)data{
+    NSString *url = [connection.currentRequest.URL absoluteString];
+    NSString *method = connection.currentRequest.HTTPMethod;
+    if([url isMatchedByRegex:@"token"]){
         [mixi_ store];
+    }else if([url isMatchedByRegex:@"albums/@me/@self"] && 
+             [method isEqualToString:@"POST"]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:YES withError:nil];
+    }else if([url isMatchedByRegex:@"albums/@me/@self"] && 
+             [method isEqualToString:@"GET"]){
+        NSArray *as = [data objectForKey:@"entry"];
+        NSMutableArray *albums = [[NSMutableArray alloc] init];
+        for(NSDictionary *a in as){
+            PhotoSubmitterAlbumEntity *album = 
+            [[PhotoSubmitterAlbumEntity alloc] initWithId:[a objectForKey:@"id"] name:[a objectForKey:@"title"] privacy:[[a objectForKey:@"privacy"] objectForKey:@"visibility"]];
+            [albums addObject:album];
+        }
+        [self setComplexSetting:albums forKey:PS_MIXI_SETTING_ALBUMS];
+        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    }else if([url isMatchedByRegex:@"photo/mediaItems/@me/@self"] &&
+             [method isEqualToString:@"POST"]){
+        NSString *hash = [self photoForRequest:connection];
+        
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+        [operationDelegate photoSubmitterDidOperationFinished:YES];
+        
+        [self clearRequest:connection];
+    }else if([url isMatchedByRegex:@"people/@me/@self"]){
+        NSString *username = [[data objectForKey:@"entry"] objectForKey:@"displayName"];
+        [self setSetting:username forKey:PS_MIXI_SETTING_USERNAME];
+        [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
     }
+    NSLog(@"%@,%@,%@", method,url,data);
+}
+
+- (void)mixi:(Mixi *)mixi didFinishLoading:(NSString *)data{
     NSLog(@"%@", data);
 }
-- (void)mixi:(Mixi*)mixi didFinishLoading:(NSString*)data{
-    NSLog(@"********DEBUG********* = %@",data);
+/*!
+ * failed
+ */
+- (void)mixi:(Mixi *)mixi andConnection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    NSString *url = [connection.currentRequest.URL absoluteString];
+    NSString *method = connection.currentRequest.HTTPMethod;
+    
+    if([url isMatchedByRegex:@"albums/@me/@self"] && 
+       [method isEqualToString:@"POST"]){
+        [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
+    }else if([url isMatchedByRegex:@"albums/@me/@self"] && 
+             [method isEqualToString:@"GET"]){
+    }else if([url isMatchedByRegex:@"photo/mediaItems/@me/@self"] &&
+       [method isEqualToString:@"POST"]){
+        NSString *hash = [self photoForRequest:connection];
+        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+        [operationDelegate photoSubmitterDidOperationFinished:NO];
+        [self clearRequest:connection];
+    }
+    NSLog(@"%@,%@,%@", url, method, error);    
+}
 
+/*!
+ * progress
+ */
+- (void)mixi:(Mixi *)mixi andConnection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
+    CGFloat progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+    NSString *hash = [self photoForRequest:connection];
+    [self photoSubmitter:self didProgressChanged:hash progress:progress];
 }
 
 #pragma mark - MixiSDKAuthorizerDelegate methods
+/*!
+ * authorization suceeded
+ */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didSuccessWithEndpoint:(NSString *)endpoint{
     [self setSetting:@"enabled" forKey:PS_MIXI_ENABLED];
     [self.authDelegate photoSubmitter:self didLogin:self.type];
@@ -88,12 +156,18 @@
     [mixi_ store];
 }
 
+/*!
+ * authorization canceled
+ */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didCancelWithEndpoint:(NSString *)endpoint{
     [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
     [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
 }
 
+/*!
+ * authorization failed
+ */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didFailWithEndpoint:(NSString *)endpoint error:(NSError *)error{
     [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
@@ -203,13 +277,41 @@
  * submit photo with data, comment and delegate
  */
 - (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    // TODO
+    NSMutableDictionary *params = nil;
+    if(photo.comment){
+        [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+         photo.comment, @"title",
+         nil];
+    }
+    NSString *path = @"/photo/mediaItems/@me/@self";
+    if(self.targetAlbum != nil){
+        path = [NSString stringWithFormat:@"%@/%@", path, self.targetAlbum.albumId];
+    }
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    MixiRequest *request = [MixiRequest postRequestWithEndpoint:path body:photo.data params:params];
+    NSURLConnection *connection = [mixi_ sendRequest:request delegate:self];
+    NSString *hash = photo.md5;
+    [self setPhotoHash:hash forRequest:connection];
+    [self addRequest:connection];
+    [self setOperationDelegate:delegate forRequest:connection];
+    [self photoSubmitter:self willStartUpload:hash];
 }
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{    
+    NSString *hash = photo.md5;
+    NSURLConnection *connection = (NSURLConnection *)[self requestForPhoto:hash];
+    [connection cancel];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:hash];
+    [self clearRequest:connection];
     //TODO
 }
 
@@ -253,32 +355,45 @@
  * create album
  */
 - (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    self.albumDelegate = delegate;
+    NSMutableDictionary *params = 
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+     title, @"description", 
+     title, @"title",
+     @"friends", @"visibility",
+     nil];
+    MixiRequest *request = [MixiRequest postRequestWithEndpoint:@"/photo/albums/@me/@self" params:params];
+    [mixi_ sendRequest:request delegate:self];
 }
 
 /*!
  * album list
  */
 - (NSArray *)albumList{
-    return nil;
+    return [self complexSettingForKey:PS_MIXI_SETTING_ALBUMS];
 }
 
 /*!
  * update album list
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    self.dataDelegate = delegate;
+    MixiRequest *request = [MixiRequest requestWithEndpoint:@"/photo/albums/@me/@self"];
+    [mixi_ sendRequest:request delegate:self];
 }
 
 /*!
  * selected album
  */
 - (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
+    return [self complexSettingForKey:PS_MIXI_SETTING_TARGET_ALBUM];
 }
 
 /*!
  * save selected album
  */
 - (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    [self setComplexSetting:targetAlbum forKey:PS_MIXI_SETTING_TARGET_ALBUM];
 }
 
 #pragma mark - username
@@ -302,14 +417,14 @@
  * return type
  */
 - (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFacebook;
+    return PhotoSubmitterTypeMixi;
 }
 
 /*!
  * name
  */
 - (NSString *)name{
-    return @"mixi";
+    return @"Mixi";
 }
 
 /*!

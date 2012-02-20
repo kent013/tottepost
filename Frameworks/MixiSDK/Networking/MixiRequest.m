@@ -28,7 +28,7 @@
 
 static NSString *defaultImageType = @"jpeg";
 static float defaultCompressionQuality = 90.0;
-static NSString *sdkUserAgent = nil;
+static NSString *sdkUserAgent = @"tottepost";
 static NSTimeInterval defaultRequestTimeout = kMixiDefaultRequestTimeout;
 static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtocolCachePolicy;
 
@@ -429,6 +429,8 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
             if ([self.body isMemberOfClass:[UIImage class]]) {
                 NSString *type = self.imageType != nil ? self.imageType : defaultImageType;
                 contentType = [NSString stringWithFormat:@"image/%@", type];
+            } else if([self.body isKindOfClass:[NSData class]]){
+                contentType = @"image/jpeg";
             }
             else if ([self.body isMemberOfClass:[NSDictionary class]]) {
                 contentType = @"text/json";
@@ -491,6 +493,9 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
     }
     else if ([self.body isKindOfClass:[NSString class]]) {
         return [(NSString*)self.body dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    else if ([self.body isKindOfClass:[NSData class]]){
+        return (NSData *)self.body;
     }
     else {
         return [[self.body description] dataUsingEncoding:NSUTF8StringEncoding];

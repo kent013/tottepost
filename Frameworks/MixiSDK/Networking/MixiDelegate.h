@@ -72,4 +72,9 @@
  */
 - (BOOL)allowBlankResponse;
 
+- (void)mixi:(Mixi*)mixi andConnection:(NSURLConnection *)connection didFinishLoading:(NSString*)data;
+- (void)mixi:(Mixi*)mixi andConnection:(NSURLConnection *)connection didSuccessWithJson:(id)data;
+- (void)mixi:(Mixi*)mixi andConnection:(NSURLConnection *)connection didFailWithError:(NSError*)error;
+- (void)mixi:(Mixi*)mixi andConnection:(NSURLConnection *)connection didSuccessWithJson:(id)data;
+- (void)mixi:(Mixi*)mixi andConnection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end
