@@ -12,7 +12,7 @@
 
 @protocol AVFoundationCameraControllerDelegate;
 
-@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,FlashButtonDelegate>{
+@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,FlashButtonDelegate,UIAccelerometerDelegate>{
     __strong AVCaptureDevice *device_;
     __strong AVCaptureSession *session_;
     __strong AVCaptureStillImageOutput *imageOutput_;
@@ -40,6 +40,7 @@
     
     AVCaptureVideoOrientation videoOrientation_;
     UIDeviceOrientation viewOrientation_;
+    UIDeviceOrientation deviceOrientation_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;
@@ -70,6 +71,7 @@
  */
 - (void) cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data;
 - (void) cameraController:(AVFoundationCameraController *)cameraController didScaledTo:(CGFloat) scale viewRect:(CGRect)rect;
+- (void) didRotatedDeviceOrientation:(UIDeviceOrientation) orientation;
 @optional
 - (void) cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController;
 @end

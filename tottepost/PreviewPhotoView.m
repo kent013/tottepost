@@ -167,16 +167,23 @@
 /*!
  * show view
  */
-- (void)presentWithPhoto:(PhotoSubmitterImageEntity *)photo{
-    commentTextView_.text = @"";
-     textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+- (void)presentWithPhoto:(PhotoSubmitterImageEntity *)photo {
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    [self presentWithPhoto:photo videoOrientation:orientation];
+}
 
+/*!
+ * show view
+ */
+- (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo videoOrientation:(UIDeviceOrientation) orientation{
+    commentTextView_.text = @"";
+    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+    
     photo_ = photo;
     
     UIImage *image = photo.image.fixOrientation;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
         if(orientation == UIDeviceOrientationLandscapeLeft){
             image = [image UIImageRotateByAngle:270];                
         }else if(orientation == UIDeviceOrientationLandscapeRight){
@@ -185,7 +192,7 @@
     }
     imageView_.image = image.fixOrientation;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];       
 }
 
 /*!
