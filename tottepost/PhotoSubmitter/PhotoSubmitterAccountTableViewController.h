@@ -12,6 +12,7 @@
 @interface PhotoSubmitterAccountTableViewController : UITableViewController<UITextFieldDelegate>{
     __strong UITextField *usernameTextField_;
     __strong UITextField *passwordTextField_;
+    BOOL isDone_;
 }
 
 @property (nonatomic, assign) id<PhotoSubmitterPasswordAuthViewDelegate> delegate;

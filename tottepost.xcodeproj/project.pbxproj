@@ -161,6 +161,13 @@
 		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
+		7995E4A714F187C3005C1453 /* fotolife_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A314F187C3005C1453 /* fotolife_16.png */; };
+		7995E4A814F187C3005C1453 /* fotolife_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A414F187C3005C1453 /* fotolife_16@2x.png */; };
+		7995E4A914F187C3005C1453 /* fotolife_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A514F187C3005C1453 /* fotolife_32.png */; };
+		7995E4AA14F187C3005C1453 /* fotolife_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A614F187C3005C1453 /* fotolife_32@2x.png */; };
+		7995E4B414F1F8FF005C1453 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E4B114F1F8FF005C1453 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7995E4B514F1F8FF005C1453 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E4B314F1F8FF005C1453 /* NSString+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7995E4B814F1FB34005C1453 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7995E4B614F1FB33005C1453 /* base64.c */; };
 		799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */; };
 		799CD6EB14E5590000F8A0EC /* PicasaPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
@@ -538,6 +545,16 @@
 		79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
 		79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		7995E4A314F187C3005C1453 /* fotolife_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_16.png; path = PhotoSubmitter/Images/fotolife_16.png; sourceTree = "<group>"; };
+		7995E4A414F187C3005C1453 /* fotolife_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fotolife_16@2x.png"; path = "PhotoSubmitter/Images/fotolife_16@2x.png"; sourceTree = "<group>"; };
+		7995E4A514F187C3005C1453 /* fotolife_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_32.png; path = PhotoSubmitter/Images/fotolife_32.png; sourceTree = "<group>"; };
+		7995E4A614F187C3005C1453 /* fotolife_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fotolife_32@2x.png"; path = "PhotoSubmitter/Images/fotolife_32@2x.png"; sourceTree = "<group>"; };
+		7995E4B014F1F8FF005C1453 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Util/NSData+Base64.h"; sourceTree = "<group>"; };
+		7995E4B114F1F8FF005C1453 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Util/NSData+Base64.m"; sourceTree = "<group>"; };
+		7995E4B214F1F8FF005C1453 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64.h"; path = "Util/NSString+Base64.h"; sourceTree = "<group>"; };
+		7995E4B314F1F8FF005C1453 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Base64.m"; path = "Util/NSString+Base64.m"; sourceTree = "<group>"; };
+		7995E4B614F1FB33005C1453 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = Util/base64.c; sourceTree = "<group>"; };
+		7995E4B714F1FB33005C1453 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = Util/base64.h; sourceTree = "<group>"; };
 		799CD6D914E543A300F8A0EC /* LFHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFHTTPRequest.h; sourceTree = "<group>"; };
 		799CD6DA14E543A300F8A0EC /* LFSiteReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFSiteReachability.h; sourceTree = "<group>"; };
 		799CD6DB14E543A300F8A0EC /* LFWebAPIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFWebAPIKit.h; sourceTree = "<group>"; };
@@ -1268,6 +1285,10 @@
 				EAAC40F214E72DD500CDC2CC /* mixi_16@2x.png */,
 				EAAC40F314E72DD500CDC2CC /* mixi_32.png */,
 				EAAC40F414E72DD500CDC2CC /* mixi_32@2x.png */,
+				7995E4A314F187C3005C1453 /* fotolife_16.png */,
+				7995E4A414F187C3005C1453 /* fotolife_16@2x.png */,
+				7995E4A514F187C3005C1453 /* fotolife_32.png */,
+				7995E4A614F187C3005C1453 /* fotolife_32@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1321,6 +1342,12 @@
 				37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */,
 				37FB6586149C4E6D00387490 /* NSData+Digest.h */,
 				37FB6587149C4E6D00387490 /* NSData+Digest.m */,
+				7995E4B614F1FB33005C1453 /* base64.c */,
+				7995E4B714F1FB33005C1453 /* base64.h */,
+				7995E4B014F1F8FF005C1453 /* NSData+Base64.h */,
+				7995E4B114F1F8FF005C1453 /* NSData+Base64.m */,
+				7995E4B214F1F8FF005C1453 /* NSString+Base64.h */,
+				7995E4B314F1F8FF005C1453 /* NSString+Base64.m */,
 				37FB6588149C4E6D00387490 /* UIImage+Digest.h */,
 				37FB6589149C4E6D00387490 /* UIImage+Digest.m */,
 				376A8B2F149FA18E00637B68 /* UIImage+AutoRotation.h */,
@@ -2360,6 +2387,10 @@
 				EAAC40F814E72DD500CDC2CC /* mixi_32@2x.png in Resources */,
 				EAADC3B414F0E97A00BEA9C2 /* button_template.png in Resources */,
 				EAADC3B514F0E97A00BEA9C2 /* button_template@2x.png in Resources */,
+				7995E4A714F187C3005C1453 /* fotolife_16.png in Resources */,
+				7995E4A814F187C3005C1453 /* fotolife_16@2x.png in Resources */,
+				7995E4A914F187C3005C1453 /* fotolife_32.png in Resources */,
+				7995E4AA14F187C3005C1453 /* fotolife_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2519,6 +2550,9 @@
 				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 				79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */,
 				79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */,
+				7995E4B414F1F8FF005C1453 /* NSData+Base64.m in Sources */,
+				7995E4B514F1F8FF005C1453 /* NSString+Base64.m in Sources */,
+				7995E4B814F1FB34005C1453 /* base64.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

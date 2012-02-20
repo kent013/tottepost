@@ -35,6 +35,7 @@ typedef enum {
 }
 
 @property(nonatomic, assign) NSString* tag;
+@property(nonatomic, assign) BOOL enableDebugOutput;
 
 + (AtompubClient *)client;
 - (id)init;

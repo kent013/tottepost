@@ -2,6 +2,7 @@
 #import <libxml/tree.h>
 
 @class DDXMLDocument;
+@class DDXMLElement;
 
 /**
  * Welcome to KissXML.
@@ -12,8 +13,8 @@
  * If you're new to the project you may wish to read the "Getting Started" wiki.
  * https://github.com/robbiehanson/KissXML/wiki/GettingStarted
  * 
- * KissXML provides a drop-in replacement for Apple's NSXML class cluster.
- * The goal is to get the exact same behavior as the NSXML classes.
+ * KissXML provides a drop-in replacement for Apple's DDXML class cluster.
+ * The goal is to get the exact same behavior as the DDXML classes.
  * 
  * For API Reference, see Apple's excellent documentation,
  * either via Xcode's Mac OS X documentation, or via the web:
@@ -65,9 +66,9 @@ enum {
 
 //- (id)initWithKind:(DDXMLNodeKind)kind options:(NSUInteger)options;
 
-//+ (id)document;
++ (id)document;
 
-//+ (id)documentWithRootElement:(DDXMLElement *)element;
++ (id)documentWithRootElement:(DDXMLElement *)element;
 
 + (id)elementWithName:(NSString *)name;
 

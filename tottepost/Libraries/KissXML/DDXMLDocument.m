@@ -14,8 +14,8 @@
  * If you're new to the project you may wish to read the "Getting Started" wiki.
  * https://github.com/robbiehanson/KissXML/wiki/GettingStarted
  * 
- * KissXML provides a drop-in replacement for Apple's NSXML class cluster.
- * The goal is to get the exact same behavior as the NSXML classes.
+ * KissXML provides a drop-in replacement for Apple's DDXML class cluster.
+ * The goal is to get the exact same behavior as the DDXML classes.
  * 
  * For API Reference, see Apple's excellent documentation,
  * either via Xcode's Mac OS X documentation, or via the web:
@@ -54,6 +54,18 @@
 	NSAssert(NO, @"Use initWithDocPrimitive:owner:");
 	
 	return nil;
+}
+
+
+- (id)initWithRootElement:(DDXMLElement *)element {
+	xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
+	if(self = [self initWithDocPrimitive:doc owner:nil]) {
+		if(element) {
+			[self setRootElement:element];
+		}
+	}
+	
+	return self;
 }
 
 /**
@@ -102,6 +114,27 @@
 	return [self initWithDocPrimitive:doc owner:nil];
 }
 
+- (void)setVersion:(NSString *)version {
+	xmlDocPtr doc = (xmlDocPtr)genericPtr;
+	xmlFree((xmlChar *)doc->version);
+	doc->version = xmlStrdup([version xmlChar]);
+}
+
+- (NSString *)version {
+	xmlDocPtr doc = (xmlDocPtr)genericPtr;
+	return [NSString stringWithUTF8String:((const char*)doc->version)];
+}
+
+- (void)setStandalone:(BOOL)standalone {
+	xmlDocPtr doc = (xmlDocPtr)genericPtr;
+	doc->standalone = standalone;
+}
+
+- (BOOL)isStandalone {
+	xmlDocPtr doc = (xmlDocPtr)genericPtr;
+	return doc->standalone;
+}
+
 /**
  * Returns the root element of the receiver.
 **/
@@ -121,6 +154,11 @@
 		return [DDXMLElement nodeWithElementPrimitive:rootNode owner:self];
 	else
 		return nil;
+}
+
+- (void)setRootElement:(DDXMLNode *)root {
+	xmlDocPtr doc = (xmlDocPtr)genericPtr;
+	xmlDocSetRootElement(doc, (xmlNodePtr)root->genericPtr);
 }
 
 - (NSData *)XMLData

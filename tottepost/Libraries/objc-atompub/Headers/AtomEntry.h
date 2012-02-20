@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 #import "AtomCoreElement.h"
 
-@class AtomControl;
+@class AtomControl, AtomContent, AtomGenerator;
 
 @interface AtomEntry : AtomCoreElement {
-
+    NSArray *contents;
 }
 + (NSString *)elementName;
 + (DDXMLNode *)elementNamespace;
@@ -23,5 +23,9 @@
 - (void)addControl:(AtomControl *)control;
 - (NSDate *)edited;
 - (void)setEdited:(NSDate *)edited;
+- (AtomContent *)content;
+- (void)setContent:(AtomContent *)content;
+- (AtomGenerator *)generator;
+- (void)setGenerator:(AtomGenerator *)generator;
 @end
 

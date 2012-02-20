@@ -127,5 +127,6 @@ typedef enum {
  * protocol for request account info
  */
 @protocol PhotoSubmitterPasswordAuthViewDelegate <NSObject>
+- (void) didCancelPasswordAuthView: (UIViewController *)passwordAuthViewController;
 - (void) passwordAuthView: (UIViewController *)passwordAuthViewController didPresentUserId:(NSString *)userId password:(NSString *)password;
 @end
