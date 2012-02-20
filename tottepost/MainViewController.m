@@ -428,6 +428,7 @@
     if(settingViewPresented_){
         [settingViewController_ updateSocialAppSwitches];
     }
+    [settingIndicatorView_ update];
 }
 
 /*!
