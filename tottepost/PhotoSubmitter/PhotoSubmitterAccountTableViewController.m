@@ -43,6 +43,7 @@
  * login
  */
 - (void)login{
+    isDone_ = YES;
     [self.delegate passwordAuthView:self didPresentUserId:usernameTextField_.text password:passwordTextField_.text];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -168,12 +169,16 @@
  */
 - (void)viewWillAppear:(BOOL)animated {
     [usernameTextField_ becomeFirstResponder];
+    isDone_ = NO;
 }
 
 /*!
  * remove first responder
  */
 - (void)viewWillDisappear:(BOOL)animated {
+    if(isDone_ == NO){
+        [self.delegate didCancelPasswordAuthView:self];
+    }
     [usernameTextField_ resignFirstResponder];
 }
 @end

@@ -43,7 +43,9 @@
  */
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.submitter updateAlbumListWithDelegate:self];
+    if(self.submitter.isAlbumSupported){
+        [self.submitter updateAlbumListWithDelegate:self];
+    }
 }
 
 #pragma mark -
@@ -53,7 +55,10 @@
  */
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    if(self.submitter.isAlbumSupported){
+        return 2;
+    }
+    return 1;
 }
 
 /*!
@@ -61,8 +66,10 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-        case FSV_SECTION_ALBUMS: return self.submitter.albumList.count + 1;
+    if(self.submitter.isAlbumSupported){
+        switch (section) {
+            case FSV_SECTION_ALBUMS: return self.submitter.albumList.count + 1;
+        }
     }
     return [super tableView:tableView numberOfRowsInSection:section];
 }
@@ -71,8 +78,10 @@
  * title for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    switch (section) {
-        case FSV_SECTION_ALBUMS : return [TTLang lstr:@"Detail_Section_Album"]; break;
+    if(self.submitter.isAlbumSupported){
+        switch (section) {
+            case FSV_SECTION_ALBUMS : return [TTLang lstr:@"Detail_Section_Album"]; break;
+        }
     }
     return [super tableView:tableView titleForHeaderInSection:section];
 }
@@ -81,8 +90,10 @@
  * footer for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    switch (section){
-        case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Album_Detail_Section_Album_Footer"], self.submitter.name];
+    if(self.submitter.isAlbumSupported){
+        switch (section){
+            case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Album_Detail_Section_Album_Footer"], self.submitter.name];
+        }
     }
     return [super tableView:tableView titleForFooterInSection:section];;
 }
@@ -93,7 +104,7 @@
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    if(indexPath.section == FSV_SECTION_ALBUMS){
+    if(indexPath.section == FSV_SECTION_ALBUMS && self.submitter.isAlbumSupported){
         if(self.submitter.albumList.count == indexPath.row){
             cell.textLabel.text = [TTLang lstr:@"Album_Detail_Section_Create_Album_Title"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -117,7 +128,7 @@
  * on row selected
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == FSV_SECTION_ALBUMS){
+    if(indexPath.section == FSV_SECTION_ALBUMS && self.submitter.isAlbumSupported){
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if(indexPath.row == self.submitter.albumList.count){
             [self.navigationController pushViewController:createAlbumViewController_ animated:YES];
