@@ -31,66 +31,66 @@
 // This way, on Mac OS X it uses DDXML, and on iOS it uses KissXML.
 
 #ifndef DDXMLNode
-  #define DDXMLNode DDXMLNode
+  #define NSXMLNode DDXMLNode
 #endif
 #ifndef DDXMLElement
-  #define DDXMLElement DDXMLElement
+  #define NSXMLElement DDXMLElement
 #endif
 #ifndef DDXMLDocument
-  #define DDXMLDocument DDXMLDocument
+  #define NSXMLDocument DDXMLDocument
 #endif
 
 #ifndef DDXMLInvalidKind
-  #define DDXMLInvalidKind DDXMLInvalidKind
+  #define NSXMLInvalidKind DDXMLInvalidKind
 #endif
 #ifndef DDXMLDocumentKind
-  #define DDXMLDocumentKind DDXMLDocumentKind
+  #define NSXMLDocumentKind DDXMLDocumentKind
 #endif
 #ifndef DDXMLElementKind
-  #define DDXMLElementKind DDXMLElementKind
+  #define NSXMLElementKind DDXMLElementKind
 #endif
 #ifndef DDXMLAttributeKind
-  #define DDXMLAttributeKind DDXMLAttributeKind
+  #define NSXMLAttributeKind DDXMLAttributeKind
 #endif
 #ifndef DDXMLNamespaceKind
-  #define DDXMLNamespaceKind DDXMLNamespaceKind
+  #define NSXMLNamespaceKind DDXMLNamespaceKind
 #endif
 #ifndef DDXMLProcessingInstructionKind
-  #define DDXMLProcessingInstructionKind DDXMLProcessingInstructionKind
+  #define NSXMLProcessingInstructionKind DDXMLProcessingInstructionKind
 #endif
 #ifndef DDXMLCommentKind
-  #define DDXMLCommentKind DDXMLCommentKind
+  #define NSXMLCommentKind DDXMLCommentKind
 #endif
 #ifndef DDXMLTextKind
-  #define DDXMLTextKind DDXMLTextKind
+  #define NSXMLTextKind DDXMLTextKind
 #endif
 #ifndef DDXMLDTDKind
-  #define DDXMLDTDKind DDXMLDTDKind
+  #define NSXMLDTDKind DDXMLDTDKind
 #endif
 #ifndef DDXMLEntityDeclarationKind
-  #define DDXMLEntityDeclarationKind DDXMLEntityDeclarationKind
+  #define NSXMLEntityDeclarationKind DDXMLEntityDeclarationKind
 #endif
 #ifndef DDXMLAttributeDeclarationKind
-  #define DDXMLAttributeDeclarationKind DDXMLAttributeDeclarationKind
+  #define NSXMLAttributeDeclarationKind DDXMLAttributeDeclarationKind
 #endif
 #ifndef DDXMLElementDeclarationKind
-  #define DDXMLElementDeclarationKind DDXMLElementDeclarationKind
+  #define NSXMLElementDeclarationKind DDXMLElementDeclarationKind
 #endif
 #ifndef DDXMLNotationDeclarationKind
-  #define DDXMLNotationDeclarationKind DDXMLNotationDeclarationKind
+  #define NSXMLNotationDeclarationKind DDXMLNotationDeclarationKind
 #endif
 
 #ifndef DDXMLNodeOptionsNone
-  #define DDXMLNodeOptionsNone DDXMLNodeOptionsNone
+  #define NSXMLNodeOptionsNone DDXMLNodeOptionsNone
 #endif
 #ifndef DDXMLNodeExpandEmptyElement
-  #define DDXMLNodeExpandEmptyElement DDXMLNodeExpandEmptyElement
+  #define NSXMLNodeExpandEmptyElement DDXMLNodeExpandEmptyElement
 #endif
 #ifndef DDXMLNodeCompactEmptyElement
-  #define DDXMLNodeCompactEmptyElement DDXMLNodeCompactEmptyElement
+  #define NSXMLNodeCompactEmptyElement DDXMLNodeCompactEmptyElement
 #endif
 #ifndef DDXMLNodePrettyPrint
-  #define DDXMLNodePrettyPrint DDXMLNodePrettyPrint
+  #define NSXMLNodePrettyPrint DDXMLNodePrettyPrint
 #endif
 
 #endif // #if TARGET_OS_IPHONE

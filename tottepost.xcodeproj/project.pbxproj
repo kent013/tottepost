@@ -197,6 +197,7 @@
 		7995E51214F27B2D005C1453 /* MixiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4F414F27B2D005C1453 /* MixiViewController.xib */; };
 		7995E51314F27B2D005C1453 /* MixiWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E4F614F27B2D005C1453 /* MixiWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E51414F27B2D005C1453 /* MixiWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4F714F27B2D005C1453 /* MixiWebViewController.xib */; };
+		7995E52614F29F8D005C1453 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */; };
 		799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */; };
 		799CD6EB14E5590000F8A0EC /* PicasaPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
@@ -244,8 +245,6 @@
 		EAAD437414B34D310093E003 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAD437214B34D310093E003 /* Default-Portrait.png */; };
 		EAADC3B414F0E97A00BEA9C2 /* button_template.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B214F0E97A00BEA9C2 /* button_template.png */; };
 		EAADC3B514F0E97A00BEA9C2 /* button_template@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAADC3B314F0E97A00BEA9C2 /* button_template@2x.png */; };
-		EAADC3C814F2877900BEA9C2 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */; };
-		EAADC3CB14F287D400BEA9C2 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3CA14F287D400BEA9C2 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1397,7 +1396,6 @@
 				792010D514E5400900D82D3D /* GData */,
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				798058B814CFD2E4006E3817 /* ios-queue-object */,
-				791BF2B114E01FCE00697E05 /* KissXML */,
 				79D783E214E4DEBB003ECCCA /* MixiSDK */,
 				791BF27214E01FC500697E05 /* oauthconsumer */,
 				793EB6C614F0BC410018F220 /* objc-atompub */,
@@ -1758,6 +1756,7 @@
 		798058B814CFD2E4006E3817 /* ios-queue-object */ = {
 			isa = PBXGroup;
 			children = (
+				791BF2B114E01FCE00697E05 /* KissXML */,
 				798058B914CFD317006E3817 /* NSMutableArray+QueueAdditions.h */,
 				798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */,
 			);
@@ -2484,6 +2483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7995E52614F29F8D005C1453 /* ScreenStatus.m in Sources */,
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
 				37FB64DE1496238600387490 /* MainViewController.m in Sources */,
