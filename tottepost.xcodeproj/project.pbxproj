@@ -2568,14 +2568,8 @@
 				79D0EAE614ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m in Sources */,
 				79D0EAF414EF617000CDEF76 /* FotolifePhotoSubmitter.m in Sources */,
 				79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */,
-<<<<<<< HEAD
 				EAADC3C814F2877900BEA9C2 /* ScreenStatus.m in Sources */,
 				EAADC3CB14F287D400BEA9C2 /* NSData+Base64.m in Sources */,
-=======
-				7995E4B414F1F8FF005C1453 /* NSData+Base64.m in Sources */,
-				7995E4B514F1F8FF005C1453 /* NSString+Base64.m in Sources */,
-				7995E4B814F1FB34005C1453 /* base64.c in Sources */,
->>>>>>> 72ed9356af74eee437633f79dce013554297b089
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
