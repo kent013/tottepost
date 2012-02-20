@@ -73,7 +73,7 @@ static MixiADBannerView *sharedView;
 
 - (void)dealloc
 {
-    [self.mapReporter release];
+    [mapReporter_ release];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	[[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:UIDeviceOrientationDidChangeNotification 

@@ -138,6 +138,9 @@
     /** \brief エンドポイント */
     NSString *endpoint_;
     
+    /** \brief エンドポイントのベースURL */
+    NSString *endpointBaseUrl_;
+    
     /** \brief リクエストボディ */
     NSObject *body_;
     
@@ -174,6 +177,7 @@
 }
 
 @property (nonatomic, copy) NSString *endpoint;
+@property (nonatomic, copy) NSString *endpointBaseUrl;
 @property (nonatomic, retain) NSObject *body;
 @property (readonly) NSData *bodyData;
 @property (nonatomic, retain) NSMutableDictionary *params;
@@ -184,7 +188,6 @@
 @property (nonatomic, copy) NSString *imageType;
 @property (nonatomic, assign) float compressionQuality;
 @property (nonatomic, assign) BOOL openMixiAppToAuthorizeIfNeeded;
-@property (readonly, getter=userAgent) NSString *userAgent;
 
 /**
  * \brief エンドポイントを指定してGETリクエストを生成
@@ -633,6 +636,6 @@
  *
  * \return ユーザーエージェント
  */
-- (NSString*)userAgent;
++ (NSString*)userAgent;
 
 @end

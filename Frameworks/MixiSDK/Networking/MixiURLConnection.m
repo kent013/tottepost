@@ -66,7 +66,7 @@ static bool autoRedirect = NO;
             else if (statusType == 3) {
                 NSString *location = [headers objectForKey:@"Location"];
                 if (autoRedirect) {
-                    NSMutableURLRequest *req = [request mutableCopy];
+                    NSMutableURLRequest *req = [[request mutableCopy] autorelease];
                     [req setURL:[NSURL URLWithString:location]];
                     ret = [self sendSynchronousRequest:req returningResponse:urlResponse error:error];
                 }
@@ -129,7 +129,7 @@ static bool autoRedirect = NO;
 
 - (id)initWithRequest:(NSURLRequest *)request delegate:(id)delegate startImmediately:(BOOL)startImmediately {
     if ((self = [super init])) {
-        self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate startImmediately:startImmediately];
+        self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:delegate startImmediately:startImmediately] autorelease];
     }
     return self;
 }

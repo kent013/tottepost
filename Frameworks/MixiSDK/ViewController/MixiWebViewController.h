@@ -25,15 +25,27 @@
 @interface MixiWebViewController : UIViewController {
     /** \brief ツールバー */
     IBOutlet UIToolbar *toolbar_;
+    
+    /** \brief タイトル */
+    NSString *toolbarTitle_;
+    
+    /** \brief ツールバーの色 */
+    UIColor *toolbarColor_;
 
     /** \brief ツールバー上の閉じるボタン */
     IBOutlet UIBarButtonItem *closeButton_;
+    
+    /** \brief ツールバー上のタイトルラベル */
+    IBOutlet UILabel *titleLabel_;
 
     /** \brief ウェブビュー */
     IBOutlet UIWebView *webView_;
 
     /** \brief ウェブビューで表示する画面のURL */
     NSURL *url_;
+    
+    /** \brief ウェブビューで表示するHTML */
+    NSString *html_;
 
     /** \brief ウェブビュー内での閉じるボタン押下を処理するデリゲート */
     id<UIWebViewDelegate> delegate_;
@@ -43,8 +55,11 @@
 }
 
 @property (nonatomic, retain) NSURL *url;
+@property (nonatomic, assign) NSString *html;
 @property (nonatomic, assign) id<UIWebViewDelegate> delegate;
 @property (nonatomic, assign) id<MixiOrientationDelegate> orientationDelegate;
+@property (nonatomic, copy) NSString *toolbarTitle;
+@property (nonatomic, retain) UIColor *toolbarColor;
 
 /**
  * \brief 閉じるボタンクリックを処理
@@ -69,5 +84,14 @@
  * \return MixiWebViewControllerインスタンス
  */
 - (id)initWithURL:(NSURL*)url delegate:(id<UIWebViewDelegate>)delegate;
+
+/**
+ * \brief 初期化
+ *
+ * \param html HTML
+ * \param delegate 閉じるボタン押下を処理するデリゲート
+ * \return MixiWebViewControllerインスタンス
+ */
+- (id)initWithHTML:(NSString*)html delegate:(id<UIWebViewDelegate>)delegate;
 
 @end

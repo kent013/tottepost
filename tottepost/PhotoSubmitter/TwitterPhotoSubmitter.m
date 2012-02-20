@@ -169,7 +169,7 @@
 }
 
 /*!
- * check url is processoble, we will not use this method in twitter
+ * check url is processable, we will not use this method in twitter
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     return NO;

@@ -17,16 +17,9 @@
 
 #define PS_MIXI_ENABLED @"PSMixiEnabled"
 
-#define PS_MIXI_AUTH_URL @"photosubmitter://auth/mixi"
-#define PS_MIXI_AUTH_TOKEN @"MixiOAuthToken"
-#define PS_MIXI_AUTH_TOKEN_SECRET @"MixiOAuthTokenSecret"
-
-#define PS_MIXI_API_CHECK_TOKEN @"check_token"
-#define PS_MIXI_API_REQUEST_TOKEN @"request_token"
-#define PS_MIXI_API_GET_TOKEN @"get_token"
-#define PS_MIXI_API_UPLOAD_IMAGE @"upload_image"
-
-#define PS_MIXI_SETTING_USERNAME @"MixiUserName"
+#define PS_MIXI_SETTING_USERNAME @"PSMixiUserName"
+#define PS_MIXI_SETTING_ALBUMS @"PSFacebookAlbums"
+#define PS_MIXI_SETTING_TARGET_ALBUM @"PSFacebookTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -38,23 +31,32 @@
 @end
 
 @implementation MixiPhotoSubmitter(PrivateImplementation)
-#pragma mark -
-#pragma mark private implementations
+#pragma mark - private implementations
 /*!
  * initializer
  */
 -(void)setupInitialState{
     mixi_ = [[Mixi sharedMixi] setupWithType:kMixiApiTypeSelectorGraphApi
                                          clientId:MIXI_SUBMITTER_API_KEY
-                                           secret:MIXI_SUBMITTER_API_SECRET];
+                                      secret:MIXI_SUBMITTER_API_SECRET];
+    MixiSDKAuthorizer *authorizer = [MixiSDKAuthorizer authorizerWithRedirectUrl:@"http://somewhere.else"];
+    authorizer.delegate = self;
+    mixi_.authorizer = authorizer;
     [mixi_ restore];
     [mixi_ reportOncePerDay];
+    if([mixi_ isAccessTokenExpired]){
+        [mixi_ refreshAccessTokenWithDelegate:self];
+    }
 }
 
 /*!
  * clear mixi access token key
  */
 - (void)clearCredentials{
+    [self removeSettingForKey:PS_MIXI_SETTING_USERNAME];
+    [self removeSettingForKey:PS_MIXI_SETTING_ALBUMS];
+    [self removeSettingForKey:PS_MIXI_SETTING_TARGET_ALBUM];
+    [self disable];
 }
 
 - (void) getUserInfomation{
@@ -65,11 +67,38 @@
 #pragma mark -
 #pragma mark mixi delegate methods
 
+- (void)mixi:(Mixi *)mixi didSuccessWithJson:(id)data{
+    if([data objectForKey:@"refresh_token"]){
+        [mixi_ store];
+    }
+    NSLog(@"%@", data);
+}
 - (void)mixi:(Mixi*)mixi didFinishLoading:(NSString*)data{
     NSLog(@"********DEBUG********* = %@",data);
 
 }
 
+#pragma mark - MixiSDKAuthorizerDelegate methods
+- (void)authorizer:(MixiSDKAuthorizer *)authorizer didSuccessWithEndpoint:(NSString *)endpoint{
+    [self setSetting:@"enabled" forKey:PS_MIXI_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    
+    //[self getUserInfomation];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    [mixi_ store];
+}
+
+- (void)authorizer:(MixiSDKAuthorizer *)authorizer didCancelWithEndpoint:(NSString *)endpoint{
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
+
+- (void)authorizer:(MixiSDKAuthorizer *)authorizer didFailWithEndpoint:(NSString *)endpoint error:(NSError *)error{
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -79,8 +108,7 @@
 @synthesize authDelegate;
 @synthesize dataDelegate;
 @synthesize albumDelegate;
-#pragma mark -
-#pragma mark public implementations
+#pragma mark - public implementations
 /*!
  * initialize
  */
@@ -97,14 +125,24 @@
  * login to facebook
  */
 -(void)login{
-    [mixi_ authorize:@"r_profile",@"r_photo", @"w_photo", nil];
+    if([mixi_ isAuthorized]){
+        [self setSetting:@"enabled" forKey:PS_MIXI_ENABLED];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+    }else{
+        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
+        MixiSDKAuthorizer *authorizer = (MixiSDKAuthorizer *)mixi_.authorizer;
+        [authorizer setParentViewController:[[PhotoSubmitterManager sharedInstance].authControllerDelegate requestNavigationControllerToPresentAuthenticationView]];
+        [mixi_ authorize:@"r_profile",@"r_photo", @"w_photo", nil];
+    }
 }
 
 /*!
  * logoff from facebook
  */
 - (void)logout{
-    //TODo
+    [mixi_ logout];
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
@@ -116,31 +154,17 @@
 }
 
 /*!
- * check url is processoble
+ * check url is processable
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
-    // TODO
-    return YES;
+    return NO;
 }
 
 /*!
  * on open url finished
  */
 - (BOOL)didOpenURL:(NSURL *)url{
-    NSError *error = nil;
-    NSString *apiType = [[Mixi sharedMixi] application:nil openURL:url sourceApplication:nil annotation:nil error:&error];
-    if (error) {
-        NSLog(@"Cannot obtain token/secret from URL: %@", [url absoluteString]);
-        return NO;
-    }
-    else if ([apiType isEqualToString:kMixiAppApiTypeToken]) {
-    }
-    else if ([apiType isEqualToString:kMixiAppApiTypeRevoke]) {
-    }
-    else if ([apiType isEqualToString:kMixiAppApiTypeReceiveRequest]) {
-    }
-    
-    return YES;
+    return NO;
 }
 
 /*!
@@ -150,7 +174,7 @@
     if(self.isEnabled == false){
         return NO;
     }
-    if ([self settingExistsForKey:PS_MIXI_AUTH_TOKEN]) {
+    if ([mixi_ isAuthorized]) {
         return YES;
     }
     return NO;
@@ -160,7 +184,7 @@
  * check is enabled
  */
 - (BOOL) isEnabled{
-    return [FacebookPhotoSubmitter isEnabled];
+    return [MixiPhotoSubmitter isEnabled];
 }
 
 /*!

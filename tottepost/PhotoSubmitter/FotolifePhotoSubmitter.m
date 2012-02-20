@@ -125,7 +125,7 @@
 }
 
 /*!
- * check url is processoble
+ * check url is processable
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     return NO;

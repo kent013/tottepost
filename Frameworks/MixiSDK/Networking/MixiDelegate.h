@@ -31,11 +31,11 @@
 
 /**
  * \brief APIの実行に成功
- *
+ * 
  * \param mixi mixiオブジェクト
- * \param data 実行結果のJSONを解釈した辞書オブジェクト
+ * \param data 実行結果のJSONを解釈したオブジェクト
  */
-- (void)mixi:(Mixi*)mixi didSuccessWithJson:(NSDictionary*)data;
+- (void)mixi:(Mixi*)mixi didSuccessWithJson:(id)data;
 
 /**
  * \brief APIの接続がキャンセル

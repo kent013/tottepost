@@ -9,10 +9,8 @@
 #import "Mixi.h"
 #import "MixiConstants.h"
 #import "MixiWebViewController.h"
-#import "MixiDownloadWebViewDelegate.h"
+#import "MixiDownloadWebViewController.h"
 #import "Reachability.h"
-
-#pragma GCC diagnostic ignored "-Wmissing-prototypes"
 
 NSString* MixiUtilEncodeURIComponent(NSString* aString) {
     return [((NSString*)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
@@ -22,6 +20,8 @@ NSString* MixiUtilEncodeURIComponent(NSString* aString) {
                                                                 kCFStringEncodingUTF8)) autorelease];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
 BOOL MixiUtilIsReachable() {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     return NotReachable != [reachability currentReachabilityStatus];
@@ -44,6 +44,7 @@ NSString* MixiUtilFirstBundleURLScheme() {
     if ([urlSchemes count] == 0) return nil;
     return [urlSchemes objectAtIndex:0];
 }
+#pragma clang pop
 
 NSDictionary* MixiUtilParseURLOptions(NSURL* url) {
     return MixiUtilParseURLOptionsByString(url, @"#");
@@ -90,8 +91,8 @@ void MixiUtilShowMessageTitle(NSString* message, NSString* title) {
 }
 
 MixiWebViewController* MixiUtilDownloadViewController(id target, SEL action) {
-    MixiWebViewController *vc = [[[MixiWebViewController alloc] initWithURL:kMixiOfficialAppDownloadURL] autorelease];
-    vc.delegate = [[MixiDownloadWebViewDelegate alloc] initWithCloseTarget:target action:action];
+    MixiDownloadWebViewController *vc =[[[MixiDownloadWebViewController alloc] initWithURL:kMixiOfficialAppDownloadURL] autorelease];
+    [vc addCloseTaget:target action:action];
     return vc;
 }
 

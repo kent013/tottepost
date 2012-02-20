@@ -16,6 +16,7 @@
 
 @synthesize clientId=clientId_, 
     secret=secret_,
+    redirectUrl=redirectUrl_,
     selectorType=selectorType_, 
     version=version_,
     pbkey=pbkey_,
@@ -24,11 +25,15 @@
 #pragma mark - Initialize
 
 + (id)configWithType:(MixiApiType)type {
-    return [self configWithType:type clientId:nil secret:nil];
+    return [self configWithType:type clientId:nil secret:nil redirectUrl:nil];
 }
 
 + (id)configWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret {
-    return [[[self alloc] initWithType:type clientId:cid secret:secret] autorelease];
+    return [self configWithType:type clientId:cid secret:secret redirectUrl:nil];
+}
+
++ (id)configWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret redirectUrl:(NSString *)redirectUrl {
+    return [[[self alloc] initWithType:type clientId:cid secret:secret redirectUrl:redirectUrl] autorelease];
 }
 
 + (id)configWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret appId:(NSString*)appId {
@@ -41,14 +46,20 @@
 }
 
 - (id)initWithType:(MixiApiType)type {
-    return [self initWithType:type clientId:nil secret:nil];
+    return [self initWithType:type clientId:nil secret:nil redirectUrl:nil];
 }
 
-- (id)initWithType:(MixiApiType)type clientId:(NSString*)id secret:(NSString*)secret {
+- (id)initWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret {
+    return [self initWithType:type clientId:cid secret:secret redirectUrl:nil];
+}
+
+- (id)initWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret redirectUrl:(NSString*)redirectUrl {
     if ((self = [super init])) {
         self.selectorType = type;
-        self.clientId = id;
+        self.clientId = cid;
         self.secret = secret;
+        self.redirectUrl = redirectUrl;
+        if (!redirectUrl) self.redirectUrl = kMixiDefaultRedirectUrl;
         self.version = kMixiConfigVersion;
         self.urlScheme = MixiUtilFirstBundleURLScheme();
     }
@@ -56,9 +67,9 @@
     return self;
 }
 
-- (id)initWithType:(MixiApiType)type clientId:(NSString*)id secret:(NSString*)secret appId:(NSString*)appId {
+- (id)initWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret appId:(NSString*)appId {
     NSLog(@"appId is ignored. Please use initWithType:clientId:secret: method instead.");
-    return [self initWithType:type clientId:id secret:secret];
+    return [self initWithType:type clientId:cid secret:secret redirectUrl:nil];
 }
 
 #pragma mark -
@@ -68,8 +79,8 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"{clientId:%@, secret:%@, selectorType:%d, version:%@}", 
-            self.clientId, self.secret, self.selectorType, self.version];
+    return [NSString stringWithFormat:@"{clientId:%@, secret:%@, redirectUrl:%@, selectorType:%d, version:%@}", 
+            self.clientId, self.secret, self.redirectUrl, self.selectorType, self.version];
 }
 
 #pragma mark - Getter
@@ -94,6 +105,7 @@
 - (void)dealloc {
     self.clientId = nil;
     self.secret = nil;
+    self.redirectUrl = nil;
     self.version = nil;
     if (pbkey_ != nil) {
         [pbkey_ release];

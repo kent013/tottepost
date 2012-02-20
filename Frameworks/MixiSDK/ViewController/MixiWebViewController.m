@@ -11,7 +11,7 @@
 
 @implementation MixiWebViewController
 
-@synthesize url=url_, delegate=delegate_, orientationDelegate=orietationDelegate_;
+@synthesize url=url_, html=html_, delegate=delegate_, orientationDelegate=orietationDelegate_, toolbarTitle=toolbarTitle_, toolbarColor=toolbarColor_;
 
 - (id)initWithURL:(NSURL*)url {
     return [self initWithURL:url delegate:nil];
@@ -26,11 +26,23 @@
     return self;
 }
 
+- (id)initWithHTML:(NSString*)html delegate:(id<UIWebViewDelegate>)delegate {
+    self = [super initWithNibName:@"MixiWebViewController" bundle:nil];
+    if (self) {
+        self.html = html;
+        self.delegate = delegate;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
-    [super dealloc];
     self.url = nil;
+    self.html = nil;
     self.delegate = nil;
+    self.toolbarColor = nil;
+    self.toolbarTitle = nil;
+    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,6 +51,14 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - Getter/Setter
+
+- (void)setToolbarTitle:(NSString *)toolbarTitle {
+    [toolbarTitle_ release];
+    toolbarTitle_ = [toolbarTitle copy];
+    if (titleLabel_) titleLabel_.text = toolbarTitle_;
 }
 
 #pragma mark - View lifecycle
@@ -53,6 +73,16 @@
     }
     if (self.url) {
         [webView_ loadRequest:[NSURLRequest requestWithURL:self.url]];
+    }
+    else if (self.html) {
+//        [webView_ loadHTMLString:self.html baseURL:[NSURL URLWithString:@"http://mixi.jp"]];
+        [webView_ loadHTMLString:self.html baseURL:[NSURL URLWithString:@"/"]];
+    }
+    if (self.toolbarTitle) {
+        titleLabel_.text = self.toolbarTitle;
+    }
+    if (self.toolbarColor) {
+        toolbar_.tintColor = self.toolbarColor;
     }
 }
 

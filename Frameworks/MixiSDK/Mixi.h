@@ -10,6 +10,7 @@
 #import "MixiApiType.h"
 
 @class MixiADBannerView;
+@class MixiAuthorizer;
 @class MixiConfig;
 @class MixiReporter;
 @class MixiRequest;
@@ -55,7 +56,7 @@
  * アプリケーションの情報は一切送信されません。
  * \sa MixiReporter#pingWithMixi:
  *
- * さらに、公式アプリで行われる認可の結果（アクセストークンなど）を受け取るために
+ * さらに、mixi公式iPhoneアプリで認可を行う場合（デフォルトの動作です）は、結果（アクセストークンなど）を受け取るために
  * UIApplicationDelegate#application:openURL:sourceApplication:annotation:
  * メソッドに次のような処理を追加しておきます。
  *
@@ -77,7 +78,59 @@
  *
  * 上記により認可が完了してればシングルトンオブジェクトはアクセストークンを保持し、APIを実行できる状態になっています。
  *
- * 次に、いくつかAPI呼び出しの例を挙げます。
+ * \section mixi公式iPhoneアプリを経由せずにSDK単独で認可／認可解除を実行
+ *
+ * Graph APIを利用する場合に限り公式アプリを経由せずにSDK単独で認可／認可解除を実行できます。
+ *
+ * SDK単独での認可を行うには、mixiオブジェクトのauthorizerプロパティをMixiSDKAuthorizerインスタンスに置き換えてください。
+ * UIApplicationDelegate#application:didFinishLaunchingWithOptions:内でMixiオブジェクトをsetupした直後に置き換えるといいでしょう。
+ * redirectUrlはsap.mixi.jpでアプリケーションに設定したリダイレクトURLです。
+ *
+ * <code><pre> if (![mixi isMixiAppInstalled]) {
+ *     mixi.authorizer = [MixiSDKAuthorizer authorizerWithRedirectUrl:redirectUrl];
+ * }
+ * </pre></code>
+ *
+ * <code>if (![mixi isMixiAppInstalled])</code>はmixi公式iPhoneアプリがなかった場合のみ、SDK単体で認可を行うようにするためのものです。
+ * mixi公式iPhoneアプリの有無にかかわらず、必ずSDK単体で認可を行う場合はこのif文は不要です。
+ * また、SDK単独で認可を行う場合は認可情報はSDK内部でやりとりされるため、先の項で説明した
+ * UIApplicationDelegate#application:openURL:sourceApplication:annotation:
+ * での処理も不要になります。
+ *
+ * SDK単体で認可する場合は、さらにauthorizerが認可に使用するウェブビューコントローラの親になるビューコントローラを設定しなければいけません。
+ * APIを呼び出すビューコントローラのUIViewController#viewDidAppear:に次のようなコードを追加してください。
+ *
+ * <code><pre> - (void)viewDidAppear:(BOOL)animated
+ * {
+ *     [super viewDidAppear:animated];
+ *     Mixi *mixi = [Mixi sharedMixi];
+ *     if (![mixi isMixiAppInstalled] && ![mixi.authorizer isAuthorized]) {
+ *         id authorizer = mixi.authorizer;
+ *         [authorizer setParentViewController:[self navigationController]];
+ *     }
+ * }
+ * </pre></code>
+ * 
+ * こちらも<code>![mixi isMixiAppInstalled] &&</code>はmixi公式iPhoneアプリがなかった場合にSDK単体で認可を行うようにするためのものです。
+ * mixi公式iPhoneアプリの有無にかかわらずSDK単体で認可を行う場合は上の条件式は不要です。
+ *
+ * \subsection 認可結果を受け取る
+ *
+ * 認可が完了するとその結果はSDK内に保持され、認可に使用したビューコントローラもdismissされます。
+ * 認可完了時にそれら以外の処理を実行する必要がある場合は認可オブジェクトにデリゲートを設定してください。
+ *
+ * <code><pre> id<MixiSDKAuthorizerDelegate> delegate = [[YourDelegate alloc] init];
+ * authorizer.delegate = delegate;
+ * </pre></code>
+ *
+ * \sa MixiSDKAuthorizerDelegate#authorizer:didSuccessWithEndpoint:
+ * \sa MixiSDKAuthorizerDelegate#authorizer:didCancelWithEndpoint:
+ * \sa MixiSDKAuthorizerDelegate#authorizer:didFailWithEndpoint:error:
+ *
+ * \subsection 認可画面のツールバーの色を変更する
+ *
+ * 認可画面のツールバーはデフォルトでは標準のくすんだ青色になっています。アプリケーションのイメージカラーに合わせてツールバーの色を変更したい場合はtoolbarColorプロパティを設定してください。
+ * <code><pre>authorizer.toolbarColor = [UIColor blackColor];</pre></code>
  *
  * \section 友人一覧取得API呼び出し
  *
@@ -278,33 +331,14 @@
     /** パーミッション */
     NSArray *permissions_;
     
-    /** \brief アクセストークン */
-    NSString *accessToken_;
-    
-    /** \brief リフレッシュトークン */
-    NSString *refreshToken_;
-    
-    /** \brief アクセストークンの有効期間 */
-    NSString *expiresIn_;
-    
-    /** \brief 任意 */
-    NSString *state_;
-    
-    /** \brief アクセストークンの有効期限 */
-    NSDate *accessTokenExpiryDate_;
-    
-    /**
-     * \brief 公式アプリから（アクセストークン以外の）結果を受け取るためのURLスキーム
-     *
-     * デフォルトでは定義されたURLスキームの一番目
-     */
-    NSString *returnScheme_;
-    
     /** \brief 自動的にアクセストークンをリフレッシュするかどうか。デフォルトはYES */
     BOOL autoRefreshToken_;
     
     /** \brief オープン中のViewController */
     MixiViewController *mixiViewController_;
+    
+    /** \brief 認可 */
+    MixiAuthorizer *authorizer_;
     
     /** \brief UUレポーター */
     MixiReporter *uuReporter_;
@@ -315,14 +349,9 @@
 
 @property (nonatomic, retain) MixiConfig *config;
 @property (nonatomic, readonly) NSArray *permissions;
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *refreshToken;
-@property (nonatomic, copy) NSString *expiresIn;
-@property (nonatomic, copy) NSString *state;
-@property (nonatomic, retain) NSDate *accessTokenExpiryDate;
-@property (nonatomic, copy) NSString *returnScheme;
 @property (nonatomic, assign) BOOL autoRefreshToken;
 @property (nonatomic, retain) MixiViewController *mixiViewController;
+@property (nonatomic, retain) MixiAuthorizer *authorizer;
 @property (nonatomic, retain) MixiReporter *uuReporter;
 
 /**
@@ -416,6 +445,27 @@
 - (NSString*)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation error:(NSError**)error;
 
 /**
+ * \brief mixi公式iPhoneアプリがインストールされているかどうか
+ *
+ * \return mixi公式iPhoneアプリがインストールされているかどうか
+ */
+- (BOOL)isMixiAppInstalled;
+
+/**
+ * \brief SDK単体で認可を実行しているかどうか
+ *
+ * \return SDK単体で認可を実行しているかどうか 
+ */
+- (BOOL)isUsingSDKAuthorizer;
+
+/**
+ * \brief mixi公式iPhoneアプリで認可を実行しているかどうか
+ *
+ * \return mixi公式iPhoneアプリで認可を実行しているかどうか 
+ */
+- (BOOL)isUsingAppAuthorizer;
+
+/**
  * \brief アクセストークンを取得済みかどうか
  * 
  * \return アクセストークンを取得済みかどうか
@@ -486,16 +536,24 @@
 /**
  * \brief ログアウト
  *
- * SDKの端末上に保持している情報をクリアします。
+ * SDKが端末上に保持している情報をクリアします。
  */
 - (void)logout;
 
 /**
- * \brief 認可状態を解除するために公式アプリを呼び出します。
+ * \brief 認可状態を解除します。
  *
- * \return 呼び出しに成功したらYESを返します。
+ * \return 呼び出しに成功したらYESを返します。公式アプリ経由で処理を実行する場合はYESを返しても解除が成功しているとは限りません。
  */
 - (BOOL)revoke;
+
+/**
+ * \brief 認可状態を解除します。
+ *
+ * \param error エラー
+ * \return 呼び出しに成功したらYESを返します。公式アプリ経由で処理を実行する場合はYESを返しても解除が成功しているとは限りません。
+ */
+- (BOOL)revokeWithError:(NSError**)error;
 
 /**
  * \brief 公式アプリからの戻りURLからaccess token、refresh tokenなどを抽出.

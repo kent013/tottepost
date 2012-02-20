@@ -84,7 +84,7 @@
 }
 
 /*!
- * check url is processoble, we will not use this method in file
+ * check url is processable, we will not use this method in file
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     return NO;

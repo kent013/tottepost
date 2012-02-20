@@ -230,7 +230,7 @@
 }
 
 /*!
- * check url is processoble
+ * check url is processable
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     if([url.absoluteString isMatchedByRegex:PS_DROPBOX_AUTH_URL]){

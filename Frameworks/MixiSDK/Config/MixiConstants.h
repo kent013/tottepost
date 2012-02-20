@@ -10,13 +10,16 @@
 
 
 /** SDKのバージョン番号 */
-#define kMixiSDKVersion @"1.2.1"
+#define kMixiSDKVersion @"1.3"
 
 /** mixi公式アプリのID */
 #define kMixiApplicationId @"jp.co.mixi.iphone"
 
 /** mixi公式アプリが使用するURIスキーム */
 #define kMixiAppScheme @"mixi-connect"
+
+/** 認可終了時に公式アプリを呼び出すためのURL */
+#define kMixiDefaultRedirectUrl (kMixiAppScheme @"://success")
 
 /** mixi公式アプリからクライアントシークレットを取得するためのURI */
 #define kMixiAppTokenUri (kMixiAppScheme @"://token")
@@ -54,8 +57,14 @@
 /** トークンリフレッシュのためのエンドポイント */
 #define kMixiApiRefreshTokenEndpoint @"https://secure.mixi-platform.com/2/token"
 
+/** トークン取得のためのエンドポイント */
+#define kMixiApiTokenEndpoint @"/token"
+
 /** 認可状態解除のためのエンドポイント */
 #define kMixiApiRevokeEndpoint @"/authorize/revoke"
+
+/** 不正なエンドポイント。エラー通知でのみ使用されます。 */
+#define kMixiApiUnknownEndpoint @"[unknown]"
 
 /** UU測定のためのエンドポイント */
 #define kMixiApiPingEndpoint @"/apps/user/count/all"
@@ -64,14 +73,16 @@
 #define kMixiApiMapEndpoint @"/apps/user/count"
 
 /** 
- * SDKの使用するUserAgentのサフィックス。実際のUserAgentは
- * UIWebViewのUA + " " + kMixiSDKUserAgentSuffix
+ * SDKの使用するUserAgentのプレフィクス。実際のUserAgentは
+ * kMixiSDKUserAgentPrefix + " " + UIWebViewのUA
  * になります。
  */
-#define kMixiSDKUserAgentSuffix (@"mixi-phone-ios/" kMixiSDKVersion)
+#define kMixiSDKUserAgentPrefix (@"mixi-phone-ios/" kMixiSDKVersion)
 
 /** KeychainのID */
 #define kMixiSDKKeychainIdentifier @"kMixiSDKKeychainIdentifier"
 
 /** mixi公式アプリのダウンロードページURL */
 #define kMixiOfficialAppDownloadURL [NSURL URLWithString:@"http://mixi.jp/official_app_introduction.pl"]
+
+#define kMixiConnectAuthorizeURL @"https://mixi.jp/connect_authorize.pl"

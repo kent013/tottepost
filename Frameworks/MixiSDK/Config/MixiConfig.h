@@ -24,6 +24,9 @@
     /** \brief mixiアプリか、mixi Graph APIか */
     MixiApiType selectorType_;
     
+    /** \brief リダイレクトURL */
+    NSString *redirectUrl_;
+    
     /** \brief バージョン */
     NSString *version_;
     
@@ -37,6 +40,7 @@
 @property (nonatomic, copy) NSString *clientId;
 @property (nonatomic, copy) NSString *secret;
 @property (nonatomic, assign) MixiApiType selectorType;
+@property (nonatomic, copy) NSString *redirectUrl;
 @property (nonatomic, copy) NSString *version;
 @property (nonatomic, readonly) NSString *pbkey;
 @property (nonatomic, copy) NSString *urlScheme;
@@ -58,6 +62,17 @@
  * \return MixiConfigインスタンス
  */
 + (id)configWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret;
+
+/**
+ * \brief タイプとOAuthクライアントIDとシークレットとリダイレクトURLを指定して設定を生成
+ *
+ * \param type kMixiApiTypeSelectorMixiAppまたはkMixiApiTypeSelectorGraphApi
+ * \param id OAuthクライアントID
+ * \param secret OAuthクライアントシークレット
+ * \param redirectUrl リダイレクトURL
+ * \return MixiConfigインスタンス
+ */
++ (id)configWithType:(MixiApiType)type clientId:(NSString*)cid secret:(NSString*)secret redirectUrl:(NSString*)redirectUrl;
 
 /** \cond DEPRECATED */
 /**
@@ -89,6 +104,17 @@
  * \return MixiConfigインスタンス
  */
 - (id)initWithType:(MixiApiType)type clientId:(NSString*)id secret:(NSString*)secret;
+
+/**
+ * \brief タイプとOAuthクライアントIDとシークレットを指定して設定を初期化
+ *
+ * \param type kMixiApiTypeSelectorMixiAppまたはkMixiApiTypeSelectorGraphApi
+ * \param id OAuthクライアントID
+ * \param secret OAuthクライアントシークレット
+ * \param redirectUrl リダイレクトURL
+ * \return MixiConfigインスタンス
+ */
+- (id)initWithType:(MixiApiType)type clientId:(NSString*)id secret:(NSString*)secret redirectUrl:(NSString*)redirectUrl;
 
 /** \cond DEPRECATED */
 /**

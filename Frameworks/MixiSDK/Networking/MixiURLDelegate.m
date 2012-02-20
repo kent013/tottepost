@@ -8,12 +8,12 @@
 #import "MixiURLDelegate.h"
 #import "MixiDelegate.h"
 #import "MixiErrorCodes.h"
-#import "JSON.h"
+#import "SBJson.h"
 
 /** \cond PRIVATE */
 @interface MixiURLDelegate (Private)
 /** [プライベート] サブクラスはこのメソッドを上書きしてJSONを処理します */
-- (void)successWithJson:(NSDictionary*)json;
+- (void)successWithJson:(id)json;
 @end
 /** \endcond */
 
@@ -61,15 +61,15 @@
     }
     
     NSError *error = nil;
-    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    NSDictionary *json = [parser objectWithString:result];
+    SBJSON *parser = [[[SBJSON alloc] init] autorelease];
+    id json = [parser objectWithString:result error:&error];
     if (error) {
         if ([self.delegate respondsToSelector:@selector(mixi:didFailWithError:)]) {
             [self.delegate mixi:self.mixi didFailWithError:error];
         }
     }
     else {
-        id jsonError = [json objectForKey:@"error"];
+        id jsonError = [json respondsToSelector:@selector(objectForKey:)] ? [json objectForKey:@"error"] : nil;
         if (jsonError != nil && ![[NSNull null] isEqual:jsonError]) {
             if ([self.delegate respondsToSelector:@selector(mixi:didFailWithError:)]) {
                 error = [NSError errorWithDomain:kMixiErrorDomain code:kMixiAPIErrorInvalidJson userInfo:json];
@@ -85,7 +85,7 @@
     }
 }
 
-- (void)successWithJson:(NSDictionary*)json {
+- (void)successWithJson:(id)json {
     // subclass responsibility
 }
 

@@ -282,7 +282,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
 }
 
 /*!
- * check url is processoble
+ * check url is processable
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     //do nothing

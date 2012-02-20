@@ -7,6 +7,7 @@
 
 #import "MixiRequest.h"
 #import "Mixi.h"
+#import "MixiAuthorizer.h"
 #import "MixiConstants.h"
 #import "MixiUtils.h"
 #import "NSObject+SBJson.h"
@@ -32,6 +33,7 @@ static NSTimeInterval defaultRequestTimeout = kMixiDefaultRequestTimeout;
 static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtocolCachePolicy;
 
 @synthesize endpoint=endpoint_,
+    endpointBaseUrl=endpointBaseUrl_,
     body=body_,
     bodyData,
     params=params_,
@@ -41,8 +43,7 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
     cachePolicy=cachePolicy_,
     imageType=imageType_,
     compressionQuality=compressionQuality_,
-    openMixiAppToAuthorizeIfNeeded=openMixiAppToAuthorizeIfNeeded_,
-    userAgent;
+    openMixiAppToAuthorizeIfNeeded=openMixiAppToAuthorizeIfNeeded_;
 
 #pragma mark - Initialize
 
@@ -289,6 +290,7 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
 - (id)initWithMethod:(NSString*)httpMethod endpoint:(NSString*)endpoint body:(NSObject*)body params:(NSDictionary*)params {
     if ((self = [super init])) {
         self.endpoint = endpoint;
+        self.endpointBaseUrl = kMixiApiBaseUrl;
         self.body = body;
         params_ = [params mutableCopy];
         self.httpMethod = httpMethod;
@@ -398,16 +400,16 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
         }
         NSString *requestUrl;
         if (body && [body length] != 0) {
-            requestUrl = [NSString stringWithFormat:@"%@%@?%@", kMixiApiBaseUrl, self.endpoint, body];
+            requestUrl = [NSString stringWithFormat:@"%@%@?%@", self.endpointBaseUrl, self.endpoint, body];
         }
         else {
-            requestUrl = [NSString stringWithFormat:@"%@%@", kMixiApiBaseUrl, self.endpoint];
+            requestUrl = [NSString stringWithFormat:@"%@%@", self.endpointBaseUrl, self.endpoint];
         }
         NSURL *url = [NSURL URLWithString:requestUrl];
         request = [NSMutableURLRequest requestWithURL:url];
     }
     else {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kMixiApiBaseUrl, self.endpoint]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.endpointBaseUrl, self.endpoint]];
         request = [NSMutableURLRequest requestWithURL:url];
         if (self.attachments && 0 < [self.attachments count]) {
             NSAssert(self.body == nil, @"The body property must be nil to attache files.");
@@ -445,8 +447,10 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
         }
     }
     [request setHTTPMethod:self.httpMethod];
-    [request setValue:[NSString stringWithFormat:@"OAuth %@", mixi.accessToken] forHTTPHeaderField:@"Authorization"];
-    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
+    if (mixi.authorizer.accessToken) {
+        [request setValue:[NSString stringWithFormat:@"OAuth %@", mixi.authorizer.accessToken] forHTTPHeaderField:@"Authorization"];
+    }
+    [request setValue:[[self class] userAgent] forHTTPHeaderField:@"User-Agent"];
     [request setTimeoutInterval:self.requestTimeout];
     [request setCachePolicy:self.cachePolicy];
     return request;
@@ -454,23 +458,15 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
 
 #pragma mark - UserAgent
 
-- (NSString*)userAgent {
++ (NSString*)userAgent {
     if (!sdkUserAgent) {
         UIWebView *webView = [[UIWebView alloc] init];
-        webView.delegate = self;
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mixi.jp"]]];
-        while (sdkUserAgent == nil) {
-            //[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:5]];
-        }
+        sdkUserAgent = [[NSString stringWithFormat:@"%@ %@", 
+                         kMixiSDKUserAgentPrefix,
+                         [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"]] retain];
         [webView release];
     }
-    return sdkUserAgent == nil ? @"" : sdkUserAgent;
-}
-
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-	sdkUserAgent = [[NSString stringWithFormat:@"%@ %@", [request valueForHTTPHeaderField:@"User-Agent"], kMixiSDKUserAgentSuffix] retain];
-	return NO;
+    return sdkUserAgent == nil ? kMixiSDKUserAgentPrefix : sdkUserAgent;
 }
 
 
@@ -505,6 +501,7 @@ static NSURLRequestCachePolicy defaultRequestCachePolicy = NSURLRequestUseProtoc
 
 - (void)dealloc {
     self.endpoint = nil;
+    self.endpointBaseUrl = nil;
     self.body = nil;
     self.params = nil;
     self.attachments = nil;

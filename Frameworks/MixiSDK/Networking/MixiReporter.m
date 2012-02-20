@@ -143,7 +143,7 @@
 - (void)setConnection:(NSURLConnection *)connection {
     if (self.connection != connection) {
         [self.connection cancel];
-        [self.connection release];
+        [connection_ release];
         connection_ = [connection retain];
     }
 }

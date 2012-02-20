@@ -7,14 +7,15 @@
 
 #import "MixiRefreshTokenURLDelegate.h"
 #import "Mixi.h"
+#import "MixiAuthorizer.h"
 #import "MixiDelegate.h"
 
 @implementation MixiRefreshTokenURLDelegate
 
-- (void)successWithJson:(NSDictionary*)json {
+- (void)successWithJson:(id)json {
     Mixi *mixi = [Mixi sharedMixi];
-    [mixi setPropertiesFromDictionary:json];
-    [mixi store];
+    [mixi.authorizer setPropertiesFromDictionary:json];
+    [mixi.authorizer store];
 }
 
 @end

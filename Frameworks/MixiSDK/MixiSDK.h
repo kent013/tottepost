@@ -41,6 +41,7 @@
 #import "MixiDelegate.h"
 #import "MixiOrientationDelegate.h"
 #import "MixiRequest.h"
+#import "MixiSDKAuthorizer.h"
 #import "MixiUtils.h"
 #import "MixiViewController.h"
 #import "MixiWebViewController.h"

@@ -229,7 +229,7 @@
 }
 
 /*!
- * check url is processoble
+ * check url is processable
  */
 - (BOOL)isProcessableURL:(NSURL *)url{
     if([url.absoluteString isMatchedByRegex:@"^fb[0-9]+"]){
