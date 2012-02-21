@@ -105,11 +105,11 @@
         [self setSetting:username forKey:PS_MIXI_SETTING_USERNAME];
         [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
     }
-    NSLog(@"%@,%@,%@", method,url,data);
+    //NSLog(@"%@,%@,%@", method,url,data);
 }
 
 - (void)mixi:(Mixi *)mixi didFinishLoading:(NSString *)data{
-    NSLog(@"%@", data);
+    //NSLog(@"%@", data);
 }
 /*!
  * failed
@@ -131,7 +131,7 @@
         [operationDelegate photoSubmitterDidOperationFinished:NO];
         [self clearRequest:connection];
     }
-    NSLog(@"%@,%@,%@", url, method, error);    
+    //NSLog(@"%@,%@,%@", url, method, error);    
 }
 
 /*!

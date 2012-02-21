@@ -252,7 +252,7 @@
  * is album supported
  */
 - (BOOL) isAlbumSupported{
-    return NO;
+    return YES;
 }
 
 /*!
