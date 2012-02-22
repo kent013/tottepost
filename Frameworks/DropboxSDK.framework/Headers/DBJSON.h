@@ -1,5 +1,5 @@
 /*
- Copyright (C) 2009 Stig Brautaset. All rights reserved.
+ Copyright (C) 2007-2009 Stig Brautaset. All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -27,29 +27,49 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <Foundation/Foundation.h>
+#import "DBJsonParser.h"
+#import "DBJsonWriter.h"
+
 /**
- @mainpage A strict JSON parser and generator for Objective-C
+ @brief Facade for DBJsonWriter/DBJsonParser.
 
- JSON (JavaScript Object Notation) is a lightweight data-interchange
- format. This framework provides two apis for parsing and generating
- JSON. One standard object-based and a higher level api consisting of
- categories added to existing Objective-C classes.
+ Requests are forwarded to instances of DBJsonWriter and DBJsonParser.
+ */
+@interface DBJSON : DBJsonBase <DBJsonParser, DBJsonWriter> {
 
- Learn more on the http://code.google.com/p/json-framework project site.
- 
- This framework does its best to be as strict as possible, both in what it
- accepts and what it generates. For example, it does not support trailing commas
- in arrays or objects. Nor does it support embedded comments, or
- anything else not in the JSON specification. This is considered a feature. 
+@private    
+    DBJsonParser *jsonParser;
+    DBJsonWriter *jsonWriter;
+}
 
 
- SBJson has been renamed to DBJson in the DropboxSDK because static libraries
- are unable to hide symbols and other libraries that developers use include
- SBJson
- 
-*/
+/// Return the fragment represented by the given string
+- (id)fragmentWithString:(NSString*)jsonrep
+                   error:(NSError**)error;
 
-#import "DBJSON.h"
-#import "NSObject+DBJSON.h"
-#import "NSString+DBJSON.h"
+/// Return the object represented by the given string
+- (id)objectWithString:(NSString*)jsonrep
+                 error:(NSError**)error;
 
+/// Parse the string and return the represented object (or scalar)
+- (id)objectWithString:(id)value
+           allowScalar:(BOOL)x
+    			 error:(NSError**)error;
+
+
+/// Return JSON representation of an array  or dictionary
+- (NSString*)stringWithObject:(id)value
+                        error:(NSError**)error;
+
+/// Return JSON representation of any legal JSON value
+- (NSString*)stringWithFragment:(id)value
+                          error:(NSError**)error;
+
+/// Return JSON representation (or fragment) for the given object
+- (NSString*)stringWithObject:(id)value
+                  allowScalar:(BOOL)x
+    					error:(NSError**)error;
+
+
+@end

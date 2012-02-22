@@ -27,29 +27,46 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- @mainpage A strict JSON parser and generator for Objective-C
+#import "NSObject+SBJson.h"
+#import "SBJsonWriter.h"
+#import "SBJsonParser.h"
 
- JSON (JavaScript Object Notation) is a lightweight data-interchange
- format. This framework provides two apis for parsing and generating
- JSON. One standard object-based and a higher level api consisting of
- categories added to existing Objective-C classes.
+@implementation NSObject (NSObject_SBJsonWriting)
 
- Learn more on the http://code.google.com/p/json-framework project site.
- 
- This framework does its best to be as strict as possible, both in what it
- accepts and what it generates. For example, it does not support trailing commas
- in arrays or objects. Nor does it support embedded comments, or
- anything else not in the JSON specification. This is considered a feature. 
+- (NSString *)JSONRepresentation {
+    SBJsonWriter *writer = [[SBJsonWriter alloc] init];    
+    NSString *json = [writer stringWithObject:self];
+    if (!json)
+        NSLog(@"-JSONRepresentation failed. Error is: %@", writer.error);
+    return json;
+}
+
+@end
 
 
- SBJson has been renamed to DBJson in the DropboxSDK because static libraries
- are unable to hide symbols and other libraries that developers use include
- SBJson
- 
-*/
 
-#import "DBJSON.h"
-#import "NSObject+DBJSON.h"
-#import "NSString+DBJSON.h"
+@implementation NSString (NSString_SBJsonParsing)
 
+- (id)JSONValue {
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    id repr = [parser objectWithString:self];
+    if (!repr)
+        NSLog(@"-JSONValue failed. Error is: %@", parser.error);
+    return repr;
+}
+
+@end
+
+
+
+@implementation NSData (NSData_SBJsonParsing)
+
+- (id)JSONValue {
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    id repr = [parser objectWithData:self];
+    if (!repr)
+        NSLog(@"-JSONValue failed. Error is: %@", parser.error);
+    return repr;
+}
+
+@end

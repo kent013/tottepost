@@ -27,29 +27,32 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <Foundation/Foundation.h>
+
 /**
- @mainpage A strict JSON parser and generator for Objective-C
-
- JSON (JavaScript Object Notation) is a lightweight data-interchange
- format. This framework provides two apis for parsing and generating
- JSON. One standard object-based and a higher level api consisting of
- categories added to existing Objective-C classes.
-
- Learn more on the http://code.google.com/p/json-framework project site.
+ @brief Adds JSON parsing methods to NSString
  
- This framework does its best to be as strict as possible, both in what it
- accepts and what it generates. For example, it does not support trailing commas
- in arrays or objects. Nor does it support embedded comments, or
- anything else not in the JSON specification. This is considered a feature. 
-
-
- SBJson has been renamed to DBJson in the DropboxSDK because static libraries
- are unable to hide symbols and other libraries that developers use include
- SBJson
- 
+This is a category on NSString that adds methods for parsing the target string.
 */
+@interface NSString (NSString_DBJSON)
 
-#import "DBJSON.h"
-#import "NSObject+DBJSON.h"
-#import "NSString+DBJSON.h"
 
+/**
+ @brief Returns the object represented in the receiver, or nil on error. 
+ 
+ Returns a a scalar object represented by the string's JSON fragment representation.
+ 
+ @deprecated Given we bill ourselves as a "strict" JSON library, this method should be removed.
+ */
+- (id)JSONFragmentValue;
+
+/**
+ @brief Returns the NSDictionary or NSArray represented by the current string's JSON representation.
+ 
+ Returns the dictionary or array represented in the receiver, or nil on error.
+
+ Returns the NSDictionary or NSArray represented by the current string's JSON representation.
+ */
+- (id)JSONValue;
+
+@end
