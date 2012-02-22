@@ -41,3 +41,9 @@
  */
 #define GOOGLE_SUBMITTER_API_KEY           @""
 #define GOOGLE_SUBMITTER_API_SECRET        @""
+
+/*!
+ * api key and secret for minus
+ */
+#define MINUS_SUBMITTER_CLIENT_ID          @""
+#define MINUS_SUBMITTER_CLIENT_SECRET      @""

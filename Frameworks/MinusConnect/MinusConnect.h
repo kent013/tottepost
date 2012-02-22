@@ -22,7 +22,6 @@
 #pragma mark - authentication
 - (id)initWithClientId:(NSString *)clientId 
           clientSecret:(NSString *)clientSecret 
-        callbackScheme:(NSString *)callbackScheme 
            andDelegate:(id<MinusSessionDelegate>)delegate;
 
 - (void)loginWithUsername:(NSString *)username 

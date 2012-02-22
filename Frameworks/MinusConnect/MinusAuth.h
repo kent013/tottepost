@@ -18,7 +18,6 @@
  */
 @interface MinusAuth : NSObject<LROAuth2ClientDelegate, NSURLConnectionDelegate>{
   @protected
-    __strong NSString *callbackScheme_;
     __strong NSString *clientId_;
     __strong NSString *clientSecret_;
 
@@ -33,7 +32,6 @@
 
 - (id)initWithClientId:(NSString *)clientId 
           clientSecret:(NSString *)clientSecret 
-        callbackScheme:(NSString *)callbackScheme 
            andDelegate:(id<MinusAuthDelegate>)delegate;
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission;
 - (void)logout;
@@ -53,5 +51,4 @@
 - (void)minusDidLogin;
 - (void)minusDidNotLogin;
 - (void)minusDidLogout;
-- (UIViewController *) requestForViewControllerToPresentAuthenticationView;
 @end

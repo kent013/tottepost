@@ -19,6 +19,7 @@
 #import "MixiPhotoSubmitter.h"
 #import "FilePhotoSubmitter.h"
 #import "FotolifePhotoSubmitter.h"
+#import "MinusPhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
 #import "PhotoSubmitterSequencialOperationQueue.h"
 

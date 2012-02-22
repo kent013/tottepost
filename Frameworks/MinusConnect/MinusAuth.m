@@ -31,13 +31,11 @@
  */
 - (id)initWithClientId:(NSString *)clientId 
           clientSecret:(NSString *)clientSecret
-        callbackScheme:(NSString *)callbackScheme
            andDelegate:(id<MinusAuthDelegate>)delegate{
     self = [super init];
     if (self) {
         clientId_ = clientId;
         clientSecret_ = clientSecret;
-        callbackScheme_ = callbackScheme;
         delegate_ = delegate;
     }
     return self;
@@ -55,7 +53,7 @@
     client_ = [[LROAuth2Client alloc] 
                initWithClientID: clientId_
                secret: clientSecret_
-               redirectURL:[NSURL URLWithString:callbackScheme_]];
+               redirectURL:nil];
     client_.delegate = self;
     client_.userURL  = [NSURL URLWithString:kMinusOAuthRequestURL];
     client_.tokenURL = [NSURL URLWithString:kMinusOAuthAuthenticationURL];

@@ -223,6 +223,7 @@
 		7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E66E14F4DD68005C1453 /* libz.dylib */; };
 		7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E67014F4DD92005C1453 /* MobileCoreServices.framework */; };
+		7995E67414F4DF14005C1453 /* MinusPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E67314F4DF13005C1453 /* MinusPhotoSubmitter.m */; };
 		799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */; };
 		799CD6EB14E5590000F8A0EC /* PicasaPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 799CD6EA14E5590000F8A0EC /* PicasaPhotoSubmitter.m */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
@@ -694,6 +695,8 @@
 		7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+QueryInspector.m"; path = "Util/NSURL+QueryInspector.m"; sourceTree = "<group>"; };
 		7995E66E14F4DD68005C1453 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7995E67014F4DD92005C1453 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7995E67214F4DF13005C1453 /* MinusPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinusPhotoSubmitter.h; path = PhotoSubmitter/MinusPhotoSubmitter.h; sourceTree = "<group>"; };
+		7995E67314F4DF13005C1453 /* MinusPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MinusPhotoSubmitter.m; path = PhotoSubmitter/MinusPhotoSubmitter.m; sourceTree = "<group>"; };
 		799CD6D914E543A300F8A0EC /* LFHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFHTTPRequest.h; sourceTree = "<group>"; };
 		799CD6DA14E543A300F8A0EC /* LFSiteReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFSiteReachability.h; sourceTree = "<group>"; };
 		799CD6DB14E543A300F8A0EC /* LFWebAPIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFWebAPIKit.h; sourceTree = "<group>"; };
@@ -1412,6 +1415,8 @@
 				EAAC40EE14E70BA800CDC2CC /* MixiPhotoSubmitter.m */,
 				79D0EAF214EF616F00CDEF76 /* FotolifePhotoSubmitter.h */,
 				79D0EAF314EF616F00CDEF76 /* FotolifePhotoSubmitter.m */,
+				7995E67214F4DF13005C1453 /* MinusPhotoSubmitter.h */,
+				7995E67314F4DF13005C1453 /* MinusPhotoSubmitter.m */,
 				37F3632614A55F0B00C1BB2B /* FilePhotoSubmitter.h */,
 				37F3632714A55F0B00C1BB2B /* FilePhotoSubmitter.m */,
 			);
@@ -2803,6 +2808,7 @@
 				7995E66814F4D6E1005C1453 /* NSString+Join.m in Sources */,
 				7995E66914F4D6E1005C1453 /* NSString+QueryString.m in Sources */,
 				7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */,
+				7995E67414F4DF14005C1453 /* MinusPhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

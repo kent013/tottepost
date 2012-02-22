@@ -30,7 +30,6 @@
 - (void) clearCredentials;
 - (void) loadCredentials;
 - (WSSECredential *) credential;
-- (void) getUserInfomation;
 @end
 
 #pragma mark - private implementations
@@ -69,13 +68,6 @@
  */
 - (WSSECredential *)credential{
     return [WSSECredential credentialWithUsername:userId_ password:password_];
-}
-
-/*!
- * get user information
- */
-- (void)getUserInfomation{
-        //[fotolife_ requestWithGraphPath:@"me" andDelegate:self];
 }
 @end
 

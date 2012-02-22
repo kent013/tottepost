@@ -76,7 +76,6 @@
     }
   }  
   NSURL *fullURL = [NSURL URLWithString:[[self.userURL absoluteString] stringByAppendingFormat:@"?%@", [params stringWithFormEncodedComponents]]];
-    NSLog(@"%@", fullURL);
   NSMutableURLRequest *authRequest = [NSMutableURLRequest requestWithURL:fullURL];
 
   [authRequest setHTTPMethod:@"GET"];

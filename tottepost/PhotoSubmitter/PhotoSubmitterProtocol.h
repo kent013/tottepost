@@ -21,6 +21,7 @@ typedef enum {
     PhotoSubmitterTypePicasa,
     PhotoSubmitterTypeMixi,
     PhotoSubmitterTypeFotolife,
+    PhotoSubmitterTypeMinus,
     PhotoSubmitterTypeFile,
 } PhotoSubmitterType;
 

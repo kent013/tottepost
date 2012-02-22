@@ -28,6 +28,7 @@
     __strong AlbumPhotoSubmitterSettingTableViewController *picasaSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *mixiSettingViewController_;
     __strong AlbumPhotoSubmitterSettingTableViewController *fotolifeSettingViewController_;
+    __strong AlbumPhotoSubmitterSettingTableViewController *minusSettingViewController_;
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong NSMutableDictionary *switches_;
     __strong NSMutableArray *accountTypeIndexes_;

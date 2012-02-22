@@ -24,7 +24,7 @@ static NSString* kMinusRequestFileWithFileId = @"fileWithFileId";
 static NSString* kMinusRequestFilesWithFolderId = @"filesWithFolderId";
 static NSString* kMinusRequestCreateFile = @"createFile";
 static NSString* kMinusRequestFolderWithFolderId = @"folderWithFolderId";
-static NSString* kMinusRequestFolderWithUsername = @"folderWithUsername";
+static NSString* kMinusRequestFoldersWithUsername = @"foldersWithUsername";
 static NSString* kMinusRequestCreateFolder = @"createFolder";
 
 /*!
@@ -41,7 +41,6 @@ static NSString *kMinusAccessToken = @"minusAuthToken";
 - (void)minusDidLogin;
 - (void)minusDidNotLogin;
 - (void)minusDidLogout;
-- (UIViewController *) requestForViewControllerToPresentAuthenticationView;
 @end
 
 /*!
