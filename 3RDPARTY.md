@@ -1,16 +1,38 @@
 3rd Party Libraries
+======================
+Service SDK
 ----------------------------------
  * [Dropbox SDK](https://www.dropbox.com/developers/reference/sdk)  
     Dropbox SDK is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
  * [Facebook SDK](https://github.com/facebook/facebook-ios-sdk)  
-    Facebook SDK is Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+    Facebook SDK is Licensed under the Apache License. You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). 
 
  * [objectiveflickr](https://github.com/lukhnos/objectiveflickr)  
     ObjectiveFlickr Copyright (c) 2006-2009 Lukhnos D. Liu.      
     LFWebAPIKit Copyright (c) 2007-2009 Lukhnos D. Liu and Lithoglyph Inc.      
     Both objectiveflickr and LFWebAPIKit is licensed under the MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
+ * [gdata-objectivec-client](http://code.google.com/p/gdata-objectivec-client/)  
+gdata-objectivec-client is licensed under the Apache License. You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). 
+
+ * [EVNConnect](https://github.com/kent013/EVNConnect)  
+Copyright (c) 2011, ISHITOYA Kentaro.  
+EVNConnect is licensed under new BSD License.  
+You can see the full text of the license at [https://github.com/kent013/ENVConnect/blob/master/LICENSE](https://github.com/kent013/EVNConnect/blob/master/LICENSE)
+
+ * [MinusConnect](https://github.com/kent013/MinusConnect)  
+Copyright (c) 2012, ISHITOYA Kentaro.  
+MinusConnect is licensed under new BSD License.  
+You can see the full text of the license at [https://github.com/kent013/MinusConnect/blob/master/LICENSE](https://github.com/kent013/MinusConnect/blob/master/LICENSE)
+
+ * [objc-atompub](https://github.com/kent013/objc-atompub)  
+Copyright (c) 2008 Lyo Kato <lyo.kato at gmail dot com>  
+objc-atompub is licensed under MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
+
+
+Other libraries
+------------------------
  * [Evernote API](http://www.evernote.com/about/developer/api/)  
 Copyright (c) 2007-2011 by Evernote Corporation, All rights reserved.  
 Evernote API's License is [here](https://github.com/kent013/EVNConnect/blob/master/Libraries/Evernote/evernote/LICENSE.txt)
@@ -53,15 +75,18 @@ PDKeychainBindingsController is licensed under MIT license. You can read full te
     Copyright (c) 2011, ISHITOYA Kentaro.  
     AVFoundationCameraController is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
 
- * [EVNConnect](https://github.com/kent013/EVNConnect)  
-Copyright (c) 2011, ISHITOYA Kentaro.  
-EVNConnect is licensed under new BSD License.  
-You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
-
- * [GrawingTextView](https://github.com/kent013/EVNConnect)  
+ * [GrowingTextView](https://github.com/HansPinckaers/GrowingTextView/)  
 Copyright (c) 2011 Hans Pinckaers.  
-GrawingTextView is licensed under MIT License.  
+GrowingTextView is licensed under MIT License.  
 You can see the full text of the license at [https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt](https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt)
+
+ * [LROAuth2Client](https://github.com/lukeredpath/LROAuth2Client)  
+    Copyright (c) 2010 Luke Redpath  
+    LROAuth2Client is licensed under MIT License. You can see the full text of the license at [https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE](https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE)  
+
+ * [ASIHTTPRequest](http://allseeing-i.com/ASIHTTPRequest/)  
+    Copyright (c) 2007-2011, All-Seeing Interactive.  
+    ASIHTTPRequest is licensed under BSD License. You can see the full text of the license at [https://github.com/pokeb/asi-http-request/blob/master/LICENSE](https://github.com/pokeb/asi-http-request/blob/master/LICENSE).
 
 
  * [KissXML](https://github.com/ddeville/KissXML)  
