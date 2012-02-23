@@ -44,6 +44,7 @@
 - (NSURLRequest *)userAuthorizationRequestWithParameters:(NSDictionary *)additionalParameters;
 - (void)verifyAuthorizationWithAccessCode:(NSString *)accessCode;
 - (void)refreshAccessToken:(LROAuth2AccessToken *)_accessToken;
+- (void) refreshAccessToken:(LROAuth2AccessToken *)_accessToken withParameters:(NSDictionary *)inParams;
 - (void)processAuthorizationResponse:(NSData *)data;
 @end
 

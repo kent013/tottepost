@@ -57,6 +57,7 @@ typedef enum {
 - (void) login;
 - (void) logout;
 - (void) disable;
+- (void) refreshCredential;
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
 - (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo;
 - (BOOL) isProcessableURL:(NSURL *)url;

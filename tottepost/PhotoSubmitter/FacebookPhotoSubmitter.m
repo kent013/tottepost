@@ -190,6 +190,13 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    [facebook_ extendAccessTokenIfNeeded];
+}
+
+/*!
  * disable
  */
 - (void)disable{

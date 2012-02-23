@@ -133,7 +133,7 @@
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }
-    //NSLog(@"%@,%@,%@", url, method, error);    
+    NSLog(@"%@,%@,%@", url, method, error);    
 }
 
 /*!
@@ -219,6 +219,15 @@
     [mixi_ logout];
     [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    //if([mixi_ isAccessTokenExpired]){
+        [mixi_ refreshAccessToken];
+    //}
 }
 
 /*!

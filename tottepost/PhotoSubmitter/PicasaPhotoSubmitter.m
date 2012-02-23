@@ -274,6 +274,12 @@ ofTotalByteCount:(unsigned long long)dataLength {
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+}
+
+/*!
  * disable
  */
 - (void)disable{

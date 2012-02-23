@@ -80,6 +80,7 @@
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [[PhotoSubmitterManager sharedInstance] refreshCredentials];
     UIApplication* app = [UIApplication sharedApplication];
     if(applicationBecomeActiveAfterOpenURL == NO){
         [self.mainViewController applicationDidBecomeActive];

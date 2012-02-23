@@ -37,6 +37,14 @@
         clientId_ = clientId;
         clientSecret_ = clientSecret;
         delegate_ = delegate;
+        
+           client_ = [[LROAuth2Client alloc] 
+                   initWithClientID: clientId_
+                   secret: clientSecret_
+                   redirectURL:nil];
+        client_.delegate = self;
+        client_.userURL  = [NSURL URLWithString:kMinusOAuthRequestURL];
+        client_.tokenURL = [NSURL URLWithString:kMinusOAuthAuthenticationURL];
     }
     return self;
 }
@@ -49,14 +57,6 @@
         [self minusDidLogin];
         return;
     }
-    
-    client_ = [[LROAuth2Client alloc] 
-               initWithClientID: clientId_
-               secret: clientSecret_
-               redirectURL:nil];
-    client_.delegate = self;
-    client_.userURL  = [NSURL URLWithString:kMinusOAuthRequestURL];
-    client_.tokenURL = [NSURL URLWithString:kMinusOAuthAuthenticationURL];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString join:permission glue:@" "], @"scope", 
                             @"password", @"grant_type", 
                             username, @"username",
@@ -136,9 +136,15 @@
 /*!
  * refresh credential
  */
-- (void)refreshCredential{
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password{
     if([self isSessionValid] == NO){
-        [client_ refreshAccessToken:accessToken_];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"password", @"grant_type", 
+                                username, @"username",
+                                password, @"password",
+                                clientSecret_, @"client_secret", nil];
+        [client_ refreshAccessToken:accessToken_ withParameters:params];
+        
     }
 }
 
@@ -146,7 +152,7 @@
  * check is session valid
  */
 - (BOOL)isSessionValid{
-    return [accessToken_ hasExpired];
+    return [accessToken_ hasExpired] == NO;
 }
 
 #pragma mark - NSURLConnectionDelegate
@@ -190,13 +196,7 @@
 }
 
 #pragma mark - LROAuth2ClientDelegate
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [self minusDidLogin];
-}
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    [self minusDidNotLogin];
-}
 /*!
  * server responds request token
  */
@@ -210,5 +210,6 @@
  */
 - (void)oauthClientDidRefreshAccessToken:(LROAuth2Client *)client{
     accessToken_ = client.accessToken;    
+    [self saveCredential];
 }
 @end

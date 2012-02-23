@@ -261,6 +261,13 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
     return [auth_ isSessionValid];
 }
 
+/*!
+ * refresh token
+ */
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password{
+    [auth_ refreshCredentialWithUsername:username password:password];
+}
+
 #pragma mark - user
 /*!
  * get active user.

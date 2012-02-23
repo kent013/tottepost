@@ -225,6 +225,12 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+}
+
+/*!
  * did fail with exception
  */
 - (void)request:(EvernoteRequest *)request didFailWithException:(NSException *)exception{

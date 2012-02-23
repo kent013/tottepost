@@ -115,6 +115,12 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+}
+
+/*!
  * disable
  */
 - (void)disable{

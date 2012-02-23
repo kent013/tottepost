@@ -99,6 +99,15 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    if([evernote_ isSessionValid] == NO){
+        [evernote_ refreshCredential];
+    }
+}
+
+/*!
  * disable
  */
 - (void)disable{

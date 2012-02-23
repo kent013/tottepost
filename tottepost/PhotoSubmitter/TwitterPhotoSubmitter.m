@@ -162,6 +162,13 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    //I think refresh feature is supported by ios
+}
+
+/*!
  * disable
  */
 - (void)disable{

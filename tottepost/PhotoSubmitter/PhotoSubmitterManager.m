@@ -249,6 +249,19 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 }
 
 /*!
+ * refresh credentials
+ */
+- (void)refreshCredentials{
+    for (NSNumber *t in supportedTypes_){
+        PhotoSubmitterType type = (PhotoSubmitterType)[t intValue];
+        id<PhotoSubmitterProtocol> submitter = [self submitterForType:type];
+        if([submitter isEnabled]){
+            [submitter refreshCredential];
+        }
+    }
+}
+
+/*!
  * on url loaded
  */
 - (BOOL)didOpenURL:(NSURL *)url{

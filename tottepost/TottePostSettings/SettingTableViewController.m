@@ -435,6 +435,7 @@
 #pragma mark -
 #pragma mark UIViewController methods
 - (void)viewDidAppear:(BOOL)animated{
+    [[PhotoSubmitterManager sharedInstance] refreshCredentials];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingDone:)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
     [self setTitle:[TTLang lstr:@"Settings_Title"]];

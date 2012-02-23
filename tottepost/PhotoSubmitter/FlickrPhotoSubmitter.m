@@ -321,6 +321,13 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    //does flickr auth token expires?
+}
+
+/*!
  * disable
  */
 - (void)disable{

@@ -76,6 +76,13 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    //not needed
+}
+
+/*!
  * disable
  */
 - (void)disable{

@@ -29,6 +29,8 @@
             andPermission:(NSArray *)permission;
 - (void)logout;
 - (BOOL)isSessionValid;
+- (void)refreshCredentialWithUsername:(NSString *)username 
+                             password:(NSString *)password;
 
 #pragma mark - user
 - (MinusRequest *) activeUserWithDelegate:(id<MinusRequestDelegate>)delegate;

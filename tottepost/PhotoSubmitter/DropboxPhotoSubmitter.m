@@ -222,6 +222,15 @@
 }
 
 /*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    if([[DBSession sharedSession] isLinked] == NO){
+        [[DBSession sharedSession] link];
+    }
+}
+
+/*!
  * disable
  */
 - (void)disable{

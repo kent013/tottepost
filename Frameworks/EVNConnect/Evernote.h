@@ -37,6 +37,7 @@
 - (void)login;
 - (void)logout;
 - (BOOL)isSessionValid;
+- (void)refreshCredential;
 - (void)saveCredential;
 - (void)loadCredential;
 - (void)clearCredential;

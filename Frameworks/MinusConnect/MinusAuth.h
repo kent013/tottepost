@@ -40,7 +40,7 @@
 - (void)clearCredential;
 - (void)loadCredential;
 - (void)saveCredential;
-- (void)refreshCredential;
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password;
 - (BOOL)isSessionValid;
 @end
 
