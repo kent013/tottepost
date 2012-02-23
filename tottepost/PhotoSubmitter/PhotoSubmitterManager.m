@@ -120,7 +120,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     if(oldValue == NO && isConnected_){
         [self restart];
     }else if(oldValue == YES && isConnected_ == NO){
-        [self cancel];
+        [self pause];
     }
 }
 @end
