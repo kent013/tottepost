@@ -390,7 +390,11 @@
         int index = [self submitterTypeToIndex:type];
         UISwitch *s = [switches_ objectForKey:[NSNumber numberWithInt:index]];
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
-        [s setOn:submitter.isLogined animated:YES];
+        BOOL isLogined = submitter.isLogined;
+        if(isLogined == NO){
+            [submitter disable];
+        }
+        [s setOn:isLogined animated:YES];
     }
 }
 

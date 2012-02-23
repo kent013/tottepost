@@ -130,6 +130,8 @@
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
         [operationDelegate photoSubmitterDidOperationFinished:NO];
         [self clearRequest:connection];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
     //NSLog(@"%@,%@,%@", url, method, error);    
 }

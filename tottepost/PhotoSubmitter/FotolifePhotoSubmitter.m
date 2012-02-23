@@ -385,6 +385,8 @@
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
         [operationDelegate photoSubmitterDidOperationFinished:YES];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
     [self clearRequest:client];
 }

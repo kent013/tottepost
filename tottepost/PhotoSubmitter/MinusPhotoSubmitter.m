@@ -416,6 +416,8 @@
         }
         [self setComplexSetting:albums forKey:PS_MINUS_SETTING_ALBUMS];
         [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
 }
 
@@ -434,6 +436,8 @@
     }else if([request.tag isEqualToString:kMinusRequestCreateFolder]){
     }else if([request.tag isEqualToString:kMinusRequestFoldersWithUsername]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
     [self clearRequest:request];
 }

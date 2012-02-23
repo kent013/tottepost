@@ -74,6 +74,7 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *hash = [self photoForRequest:connection];
     if(hash == nil){
+        NSLog(@"%s, hash not found.", __PRETTY_FUNCTION__);
         return;
     }
     [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];

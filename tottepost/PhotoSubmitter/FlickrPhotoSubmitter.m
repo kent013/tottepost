@@ -201,6 +201,8 @@
         [self clearRequest:inRequest];
         
         [self performSelectorOnMainThread:@selector(addPhotoToPhotoSet:) withObject:photoId waitUntilDone:NO];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
 }
 

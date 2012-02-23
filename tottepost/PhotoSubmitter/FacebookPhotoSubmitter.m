@@ -68,37 +68,6 @@
     [facebook_ requestWithGraphPath:@"me" andDelegate:self];
 }
 
-#pragma mark - FBSessionDelegate methods
-/*!
- * facebook delegate, did login suceeded
- */
-- (void)fbDidLogin {
-    [self setSetting:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
-    [self setSetting:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-    [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
-    
-    [self getUserInfomation];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
-}
-
-/*!
- * facebook delegate, if not login
- */
--(void)fbDidNotLogin:(BOOL)cancelled {
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
-}
-
-/*!
- * facebook delegate, if logout
- */
-- (void) fbDidLogout {
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-}
-
 #pragma mark - FBRequestWithUploadProgressDelegate
 /*!
  * facebook request delegate, did receive response
@@ -126,12 +95,9 @@
         id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
         [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
         [operationDelegate photoSubmitterDidOperationFinished:YES];
-        
-        [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"albums$"] && 
              [request.httpMethod isEqualToString:@"POST"]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:YES withError:nil];
-        [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"albums$"] && 
              [request.httpMethod isEqualToString:@"GET"]){
         NSArray *as = [result objectForKey:@"data"];
@@ -143,7 +109,10 @@
         }
         [self setComplexSetting:albums forKey:PS_FACEBOOK_SETTING_ALBUMS];
         [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+    }else{
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
+    [self clearRequest:request];
 };
 
 /*!
@@ -444,5 +413,49 @@
  */
 - (UIImage *)smallIcon{
     return [UIImage imageNamed:@"facebook_16.png"];
+}
+
+#pragma mark - FBSessionDelegate methods
+/*!
+ * facebook delegate, did login suceeded
+ */
+- (void)fbDidLogin {
+    [self setSetting:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
+    [self setSetting:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
+    [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    
+    [self getUserInfomation];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
+
+/*!
+ * facebook delegate, if not login
+ */
+-(void)fbDidNotLogin:(BOOL)cancelled {
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
+
+/*!
+ * facebook delegate, if logout
+ */
+- (void) fbDidLogout {
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * facebook session invalidated
+ */
+- (void) fbSessionInvalidated{
+    [facebook_ extendAccessTokenIfNeeded];
+}
+
+/*!
+ * facebook session extended
+ */
+- (void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
 }
 @end

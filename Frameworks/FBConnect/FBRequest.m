@@ -15,7 +15,7 @@
  */
 
 #import "FBRequest.h"
-#import "SBJSON.h"
+#import "SBJson.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // global
@@ -23,10 +23,16 @@
 static NSString* kUserAgent = @"FacebookConnect";
 static NSString* kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
 static const int kGeneralErrorCode = 10000;
+static const int kRESTAPIAccessTokenErrorCode = 190;
 
 static const NSTimeInterval kTimeoutInterval = 180.0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface FBRequest ()
+@property (nonatomic,readwrite) FBRequestState state;
+@property (nonatomic,readwrite) BOOL sessionDidExpire;
+@end
 
 @implementation FBRequest
 
@@ -35,8 +41,10 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
             httpMethod = _httpMethod,
             params = _params,
             connection = _connection,
-            responseText = _responseText;
-
+            responseText = _responseText,
+            state = _state,
+            sessionDidExpire = _sessionDidExpire,
+            error = _error;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // class public
 
@@ -234,6 +242,9 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
  *                          fails with error
  */
 - (void)failWithError:(NSError *)error {
+  if ([error code] == kRESTAPIAccessTokenErrorCode) {
+    self.sessionDidExpire = YES;
+  }
   if ([_delegate respondsToSelector:@selector(request:didFailWithError:)]) {
     [_delegate request:self didFailWithError:error];
   }
@@ -247,12 +258,14 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
       @selector(request:didLoadRawResponse:)]) {
     [_delegate request:self didLoadRawResponse:data];
   }
+    
+  NSError* error = nil;
+  id result = [self parseJsonResponse:data error:&error];
+  self.error = error;  
 
   if ([_delegate respondsToSelector:@selector(request:didLoad:)] ||
       [_delegate respondsToSelector:
           @selector(request:didFailWithError:)]) {
-    NSError* error = nil;
-    id result = [self parseJsonResponse:data error:&error];
 
     if (error) {
       [self failWithError:error];
@@ -304,7 +317,8 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
   }
 
   _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-
+  self.state = kFBRequestStateLoading;
+  self.sessionDidExpire = NO;
 }
 
 /**
@@ -345,19 +359,17 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   [self handleResponseData:_responseText];
 
-  [_responseText release];
-  _responseText = nil;
-  [_connection release];
-  _connection = nil;
+  self.responseText = nil;
+  self.connection = nil;
+  self.state = kFBRequestStateComplete;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
   [self failWithError:error];
 
-  [_responseText release];
-  _responseText = nil;
-  [_connection release];
-  _connection = nil;
+  self.responseText = nil;
+  self.connection = nil;
+  self.state = kFBRequestStateComplete;
 }
 
 @end
