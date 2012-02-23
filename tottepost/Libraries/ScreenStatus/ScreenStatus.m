@@ -172,7 +172,7 @@
 +(UIDeviceOrientation)orientation2:(UIAcceleration *)acceleration
 {
     double X = ABS(acceleration.x),Y = ABS(acceleration.y),Z = ABS(acceleration.z);
-    Z -= 0.15;
+    Z -= 0.25;
     
     if(X > Y){
         if(X > Z){//X > Y,Z
