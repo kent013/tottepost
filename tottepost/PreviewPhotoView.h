@@ -19,6 +19,8 @@
     __strong UIImageView *imageView_;
     __strong PhotoSubmitterImageEntity *photo_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
+    BOOL isKeyboardPresented_;
+    CGRect keyboardRect_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
 @property (readonly, nonatomic) PhotoSubmitterImageEntity *photo;

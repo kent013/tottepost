@@ -73,6 +73,7 @@
  * keyboard shown
  */
 - (void)keyboardWillShow:(NSNotification *)aNotification {
+    isKeyboardPresented_ = YES;
     commentBackgroundView_.backgroundColor = [UIColor colorWithWhite:0.95 alpha:0.9];
     CGRect tKeyboardRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     tKeyboardRect = [self convertRect:tKeyboardRect fromView:nil];
@@ -81,6 +82,8 @@
     
     CGRect frame = commentBackgroundView_.frame;
     frame.origin.y = tKeyboardRect.origin.y - commentBackgroundView_.frame.size.height - MAINVIEW_PADDING_Y;
+    
+    keyboardRect_ = tKeyboardRect;
     
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
@@ -103,6 +106,7 @@
     [UIView setAnimationDuration:animationDuration];
     commentBackgroundView_.frame = frame;
     [UIView commitAnimations];
+    isKeyboardPresented_ = NO;
 }
 
 /*!
@@ -123,11 +127,19 @@
     else
     {
         imageView_.frame = CGRectMake(-20, 0, frame.size.width + 40, frame.size.height);
-        commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
-        commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
+        
+        int commentY = 0;
+        if(isKeyboardPresented_){
+            commentY = keyboardRect_.origin.y - commentBackgroundView_.frame.size.height - MAINVIEW_PADDING_Y;
+
+        }else{
+            commentY = frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - MAINVIEW_PADDING_Y;
+        }
+        commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE) / 2, commentY, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
+        commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
         NSString *text = @"000"; 
         CGSize size = [text sizeWithFont:textCountview_.font];
-        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHOEN - size.width -3, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE -size.height, size.width, size.height);
+        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE - size.width - 3, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - size.height, size.width, size.height);
     }
 }
 
