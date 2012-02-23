@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
-#import "FBNetworkReachability.h"
 #import "TottePostSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
@@ -25,7 +24,6 @@
 - (void) didPostCancelButtonTapped: (id)sender;
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
-- (void) didChangeNetworkReachability:(NSNotification*)notification;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) closePreview;
 - (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
@@ -118,18 +116,6 @@
         orientation_ = UIDeviceOrientationPortrait;
     }
     lastOrientation_ = orientation_;
-
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(didChangeNetworkReachability:)
-     name:FBNetworkReachabilityDidChangeNotification
-     object:nil];
-    if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
-        isConnected_ = NO;
-    }else{
-        isConnected_ = YES;
-    }
-    [[FBNetworkReachability sharedInstance] startNotifier];
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
@@ -236,19 +222,6 @@
 
 #pragma mark -
 #pragma mark photo methods
-/*!
- * check for connection
- */
-- (void)didChangeNetworkReachability:(NSNotification *)notification
-{
-    FBNetworkReachability *reachability = (FBNetworkReachability *)[notification object];
-    BOOL oldValue = isConnected_;
-    isConnected_ = (reachability.connectionMode != FBNetworkReachableNon);
-    if(oldValue == NO && isConnected_){
-        [[PhotoSubmitterManager sharedInstance] restart];
-    }
-}
-
 /*!
  * on camera button tapped
  */

@@ -295,6 +295,9 @@
     }
     MixiRequest *request = [MixiRequest postRequestWithEndpoint:path body:photo.image params:params];
     NSURLConnection *connection = [mixi_ sendRequest:request delegate:self];
+    if(connection == nil){
+        return;
+    }
     NSString *hash = photo.md5;
     [self setPhotoHash:hash forRequest:connection];
     [self addRequest:connection];

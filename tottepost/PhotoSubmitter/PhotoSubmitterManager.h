@@ -40,6 +40,7 @@
     __strong CLLocation *location_;
     BOOL geoTaggingEnabled_;
     BOOL isPausingOperation_;
+    BOOL isConnected_;
 }
 
 @property (nonatomic, assign) id<PhotoSubmitterAuthControllerDelegate> authControllerDelegate;

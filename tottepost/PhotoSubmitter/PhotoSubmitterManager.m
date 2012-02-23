@@ -8,6 +8,7 @@
 
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
+#import "FBNetworkReachability.h"
 
 #define PS_OPERATIONS @"PSOperations"
 
@@ -24,6 +25,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void) addOperation: (PhotoSubmitterOperation *)operation;
 - (PhotoSubmitterSequencialOperationQueue *) sequencialOperationQueueForType: (PhotoSubmitterType) type;
 - (void) pauseFinished;
+- (void) didChangeNetworkReachability:(NSNotification*)notification;
 @end
 
 @implementation PhotoSubmitterManager(PrivateImplementation)
@@ -52,6 +54,18 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     self.submitPhotoWithOperations = NO;
     isPausingOperation_ = NO;
     [self loadSubmitters];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didChangeNetworkReachability:)
+     name:FBNetworkReachabilityDidChangeNotification
+     object:nil];
+    if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
+        isConnected_ = NO;
+    }else{
+        isConnected_ = YES;
+    }
+    [[FBNetworkReachability sharedInstance] startNotifier];
 }
 
 /*!
@@ -74,11 +88,14 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void)addOperation:(PhotoSubmitterOperation *)operation{
     [operation addDelegate: self];
     [operations_ setObject:operation forKey:[NSNumber numberWithInt:operation.hash]];
-    if(operation.submitter.isSequencial){
-        PhotoSubmitterSequencialOperationQueue *queue = [self sequencialOperationQueueForType:operation.submitter.type];
-        [queue enqueue:operation];
-    }else{
-        [operationQueue_ addOperation:operation];
+    
+    if(isConnected_){
+        if(operation.submitter.isSequencial){
+            PhotoSubmitterSequencialOperationQueue *queue = [self sequencialOperationQueueForType:operation.submitter.type];
+            [queue enqueue:operation];
+        }else{
+            [operationQueue_ addOperation:operation];
+        }
     }
     for(id<PhotoSubmitterManagerDelegate> delegate in delegates_){
         [delegate photoSubmitterManager:self didOperationAdded:operation];
@@ -91,7 +108,21 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 - (void)pauseFinished{
     isPausingOperation_ = NO;
 }
- 
+
+/*!
+ * check for connection
+ */
+- (void)didChangeNetworkReachability:(NSNotification *)notification
+{
+    FBNetworkReachability *reachability = (FBNetworkReachability *)[notification object];
+    BOOL oldValue = isConnected_;
+    isConnected_ = (reachability.connectionMode != FBNetworkReachableNon);
+    if(oldValue == NO && isConnected_){
+        [self restart];
+    }else if(oldValue == YES && isConnected_ == NO){
+        [self cancel];
+    }
+}
 @end
 
 //-----------------------------------------------------------------------------

@@ -202,7 +202,7 @@
  * cancel photo upload
  */
 - (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.path;
+    NSString *hash = photo.md5;
     MinusRequest *request = (MinusRequest *)[self requestForPhoto:hash];
     [request cancel];
     
