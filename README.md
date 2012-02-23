@@ -54,7 +54,7 @@ New BSD License. See [LICENSE](https://github.com/kent013/tottepost/blob/master/
 
 CHANGE LOG
 ------------------------------------
-See [ChangeLog](https://github.com/kent013/tottepost/blob/master/ChangeLog.md).
+See [CHANGELOG](https://github.com/kent013/tottepost/blob/master/CHANGELOG.md).
 
 3rd Party Libraries and Resources
 ------------------------------------
