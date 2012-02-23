@@ -32,17 +32,13 @@ tottepostはシンプルさにフォーカスしています。
 できること一覧
 ------------------------------------
  * 写真をソーシャルサービスやクラウドサービスにアップロード
-   * Facebook
-     * アルバム選択
-     * 960x720の解像度
-   * Twitter
-   * Flickr
-   * Dropbox
-   * Evernote (リポジトリでサポート）
+   * Facebook / Twitter / Flickr / Dropbox
+   * リポジトリでサポート: Evernote / Picasa / Minus / Mixi / Fotolife
  * ローカルのカメラロールに保存
  * コメント入力あり/なしの切り替え
  * ジオタグ埋め込みの切り替え
- * バックグラウンドでのアップロード
+ * バックグラウンドでのアップロード，自動レジューム
+ * アルバムの選択，作成
 
 作者
 ------------------------------------
@@ -60,6 +56,10 @@ Copyright (c) 2011, ISHITOYA Kentaro.
 Copyright (c) 2011, WATANABE Ken.  
 
 修正BSDライセンスです。 [LICENSE](https://github.com/kent013/tottepost/blob/master/LICENSE)をご覧ください。
+
+変更履歴
+------------------------------------
+See [ChangeLog](https://github.com/kent013/tottepost/blob/master/ChangeLog.md).
 
 サードパーティライブラリ
 ------------------------------------

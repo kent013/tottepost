@@ -21,23 +21,20 @@ This application is not similar to Instagram or other kind of camera application
 Tottepost is focusing on simplicity, thus we will not provide effects, cropping or decorating photo functionality. We provide features to take photo and share the photo to social applications or cloud services in least one tap.
 
 
+[KISS](http://en.wikipedia.org/wiki/KISS_principle).
+
 <a href="http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8&uo=4" target="itunes_store"><img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" alt="Single tap to share photo - tottepost - ISHITOYA Kentaro" style="border: 0;"/></a>
 
 FEATURE LIST
 ------------------------------------
  * Upload image to social applications and cloud services
-   * Facebook
-   * Twitter
-   * Flickr
-   * Dropbox
-   * Evernote (supported in source code)
-   * Picasa (supported in source code)
-   * Mixi (supported in source code)
-   * Fotolife (supported in source code)
+   * Facebook / Twitter / Flickr / Dropbox 
+   * Supported in source code: Evernote / Picasa / Minus / Mixi / Fotolife
  * Save image to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location
- * Background upload
+ * Background upload, Automatic resume
+ * Selecting target album, Creating album 
 
 AUTHORS
 ------------------------------------
@@ -54,6 +51,10 @@ Copyright (c) 2011, ISHITOYA Kentaro.
 Copyright (c) 2011, WATANABE Ken.  
 
 New BSD License. See [LICENSE](https://github.com/kent013/tottepost/blob/master/LICENSE) file. 
+
+CHANGE LOG
+------------------------------------
+See [ChangeLog](https://github.com/kent013/tottepost/blob/master/ChangeLog.md).
 
 3rd Party Libraries and Resources
 ------------------------------------

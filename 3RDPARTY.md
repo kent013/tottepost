@@ -49,10 +49,6 @@ PDKeychainBindingsController is licensed under MIT license. You can read full te
     Copyright (c) 2010 Apple Inc. All Rights Reserved.  
     See [http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html](http://developer.apple.com/library/ios/#samplecode/Reachability/Listings/ReadMe_txt.html) for more detail.
 
- * [SBJSON](https://github.com/stig/json-framework/)  
-    Copyright (C) 2007-2011 Stig Brautaset. All rights reserved.  
-    SBJSON is licensed under BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/bsd-license.php](http://www.opensource.org/licenses/bsd-license.php)
-
  * [AVFoundationCameraController](https://github.com/kent013/AVFoundationCameraController)  
     Copyright (c) 2011, ISHITOYA Kentaro.  
     AVFoundationCameraController is licensed under new BSD License. You can see the full text of the license at [http://www.opensource.org/licenses/BSD-3-Clause](http://www.opensource.org/licenses/BSD-3-Clause)
