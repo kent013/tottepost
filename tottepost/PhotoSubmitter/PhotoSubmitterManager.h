@@ -8,18 +8,6 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
-#import "PhotoSubmitterProtocol.h"
-#import "FacebookPhotoSubmitter.h"
-#import "FlickrPhotoSubmitter.h"
-#import "TwitterPhotoSubmitter.h"
-#import "DropboxPhotoSubmitter.h"
-#import "EvernotePhotoSubmitter.h"
-#import "PicasaPhotoSubmitter.h"
-#import "PhotoSubmitterOperation.h"
-#import "MixiPhotoSubmitter.h"
-#import "FilePhotoSubmitter.h"
-#import "FotolifePhotoSubmitter.h"
-#import "MinusPhotoSubmitter.h"
 #import "PhotoSubmitterImageEntity.h"
 #import "PhotoSubmitterSequencialOperationQueue.h"
 

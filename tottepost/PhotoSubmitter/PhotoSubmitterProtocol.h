@@ -11,6 +11,8 @@
 #import "PhotoSubmitterImageEntity.h"
 /*!
  * Submitter Types
+ * If you added new submitter, please add a value here and you may also add a
+ * code to PhotoSubmitterFactory to create instance.
  */
 typedef enum {
     PhotoSubmitterTypeInvalid = -1,
@@ -24,6 +26,9 @@ typedef enum {
     PhotoSubmitterTypeFotolife,
     PhotoSubmitterTypeMinus,
     PhotoSubmitterTypeFile,
+    
+    //number of photosubmitter
+    PhotoSubmitterCount
 } PhotoSubmitterType;
 
 @protocol PhotoSubmitterAuthenticationDelegate;

@@ -243,6 +243,7 @@
 		79D0EAF714EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EAF614EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
+		79EC635014FD1B5900FB835C /* PhotoSubmitterFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC634F14FD1B5900FB835C /* PhotoSubmitterFactory.m */; };
 		79F7471214DA58FD00C7BAD8 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7470914DA58FD00C7BAD8 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79F7471314DA58FD00C7BAD8 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F7470B14DA58FD00C7BAD8 /* FBDialog.bundle */; };
 		79F7471414DA58FD00C7BAD8 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7470D14DA58FD00C7BAD8 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1053,6 +1054,8 @@
 		79D0EAF614EF620100CDEF76 /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterAccountTableViewController.m; path = PhotoSubmitter/PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
+		79EC634E14FD1B5900FB835C /* PhotoSubmitterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterFactory.h; path = PhotoSubmitter/PhotoSubmitterFactory.h; sourceTree = "<group>"; };
+		79EC634F14FD1B5900FB835C /* PhotoSubmitterFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterFactory.m; path = PhotoSubmitter/PhotoSubmitterFactory.m; sourceTree = "<group>"; };
 		79F7470814DA58FD00C7BAD8 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		79F7470914DA58FD00C7BAD8 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		79F7470A14DA58FD00C7BAD8 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -1405,6 +1408,8 @@
 				798058A714CBDF86006E3817 /* PhotoSubmitterImageEntity.m */,
 				37FB65491497313500387490 /* PhotoSubmitterManager.h */,
 				37FB654A1497313500387490 /* PhotoSubmitterManager.m */,
+				79EC634E14FD1B5900FB835C /* PhotoSubmitterFactory.h */,
+				79EC634F14FD1B5900FB835C /* PhotoSubmitterFactory.m */,
 				37F26D07149F856D000172EF /* PhotoSubmitterOperation.h */,
 				37F26D08149F856D000172EF /* PhotoSubmitterOperation.m */,
 				798058BC14CFD450006E3817 /* PhotoSubmitterSequencialOperationQueue.h */,
@@ -2825,6 +2830,7 @@
 				7995E66914F4D6E1005C1453 /* NSString+QueryString.m in Sources */,
 				7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */,
 				7995E67414F4DF14005C1453 /* MinusPhotoSubmitter.m in Sources */,
+				79EC635014FD1B5900FB835C /* PhotoSubmitterFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

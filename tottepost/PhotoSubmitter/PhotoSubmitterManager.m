@@ -7,6 +7,7 @@
 //
 
 #import "PhotoSubmitterManager.h"
+#import "PhotoSubmitterFactory.h"
 #import "UIImage+EXIF.h"
 #import "FBNetworkReachability.h"
 
@@ -38,17 +39,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     delegates_ = [[NSMutableArray alloc] init];
     sequencialOperationQueues_ = [[NSMutableDictionary alloc] init];
 
-    supportedTypes_ = [NSMutableArray arrayWithObjects:
-                       [NSNumber numberWithInt:PhotoSubmitterTypeFacebook],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeTwitter],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeFlickr],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeDropbox],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeEvernote],
-                       [NSNumber numberWithInt:PhotoSubmitterTypePicasa],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeMixi],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeFotolife],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeMinus],
-                       [NSNumber numberWithInt:PhotoSubmitterTypeFile], nil];
+    supportedTypes_ = [[NSMutableArray alloc] init];
+    for(int i = 0; i < PhotoSubmitterCount; i++){
+        [supportedTypes_ addObject:[NSNumber numberWithInt:i]];
+    }
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
@@ -156,40 +150,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     if(submitter){
         return submitter;
     }
-    switch (type) {
-        case PhotoSubmitterTypeFacebook:
-            submitter = [[FacebookPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeTwitter:
-            submitter = [[TwitterPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeFlickr:
-            submitter = [[FlickrPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeDropbox:
-            submitter = [[DropboxPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeEvernote:
-            submitter = [[EvernotePhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypePicasa:
-            submitter = [[PicasaPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeMixi:
-            submitter = [[MixiPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeFotolife:
-            submitter = [[FotolifePhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeMinus:
-            submitter = [[MinusPhotoSubmitter alloc] init];
-            break;
-        case PhotoSubmitterTypeFile:
-            submitter = [[FilePhotoSubmitter alloc] init];
-            break;
-        default:
-            break;
-    }
+    submitter = [PhotoSubmitterFactory createWithType:type];
     if(submitter){
         [submitters_ setObject:submitter forKey:[NSNumber numberWithInt:type]];
     }

@@ -18,7 +18,7 @@
  * for more details.
  *
  * get instance with using 
- * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFacebook]
+ * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFotolife]
  * or
  * [PhotoSubmitter facebookPhotoSubmitter]
  */

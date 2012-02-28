@@ -7,6 +7,7 @@
 //
 
 #import "TwitterPhotoSubmitterSettingTableViewController.h"
+#import "TwitterPhotoSubmitter.h"
 #import "TTLang.h"
 
 #define TSV_SECTION_COUNT 2

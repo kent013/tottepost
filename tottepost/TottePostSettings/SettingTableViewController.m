@@ -35,6 +35,8 @@
 //-----------------------------------------------------------------------------
 @interface SettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
+- (void) addAlbumSettingTableViewControllerWithType:(PhotoSubmitterType) type;
+- (PhotoSubmitterSettingTableViewController *)settingTableViewControllerForType:(PhotoSubmitterType) type;
 - (void) settingDone:(id)sender;
 - (UITableViewCell *) createGeneralSettingCell:(int)tag;
 - (UITableViewCell *) createSocialAppButtonWithTag:(int)tag;
@@ -56,16 +58,17 @@
 - (void)setupInitialState{
     self.tableView.delegate = self;
     switches_ = [[NSMutableDictionary alloc] init];
+    settingControllers_ = [[NSMutableDictionary alloc] init];
     
-    facebookSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFacebook];
-    twitterSettingViewController_ = [[TwitterPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter];
-    flickrSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFlickr];
-    dropboxSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeDropbox];
-    evernoteSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeEvernote];
-    picasaSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypePicasa];
-    mixiSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeMixi];
-    fotolifeSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeFotolife];
-    minusSettingViewController_ = [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeMinus];
+    for(int i = 0; i < PhotoSubmitterCount; i++){
+        if(i == PhotoSubmitterTypeFile || i == PhotoSubmitterTypeTwitter){
+            continue;
+        }
+        [self addAlbumSettingTableViewControllerWithType:i];
+    }
+    [settingControllers_ 
+     setObject:[[TwitterPhotoSubmitterSettingTableViewController alloc] initWithType:PhotoSubmitterTypeTwitter]
+     forKey:[NSNumber numberWithInt:PhotoSubmitterTypeTwitter]];
 
     aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
     aboutSettingViewController_.delegate = self;
@@ -76,6 +79,22 @@
     }
     accountTypeIndexes_ = [NSMutableArray arrayWithArray:[TottePostSettings getInstance].supportedTypeIndexes];
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
+}
+
+/*!
+ * add Album setting table view controller
+ */
+- (void)addAlbumSettingTableViewControllerWithType:(PhotoSubmitterType)type{
+    [settingControllers_ 
+     setObject:[[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:type]
+     forKey:[NSNumber numberWithInt:type]];
+}
+
+/*!
+ * get setting table view fo type
+ */
+- (PhotoSubmitterSettingTableViewController *)settingTableViewControllerForType:(PhotoSubmitterType)type{
+    return [settingControllers_ objectForKey:[NSNumber numberWithInt:type]];
 }
 
 #pragma mark -
@@ -198,52 +217,10 @@
                 break;
         }        
     }else if(indexPath.section == SV_SECTION_ACCOUNTS){
-        switch ((int)[self indexToSubmitterType:indexPath.row]) {
-            case SV_ACCOUNTS_FACEBOOK: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook].isEnabled){
-                    [self.navigationController pushViewController:facebookSettingViewController_ animated:YES]; 
-                }
-                break;
-            case SV_ACCOUNTS_TWITTER: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeTwitter].isEnabled){
-                    [self.navigationController pushViewController:twitterSettingViewController_ animated:YES]; 
-                }
-                break;
-            case SV_ACCOUNTS_FLICKR: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFlickr].isEnabled){
-                    [self.navigationController pushViewController:flickrSettingViewController_ animated:YES]; 
-                }
-                break;
-            case SV_ACCOUNTS_DROPBOX: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox].isEnabled){
-                    [self.navigationController pushViewController:dropboxSettingViewController_ animated:YES]; 
-                }
-                break;
-            case SV_ACCOUNTS_EVERNOTE: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote].isEnabled){
-                    [self.navigationController pushViewController:evernoteSettingViewController_ animated:YES]; 
-                }
-                break;
-            case SV_ACCOUNTS_PICASA: 
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypePicasa].isEnabled){
-                    [self.navigationController pushViewController:picasaSettingViewController_ animated:YES]; 
-                }
-                break;   
-            case SV_ACCOUNTS_MIXI:
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeMixi].isEnabled){
-                    [self.navigationController pushViewController:mixiSettingViewController_ animated:YES]; 
-                }
-                break;  
-            case SV_ACCOUNTS_FOTOLIFE:
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFotolife].isEnabled){
-                    [self.navigationController pushViewController:fotolifeSettingViewController_ animated:YES]; 
-                }
-                break;  
-            case SV_ACCOUNTS_MINUS:
-                if([PhotoSubmitterManager submitterForType:PhotoSubmitterTypeMinus].isEnabled){
-                    [self.navigationController pushViewController:minusSettingViewController_ animated:YES]; 
-                }
-                break;   
+        PhotoSubmitterType type = (PhotoSubmitterType)[self indexToSubmitterType:indexPath.row];
+        id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+        if(submitter.isEnabled){
+            [self.navigationController pushViewController:[self settingTableViewControllerForType:type] animated:YES];
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];
