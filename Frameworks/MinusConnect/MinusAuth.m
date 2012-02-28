@@ -9,14 +9,33 @@
 #import "MinusAuth.h"
 #import "NSString+Join.h"
 
+/*!
+ * endpoint urls
+ */
+static NSString *kMinusOAuthRequestURL = @"https://minus.com/oauth/token";
+static NSString *kMinusOAuthAuthenticationURL = @"https://minus.com/oauth/token";
+static NSString *kMinusServiceKey = @"MinusService";
+
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface MinusAuth(PrivateImplementation)
+-(void)requestAccessWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission;
 @end
 
 @implementation MinusAuth(PrivateImplementation)
-
+/*!
+ * request for access
+ */
+-(void)requestAccessWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString join:permission glue:@" "], @"scope", nil];
+    [[NXOAuth2AccountStore sharedStore] 
+     requestAccessToAccountWithType:kMinusServiceKey
+     username:username
+     password:password
+     additionalParameters:params];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -24,7 +43,7 @@
 //-----------------------------------------------------------------------------
 #pragma mark - authentication
 @implementation MinusAuth
-@synthesize credential = accessToken_;
+@dynamic credential;
 
 /*!
  * initialize
@@ -36,15 +55,32 @@
     if (self) {
         clientId_ = clientId;
         clientSecret_ = clientSecret;
-        delegate_ = delegate;
+        delegate_ = delegate; 
+        [[NXOAuth2AccountStore sharedStore] 
+         setClientID:clientId_
+         secret:clientSecret_
+         authorizationURL:[NSURL URLWithString:kMinusOAuthAuthenticationURL]
+         tokenURL:[NSURL URLWithString:kMinusOAuthAuthenticationURL]
+         redirectURL:nil
+         forAccountType:kMinusServiceKey];
         
-           client_ = [[LROAuth2Client alloc] 
-                   initWithClientID: clientId_
-                   secret: clientSecret_
-                   redirectURL:nil];
-        client_.delegate = self;
-        client_.userURL  = [NSURL URLWithString:kMinusOAuthRequestURL];
-        client_.tokenURL = [NSURL URLWithString:kMinusOAuthAuthenticationURL];
+        [[NSNotificationCenter defaultCenter] 
+         addObserverForName:NXOAuth2AccountStoreAccountsDidAddNotification
+         object:[NXOAuth2AccountStore sharedStore]
+         queue:nil
+         usingBlock:^(NSNotification *aNotification){
+             [self minusDidLogin];
+         }];   
+        
+        [[NSNotificationCenter defaultCenter] 
+         addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+         object:[NXOAuth2AccountStore sharedStore]
+         queue:nil
+         usingBlock:^(NSNotification *aNotification){
+             NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
+             NSLog(@"%@", error);
+             [self minusDidNotLogin];
+         }];
     }
     return self;
 }
@@ -57,20 +93,7 @@
         [self minusDidLogin];
         return;
     }
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString join:permission glue:@" "], @"scope", 
-                            @"password", @"grant_type", 
-                            username, @"username",
-                            password, @"password",
-                            clientSecret_, @"client_secret", nil];
-
-    NSURLRequest *request = [client_ userAuthorizationRequestWithParameters:params];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    
-    if(connection == nil){
-        [self minusDidNotLogin];
-        return;
-    }
-    [connection start];
+    [self requestAccessWithUsername:username password:password andPermission:permission];
 }
 
 /*!
@@ -94,6 +117,16 @@
 }
 
 /*!
+ * send did login message
+ */
+- (void)minusDidLogout{
+    if ([delegate_ respondsToSelector:@selector(minusDidLogout)]) {
+        [delegate_ minusDidLogout];
+    }
+    
+}
+
+/*!
  * send did not login message
  */
 - (void)minusDidNotLogin{
@@ -107,109 +140,39 @@
  * clear access token
  */
 - (void)clearCredential{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    [defaults removeObjectForKey:kMinusAccessToken];
-    [defaults synchronize];
-    accessToken_ = nil;
-}
-
-/*!
- * load credential
- */
-- (void)loadCredential{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    NSData *data = [defaults objectForKey:kMinusAccessToken];
-    if(data != nil){
-        accessToken_ = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kMinusServiceKey]) {
+        [[NXOAuth2AccountStore sharedStore] removeAccount:account];
     }
 }
 
 /*!
- * save credential
+ * get credential
  */
-- (void)saveCredential{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessToken_];
-    [defaults setValue:data forKey:kMinusAccessToken];
+- (NXOAuth2Account *)credential{
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kMinusServiceKey]) {
+        return account;
+    }
+    return nil;
 }
 
 /*!
  * refresh credential
  */
-- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password{
-    if([self isSessionValid] == NO){
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"password", @"grant_type", 
-                                username, @"username",
-                                password, @"password",
-                                clientSecret_, @"client_secret", nil];
-        [client_ refreshAccessToken:accessToken_ withParameters:params];
-        
-    }
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission{
+    [self requestAccessWithUsername:username password:password andPermission:permission];
 }
 
 /*!
  * check is session valid
  */
 - (BOOL)isSessionValid{
-    return [accessToken_ hasExpired] == NO;
-}
-
-#pragma mark - NSURLConnectionDelegate
-#pragma mark - NSURLConnection[Data]Delegate methods
-/*!
- * did receive response
- */
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    data_ = [[NSMutableData alloc] init];
-    
-    NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *) response;
-    NSInteger statusCode = [httpResponse statusCode];
-    if (statusCode != 200) {
-        [connection cancel];
-        NSLog(@"%s:HTTP Response is %d", __PRETTY_FUNCTION__, statusCode);
-        return;
+    NXOAuth2Account *credential = self.credential;
+    if(credential == nil){
+        return NO;
     }
-}
-
-/*!
- * append data
- */
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    [data_ appendData:data];
-}
-
-
-/*!
- * did fail with error
- */
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error{
-    NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
-}
-
-/*!
- * did finish loading
- */
--(void)connectionDidFinishLoading:(NSURLConnection*)connection
-{
-    [client_ processAuthorizationResponse:data_];
-}
-
-#pragma mark - LROAuth2ClientDelegate
-
-/*!
- * server responds request token
- */
-- (void)oauthClientDidReceiveAccessToken:(LROAuth2Client *)client{
-    accessToken_ = client.accessToken;
-    [self minusDidLogin];
-}
-
-/*!
- * server responds to refresh token
- */
-- (void)oauthClientDidRefreshAccessToken:(LROAuth2Client *)client{
-    accessToken_ = client.accessToken;    
-    [self saveCredential];
+    if([credential.accessToken doesExpire] && [credential.accessToken hasExpired]){
+        return NO;
+    }
+    return YES;
 }
 @end

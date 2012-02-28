@@ -16,6 +16,7 @@ static NSString* kHTTPPUT = @"PUT";
 static NSString* kHTTPDELETE = @"DELETE";
 
 static const NSTimeInterval kTimeoutInterval = 180.0;
+static const NSString *kMinusBaseURL = @"https://minus.com/api/v2/";
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -95,7 +96,7 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
     }
     NSString* query = [pairs componentsJoinedByString:@"&"];
     
-    return [NSString stringWithFormat:@"%@%@%@&bearer_token=%@", baseUrl, queryPrefix, query, auth_.credential.accessToken];
+    return [NSString stringWithFormat:@"%@%@%@&bearer_token=%@", baseUrl, queryPrefix, query, auth_.credential.accessToken.accessToken];
 }
 
 /*!
@@ -202,7 +203,6 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
                                        clientSecret:clientSecret 
                                         andDelegate:self];
         self.sessionDelegate = delegate;
-        [auth_ loadCredential];
         [self setupInitialState];
     }
     return self;
@@ -226,15 +226,15 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
 - (void)logout{
     if([auth_ isSessionValid]){
         [auth_ logout];
+    }else{
+        [self minusDidLogout];
     }
-    [self minusDidLogout];
 }
 
 /*!
  * did logined
  */
 - (void)minusDidLogin{
-    [auth_ saveCredential];
     [self.sessionDelegate minusDidLogin];
 }
 
@@ -264,8 +264,9 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
 /*!
  * refresh token
  */
-- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password{
-    [auth_ refreshCredentialWithUsername:username password:password];
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission
+{
+    [auth_ refreshCredentialWithUsername:username password:password andPermission:permission];
 }
 
 #pragma mark - user

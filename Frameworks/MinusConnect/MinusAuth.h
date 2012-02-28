@@ -8,27 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "MinusProtocol.h"
-#import "LROAuth2Client.h"
-#import "LROAuth2AccessToken.h"
+#import "NXOAuth2.h"
 
 @protocol MinusAuthDelegate;
 
 /*!
  * minus auth object
  */
-@interface MinusAuth : NSObject<LROAuth2ClientDelegate, NSURLConnectionDelegate>{
+@interface MinusAuth : NSObject{
   @protected
     __strong NSString *clientId_;
     __strong NSString *clientSecret_;
-
-    __strong LROAuth2Client *client_;
-    __strong LROAuth2AccessToken *accessToken_;
     
     __strong NSMutableData *data_;
     id<MinusAuthDelegate> delegate_;
 }
 
-@property (nonatomic, readonly) LROAuth2AccessToken *credential;
+@property (nonatomic, readonly) NXOAuth2Account *credential;
 
 - (id)initWithClientId:(NSString *)clientId 
           clientSecret:(NSString *)clientSecret 
@@ -36,11 +32,10 @@
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password andPermission:(NSArray *)permission;
 - (void)logout;
 - (void)minusDidLogin;
+- (void)minusDidLogout;
 - (void)minusDidNotLogin;
 - (void)clearCredential;
-- (void)loadCredential;
-- (void)saveCredential;
-- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password;
+- (void)refreshCredentialWithUsername:(NSString *)username password:(NSString *)password  andPermission:(NSArray *)permission;
 - (BOOL)isSessionValid;
 @end
 

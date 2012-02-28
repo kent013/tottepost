@@ -117,7 +117,7 @@
     if([minus_ isSessionValid] == NO){
         userId_ = [self secureSettingForKey:PS_MINUS_AUTH_USERID];
         password_ = [self secureSettingForKey:PS_MINUS_AUTH_PASSWORD];
-        [minus_ refreshCredentialWithUsername:userId_ password:password_];
+        [minus_ refreshCredentialWithUsername:userId_ password:password_ andPermission:[NSArray arrayWithObjects:@"read_all", @"upload_new", nil]];
     }
 }
 

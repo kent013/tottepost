@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LROAuth2AccessToken.h"
 #import "MinusProtocol.h"
 
 @interface MinusRequest : NSObject<NSURLConnectionDelegate, NSURLConnectionDataDelegate>{
