@@ -110,32 +110,6 @@
     isAlbumSupported_ = isAlbumSupported;
 }
 
-#pragma mark - util methods
-/*!
- * clear facebook access token key
- */
-- (void)clearCredentials{
-    [self removeSettingForKey:[self keyForEnabled]];
-    [self removeSettingForKey:[self keyForUsername]];
-    [self removeSettingForKey:[self keyForAlbums]];
-    [self removeSettingForKey:[self keyForTargetAlbum]];
-}
-
-/*!
- * refresh credential
- */
-- (void)refreshCredential{
-    //do nothing
-}
-
-/*!
- * enable
- */
-- (void)enable{
-    [self setSetting:[NSNumber numberWithBool:YES] forKey:[self keyForEnabled]];
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
-}
-
 #pragma mark - PhotoSubmitterProtocol methods
 #pragma mark - authorization
 /*!
@@ -160,6 +134,14 @@
     [instance onLogout];
     [self clearCredentials];
     [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * enable
+ */
+- (void)enable{
+    [self setSetting:[NSNumber numberWithBool:YES] forKey:[self keyForEnabled]];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
 }
 
 /*!
@@ -204,6 +186,23 @@
  */
 - (BOOL)didOpenURL:(NSURL *)url{
     return NO;
+}
+
+/*!
+ * clear facebook access token key
+ */
+- (void)clearCredentials{
+    [self removeSettingForKey:[self keyForEnabled]];
+    [self removeSettingForKey:[self keyForUsername]];
+    [self removeSettingForKey:[self keyForAlbums]];
+    [self removeSettingForKey:[self keyForTargetAlbum]];
+}
+
+/*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+    //do nothing
 }
 
 #pragma mark - photos

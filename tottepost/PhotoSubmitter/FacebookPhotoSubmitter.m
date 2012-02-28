@@ -109,10 +109,10 @@
     }else if([request.url isMatchedByRegex:@"albums$"] && 
              [request.httpMethod isEqualToString:@"POST"]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
-        [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"photos$"]){
         [self completeSubmitPhotoWithRequest:request andError:error];
     }
+    [self clearRequest:request];
 };
 
 /*!

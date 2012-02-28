@@ -232,7 +232,7 @@
 
 #pragma mark - photo
 /*!
- * submit photob
+ * submit photo
  */
 - (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     DBRestClient *restClient = 

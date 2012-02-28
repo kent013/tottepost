@@ -65,7 +65,8 @@ ofTotalByteCount:(unsigned long long)dataLength;
     [service_ setServiceShouldFollowNextLinks:YES];
     
     //-lObjC staff.
-    [GTMHTTPUploadFetcher alloc];
+    GTMHTTPFetcher *fetcher = [[GTMHTTPUploadFetcher alloc] init];
+    fetcher = nil;
 }
 
 /*!

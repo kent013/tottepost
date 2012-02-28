@@ -38,6 +38,9 @@
     BOOL isAlbumSupported_;
 }
 
+/*!
+ * set photosubmitter's setting
+ */
 - (void) setSubmitterIsConcurrent:(BOOL)isConcurrent 
                      isSequencial:(BOOL)isSequencial 
                     usesOperation:(BOOL)usesOperation
