@@ -185,17 +185,12 @@
         [self removeSettingForKey:[self photosetDummyPhotoKey:self.targetAlbum.albumId]];
         
 	}else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
-        NSString *hash = [self photoForRequest:inRequest];
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
-        
+        [self completeSubmitPhotoWithRequest:inRequest];          
         NSString *photoId = [[inResponseDictionary objectForKey:@"photoid"] objectForKey:@"_text"];
+        
         if([self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] == nil){
             [self setSetting:photoId forKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID];
         }
-        [self clearRequest:inRequest];
-        
         [self performSelectorOnMainThread:@selector(addPhotoToPhotoSet:) withObject:photoId waitUntilDone:NO];
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -207,11 +202,7 @@
  */
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest didFailWithError:(NSError *)inError{
     if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_UPLOAD_IMAGE]){
-        NSString *hash = [self photoForRequest:inRequest];
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:inError.localizedDescription];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:inRequest];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];   
-        [self clearRequest:inRequest];
+        [self completeSubmitPhotoWithRequest:inRequest andError:inError];  
     }else if([inRequest.sessionInfo isEqualToString:PS_FLICKR_API_ADD_PHOTOSET_PHOTO]){
         [self clearRequest:inRequest];
     }else if([inRequest.sessionInfo isEqualToString:PS_FLICKR_API_CREATE_PHOTOSET]){

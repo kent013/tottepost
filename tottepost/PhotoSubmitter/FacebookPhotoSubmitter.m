@@ -78,14 +78,7 @@
         NSString *username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];
         self.username = username;
     }else if([request.url isMatchedByRegex:@"photos$"]){
-        if ([result isKindOfClass:[NSArray class]]) {
-            result = [result objectAtIndex:0];
-        }
-        NSString *hash = [self photoForRequest:request];
-        
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
+        [self completeSubmitPhotoWithRequest:request];
     }else if([request.url isMatchedByRegex:@"albums$"] && 
              [request.httpMethod isEqualToString:@"POST"]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:YES withError:nil];
@@ -118,11 +111,7 @@
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];
         [self clearRequest:request];
     }else if([request.url isMatchedByRegex:@"photos$"]){
-        NSString *hash = [self photoForRequest:request];
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];
-        [self clearRequest:request];
+        [self completeSubmitPhotoWithRequest:request andError:error];
     }
 };
 

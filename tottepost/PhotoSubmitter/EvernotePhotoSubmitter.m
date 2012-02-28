@@ -260,11 +260,7 @@
     if([request.method isEqualToString:@"createNote"] == NO){
         return;
     }
-    NSString *hash = [self photoForRequest:request];
-    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationFinished:NO];
-    [self clearRequest:request];
+    [self completeSubmitPhotoWithRequest:request];
 }
 
 /*!
@@ -274,12 +270,8 @@
     if([request.method isEqualToString:@"createNote"] == NO){
         return;
     }
-    NSString *hash = [self photoForRequest:request];
-    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:exception.description];
     NSLog(@"%s, %@", __PRETTY_FUNCTION__, exception.description);
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationFinished:NO];
-    [self clearRequest:request];
+    [self completeSubmitPhotoWithRequest:request andError:nil];
 }
 
 /*!

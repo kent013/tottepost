@@ -81,13 +81,7 @@
         self.albumList = albums;
     }else if([url isMatchedByRegex:@"photo/mediaItems/@me/@self"] &&
              [method isEqualToString:@"POST"]){
-        NSString *hash = [self photoForRequest:connection];
-        
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
-        
-        [self clearRequest:connection];
+        [self completeSubmitPhotoWithRequest:connection];
     }else if([url isMatchedByRegex:@"people/@me/@self"]){
         NSString *username = [[data objectForKey:@"entry"] objectForKey:@"displayName"];
         self.username = username;
@@ -112,11 +106,7 @@
              [method isEqualToString:@"GET"]){
     }else if([url isMatchedByRegex:@"photo/mediaItems/@me/@self"] &&
        [method isEqualToString:@"POST"]){
-        NSString *hash = [self photoForRequest:connection];
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];
-        [self clearRequest:connection];
+        [self completeSubmitPhotoWithRequest:connection andError:error];
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }

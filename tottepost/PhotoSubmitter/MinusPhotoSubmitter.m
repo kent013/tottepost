@@ -250,13 +250,7 @@
         }
         self.username = [result objectForKey:@"display_name"];
     }else if([request.tag isEqualToString:kMinusRequestCreateFile]){
-        NSString *hash = [self photoForRequest:request];
-        
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
-        
-        [self clearRequest:request];
+        [self completeSubmitPhotoWithRequest:request];
     }else if([request.tag isEqualToString:kMinusRequestCreateFolder]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:YES withError:nil];
         [self clearRequest:request];
@@ -285,11 +279,7 @@
     NSLog(@"%@", error);
     if([request.tag isEqualToString:kMinusRequestActiveUser]){
     }else if([request.tag isEqualToString:kMinusRequestCreateFile]){
-        NSString *hash = [self photoForRequest:request];
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];
-        [self clearRequest:request];
+        [self completeSubmitPhotoWithRequest:request andError:error];
     }else if([request.tag isEqualToString:kMinusRequestCreateFolder]){
     }else if([request.tag isEqualToString:kMinusRequestFoldersWithUsername]){
         [self.albumDelegate photoSubmitter:self didAlbumCreated:nil suceeded:NO withError:error];

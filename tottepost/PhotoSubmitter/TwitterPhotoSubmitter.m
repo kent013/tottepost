@@ -57,28 +57,14 @@
  * did fail
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    NSString *hash = [self photoForRequest:connection];    
-    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-    [operationDelegate photoSubmitterDidOperationFinished:NO];
-    [self clearRequest:connection];
-
+    [self completeSubmitPhotoWithRequest:connection andError:error];
 }
 
 /*!
  * did finished
  */
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSString *hash = [self photoForRequest:connection];
-    if(hash == nil){
-        NSLog(@"%s, hash not found.", __PRETTY_FUNCTION__);
-        return;
-    }
-    [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:connection];
-    [operationDelegate photoSubmitterDidOperationFinished:YES];
-    [self clearRequest:connection];
-    
+    [self completeSubmitPhotoWithRequest:connection];    
 }
 
 /*!

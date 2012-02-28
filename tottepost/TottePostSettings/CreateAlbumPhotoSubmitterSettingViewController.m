@@ -123,6 +123,9 @@
         titleField_.borderStyle = UITextBorderStyleNone;
         titleField_.placeholder = [TTLang lstr:@"Create_Album_Placeholder"];
         titleField_.clearButtonMode = UITextFieldViewModeWhileEditing;
+        titleField_.spellCheckingType = UITextSpellCheckingTypeNo;
+        titleField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        titleField_.autocorrectionType = UITextAutocorrectionTypeNo;
         titleField_.returnKeyType = UIReturnKeyDone;
         titleField_.textAlignment = UITextAlignmentLeft;
         titleField_.delegate = self;

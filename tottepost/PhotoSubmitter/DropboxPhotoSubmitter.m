@@ -69,27 +69,16 @@
  * Dropbox delegate, upload finished
  */
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath metadata:(DBMetadata*)metadata{
-    NSString *hash = [self photoForRequest:client];
-    [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-    
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:srcPath error:nil];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-    [operationDelegate photoSubmitterDidOperationFinished:YES];
-    
-    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+    [self completeSubmitPhotoWithRequest:client];
 }
 
 /*!
  * Dropbox delegate, upload failed
  */
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError *)error{
-    NSString *hash = [self photoForRequest:client];
-    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-    [operationDelegate photoSubmitterDidOperationFinished:NO];
-    [self performSelector:@selector(clearRequest:) withObject:client afterDelay:2.0];
+    [self completeSubmitPhotoWithRequest:client andError:error];
 }
 
 /*!

@@ -110,6 +110,7 @@
     isAlbumSupported_ = isAlbumSupported;
 }
 
+#pragma mark - util methods
 /*!
  * clear facebook access token key
  */
@@ -124,6 +125,7 @@
  * refresh credential
  */
 - (void)refreshCredential{
+    //do nothing
 }
 
 /*!
@@ -135,38 +137,7 @@
 }
 
 #pragma mark - PhotoSubmitterProtocol methods
-/*!
- * submit photo with data, comment and delegate
- */
-- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
-    
-    if(delegate.isCancelled){
-        return;
-    }
-    id request = [instance onSubmitPhoto:photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate];
-    if(request == nil){
-        return;
-    }
-    [self setPhotoHash:photo.photoHash forRequest:request];
-    [self addRequest:request];
-    [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:photo.photoHash];    
-}
-
-/*!
- * cancel photo upload
- */
-- (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
-    id request = [instance onCancelPhotoSubmit:photo];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:photo.photoHash];
-    [self clearRequest:request];
-
-}
-
+#pragma mark - authorization
 /*!
  * login
  */
@@ -200,18 +171,18 @@
 }
 
 /*!
- * check is logined
- */
-- (BOOL)isLogined{
-    return self.isEnabled && self.isSessionValid;
-}
-
-/*!
  * is session valid
  */
 - (BOOL)isSessionValid{
     NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
     return NO;
+}
+
+/*!
+ * check is logined
+ */
+- (BOOL)isLogined{
+    return self.isEnabled && self.isSessionValid;
 }
 
 /*!
@@ -233,6 +204,65 @@
  */
 - (BOOL)didOpenURL:(NSURL *)url{
     return NO;
+}
+
+#pragma mark - photos
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    id request = [instance onSubmitPhoto:photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate];
+    if(request == nil){
+        return;
+    }
+    [self setPhotoHash:photo.photoHash forRequest:request];
+    [self addRequest:request];
+    [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:photo.photoHash];    
+}
+
+/*!
+ * cancel photo upload
+ */
+- (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    id request = [instance onCancelPhotoSubmit:photo];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:photo.photoHash];
+    [self clearRequest:request];    
+}
+
+/*!
+ * complete submit photo operation and send message to delegates.
+ */
+- (void)completeSubmitPhotoWithRequest:(id)request{
+    NSString *hash = [self photoForRequest:request];
+    
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+    [operationDelegate photoSubmitterDidOperationFinished:YES];
+    
+    //delay for Dropbox
+    [self performSelector:@selector(clearRequest:) withObject:request afterDelay:2.0];
+}
+
+/*!
+ * complete submit photo operation and send error message to delegates.
+ */
+- (void)completeSubmitPhotoWithRequest:(id)request andError:(NSError *)error{
+    NSString *hash = [self photoForRequest:request];
+    [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationFinished:NO];
+    
+    //delay for Dropbox
+    [self performSelector:@selector(clearRequest:) withObject:request afterDelay:2.0];
 }
 
 #pragma mark - albums

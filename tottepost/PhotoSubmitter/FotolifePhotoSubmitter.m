@@ -248,11 +248,7 @@
  */
 - (void)client:(AtompubClient *)client didCreateEntry:(AtomEntry *)entry withLocation:(NSURL *)location{
     if([client.tag isEqualToString:@"submitPhoto"]){
-        NSString *hash = [self photoForRequest:client];
-        
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
+        [self completeSubmitPhotoWithRequest:client];
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }
@@ -267,10 +263,7 @@
         [self clearCredentials];
         [self.authDelegate photoSubmitter:self didLogout:self.type];
     }else if([client.tag isEqualToString:@"submitPhoto"]){
-        NSString *hash = [self photoForRequest:client];
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];
+        [self completeSubmitPhotoWithRequest:client andError:error];
     }
     NSLog(@"%@", error.description);
     [self clearRequest:client];

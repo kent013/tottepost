@@ -135,23 +135,15 @@ ofTotalByteCount:(unsigned long long)dataLength {
  */
 - (void)addPhotoTicket:(GDataServiceTicket *)ticket
      finishedWithEntry:(GDataEntryPhoto *)photoEntry
-                 error:(NSError *)error {
-    
-    NSString *hash = [self photoForRequest:ticket];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:ticket];
-    if (error == nil) {        
-        [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-        [operationDelegate photoSubmitterDidOperationFinished:YES];
-        
-        [self clearRequest:ticket];
+                 error:(NSError *)error {    
+    if (error == nil) {
+        [self completeSubmitPhotoWithRequest:ticket];
     } else {
         if(self.targetAlbum != nil){
             [self removeSettingForKey:self.targetAlbum.albumId];
         }
-        [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-        [operationDelegate photoSubmitterDidOperationFinished:NO];
+        [self completeSubmitPhotoWithRequest:ticket andError:error];
     }
-    [self clearRequest:ticket];
 }
 
 

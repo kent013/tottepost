@@ -73,7 +73,7 @@
 
 #pragma mark - photo
 /*!
- * submit photo with data, comment and delegate
+ * submit photo
  */
 - (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -81,17 +81,18 @@
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
         [lib writeImageDataToSavedPhotosAlbum:photo.data
                                      metadata:photo.metadata
-                              completionBlock:^(NSURL* url, NSError* error){
-                                  [self photoSubmitter:self didProgressChanged:hash progress:0.75];
-                                  if(error == nil){
-                                      [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
-                                  }else{
-                                      [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
-                                  }
-                                  id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
-                                  [operationDelegate photoSubmitterDidOperationFinished:YES];
-                                  [self clearRequest:hash];
-                              }];
+                              completionBlock:^(NSURL* url, NSError* error)
+        {
+            [self photoSubmitter:self didProgressChanged:hash progress:0.75];
+            if(error == nil){
+                [self photoSubmitter:self didSubmitted:hash suceeded:YES message:@"Photo upload succeeded"];
+            }else{
+                [self photoSubmitter:self didSubmitted:hash suceeded:NO message:[error localizedDescription]];
+            }
+            id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:hash];
+            [operationDelegate photoSubmitterDidOperationFinished:YES];
+            [self clearRequest:hash];
+        }];
         [self photoSubmitter:self willStartUpload:hash];
         [self photoSubmitter:self didProgressChanged:hash progress:0.25];
         [self setOperationDelegate:delegate forRequest:hash];
