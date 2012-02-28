@@ -130,7 +130,7 @@ static NSString *kMinusServiceKey = @"MinusService";
  * send did not login message
  */
 - (void)minusDidNotLogin{
-    if ([delegate_ respondsToSelector:@selector(minusDidNotLogin:)]) {
+    if ([delegate_ respondsToSelector:@selector(minusDidNotLogin)]) {
         [delegate_ minusDidNotLogin];
     }
 }

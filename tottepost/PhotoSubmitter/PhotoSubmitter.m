@@ -205,6 +205,30 @@
     //do nothing
 }
 
+/*!
+ * complete login operation and send signal to delegate
+ */
+- (void)completeLogin{
+    [self enable]; //enable signals didLogin
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
+
+/*!
+ * complete login operation and send signal to delegate that login failed
+ */
+- (void)completeLoginFailed{
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+}
+/*!
+ * complete logout operation and send signal to delegate
+ */
+- (void)completeLogout{
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
 #pragma mark - photos
 /*!
  * submit photo with data, comment and delegate

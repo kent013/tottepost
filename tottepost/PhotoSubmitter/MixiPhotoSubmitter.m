@@ -89,9 +89,6 @@
     //NSLog(@"%@,%@,%@", method,url,data);
 }
 
-- (void)mixi:(Mixi *)mixi didFinishLoading:(NSString *)data{
-    //NSLog(@"%@", data);
-}
 /*!
  * failed
  */
@@ -127,28 +124,22 @@
  * authorization suceeded
  */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didSuccessWithEndpoint:(NSString *)endpoint{
-    [self enable];    
-    //[self getUserInfomation];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     [mixi_ store];
+    [self completeLogin];
 }
 
 /*!
  * authorization canceled
  */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didCancelWithEndpoint:(NSString *)endpoint{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    [self completeLoginFailed];
 }
 
 /*!
  * authorization failed
  */
 - (void)authorizer:(MixiSDKAuthorizer *)authorizer didFailWithEndpoint:(NSString *)endpoint error:(NSError *)error{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    [self completeLoginFailed];
 }
 @end
 
@@ -186,6 +177,7 @@
  */
 - (void)onLogout{
     [mixi_ logout];
+    [self completeLogout];
 }
 
 /*!

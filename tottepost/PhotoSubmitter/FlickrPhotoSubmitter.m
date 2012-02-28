@@ -215,9 +215,7 @@
     }else if([inRequest.sessionInfo isEqualToString: PS_FLICKR_API_REMOVE_PHOTOSET_PHOTO]){
         [self clearRequest:inRequest];
     }else{
-        NSLog(@"flickr error:%@", inError);
-        [self clearCredentials];
-        [self.authDelegate photoSubmitter:self didLogout:self.type];
+        [self completeLoginFailed];
     }
     NSLog(@"%@, %@, %s", inRequest.sessionInfo, inError.description, __PRETTY_FUNCTION__);
 }
@@ -252,8 +250,7 @@
     
     authRequest_.sessionInfo = PS_FLICKR_API_CHECK_TOKEN;
     [authRequest_ callAPIMethodWithGET:PS_FLICKR_API_CHECK_TOKEN arguments:nil];
-    [self enable];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    [self completeLogin];
     
     //fetch dummy primary photo id to create photoset
     if([self settingForKey:PS_FLICKR_SETTING_DUMMY_PHOTO_ID] == nil){
@@ -296,6 +293,7 @@
  * logoff from flickr
  */
 - (void)onLogout{
+    [self completeLogout];
 }
 
 /*!

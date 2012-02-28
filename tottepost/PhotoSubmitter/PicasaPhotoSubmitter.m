@@ -109,13 +109,10 @@ ofTotalByteCount:(unsigned long long)dataLength;
                                   encoding:NSUTF8StringEncoding];
             NSLog(@"%@", str);
         }
-        [self.authDelegate photoSubmitter:self didLogout:self.type];
-        [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
-        [self clearCredentials];
+        [self completeLoginFailed];
     } else {
         auth_ = auth;
-        [self enable];
-        [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type]; 
+        [self completeLogin];
     }
 }
 
@@ -248,6 +245,7 @@ ofTotalByteCount:(unsigned long long)dataLength {
     if ([[auth_ serviceProvider] isEqual:kGTMOAuth2ServiceProviderGoogle]) {
         [GTMOAuth2ViewControllerTouch revokeTokenForGoogleAuthentication:auth_];
     }
+    [self completeLogout];
 }
 
 /*!

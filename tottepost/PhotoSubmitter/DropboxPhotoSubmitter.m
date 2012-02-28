@@ -179,6 +179,7 @@
  */
 -(void)onLogin{
     [[DBSession sharedSession] link];
+    [self completeLogin];
 }
 
 /*!
@@ -186,6 +187,7 @@
  */
 - (void)onLogout{  
     [[DBSession sharedSession] unlinkAll];
+    [self completeLogout];
 }
 
 /*!
@@ -325,8 +327,7 @@
 /*!
  * authorization failed
  */
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId{        [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId{       
+    [self completeLoginFailed];
 }
 @end

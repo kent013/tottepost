@@ -106,6 +106,7 @@
  * logoff from fotolife
  */
 - (void)onLogout{
+    [self completeLogout];
 }
 
 /*!
@@ -209,7 +210,7 @@
  * did canceled
  */
 - (void)didCancelPasswordAuthView:(UIViewController *)passwordAuthViewController{
-    [self disable];
+    [self completeLoginFailed];
 }
 
 /*!
@@ -233,10 +234,9 @@
  */
 - (void)client:(AtompubClient *)client didReceiveFeed:(AtomFeed *)feed{
     if([client.tag isEqualToString:@"login"]){
-        [self enable];
-        [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
         userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         password_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
+        [self completeLogin];
     }else if([client.tag isEqualToString:@"album"]){
         NSLog(@"%@", [feed stringValue]);
     }
@@ -260,8 +260,7 @@
  */
 - (void)client:(AtompubClient *)client didFailWithError:(NSError *)error{
     if([client.tag isEqualToString:@"login"]){
-        [self clearCredentials];
-        [self.authDelegate photoSubmitter:self didLogout:self.type];
+        [self completeLoginFailed];
     }else if([client.tag isEqualToString:@"submitPhoto"]){
         [self completeSubmitPhotoWithRequest:client andError:error];
     }

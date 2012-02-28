@@ -293,21 +293,20 @@
  */
 - (void)evernoteDidLogin{
     [evernote_ saveCredential]; 
-    [self enable];
+    [self completeLogin];
 }
 
 /*!
  * when the load account finished
  */
 - (void)evernoteDidNotLogin{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self completeLoginFailed];
 }
 
 /*!
  * logout
  */
 - (void)evernoteDidLogout{
-    [self clearCredentials];    
+    [self completeLogout];
 }
 @end

@@ -198,27 +198,25 @@
  * did login to minus
  */
 -(void)minusDidLogin{
-    [self enable];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     userId_ = [self secureSettingForKey:PS_MINUS_AUTH_USERID];
     password_ = [self secureSettingForKey:PS_MINUS_AUTH_PASSWORD];
     [self getUserInfomation];
+    [self completeLogin];
 }
 
 /*!
  * did logout from minus
  */
 - (void)minusDidLogout{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self completeLogout];
 }
 
 /*!
  * attempt to login, but not logined
  */
 - (void)minusDidNotLogin{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self completeLoginFailed];
+    
 }
 
 #pragma mark - PhotoSubmitterPasswordAuthDelegate

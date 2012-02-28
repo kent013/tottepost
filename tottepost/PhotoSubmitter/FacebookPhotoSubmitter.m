@@ -279,27 +279,23 @@
 - (void)fbDidLogin {
     [self setSetting:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
     [self setSetting:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-    [self enable];
     
+    [self completeLogin];
     [self getUserInfomation];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
 }
 
 /*!
  * facebook delegate, if not login
  */
 -(void)fbDidNotLogin:(BOOL)cancelled {
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-    [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
+    [self completeLoginFailed];
 }
 
 /*!
  * facebook delegate, if logout
  */
 - (void) fbDidLogout {
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
+    [self completeLogout];
 }
 
 /*!
