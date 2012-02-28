@@ -11,12 +11,8 @@
 #import "PhotoSubmitterAccountTableViewController.h"
 #import "PhotoSubmitterManager.h"
 
-#define PS_MINUS_ENABLED @"PSMinusEnabled"
 #define PS_MINUS_AUTH_USERID @"PSMinusUserId"
 #define PS_MINUS_AUTH_PASSWORD @"PSMinusPassword"
-#define PS_MINUS_SETTING_USERNAME @"PSMinusUserName"
-#define PS_MINUS_SETTING_ALBUMS @"PSMinusAlbums"
-#define PS_MINUS_SETTING_TARGET_ALBUM @"PSMinusTargetAlbum"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -34,6 +30,12 @@
  * initializer
  */
 -(void)setupInitialState{
+    [self setSubmitterIsConcurrent:YES 
+                      isSequencial:NO 
+                     usesOperation:YES 
+                   requiresNetwork:YES 
+                  isAlbumSupported:YES];
+    
     minus_ = [[MinusConnect alloc] 
               initWithClientId:MINUS_SUBMITTER_CLIENT_ID
               clientSecret:MINUS_SUBMITTER_CLIENT_SECRET
@@ -45,14 +47,11 @@
  * clear Minus access token key
  */
 - (void)clearCredentials{
-    if ([self secureSettingExistsForKey:PS_MINUS_AUTH_USERID]) {
-        [self removeSecureSettingForKey:PS_MINUS_AUTH_USERID];
-        [self removeSecureSettingForKey:PS_MINUS_AUTH_PASSWORD];
-        [self removeSettingForKey:PS_MINUS_SETTING_USERNAME];
-        userId_ = nil;
-        password_ = nil;
-    } 
-    [self disable];
+    [self removeSecureSettingForKey:PS_MINUS_AUTH_USERID];
+    [self removeSecureSettingForKey:PS_MINUS_AUTH_PASSWORD];
+    userId_ = nil;
+    password_ = nil;
+    [super clearCredentials];
 }
 
 /*!
@@ -97,28 +96,18 @@
 /*!
  * login to Minus
  */
--(void)login{
-    if ([minus_ isSessionValid]) {
-        [self setSetting:@"enabled" forKey:PS_MINUS_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-        return;
-    }else{
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        PhotoSubmitterAccountTableViewController *controller =
-        [[PhotoSubmitterAccountTableViewController alloc] init];
-        controller.delegate = self;
-        [[[[PhotoSubmitterManager sharedInstance] authControllerDelegate] requestNavigationControllerToPresentAuthenticationView] pushViewController:controller animated:YES];
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-    }
+-(void)onLogin{
+    PhotoSubmitterAccountTableViewController *controller =
+    [[PhotoSubmitterAccountTableViewController alloc] init];
+    controller.delegate = self;
+    [[[[PhotoSubmitterManager sharedInstance] authControllerDelegate] requestNavigationControllerToPresentAuthenticationView] pushViewController:controller animated:YES];
 }
 
 /*!
  * logoff from Minus
  */
-- (void)logout{  
+- (void)onLogout{  
     [minus_ logout];
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
@@ -132,67 +121,15 @@
     }
 }
 
-/*!
- * disable
- */
-- (void)disable{
-    [self removeSettingForKey:PS_MINUS_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-}
-
-/*!
- * check url is processable
- */
-- (BOOL)isProcessableURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * on open url finished
- */
-- (BOOL)didOpenURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([minus_ isSessionValid]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [MinusPhotoSubmitter isEnabled];
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_MINUS_ENABLED]) {
-        return YES;
-    }
-    return NO;
+- (BOOL)isSessionValid{
+    return [minus_ isSessionValid];
 }
 
 #pragma mark - photo
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    if(delegate.isCancelled){
-        return;
-    }
+- (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     NSString *folderId = @"";
     if(self.targetAlbum){
         folderId = self.targetAlbum.albumId;
@@ -202,64 +139,20 @@
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     MinusRequest *request = [minus_ createFileWithFolderId:folderId caption:photo.comment filename:filename data:photo.data dataContentType:@"image/jpeg" andDelegate:self];
     
-    NSString *hash = photo.md5;
-    [self addRequest:request];
-    [self setPhotoHash:hash forRequest:request];
-    [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:hash];
+    photo.photoHash = photo.md5;
+    return  request;
 }    
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    MinusRequest *request = (MinusRequest *)[self requestForPhoto:hash];
+- (id)onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    MinusRequest *request = (MinusRequest *)[self requestForPhoto:photo.photoHash];
     [request cancel];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return YES;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * use NSOperation?
- */
-- (BOOL)useOperation{
-    return YES;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return YES;
+    return request;
 }
 
 #pragma mark - album
-
-/*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return YES;
-}
-
 /*!
  * create album
  */
@@ -267,13 +160,6 @@
     self.albumDelegate = delegate;
     MinusRequest *request = [minus_ createFolderWithUsername:userId_ name:title isPublic:NO andDelegate:self];
     [self addRequest:request];
-}
-
-/*!
- * albumlist
- */
-- (NSArray *)albumList{
-    return [self complexSettingForKey:PS_MINUS_SETTING_ALBUMS];
 }
 
 /*!
@@ -285,27 +171,7 @@
     [self addRequest:request];
 }
 
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return [self complexSettingForKey:PS_MINUS_SETTING_TARGET_ALBUM];
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    [self setComplexSetting:targetAlbum forKey:PS_MINUS_SETTING_TARGET_ALBUM];
-}
-
 #pragma mark - username
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_MINUS_SETTING_USERNAME];
-}
 /*!
  * update username
  */
@@ -329,27 +195,12 @@
     return @"Minus";
 }
 
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"minus_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"minus_16.png"];
-}
-
 #pragma mark - MinusConnectSessionDelegate
 /*!
  * did login to minus
  */
 -(void)minusDidLogin{
-    [self setSetting:@"enabled" forKey:PS_MINUS_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    [self enable];
     [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
     userId_ = [self secureSettingForKey:PS_MINUS_AUTH_USERID];
     password_ = [self secureSettingForKey:PS_MINUS_AUTH_PASSWORD];
@@ -399,9 +250,7 @@
         if ([result isKindOfClass:[NSArray class]]) {
             result = [result objectAtIndex:0];
         }
-        NSString *username = [result objectForKey:@"display_name"];
-        [self setSetting:username forKey:PS_MINUS_SETTING_USERNAME];
-        [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
+        self.username = [result objectForKey:@"display_name"];
     }else if([request.tag isEqualToString:kMinusRequestCreateFile]){
         NSString *hash = [self photoForRequest:request];
         
@@ -417,16 +266,15 @@
         NSArray *as = [result objectForKey:@"results"];
         NSMutableArray *albums = [[NSMutableArray alloc] init];
         for(NSDictionary *a in as){
-            NSString *privacy = @"public";
+            NSString *privacy = @"private";
             if([a objectForKey:@"is_public"]){
-                privacy = @"private";
+                privacy = @"public";
             }
             PhotoSubmitterAlbumEntity *album = 
             [[PhotoSubmitterAlbumEntity alloc] initWithId:[a objectForKey:@"id"] name:[a objectForKey:@"name"] privacy:privacy];
             [albums addObject:album];
         }
-        [self setComplexSetting:albums forKey:PS_MINUS_SETTING_ALBUMS];
-        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+        self.albumList = albums;
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }

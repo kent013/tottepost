@@ -11,7 +11,7 @@
 #import "PhotoSubmitter.h"
 #import "PhotoSubmitterProtocol.h"
 
-@interface TwitterPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, NSURLConnectionDataDelegate, NSURLConnectionDelegate, UIAlertViewDelegate>{
+@interface TwitterPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, NSURLConnectionDataDelegate, NSURLConnectionDelegate, UIAlertViewDelegate>{
     ACAccountStore *accountStore_;
 }
 

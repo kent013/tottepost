@@ -17,7 +17,7 @@
  * or
  * [PhotoSubmitter minusPhotoSubmitter]
  */
-@interface MinusPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, PhotoSubmitterPasswordAuthViewDelegate, MinusRequestDelegate, MinusSessionDelegate>{
+@interface MinusPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, PhotoSubmitterPasswordAuthViewDelegate, MinusRequestDelegate, MinusSessionDelegate>{
     __strong MinusConnect *minus_;
     __strong NSString *userId_;
     __strong NSString *password_;

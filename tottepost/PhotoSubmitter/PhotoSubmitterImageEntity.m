@@ -68,6 +68,7 @@
 @synthesize data = data_;
 @synthesize timestamp = timestamp_;
 @synthesize path = path_;
+@synthesize photoHash = photoHash_;
 @synthesize comment;
 @synthesize location;
 

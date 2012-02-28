@@ -173,7 +173,7 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     cell.imageView.image = submitter.icon;
-    cell.textLabel.text = submitter.name;
+    cell.textLabel.text = submitter.displayName;
     
     UISwitch *s = [self createSwitchWithTag:tag on:NO];
     [s addTarget:self action:@selector(didSocialAppSwitchChanged:) forControlEvents:UIControlEventValueChanged];

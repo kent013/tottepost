@@ -15,6 +15,6 @@
  * get instance with using 
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeDropbox]
  */
-@interface DropboxPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, DBSessionDelegate, DBRestClientDelegate>{
+@interface DropboxPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, DBSessionDelegate, DBRestClientDelegate>{
 }
 @end

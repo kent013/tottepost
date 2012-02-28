@@ -18,7 +18,7 @@
  * or
  * [PhotoSubmitter flickrPhotoSubmitter]
  */
-@interface FlickrPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, OFFlickrAPIRequestDelegate>{
+@interface FlickrPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, OFFlickrAPIRequestDelegate>{
     __strong OFFlickrAPIContext *flickr_;
     __strong OFFlickrAPIRequest *authRequest_;
 }

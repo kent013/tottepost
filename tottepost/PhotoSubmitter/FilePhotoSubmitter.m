@@ -14,14 +14,11 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
-#define PS_FILE_NOT_ENABLED @"PSFileNotEnabled"
-
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface FilePhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
-- (void) clearCredentials;
 @end
 
 @implementation FilePhotoSubmitter(PrivateImplementation)
@@ -30,13 +27,11 @@
  * initializer
  */
 -(void)setupInitialState{
-}
-
-/*!
- * clear defaults
- */
-- (void)clearCredentials{
-    [self removeSettingForKey:PS_FILE_NOT_ENABLED];
+    [self setSubmitterIsConcurrent:NO 
+                      isSequencial:NO 
+                     usesOperation:NO 
+                   requiresNetwork:NO 
+                  isAlbumSupported:NO];
 }
 @end
 
@@ -45,9 +40,6 @@
 //-----------------------------------------------------------------------------
 #pragma mark - public PhotoSubmitter Protocol implementations
 @implementation FilePhotoSubmitter
-@synthesize authDelegate;
-@synthesize dataDelegate;
-@synthesize albumDelegate;
 /*!
  * initialize
  */
@@ -63,69 +55,19 @@
 /*!
  * login to file
  */
--(void)login{
-    [self clearCredentials];
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
+-(void)onLogin{
 }
 
 /*!
  * logoff from file
  */
-- (void)logout{  
-    [self disable];
+- (void)onLogout{
 }
 
 /*!
- * refresh credential
+ * is session valid
  */
-- (void)refreshCredential{
-    //not needed
-}
-
-/*!
- * disable
- */
-- (void)disable{
-    [self setSetting:@"notenabled" forKey:PS_FILE_NOT_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-}
-
-/*!
- * check url is processable, we will not use this method in file
- */
-- (BOOL)isProcessableURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * on open url finished, we will not use this method in file
- */
-- (BOOL)didOpenURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * check is logined
- */
-- (BOOL)isLogined{
-    return self.isEnabled;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [FilePhotoSubmitter isEnabled];
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FILE_NOT_ENABLED]) {
-        return NO;
-    }
+- (BOOL)isSessionValid{
     return YES;
 }
 
@@ -133,9 +75,10 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+- (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    photo.photoHash = photo.md5;
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *hash = photo.md5;
+        NSString *hash = photo.photoHash;
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
         [lib writeImageDataToSavedPhotosAlbum:photo.data
                                      metadata:photo.metadata
@@ -154,99 +97,14 @@
         [self photoSubmitter:self didProgressChanged:hash progress:0.25];
         [self setOperationDelegate:delegate forRequest:hash];
     });
+    return nil;
 }
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    //do not cancel
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return NO;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * use NSOperation?
- */
-- (BOOL)useOperation{
-    return NO;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return NO;
-}
-
-#pragma mark - albums
-/*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return NO;
-}
-
-/*!
- * create album
- */
-- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-    //do nothing 
-}
-
-/*!
- * albumlist
- */
-- (NSArray *)albumList{
+- (id)onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
     return nil;
-}
-
-/*!
- * update album list
- */
-- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    //do nothing
-}
-
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
-}
-
-#pragma mark - username
-/*!
- * get username
- */
-- (NSString *)username{
-    return nil;
-}
-
-/*!
- * update username
- */
-- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
-    //do nothing
 }
 
 #pragma mark - other properties
@@ -261,20 +119,13 @@
  * name
  */
 - (NSString *)name{
+    return @"File";
+}
+
+/*!
+ * display name
+ */
+- (NSString *)displayName{
     return @"Camera Roll";
-}
-
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"file_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"file_16.png"];
 }
 @end

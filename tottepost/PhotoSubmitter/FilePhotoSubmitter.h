@@ -14,6 +14,6 @@
  * get instance with using 
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeDropbox]
  */
-@interface FilePhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
+@interface FilePhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol>{
 }
 @end

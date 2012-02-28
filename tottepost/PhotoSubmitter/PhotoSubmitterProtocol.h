@@ -13,6 +13,7 @@
  * Submitter Types
  */
 typedef enum {
+    PhotoSubmitterTypeInvalid = -1,
     PhotoSubmitterTypeFacebook = 0,
     PhotoSubmitterTypeTwitter,
     PhotoSubmitterTypeFlickr,
@@ -39,25 +40,29 @@ typedef enum {
 @required
 @property (nonatomic, readonly) PhotoSubmitterType type;
 @property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) NSString *displayName;
 @property (nonatomic, readonly) UIImage *icon;
 @property (nonatomic, readonly) UIImage *smallIcon;
-@property (nonatomic, readonly) NSString *username;
-@property (nonatomic, readonly) NSArray *albumList;
 @property (nonatomic, readonly) BOOL isLogined;
 @property (nonatomic, readonly) BOOL isEnabled;
 @property (nonatomic, readonly) BOOL isConcurrent;
 @property (nonatomic, readonly) BOOL useOperation;
 @property (nonatomic, readonly) BOOL isSequencial;
 @property (nonatomic, readonly) BOOL isAlbumSupported;
+@property (nonatomic, readonly) BOOL isSessionValid;
 @property (nonatomic, readonly) BOOL requiresNetwork;
 @property (nonatomic, assign) id<PhotoSubmitterAuthenticationDelegate> authDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterDataDelegate> dataDelegate;
 @property (nonatomic, assign) id<PhotoSubmitterAlbumDelegate> albumDelegate;
 @property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;
+@property (nonatomic, assign) NSString *username;
+@property (nonatomic, assign) NSArray *albumList;
 - (void) login;
 - (void) logout;
+- (void) enable;
 - (void) disable;
 - (void) refreshCredential;
+- (void) clearCredentials;
 - (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
 - (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo;
 - (BOOL) isProcessableURL:(NSURL *)url;
@@ -68,7 +73,16 @@ typedef enum {
 - (void) updateAlbumListWithDelegate: (id<PhotoSubmitterDataDelegate>) delegate;
 - (void) updateUsernameWithDelegate: (id<PhotoSubmitterDataDelegate>) delegate;
 - (void) createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate;
-+ (BOOL) isEnabled;
+@end
+
+/*!
+ * protocol for submitter
+ */
+@protocol PhotoSubmitterInstanceProtocol <NSObject>
+- (void) onLogin;
+- (void) onLogout;
+- (id) onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate;
+- (id) onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo;
 @end
 
 /*!
@@ -106,7 +120,7 @@ typedef enum {
  * protocol for fetch data
  */
 @protocol PhotoSubmitterDataDelegate <NSObject>
-- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated: (NSMutableArray *)albums;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAlbumUpdated: (NSArray *)albums;
 - (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didUsernameUpdated: (NSString *)username;
 @end
 

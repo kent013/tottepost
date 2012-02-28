@@ -15,7 +15,7 @@
  * get instance with using 
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeEvernote]
  */
-@interface EvernotePhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, EvernoteSessionDelegate, EvernoteRequestDelegate>{
+@interface EvernotePhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, EvernoteSessionDelegate, EvernoteRequestDelegate>{
     __strong Evernote *evernote_;
 }
 @end

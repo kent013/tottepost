@@ -19,7 +19,7 @@
  * or
  * [PhotoSubmitter facebookPhotoSubmitter]
  */
-@interface FacebookPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
+@interface FacebookPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, FBSessionDelegate, FBRequestWithUploadProgressDelegate>{
     __strong Facebook *facebook_;
 }
 @end

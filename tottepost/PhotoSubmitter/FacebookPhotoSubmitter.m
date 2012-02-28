@@ -14,12 +14,8 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
-#define PS_FACEBOOK_ENABLED @"PSFacebookEnabled"
 #define PS_FACEBOOK_AUTH_TOKEN @"PSFacebookAccessTokenKey"
 #define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"PSFacebookExpirationDateKey"
-#define PS_FACEBOOK_SETTING_USERNAME @"PSFacebookUsername"
-#define PS_FACEBOOK_SETTING_ALBUMS @"PSFacebookAlbums"
-#define PS_FACEBOOK_SETTING_TARGET_ALBUM @"PSFacebookTargetAlbums"
 
 #define PS_FACEBOOK_PHOTO_WIDTH 960
 #define PS_FACEBOOK_PHOTO_HEIGHT 720
@@ -29,7 +25,6 @@
 //-----------------------------------------------------------------------------
 @interface FacebookPhotoSubmitter(PrivateImplementation)
 - (void) setupInitialState;
-- (void) clearCredentials;
 - (void) getUserInfomation;
 @end
 
@@ -39,6 +34,12 @@
  * initializer
  */
 -(void)setupInitialState{
+    [self setSubmitterIsConcurrent:YES 
+                      isSequencial:NO 
+                     usesOperation:YES 
+                   requiresNetwork:YES 
+                  isAlbumSupported:YES];
+    
     facebook_ = [[Facebook alloc] initWithAppId:PHOTO_SUBMITTER_FACEBOOK_API_ID andDelegate:self];
     if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN] 
         && [self settingExistsForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE]) {
@@ -54,11 +55,8 @@
     if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
         [self removeSettingForKey:PS_FACEBOOK_AUTH_TOKEN];
         [self removeSettingForKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-        [self removeSettingForKey:PS_FACEBOOK_SETTING_USERNAME];
-        [self removeSettingForKey:PS_FACEBOOK_SETTING_ALBUMS];
-        [self removeSettingForKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
     } 
-    [self disable];
+    [super clearCredentials];
 }
 
 /*!
@@ -70,12 +68,6 @@
 
 #pragma mark - FBRequestWithUploadProgressDelegate
 /*!
- * facebook request delegate, did receive response
- */
-- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
-};
-
-/*!
  * facebook request delegate, did load
  */
 - (void)request:(FBRequest *)request didLoad:(id)result {
@@ -83,9 +75,8 @@
         if ([result isKindOfClass:[NSArray class]]) {
             result = [result objectAtIndex:0];
         }
-        NSString *username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];        
-        [self setSetting:username forKey:PS_FACEBOOK_SETTING_USERNAME];
-        [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
+        NSString *username = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfRegex:@" +" withString:@" "];
+        self.username = username;
     }else if([request.url isMatchedByRegex:@"photos$"]){
         if ([result isKindOfClass:[NSArray class]]) {
             result = [result objectAtIndex:0];
@@ -107,8 +98,7 @@
             [[PhotoSubmitterAlbumEntity alloc] initWithId:[a objectForKey:@"id"] name:[a objectForKey:@"name"] privacy:[a objectForKey:@"privacy"]];
             [albums addObject:album];
         }
-        [self setComplexSetting:albums forKey:PS_FACEBOOK_SETTING_ALBUMS];
-        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+        self.albumList = albums;
     }else{
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }
@@ -151,9 +141,6 @@
 //-----------------------------------------------------------------------------
 #pragma mark - public PhotoSubmitter Protocol implementations
 @implementation FacebookPhotoSubmitter
-@synthesize authDelegate;
-@synthesize dataDelegate;
-@synthesize albumDelegate;
 /*!
  * initialize
  */
@@ -169,24 +156,17 @@
 /*!
  * login to facebook
  */
--(void)login{
-    if (![facebook_ isSessionValid]) {
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        NSArray *permissions = 
-        [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
-        [facebook_ authorize:permissions];
-    }else{
-        [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-    }
+-(void)onLogin{
+    NSArray *permissions = 
+    [NSArray arrayWithObjects:@"publish_stream", @"user_location", @"user_photos", @"offline_access", nil];
+    [facebook_ authorize:permissions];
 }
 
 /*!
  * logoff from facebook
  */
-- (void)logout{
+- (void)onLogout{
     [facebook_ logout:self];   
-    [self clearCredentials];
 }
 
 /*!
@@ -194,14 +174,6 @@
  */
 - (void)refreshCredential{
     [facebook_ extendAccessTokenIfNeeded];
-}
-
-/*!
- * disable
- */
-- (void)disable{
-    [self removeSettingForKey:PS_FACEBOOK_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
@@ -222,31 +194,10 @@
 }
 
 /*!
- * check is logined
+ * is session valid
  */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([self settingExistsForKey:PS_FACEBOOK_AUTH_TOKEN]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [FacebookPhotoSubmitter isEnabled];
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FACEBOOK_ENABLED]) {
+- (BOOL)isSessionValid{
+    if ([self settingForKey:PS_FACEBOOK_AUTH_TOKEN]) {
         return YES;
     }
     return NO;
@@ -256,7 +207,7 @@
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+- (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     CGSize size = CGSizeMake(PS_FACEBOOK_PHOTO_WIDTH, PS_FACEBOOK_PHOTO_HEIGHT);
     if(photo.image.size.width < photo.image.size.height){
         size = CGSizeMake(PS_FACEBOOK_PHOTO_HEIGHT, PS_FACEBOOK_PHOTO_WIDTH);
@@ -271,68 +222,21 @@
     if(self.targetAlbum != nil){
         path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
     }
-    
-    if(delegate.isCancelled){
-        return;
-    }
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
-    NSString *hash = photo.md5;
-    [self setPhotoHash:hash forRequest:request];
-    [self addRequest:request];
-    [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:hash];    
+    photo.photoHash = photo.md5;
+    return request;
 }
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    FBRequest *request = (FBRequest *)[self requestForPhoto:hash];
+- (id)onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    FBRequest *request = (FBRequest *)[self requestForPhoto:photo.photoHash];
     [request.connection cancel];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return YES;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * use NSOperation?
- */
-- (BOOL)useOperation{
-    return YES;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return YES;
+    return request;
 }
 
 #pragma mark - albums
-/*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return YES;
-}
-
 /*!
  * create album
  */
@@ -349,13 +253,6 @@
 }
 
 /*!
- * album list
- */
-- (NSArray *)albumList{
-    return [self complexSettingForKey:PS_FACEBOOK_SETTING_ALBUMS];
-}
-
-/*!
  * update album list
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
@@ -363,28 +260,7 @@
     [facebook_ requestWithGraphPath:@"me/albums" andDelegate:self];
 }
 
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return [self complexSettingForKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    [self setComplexSetting:targetAlbum forKey:PS_FACEBOOK_SETTING_TARGET_ALBUM];
-}
-
 #pragma mark - username
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_FACEBOOK_SETTING_USERNAME];
-}
-
 /*!
  * update username
  */
@@ -408,20 +284,6 @@
     return @"Facebook";
 }
 
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"facebook_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"facebook_16.png"];
-}
-
 #pragma mark - FBSessionDelegate methods
 /*!
  * facebook delegate, did login suceeded
@@ -429,8 +291,7 @@
 - (void)fbDidLogin {
     [self setSetting:[facebook_ accessToken] forKey:PS_FACEBOOK_AUTH_TOKEN];
     [self setSetting:[facebook_ expirationDate] forKey:PS_FACEBOOK_AUTH_EXPIRATION_DATE];
-    [self setSetting:@"enabled" forKey:PS_FACEBOOK_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    [self enable];
     
     [self getUserInfomation];
     [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];

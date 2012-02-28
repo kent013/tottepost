@@ -16,7 +16,7 @@
  * image hash <-> request hash, conversion table for asyncronous request
  * and request objects.
  */
-@interface PhotoSubmitter : NSObject{
+@interface PhotoSubmitter : NSObject<PhotoSubmitterProtocol>{
 @private
     __strong NSMutableDictionary *photos_;
     __strong NSMutableDictionary *requests_;
@@ -30,7 +30,20 @@
      * an array of id<PhotoSubmitterPhotoDelegate>
      */
     __strong NSMutableArray *photoDelegates_;
+    
+    BOOL isConcurrent_;
+    BOOL isSequencial_;
+    BOOL useOperation_;
+    BOOL requiresNetwork_;
+    BOOL isAlbumSupported_;
 }
+
+- (void) setSubmitterIsConcurrent:(BOOL)isConcurrent 
+                     isSequencial:(BOOL)isSequencial 
+                    usesOperation:(BOOL)usesOperation
+                  requiresNetwork:(BOOL)requiresNetwork 
+                 isAlbumSupported:(BOOL)isAlbumSupported;
+
 //request methods
 - (void) addRequest:(NSObject *)request;
 - (void) removeRequest:(NSObject *)request;

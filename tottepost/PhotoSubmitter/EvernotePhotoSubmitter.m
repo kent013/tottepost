@@ -13,11 +13,7 @@
 #import "PhotoSubmitterManager.h"
 #import "UIImage+EXIF.h"
 
-#define PS_EVERNOTE_ENABLED @"PSEvernoteEnabled"
 #define PS_EVERNOTE_AUTH_URL @"photosubmitter://auth/evernote"
-#define PS_EVERNOTE_SETTING_USERNAME @"PSEvernoteUserName"
-#define PS_EVERNOTE_SETTING_ALBUMS @"PSEvernoteAlbums"
-#define PS_EVERNOTE_SETTING_TARGET_ALBUM @"PSEvernoteTargetAlbums"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -33,6 +29,11 @@
  * initializer
  */
 -(void)setupInitialState{
+    [self setSubmitterIsConcurrent:YES 
+                      isSequencial:NO 
+                     usesOperation:YES 
+                   requiresNetwork:YES 
+                  isAlbumSupported:YES];
     evernote_ = 
     [[Evernote alloc] initWithAuthType:EvernoteAuthTypeOAuthConsumer
                            consumerKey:EVERNOTE_SUBMITTER_API_KEY
@@ -48,9 +49,7 @@
  */
 - (void)clearCredentials{
     [evernote_ clearCredential];
-    [self removeSettingForKey:PS_EVERNOTE_SETTING_USERNAME];
-    [self removeSettingForKey:PS_EVERNOTE_SETTING_ALBUMS];
-    [self removeSettingForKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
+    [super clearCredentials];
 }
 @end
 
@@ -77,25 +76,15 @@
 /*!
  * login to Evernote
  */
--(void)login{
-    if ([evernote_ isSessionValid]) {
-        [self setSetting:@"enabled" forKey:PS_EVERNOTE_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-        return;
-    }else{
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        [evernote_ login];
-    }
+-(void)onLogin{
+    [evernote_ login];
 }
 
 /*!
  * logoff from Evernote
  */
-- (void)logout{  
+- (void)onLogout{  
     [evernote_ logout];
-    [self clearCredentials];
-    [self removeSettingForKey:PS_EVERNOTE_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
@@ -105,14 +94,6 @@
     if([evernote_ isSessionValid] == NO){
         [evernote_ refreshCredential];
     }
-}
-
-/*!
- * disable
- */
-- (void)disable{
-    [self removeSettingForKey:PS_EVERNOTE_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
 }
 
 /*!
@@ -132,8 +113,7 @@
     [evernote_ handleOpenURL:url];
     BOOL result = NO;
     if([evernote_ isSessionValid]){
-        [self setSetting:@"enabled" forKey:PS_EVERNOTE_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
+        [self enable];
         result = YES;
     }else{
         [self.authDelegate photoSubmitter:self didLogout:self.type];
@@ -143,41 +123,17 @@
 }
 
 /*!
- * check is logined
+ * is session valid
  */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([evernote_ isSessionValid]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [EvernotePhotoSubmitter isEnabled];
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_EVERNOTE_ENABLED]) {
-        return YES;
-    }
-    return NO;
+- (BOOL)isSessionValid{
+    return [evernote_ isSessionValid];
 }
 
 #pragma mark - photo
 /*!
- * submit photo with data, comment and delegate
+ * submit photo
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+- (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     
     EDAMResource *photoResource = 
     [evernote_ createResourceFromImageData:photo.autoRotatedData andMime:@"image/jpeg"];
@@ -195,9 +151,6 @@
         notebookGuid = notebook.guid;
     }
     
-    if(delegate.isCancelled){
-        return;
-    }
     EvernoteRequest *request = 
     [evernote_ createNoteInNotebook:notebookGuid
                               title:[df stringFromDate:[NSDate date]]
@@ -205,65 +158,21 @@
                                tags:nil
                           resources:[NSArray arrayWithObject:photoResource]
                         andDelegate:self];    
-    NSString *hash = photo.md5;
-    [self addRequest:request];
-    [self setPhotoHash:hash forRequest:request];
-    [self setOperationDelegate:delegate forRequest:request];
-    [self photoSubmitter:self willStartUpload:hash];
+    photo.photoHash = photo.md5;
+    return request;
     
 }    
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    EvernoteRequest *request = (EvernoteRequest *)[self requestForPhoto:hash];
-    NSLog(@"%@", request.description);
+- (id)onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    EvernoteRequest *request = (EvernoteRequest *)[self requestForPhoto:photo.photoHash];
     [request abort];
-    
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:request];
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return YES;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * use NSOperation?
- */
-- (BOOL)useOperation{
-    return YES;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return YES;
+    return request;
 }
 
 #pragma mark - album
-/*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return YES;
-}
-
 /*!
  * create album
  */
@@ -275,13 +184,6 @@
 }
 
 /*!
- * albumlist
- */
-- (NSArray *)albumList{
-    return [self complexSettingForKey:PS_EVERNOTE_SETTING_ALBUMS];
-}
-
-/*!
  * update album list
  */
 - (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
@@ -290,28 +192,7 @@
     [self addRequest:request];
 }
 
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return [self complexSettingForKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    [self setComplexSetting:targetAlbum forKey:PS_EVERNOTE_SETTING_TARGET_ALBUM];
-}
-
 #pragma mark - username
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self settingForKey:PS_EVERNOTE_SETTING_USERNAME];
-}
-
 /*!
  * update username
  */
@@ -336,20 +217,6 @@
     return @"Evernote";
 }
 
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"evernote_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"evernote_16.png"];
-}
-
 #pragma mark -
 #pragma mark EvernoteRequestDelegate methods
 /*!
@@ -369,8 +236,7 @@
             [[PhotoSubmitterAlbumEntity alloc] initWithId:a.guid name:a.name privacy:@""];
             [albums addObject:album];
         }
-        [self setComplexSetting:albums forKey:PS_EVERNOTE_SETTING_ALBUMS];
-        [self.dataDelegate photoSubmitter:self didAlbumUpdated:albums];
+        self.albumList = albums;
     }else if([request.method isEqualToString:@"createNotebook"]){
         EDAMNotebook *notebook = (EDAMNotebook *)result;
         PhotoSubmitterAlbumEntity *album = 
@@ -378,8 +244,7 @@
         [self.albumDelegate photoSubmitter:self didAlbumCreated:album suceeded:YES withError:nil];
     }else if([request.method isEqualToString:@"getUser"]){
         EDAMUser *user = (EDAMUser *)result;
-        [self setSetting:user.name forKey:PS_EVERNOTE_SETTING_USERNAME];
-        [self.dataDelegate photoSubmitter:self didUsernameUpdated:user.name];
+        self.username = user.name;
     }
     
     [self clearRequest:request];
@@ -436,9 +301,8 @@
  * Evernote delegate, account info loaded
  */
 - (void)evernoteDidLogin{
-    [self setSetting:@"enabled" forKey:PS_EVERNOTE_ENABLED];
     [evernote_ saveCredential]; 
-    [self.authDelegate photoSubmitter:self didLogin:self.type];
+    [self enable];
 }
 
 /*!

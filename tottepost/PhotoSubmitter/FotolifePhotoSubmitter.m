@@ -14,10 +14,8 @@
 #import "Atompub.h"
 #import "AtomContent.h"
 
-#define PS_FOTOLIFE_ENABLED @"PSFotolifeEnabled"
 #define PS_FOTOLIFE_AUTH_USERID @"PSFotolifeUserId"
 #define PS_FOTOLIFE_AUTH_PASSWORD @"PSFotolifePassword"
-#define PS_FOTOLIFE_SETTING_USERNAME @"PSFotolifeUsername"
 
 #define PS_FOTOLIFE_PHOTO_WIDTH 960
 #define PS_FOTOLIFE_PHOTO_HEIGHT 720
@@ -38,6 +36,12 @@
  * initializer
  */
 -(void)setupInitialState{
+    [self setSubmitterIsConcurrent:YES 
+                      isSequencial:NO 
+                     usesOperation:YES 
+                   requiresNetwork:YES 
+                  isAlbumSupported:NO];
+    
     [self loadCredentials];
 }
 
@@ -45,12 +49,9 @@
  * clear fotolife access token key
  */
 - (void)clearCredentials{
-    if ([self secureSettingExistsForKey:PS_FOTOLIFE_AUTH_USERID]) {
-        [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
-        [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
-        [self removeSettingForKey:PS_FOTOLIFE_SETTING_USERNAME];
-    } 
-    [self disable];
+    [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
+    [self removeSecureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];
+    [super clearCredentials];
 }
 
 /*!
@@ -94,90 +95,32 @@
 /*!
  * login to fotolife
  */
--(void)login{
-    if([self secureSettingExistsForKey:PS_FOTOLIFE_AUTH_USERID]){
-        [self setSetting:@"enabled" forKey:PS_FOTOLIFE_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
-    }else{
-        [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
-        PhotoSubmitterAccountTableViewController *controller =
-        [[PhotoSubmitterAccountTableViewController alloc] init];
-        controller.delegate = self;
-        [[[[PhotoSubmitterManager sharedInstance] authControllerDelegate] requestNavigationControllerToPresentAuthenticationView] pushViewController:controller animated:YES];
-    }
+-(void)onLogin{
+    PhotoSubmitterAccountTableViewController *controller =
+    [[PhotoSubmitterAccountTableViewController alloc] init];
+    controller.delegate = self;
+    [[[[PhotoSubmitterManager sharedInstance] authControllerDelegate] requestNavigationControllerToPresentAuthenticationView] pushViewController:controller animated:YES];
 }
 
 /*!
  * logoff from fotolife
  */
-- (void)logout{  
-    [self clearCredentials];
+- (void)onLogout{
 }
 
 /*!
- * refresh credential
+ * is session valid
  */
-- (void)refreshCredential{
+- (BOOL)isSessionValid{
+    return [self secureSettingExistsForKey:PS_FOTOLIFE_AUTH_USERID];
 }
 
-/*!
- * disable
- */
-- (void)disable{
-    [self removeSettingForKey:PS_FOTOLIFE_ENABLED];
-    [self.authDelegate photoSubmitter:self didLogout:self.type];
-}
-
-/*!
- * check url is processable
- */
-- (BOOL)isProcessableURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * on open url finished
- */
-- (BOOL)didOpenURL:(NSURL *)url{
-    return NO;
-}
-
-/*!
- * check is logined
- */
-- (BOOL)isLogined{
-    if(self.isEnabled == false){
-        return NO;
-    }
-    if ([self secureSettingExistsForKey:PS_FOTOLIFE_AUTH_USERID]) {
-        return YES;
-    }
-    return NO;
-}
-
-/*!
- * check is enabled
- */
-- (BOOL) isEnabled{
-    return [FotolifePhotoSubmitter isEnabled];
-}
-
-/*!
- * isEnabled
- */
-+ (BOOL)isEnabled{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:PS_FOTOLIFE_ENABLED]) {
-        return YES;
-    }
-    return NO;
-}
 
 #pragma mark - photo
 /*!
  * submit photo with data, comment and delegate
  */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+- (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
     AtomEntry *entry = [AtomEntry entry];
     if(photo.comment){
         entry.title = photo.comment;
@@ -206,73 +149,24 @@
     
     [client startCreatingEntry:entry withURL:[NSURL URLWithString:@"http://f.hatena.ne.jp/atom/post"]];
     
-    NSString *hash = photo.md5;
-    [self setPhotoHash:hash forRequest:client];
-    [self addRequest:client];
-    [self setOperationDelegate:delegate forRequest:client];
-    [self photoSubmitter:self willStartUpload:hash];    
+    photo.photoHash = photo.md5; 
+    return client;
 }
 
 /*!
  * cancel photo upload
  */
-- (void)cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
-    NSString *hash = photo.md5;
-    AtompubClient *client = (AtompubClient *)[self requestForPhoto:hash];
+- (id)onCancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    AtompubClient *client = (AtompubClient *)[self requestForPhoto:photo.photoHash];
     [client cancel];
-    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:client];
-    [operationDelegate photoSubmitterDidOperationCanceled];
-    [self photoSubmitter:self didCanceled:hash];
-    [self clearRequest:client];
-}
-
-/*!
- * invoke method as concurrent?
- */
-- (BOOL)isConcurrent{
-    return YES;
-}
-
-/*!
- * is sequencial? if so, use SequencialQueue
- */
-- (BOOL)isSequencial{
-    return NO;
-}
-
-/*!
- * use NSOperation?
- */
-- (BOOL)useOperation{
-    return YES;
-}
-
-/*!
- * requires network
- */
-- (BOOL)requiresNetwork{
-    return YES;
+    return client;
 }
 
 #pragma mark - albums
 /*!
- * is album supported
- */
-- (BOOL) isAlbumSupported{
-    return NO;
-}
-
-/*!
  * create album
  */
 - (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
-}
-
-/*!
- * album list
- */
-- (NSArray *)albumList{
-    return nil;
 }
 
 /*!
@@ -282,34 +176,20 @@
     //do nothing
 }
 
-/*!
- * selected album
- */
-- (PhotoSubmitterAlbumEntity *)targetAlbum{
-    return nil;
-}
-
-/*!
- * save selected album
- */
-- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
-    //do nothing
-}
-
 #pragma mark - username
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
-}
-
 /*!
  * update username
  */
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
     [self.dataDelegate photoSubmitter:self didUsernameUpdated:self.username];
+}
+
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
 }
 
 #pragma mark - other properties
@@ -326,21 +206,6 @@
 - (NSString *)name{
     return @"Fotolife";
 }
-
-/*!
- * icon image
- */
-- (UIImage *)icon{
-    return [UIImage imageNamed:@"fotolife_32.png"];
-}
-
-/*!
- * small icon image
- */
-- (UIImage *)smallIcon{
-    return [UIImage imageNamed:@"fotolife_16.png"];
-}
-
 #pragma mark - PhotoSubmitterPasswordAuthDelegate
 /*!
  * did canceled
@@ -370,8 +235,7 @@
  */
 - (void)client:(AtompubClient *)client didReceiveFeed:(AtomFeed *)feed{
     if([client.tag isEqualToString:@"login"]){
-        [self setSetting:@"enabled" forKey:PS_FOTOLIFE_ENABLED];
-        [self.authDelegate photoSubmitter:self didLogin:self.type];
+        [self enable];
         [self.authDelegate photoSubmitter:self didAuthorizationFinished:self.type];
         userId_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
         password_ = [self secureSettingForKey:PS_FOTOLIFE_AUTH_PASSWORD];

@@ -18,16 +18,72 @@
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface PhotoSubmitter(PrivateImplementation)
+@property (nonatomic, readonly) NSString *keyForEnabled;
+@property (nonatomic, readonly) NSString *keyForUsername;
+@property (nonatomic, readonly) NSString *keyForAlbums;
+@property (nonatomic, readonly) NSString *keyForTargetAlbum;
+- (NSString *) getIconImageNameWithSize:(int)size;
+- (id<PhotoSubmitterInstanceProtocol>) subclassInstance;
 @end
 
 @implementation PhotoSubmitter(PrivateImplementation)
+/*!
+ * get enabled key
+ */
+- (NSString *)keyForEnabled{
+    return [NSString stringWithFormat:@"PS%@Enabled", self.name];
+}
+
+/*!
+ * get username key
+ */
+- (NSString *)keyForUsername{
+    return [NSString stringWithFormat:@"PS%@Username", self.name];
+}
+
+/*!
+ * get albums key
+ */
+- (NSString *)keyForAlbums{
+    return [NSString stringWithFormat:@"PS%@Albums", self.name];
+}
+
+/*!
+ * get target album key
+ */
+- (NSString *)keyForTargetAlbum{
+    return [NSString stringWithFormat:@"PS%@TargetAlbum", self.name];
+}
+
+/*!
+ * get icon name
+ */
+- (NSString *)getIconImageNameWithSize:(int)size{
+    return [NSString stringWithFormat:@"%@_%d.png", 
+            [self.name lowercaseString], size];
+}
+
+/*!
+ * get subclass instance
+ */
+- (id<PhotoSubmitterInstanceProtocol>)subclassInstance{
+    assert([self conformsToProtocol:@protocol(PhotoSubmitterInstanceProtocol)]);
+    return (id<PhotoSubmitterInstanceProtocol>)self;
+}
 @end
 
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
-
 @implementation PhotoSubmitter
+@synthesize isAlbumSupported = isAlbumSupported_;
+@synthesize isConcurrent = isConcurrent_;
+@synthesize isSequencial = isSequencial_;
+@synthesize useOperation = useOperation_;
+@synthesize requiresNetwork = requiresNetwork_;
+@synthesize authDelegate;
+@synthesize dataDelegate;
+@synthesize albumDelegate;
 
 /*!
  * initialize
@@ -43,8 +99,258 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark request methods
+/*!
+ * setup flags
+ */
+- (void)setSubmitterIsConcurrent:(BOOL)isConcurrent isSequencial:(BOOL)isSequencial usesOperation:(BOOL)usesOperation requiresNetwork:(BOOL)requiresNetwork isAlbumSupported:(BOOL)isAlbumSupported{
+    isConcurrent_ = isConcurrent;
+    isSequencial_ = isSequencial;
+    useOperation_ = usesOperation;
+    requiresNetwork_ = requiresNetwork;
+    isAlbumSupported_ = isAlbumSupported;
+}
+
+/*!
+ * clear facebook access token key
+ */
+- (void)clearCredentials{
+    [self removeSettingForKey:[self keyForEnabled]];
+    [self removeSettingForKey:[self keyForUsername]];
+    [self removeSettingForKey:[self keyForAlbums]];
+    [self removeSettingForKey:[self keyForTargetAlbum]];
+}
+
+/*!
+ * refresh credential
+ */
+- (void)refreshCredential{
+}
+
+/*!
+ * enable
+ */
+- (void)enable{
+    [self setSetting:[NSNumber numberWithBool:YES] forKey:[self keyForEnabled]];
+    [self.authDelegate photoSubmitter:self didLogin:self.type];
+}
+
+#pragma mark - PhotoSubmitterProtocol methods
+/*!
+ * submit photo with data, comment and delegate
+ */
+- (void) submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    
+    if(delegate.isCancelled){
+        return;
+    }
+    id request = [instance onSubmitPhoto:photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate];
+    if(request == nil){
+        return;
+    }
+    [self setPhotoHash:photo.photoHash forRequest:request];
+    [self addRequest:request];
+    [self setOperationDelegate:delegate forRequest:request];
+    [self photoSubmitter:self willStartUpload:photo.photoHash];    
+}
+
+/*!
+ * cancel photo upload
+ */
+- (void) cancelPhotoSubmit:(PhotoSubmitterImageEntity *)photo{
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    id request = [instance onCancelPhotoSubmit:photo];
+    id<PhotoSubmitterPhotoOperationDelegate> operationDelegate = [self operationDelegateForRequest:request];
+    [operationDelegate photoSubmitterDidOperationCanceled];
+    [self photoSubmitter:self didCanceled:photo.photoHash];
+    [self clearRequest:request];
+
+}
+
+/*!
+ * login
+ */
+- (void) login{
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    if(self.isSessionValid){
+        [self enable];
+        [self.authDelegate photoSubmitter:self didLogin:self.type];
+        return;
+    }
+    [self.authDelegate photoSubmitter:self willBeginAuthorization:self.type];
+    [instance onLogin];
+}
+
+/*!
+ * logout and clear settings
+ */
+- (void)logout{  
+    id<PhotoSubmitterInstanceProtocol> instance = [self subclassInstance];
+    [instance onLogout];
+    [self clearCredentials];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * disable
+ */
+- (void)disable{
+    [self removeSettingForKey:self.keyForEnabled];
+    [self.authDelegate photoSubmitter:self didLogout:self.type];
+}
+
+/*!
+ * check is logined
+ */
+- (BOOL)isLogined{
+    return self.isEnabled && self.isSessionValid;
+}
+
+/*!
+ * is session valid
+ */
+- (BOOL)isSessionValid{
+    NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
+    return NO;
+}
+
+/*!
+ * isEnabled
+ */
+- (BOOL)isEnabled{
+    return [[self settingForKey:[self keyForEnabled]] boolValue];
+}
+
+/*!
+ * check url is processable, we will not use this method in twitter
+ */
+- (BOOL)isProcessableURL:(NSURL *)url{
+    return NO;
+}
+
+/*!
+ * on open url finished, we will not use this method in twitter
+ */
+- (BOOL)didOpenURL:(NSURL *)url{
+    return NO;
+}
+
+#pragma mark - albums
+/*!
+ * album list
+ */
+- (NSArray *)albumList{
+    id albums = [self complexSettingForKey:[self keyForAlbums]];
+    if([albums isKindOfClass:[NSArray class]]){
+        return albums;
+    }
+    [self removeSettingForKey:[self keyForAlbums]];
+    return nil;
+}
+
+/*!
+ * set album list
+ */
+- (void) setAlbumList:(NSArray *)albumList{
+    [self setComplexSetting:albumList forKey:[self keyForAlbums]];
+    [self.dataDelegate photoSubmitter:self didAlbumUpdated:albumList];
+}
+
+/*!
+ * selected album
+ */
+- (PhotoSubmitterAlbumEntity *)targetAlbum{
+    return [self complexSettingForKey:[self keyForTargetAlbum]];
+}
+
+/*!
+ * save selected album
+ */
+- (void)setTargetAlbum:(PhotoSubmitterAlbumEntity *)targetAlbum{
+    [self setComplexSetting:targetAlbum forKey:[self keyForTargetAlbum]];
+}
+
+/*!
+ * create album
+ */
+- (void)createAlbum:(NSString *)title withDelegate:(id<PhotoSubmitterAlbumDelegate>)delegate{
+    //do nothing 
+    self.albumDelegate = delegate;
+}
+
+/*!
+ * update album list
+ */
+- (void)updateAlbumListWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    //do nothing
+    self.dataDelegate = delegate;
+}
+
+#pragma mark - username
+/*!
+ * set username
+ */
+- (void)setUsername:(NSString *)username{
+    [self setSetting:username forKey:[self keyForUsername]];
+    [self.dataDelegate photoSubmitter:self didUsernameUpdated:username];
+}
+
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self settingForKey:[self keyForUsername]];
+    //do nothing
+}
+
+/*!
+ * update username
+ */
+- (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
+    //do nothing
+    self.dataDelegate = delegate;
+}
+
+#pragma mark - other properties
+/*!
+ * return type
+ */
+- (PhotoSubmitterType) type{
+    NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
+    return PhotoSubmitterTypeInvalid;
+}
+
+/*!
+ * name
+ */
+- (NSString *)name{
+    NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
+    return nil;
+}
+
+/*!
+ * display name
+ */
+- (NSString *)displayName{
+    return self.name; 
+}
+
+/*!
+ * icon image
+ */
+- (UIImage *)icon{
+    return [UIImage imageNamed:[self getIconImageNameWithSize:32]];
+}
+
+/*!
+ * small icon image
+ */
+- (UIImage *)smallIcon{
+    return [UIImage imageNamed:[self getIconImageNameWithSize:16]];
+}
+
+#pragma mark - UTILITY METHODS
+#pragma mark - request methods
 /*!
  * add request
  */
@@ -180,14 +486,6 @@
     [self removeRequest:request];
     [self removeOperationDelegateForRequest:request];
     [self removePhotoForRequest:request];
-}
-
-#pragma mark -
-#pragma mark submit photo methods
-/*!
- * submit photo with comment and operation
- */
-- (void)submitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterOperationDelegate>)delegate{
 }
 
 #pragma mark - setting methods

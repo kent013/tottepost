@@ -16,7 +16,7 @@
  * get instance with using 
  * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypePicasa]
  */
-@interface PicasaPhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol>{
+@interface PicasaPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol>{
     __strong GDataServiceGooglePhotos *service_;
     __strong GTMOAuth2Authentication *auth_;
     __strong GDataFeedPhotoUser *photoFeed_;

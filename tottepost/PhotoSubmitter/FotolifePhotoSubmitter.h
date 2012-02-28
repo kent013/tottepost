@@ -22,7 +22,7 @@
  * or
  * [PhotoSubmitter facebookPhotoSubmitter]
  */
-@interface FotolifePhotoSubmitter : PhotoSubmitter<PhotoSubmitterProtocol, PhotoSubmitterPasswordAuthViewDelegate, AtompubClientDelegate>{
+@interface FotolifePhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, PhotoSubmitterPasswordAuthViewDelegate, AtompubClientDelegate>{
     __strong NSString *userId_;
     __strong NSString *password_;
 }
