@@ -217,7 +217,6 @@
     
     NSURLConnection *connection = 
     [[NSURLConnection alloc] initWithRequest:request.signedURLRequest delegate:self startImmediately:NO];
-    photo.photoHash = photo.md5;
     
     if(connection != nil){
         [connection start];

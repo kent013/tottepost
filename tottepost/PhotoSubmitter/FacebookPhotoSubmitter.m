@@ -223,7 +223,6 @@
         path = [NSString stringWithFormat:@"%@/photos", self.targetAlbum.albumId];
     }
     FBRequest *request = [facebook_ requestWithGraphPath:path andParams:params andHttpMethod:@"POST" andDelegate:self];
-    photo.photoHash = photo.md5;
     return request;
 }
 

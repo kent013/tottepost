@@ -234,7 +234,6 @@
     if(connection == nil){
         return nil;
     }
-    photo.photoHash = photo.md5;
     return connection;
 }
 

@@ -76,7 +76,6 @@
  * submit photo with data, comment and delegate
  */
 - (id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate{
-    photo.photoHash = photo.md5;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *hash = photo.photoHash;
         ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];

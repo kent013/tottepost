@@ -138,8 +138,6 @@
     df.dateFormat  = @"yyyyMMddHHmmss";
     NSString *filename = [NSString stringWithFormat:@"%@.jpg", [df stringFromDate:photo.timestamp]];
     MinusRequest *request = [minus_ createFileWithFolderId:folderId caption:photo.comment filename:filename data:photo.data dataContentType:@"image/jpeg" andDelegate:self];
-    
-    photo.photoHash = photo.md5;
     return  request;
 }    
 

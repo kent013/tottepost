@@ -184,6 +184,16 @@
 }
 
 /*!
+ * get photo hash
+ */
+- (NSString *)photoHash{
+    if(photoHash_ == nil){
+        photoHash_ = self.md5;
+    }
+    return photoHash_;
+}
+
+/*!
  * encode
  */
 - (void)encodeWithCoder:(NSCoder*)coder {

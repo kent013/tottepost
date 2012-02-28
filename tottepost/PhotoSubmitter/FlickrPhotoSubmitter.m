@@ -356,8 +356,6 @@
     request.delegate = self;
     request.sessionInfo = PS_FLICKR_API_UPLOAD_IMAGE;
     [request uploadImageStream:[NSInputStream inputStreamWithData:photo.data] suggestedFilename:@"TottePost uploads" MIMEType:@"image/jpeg" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"0", @"is_public", photo.comment, @"title", nil]];
-    
-    photo.photoHash = photo.md5;
     return request;
 }
 

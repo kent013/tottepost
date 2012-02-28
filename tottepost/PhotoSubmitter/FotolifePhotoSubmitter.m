@@ -148,8 +148,6 @@
     [client setCredential:[self credential]];
     
     [client startCreatingEntry:entry withURL:[NSURL URLWithString:@"http://f.hatena.ne.jp/atom/post"]];
-    
-    photo.photoHash = photo.md5; 
     return client;
 }
 

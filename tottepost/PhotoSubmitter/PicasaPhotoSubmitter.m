@@ -291,8 +291,6 @@ ofTotalByteCount:(unsigned long long)dataLength {
     [newEntry setTimestamp:[GDataPhotoTimestamp timestampWithDate:photo.timestamp]];
     
     [newEntry setPhotoData:photo.data];
-    
-    photo.photoHash = photo.md5;    
     [newEntry setUploadSlug:photo.photoHash];
     
     NSString *mimeType = @"image/jpeg";

@@ -157,8 +157,7 @@
                             content:photo.comment 
                                tags:nil
                           resources:[NSArray arrayWithObject:photoResource]
-                        andDelegate:self];    
-    photo.photoHash = photo.md5;
+                        andDelegate:self];
     return request;
     
 }    
