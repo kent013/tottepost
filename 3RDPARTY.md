@@ -30,6 +30,8 @@ You can see the full text of the license at [https://github.com/kent013/MinusCon
 Copyright (c) 2008 Lyo Kato <lyo.kato at gmail dot com>  
 objc-atompub is licensed under MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
+ * [Mixi SDK](http://developer.mixi.co.jp/appli/ns/ios/download/)  
+Mixi SDK is Licensed under their special license. You can see license at [http://developer.mixi.co.jp/about-platform/policies/platform_terms/](http://developer.mixi.co.jp/about-platform/policies/platform_terms/) 
 
 Other libraries
 ------------------------
@@ -80,14 +82,13 @@ Copyright (c) 2011 Hans Pinckaers.
 GrowingTextView is licensed under MIT License.  
 You can see the full text of the license at [https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt](https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt)
 
- * [LROAuth2Client](https://github.com/lukeredpath/LROAuth2Client)  
-    Copyright (c) 2010 Luke Redpath  
-    LROAuth2Client is licensed under MIT License. You can see the full text of the license at [https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE](https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE)  
+ * [ISO8601DateFormatter](http://boredzo.org/iso8601parser/)  
+   Copyright (c) 2006–2011 Peter Hosey.  
+   It is under the BSD license. You can see [https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt](https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt) for the full text of the license.
 
- * [ASIHTTPRequest](http://allseeing-i.com/ASIHTTPRequest/)  
-    Copyright (c) 2007-2011, All-Seeing Interactive.  
-    ASIHTTPRequest is licensed under BSD License. You can see the full text of the license at [https://github.com/pokeb/asi-http-request/blob/master/LICENSE](https://github.com/pokeb/asi-http-request/blob/master/LICENSE).
-
+ * [OAuth2Client](https://github.com/nxtbgthng/OAuth2Client)  
+    Copyright © 2010, nxtbgthng  
+    OAuth2Client is licensed under BSD License. You can see the full text of the license at [https://github.com/nxtbgthng/OAuth2Client](https://github.com/nxtbgthng/OAuth2Client)
 
  * [KissXML](https://github.com/ddeville/KissXML)  
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
