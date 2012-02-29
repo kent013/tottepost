@@ -8,10 +8,8 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "EvernotePhotoSubmitter.h"
-#import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 
 #define PS_EVERNOTE_AUTH_URL @"photosubmitter://auth/evernote"
 

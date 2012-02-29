@@ -86,6 +86,20 @@
 }
 
 /*!
+ * init with data
+ */
+- (id)initWithImage:(UIImage *)inImage{
+    self = [super init];
+    if(self){
+        image_ = inImage;
+        data_ = UIImageJPEGRepresentation(image_, 1.0);
+        timestamp_ = [NSDate date];
+        resizedImages_ = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+/*!
  * apply metadata
  */
 - (void)applyMetadata{

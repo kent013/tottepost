@@ -8,11 +8,9 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "FacebookPhotoSubmitter.h"
-#import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 #import "PhotoSubmitterAlbumEntity.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 
 #define PS_FACEBOOK_AUTH_TOKEN @"PSFacebookAccessTokenKey"
 #define PS_FACEBOOK_AUTH_EXPIRATION_DATE @"PSFacebookExpirationDateKey"

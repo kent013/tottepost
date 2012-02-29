@@ -8,10 +8,8 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "FlickrPhotoSubmitter.h"
-#import "UIImage+Digest.h"
 #import "NSData+Digest.h"
 #import "RegexKitLite.h"
-#import "UIImage+EXIF.h"
 #import "PhotoSubmitterManager.h"
 
 #define PS_FLICKR_AUTH_URL @"photosubmitter://auth/flickr"

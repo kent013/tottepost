@@ -220,7 +220,10 @@
         PhotoSubmitterType type = (PhotoSubmitterType)[self indexToSubmitterType:indexPath.row];
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
         if(submitter.isEnabled){
-            [self.navigationController pushViewController:[self settingTableViewControllerForType:type] animated:YES];
+            PhotoSubmitterSettingTableViewController *vc = [self settingTableViewControllerForType:type];
+            if(vc != nil){
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated: YES];

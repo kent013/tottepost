@@ -1499,6 +1499,7 @@
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				798058B814CFD2E4006E3817 /* ios-queue-object */,
 				7995E61C14F4D5F8005C1453 /* json-framework */,
+				791BF2B114E01FCE00697E05 /* KissXML */,
 				7995E60814F4D569005C1453 /* MinusConnect */,
 				79D783E214E4DEBB003ECCCA /* MixiSDK */,
 				79EC635614FD23C000FB835C /* NXOAuth */,
@@ -1860,7 +1861,6 @@
 		798058B814CFD2E4006E3817 /* ios-queue-object */ = {
 			isa = PBXGroup;
 			children = (
-				791BF2B114E01FCE00697E05 /* KissXML */,
 				798058B914CFD317006E3817 /* NSMutableArray+QueueAdditions.h */,
 				798058BA14CFD317006E3817 /* NSMutableArray+QueueAdditions.m */,
 			);

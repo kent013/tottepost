@@ -8,10 +8,8 @@
 
 #import "PhotoSubmitterAPIKey.h"
 #import "DropboxPhotoSubmitter.h"
-#import "UIImage+Digest.h"
 #import "RegexKitLite.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 
 #define PS_DROPBOX_AUTH_URL @"db-"
 

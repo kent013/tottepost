@@ -9,8 +9,6 @@
 #import "PhotoSubmitterAPIKey.h"
 #import "PicasaPhotoSubmitter.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+Digest.h"
-#import "UIImage+EXIF.h"
 #import "RegexKitLite.h"
 #import "GTMOAuth2ViewControllerTouch.h"
 #import "GTMHTTPUploadFetcher.h"

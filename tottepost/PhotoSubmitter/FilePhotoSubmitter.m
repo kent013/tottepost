@@ -10,9 +10,7 @@
 #import <ImageIO/ImageIO.h>
 #import "FilePhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
-#import "NSData+Digest.h"
 #import "PhotoSubmitterManager.h"
-#import "UIImage+EXIF.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations

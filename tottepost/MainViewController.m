@@ -502,7 +502,7 @@
 }
 
 #pragma mark -
-#pragma mark PreviewPhotoVieww delegate
+#pragma mark PreviewPhotoView delegate
 /*!
  * request for orientation
  */

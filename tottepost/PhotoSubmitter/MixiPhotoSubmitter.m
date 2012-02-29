@@ -8,10 +8,7 @@
 
 #import "MixiPhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
-#import "UIImage+Digest.h"
-#import "NSData+Digest.h"
 #import "RegexKitLite.h"
-#import "UIImage+EXIF.h"
 #import "PhotoSubmitterManager.h"
 #import "MixiSDK.h"
 

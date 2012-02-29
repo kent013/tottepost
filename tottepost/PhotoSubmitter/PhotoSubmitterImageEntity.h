@@ -30,6 +30,7 @@
 @property (readonly, nonatomic) NSDate *timestamp;
 
 - (id) initWithData:(NSData *)data;
+- (id) initWithImage:(UIImage *)image;
 - (void) applyMetadata;
 - (UIImage *) resizedImage: (CGSize) size;
 - (NSData *) autoRotatedData;
