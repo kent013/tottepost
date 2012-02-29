@@ -10,7 +10,7 @@ The Code
 ------------------------------------------
 PhotoSubmitter supports authentication like,
 
-```objc
+```
 [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook] login];
 ```
 
@@ -18,14 +18,14 @@ This code will brings up Safari or Facebook app in your iPhone for authenticatio
 
 There are a lot of supported services, Facebook, Twitter, Dropbox and so on. You can enable submitter with just calling login method.
 
-```objc
+```
 [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox] login];
 [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote] login];
 ```
 
 Once PhotoSubmitter is enabled and authenticated, you can submit photo to the service like this,
 
-```objc
+```
 PhotoSubmitterImageEntity *photo = 
     [[PhotoSubmitterImageEntity alloc] initWithData:data];
 [PhotoSubmitterManager submitPhoto:photo];
@@ -132,4 +132,56 @@ Custom URL schema setting is needed for Safari or App authentication. See [Imple
  and [Launching Your Own Application via a Custom URL Scheme](http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html) for more information.
 
 UINavigationController is needed to present built-in WebView and PasswordView. To provide UINavigationController to the PhotoSubmitter, you may implement `PhotoSubmitterAuthControllerDelegate`'s method `(UINavigationController *) requestNavigationControllerToPresentAuthenticationView` in your client code.
+
+Implementing New PhotoSubmitter
+---------------------------------------
+Rules for new class interface decralation,
+
+1. Name new class as [Hoge]PhotoSubmitter where Hoge is service name.
+2. Extend `PhotoSubmitter`.
+3. Implement `PhotoSubmitterInstanceProtocol`.
+4. Add new `PhotoSubmitterType`.
+
+Rules for new class implementation,
+
+1. Call configuration method in initialize method.  
+```
+    [self setSubmitterIsConcurrent:YES 
+                      isSequencial:NO 
+                     usesOperation:YES 
+                   requiresNetwork:YES 
+                  isAlbumSupported:YES];
+```
+   * isConcurrent indicates photo upload process uses thread.
+     * When the flag is `NO`, photo upload process will called in main thread. 
+   * isSequencial indicates photo upload process uses `PhotoSubmitterSequencialOperationQueue`.
+     * Flag for services not permit upload multiple photo at same time like Twitter.
+   * usesOperation indicates use NSOperationQueue for upload process.
+   * requireNetwork indicates the PhotoSubmitter needs network. 
+   * isAlbumSupported indicates the PhotoSubmitter implements album methods.
+2. Implement `PhotoSubmitterInstanceProtocol`
+   * `-(void)onLogin` will call when `[PhotoSubmitterProtocol login]` is called.
+     * Implement login process here.
+     * When login process is done, usually in the delegate method like fbLogin, you must call `[PhotoSubmitter completeLogin]`.
+     * If login process is failure, usually in the delegate method like fbNotLogin, you must call `[PhotoSubmitter completeLoginFail]`.
+   * `-(void)onLogout` will call when `[PhotoSubmitterProtocol logout]` is called.
+     * Implement logout process here.
+     * When the logout process is finished(In the delegate method, if logout process is asynchronous), you must call `[PhotoSubmitter completeLogout]`.
+     * If there are no specific logout process, you must call `[PhotoSubmitter completeLogout]` in `(void)onLogout`. This method clear credentials. 
+   * `-(id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate` will call when the `[PhotoSubmitter submitPhoto]` called.
+     * Implement photo upload process here. 
+     * Return value of the method may not be nil(nil means upload is not started), like FBRequest, NSURLConnection or some instance represents individual request. 
+     * When the upload process is finished(In the delegate method, if upload process is asynchronous), you must call `[PhotoSubmitter completeSubmitPhoto:(id)request]`. Where request must be same object as Return value.
+     * If the upload process is failed, you must call `[PhotoSubmitter completeSubmitPhoto:(id)request andError:(NSError *)error]`.
+   * `-(id)onCancelPhoto:(PhotoSubmitterImageEntity *)photo` will call when the `[PhotoSubmitter cancel]` called.
+     * Implement cancel photo upload process here. 
+     * You can obtain request object calling `[self requestForPhotoHash:photo.photoHash]`.
+     * Return value of the method may not be nil(nil means upload is not started), like FBRequest, NSURLConnection or some instance represents individual request. 
+3. Override `PhotoSubmitter`'s method.
+   * `-(PhotoSubmitterType)type`, return PhotoSubmitterType you declared.
+   * `-(NSString *)name`, return your submitter's service name like `Dropbox`, `Facebook`
+   * `-(BOOL)isSessionValid`, return your submitter's authentication is valid.
+
+Fast way to implement new PhotoSubmitter, you may copy existing PhotoSubmitter's source code.
+FacebookPhotoSubmitter is suitable for Safari or App authentication. If the service needed to present WebView, copy Mixi or Picasa. And If the service needed to present PasswordView, copy Minus or Fotolife.
 
