@@ -86,6 +86,10 @@ You can see the full text of the license at [https://github.com/HansPinckaers/Gr
    Copyright (c) 2006–2011 Peter Hosey.  
    It is under the BSD license. You can see [https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt](https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt) for the full text of the license.
 
+ * [OAuth2Client](https://github.com/nxtbgthng/OAuth2Client)  
+    Copyright © 2010, nxtbgthng  
+    OAuth2Client is licensed under BSD License. You can see the full text of the license at [https://github.com/nxtbgthng/OAuth2Client](https://github.com/nxtbgthng/OAuth2Client)
+
  * [KissXML](https://github.com/ddeville/KissXML)  
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
  * [ios-queue-object](https://github.com/esromneb/ios-queue-object/)
