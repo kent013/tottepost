@@ -193,6 +193,7 @@ For example,
 </tr>
 </table>
 
+--
 #### Implement PhotoSubmitterInstanceProtocol
 **Implement login process in `-(void)onLogin`.**  
 This method will call when `[PhotoSubmitterProtocol login]` is called. For example,
@@ -312,6 +313,7 @@ Return value of the method is NSURLConnection or some instance represents indivi
 }
 ```
 
+--
 #### Override PhotoSubmitter's method.
 **type**  
 return PhotoSubmitterType you declared.
