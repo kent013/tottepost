@@ -113,7 +113,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>NO</td>
 </tr>
 </table>
