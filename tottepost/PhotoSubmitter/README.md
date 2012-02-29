@@ -250,7 +250,7 @@ If there are no specific logout process, you must call `[PhotoSubmitter complete
 }
 ```
 
-**Implement upload photo process in `-(id)onSubmitPhoto:(PhotoSubmitterImageEntity *)photo andOperationDelegate:(id<PhotoSubmitterPhotoOperationDelegate>)delegate`**  
+**Implement upload photo process in `-(id)onSubmitPhoto: andOperationDelegate:`**  
 This method will call when the `[PhotoSubmitter submitPhoto]` called.
 Return value of the method may not be nil (nil means upload is not started), like FBRequest, NSURLConnection or some instance represents individual request. 
 
@@ -313,7 +313,7 @@ Return value of the method is NSURLConnection or some instance represents indivi
 ```
 
 #### Override PhotoSubmitter's method.
-**`-(PhotoSubmitterType)type`**  
+**type**  
 return PhotoSubmitterType you declared.
 
 ```
@@ -322,7 +322,7 @@ return PhotoSubmitterType you declared.
 }
 ```
 
-**`-(NSString *)name`**
+**name**  
 return your submitter's service name like `Dropbox`, `Facebook`
 
 ```
@@ -331,7 +331,7 @@ return your submitter's service name like `Dropbox`, `Facebook`
 }
 ```
 
-**`-(BOOL)isSessionValid`**
+**isSessionValid**  
 return your submitter's authentication is valid.
 
 ```
