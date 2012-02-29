@@ -30,7 +30,7 @@ You can see the full text of the license at [https://github.com/kent013/MinusCon
 Copyright (c) 2008 Lyo Kato <lyo.kato at gmail dot com>  
 objc-atompub is licensed under MIT License. You can see the full text of the license at [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
- * [Mixi SDK](http://developer.mixi.co.jp/appli/ns/ios/download/)
+ * [Mixi SDK](http://developer.mixi.co.jp/appli/ns/ios/download/)  
 Mixi SDK is Licensed under their special license. You can see license at [http://developer.mixi.co.jp/about-platform/policies/platform_terms/](http://developer.mixi.co.jp/about-platform/policies/platform_terms/) 
 
 Other libraries
