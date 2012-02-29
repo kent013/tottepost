@@ -40,7 +40,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 <table>
 <tr>
 <th>Service Name</th>
-<th>SDK</th>
 <th>Auth Type</th>
 <th>Requirement</th>
 <th>Upload Type</th>
@@ -48,7 +47,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Facebook</td>
-<td><a href="https://github.com/facebook/facebook-ios-sdk">Facebook SDK</a></td>
 <td>OAuth (Safari/FacebookApp)</td>
 <td>URLScheme: fb[appId]</td>
 <td>Concurrent</td>
@@ -56,7 +54,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Twitter</td>
-<td><a href="https://developer.apple.com/library/ios/#documentation/"Twitter/Reference/TwitterFrameworkReference/_index.html">Twitter.Framework</a></td>
 <td>iOS</td>
 <td>-</td>
 <td>Sequencial</td>
@@ -64,7 +61,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Dropbox</td>
-<td><a href="https://www.dropbox.com/developers/reference/sdk">Dropbox SDK</a></td>
 <td>OAuth (Safari/DropboxApp)</td>
 <td>URLScheme: db-[appId]</td>
 <td>Concurrent</td>
@@ -72,7 +68,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Flickr</td>
-<td><a href="https://github.com/lukhnos/objectiveflickr">ObjectiveFlickr</a></td>
 <td>OAuth (Safari)</td>
 <td>URLScheme: photosubmitter</td>
 <td>Concurrent</td>
@@ -80,7 +75,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Evernote</td>
-<td><a href="https://github.com/kent013/EVNConnect">EVNConnect</a></td>
 <td>OAuth (Safari)</td>
 <td>URLScheme: photosubmitter</td>
 <td>Concurrent</td>
@@ -88,7 +82,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Picasa</td>
-<td><a href="http://code.google.com/p/gdata-objectivec-client/">gdata-objectivec-client</a></td>
 <td>OAuth (In App WebView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -96,7 +89,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Minus</td>
-<td><a href="https://github.com/kent013/MinusConnect">MinusConnect</a></td>
 <td>OAuth (In App PasswordView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -104,7 +96,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Mixi</td>
-<td><a href="http://developer.mixi.co.jp/connect/mixi_graph_api/ios/">Mixi SDK</a></td>
 <td>OAuth (In App WebView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -112,7 +103,6 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 <tr>
 <td>Fotolife</td>
-<td><a href="https://github.com/kent013/objc-atompub">objc-atompub</a></td>
 <td>BASIC (In App PasswordView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -133,12 +123,80 @@ Custom URL schema setting is needed for Safari or App authentication. See [Imple
 
 UINavigationController is needed to present built-in WebView and PasswordView. To provide UINavigationController to the PhotoSubmitter, you may implement `PhotoSubmitterAuthControllerDelegate`'s method `(UINavigationController *) requestNavigationControllerToPresentAuthenticationView` in your client code.
 
+
+Library Dependency
+--------------------------------------
+Libraries are stored in [tottepost/Libraries](https://github.com/kent013/tottepost/tree/master/tottepost/Libraries), and Utility classes are stored in [tottepost/Util](https://github.com/kent013/tottepost/tree/master/tottepost/Util).
+
+Common libraries are CoreLocation.framework, ImageIO.framework, [FBNetworkReachability](https://github.com/dev5tec/FBNetworkReachability), [ios-queue-object](https://github.com/esromneb/ios-queue-object/), [PDKeychainBindingsController](https://github.com/carlbrown/PDKeychainBindingsController), 
+[UIImage-categories](https://github.com/jchatard/UIImage-categories) and [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)(libicucore.dylib). These libraries are needed to use PhotoSubmitter with any type of service below.
+
+<table>
+<tr>
+<th>Service Name</th>
+<th>SDK</th>
+<th>Libraries</th>
+</tr>
+<tr>
+<td>Facebook</td>
+<td><a href="https://github.com/facebook/facebook-ios-sdk">Facebook SDK</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Twitter</td>
+<td><a href="https://developer.apple.com/library/ios/#documentation/"Twitter/Reference/TwitterFrameworkReference/_index.html">Twitter.framework</a></td>
+<td>Accounts.framework</td>
+</tr>
+<tr>
+<td>Dropbox</td>
+<td><a href="https://www.dropbox.com/developers/reference/sdk">Dropbox SDK</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Flickr</td>
+<td><a href="https://github.com/lukhnos/objectiveflickr">ObjectiveFlickr</a></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Evernote</td>
+<td><a href="https://github.com/kent013/EVNConnect">EVNConnect</a></td>
+<td><a href="http://regexkit.sourceforge.net/RegexKitLite/">RegexKitLite</a>, Security.framework, libicucore, libxml2</td>
+</tr>
+<tr>
+<td>Picasa</td>
+<td><a href="http://code.google.com/p/gdata-objectivec-client/">gdata-objectivec-client</a></td>
+<td>libxml2</td>
+</tr>
+<tr>
+<td>Minus</td>
+<td><a href="https://github.com/kent013/MinusConnect">MinusConnect</a></td>
+<td><a href="https://github.com/nxtbgthng/OAuth2Client">OAuth2Client</a>, <a href="https://github.com/stig/json-framework/">json-framework</a>, CFNetwork.framework, CoreData.framework, MobileCoreServices.framework, Security.framework, SystemConfiguration.framework, libz.dylib</td>
+</tr>
+<tr>
+<td>Mixi</td>
+<td><a href="http://developer.mixi.co.jp/connect/mixi_graph_api/ios/">Mixi SDK</a></td>
+<td>CFNetwork.framework, Security.framework, SystemConfiguration.framework</td>
+</tr>
+<tr>
+<td>Fotolife</td>
+<td><a href="https://github.com/kent013/objc-atompub">objc-atompub</a></td>
+<td><a href="http://boredzo.org/iso8601parser/">ISO8601DateFormatter</a>, <a href="https://github.com/ddeville/KissXML">KissXML</a>, libxml2</td>
+</tr>
+<tr>
+<td>File</td>
+<td>-</td>
+<td>AssetsLibrary.framework, ImageIO.framework</td>
+</tr>
+</table>
+
+
 Implementing New PhotoSubmitter
 ---------------------------------------
 Fast way to implement new PhotoSubmitter, you may copy existing PhotoSubmitter's source code.
 FacebookPhotoSubmitter is suitable for Safari or App authentication. If the service needed to present WebView, copy Mixi or Picasa. And If the service needed to present PasswordView, copy Minus or Fotolife.
 
 ### PhotoSubmitter Implementation
+-
 * Name new class as [Hoge]PhotoSubmitter where Hoge is service name.
 * Extend `PhotoSubmitter`.
 * Implement `PhotoSubmitterInstanceProtocol`.
@@ -155,8 +213,10 @@ For example,
 ```
 
 ### PhotoSubmitter Implementation
+-
 
 ####Call configuration method in initialize method.  
+-
 ```
     [self setSubmitterIsConcurrent:YES 
                       isSequencial:NO 
@@ -193,8 +253,8 @@ For example,
 </tr>
 </table>
 
---
 #### Implement PhotoSubmitterInstanceProtocol
+-
 **Implement login process in `-(void)onLogin`.**  
 This method will call when `[PhotoSubmitterProtocol login]` is called. For example,
 
@@ -313,8 +373,8 @@ Return value of the method is NSURLConnection or some instance represents indivi
 }
 ```
 
---
 #### Override PhotoSubmitter's method.
+-
 **type**  
 return PhotoSubmitterType you declared.
 
