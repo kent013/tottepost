@@ -9,17 +9,22 @@ So, I developed PhotoSubmitter library as an abstraction layer for this situatio
 The Code
 ------------------------------------------
 PhotoSubmitter supports authentication like,
+
     [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook] login];
+
 This code will brings up Safari or Facebook app in your iPhone for authentication. You can receive messages from PhotoSubmitter while authenticating with implementing `PhotoSubmitterAuthenticationDelegate`. 
 
 There are a lot of supported services, Facebook, Twitter, Dropbox and so on. You can enable submitter with just calling login method.
+
     [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox] login];
     [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote] login];
 
 Once PhotoSubmitter is enabled and authenticated, you can submit photo to the service like this,
+
     PhotoSubmitterImageEntity *photo = 
         [[PhotoSubmitterImageEntity alloc] initWithData:data];
     [PhotoSubmitterManager submitPhoto:photo];
+
 This code is creating photo entity and submitting photo to the authenticated services asynchronously. You can receive messages from PhotoSubmitter while submitting photo with implementing `PhotoSubmitterPhotoDelegate`.
 
 Supported Services
