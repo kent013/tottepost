@@ -80,14 +80,9 @@ Copyright (c) 2011 Hans Pinckaers.
 GrowingTextView is licensed under MIT License.  
 You can see the full text of the license at [https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt](https://github.com/HansPinckaers/GrowingTextView/blob/master/LICENSE.txt)
 
- * [LROAuth2Client](https://github.com/lukeredpath/LROAuth2Client)  
-    Copyright (c) 2010 Luke Redpath  
-    LROAuth2Client is licensed under MIT License. You can see the full text of the license at [https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE](https://github.com/lukeredpath/LROAuth2Client/blob/master/MIT-LICENSE)  
-
- * [ASIHTTPRequest](http://allseeing-i.com/ASIHTTPRequest/)  
-    Copyright (c) 2007-2011, All-Seeing Interactive.  
-    ASIHTTPRequest is licensed under BSD License. You can see the full text of the license at [https://github.com/pokeb/asi-http-request/blob/master/LICENSE](https://github.com/pokeb/asi-http-request/blob/master/LICENSE).
-
+ * [ISO8601DateFormatter](http://boredzo.org/iso8601parser/)
+   This code is copyright 2006–2011 Peter Hosey. It is under the BSD license.
+   You can see [https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt](https://bitbucket.org/boredzo/iso-8601-parser-unparser/src/900c739f57ea/LICENSE.txt) for the full text of the license.
 
  * [KissXML](https://github.com/ddeville/KissXML)  
  * [AAMFeedback](https://github.com/fladdict/AAMFeedback)
