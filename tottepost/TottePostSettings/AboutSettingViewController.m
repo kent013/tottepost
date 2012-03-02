@@ -7,20 +7,15 @@
 //
 
 #import "AboutSettingViewController.h"
-#import "TottePostSettings.h"
-#import "UserVoiceAccountSettingViewController.h"
 #import "TTLang.h"
 
 #define ASV_BUTTON_TYPE 102
 
-#define ASV_SECTION_ABOUT 0
-#define ASV_SECTION_FEEDBACK_USERVOICE 1
-//#define ASV_SECTION_USERVOICE 2
-#define ASV_SECTION_FEEDBACK_MAIL 2
+#define ASV_SECTION_FEEDBACK 0
+#define ASV_SECTION_ABOUT 1
 
-#define ASV_ROW_USERVOICE_MAIL 0
-#define ASV_ROW_USERVOICE_USERNAME 1
-#define ASV_ROW_USERVOICE_BUTTON 2
+#define ASV_ROW_FEEDBACK_USERVOICE 0
+#define ASV_ROW_FEEDBACK_MAIL 1
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -29,7 +24,6 @@
 - (void) setupInitialState;
 - (void) handleMailFeedbackButtonTapped:(UIButton *)sender;
 - (void) handleUserVoiceFeedbackButtonTapped:(UIButton *)sender;
-- (void) handleUserVoiceSettingButtonTapped:(UIButton *)sender;
 @end
 
 @implementation AboutSettingViewController(PrivateImplementation)
@@ -43,12 +37,6 @@
  * handle feedback button tapped
  */
 - (void)handleUserVoiceFeedbackButtonTapped:(UIButton *)sender{
-    /*NSString *email = [[TottePostSettings getInstance] username];
-    if(email == nil){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoEmailForUserVoiceProvided"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }*/
     [self.delegate didUserVoiceFeedbackButtonPressed];
 }
 
@@ -57,15 +45,6 @@
  */
 - (void)handleMailFeedbackButtonTapped:(UIButton *)sender{
     [self.delegate didMailFeedbackButtonPressed];    
-}
-
-/*!
- * handle uservoice setting button tapped
- */
-- (void)handleUserVoiceSettingButtonTapped:(UIButton *)sender{
-    UserVoiceAccountSettingViewController *uvc = [[UserVoiceAccountSettingViewController alloc] init];
-    uvc.delegate = self;
-    [self.navigationController pushViewController:uvc animated:YES];
 }
 @end
 
@@ -91,7 +70,7 @@
  */
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 /*!
@@ -99,9 +78,9 @@
  */
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
-    /*if(section == ASV_SECTION_USERVOICE){
-        return 3;
-    }*/
+    if(section == ASV_SECTION_FEEDBACK){
+        return 2;
+    }
     return 1;
 }
 
@@ -118,9 +97,17 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
         case ASV_SECTION_ABOUT: return [TTLang lstr:@"About_Section_About"];
-        //case ASV_SECTION_USERVOICE: return [TTLang lstr:@"About_Section_UserVoice"];
-        case ASV_SECTION_FEEDBACK_MAIL: return [TTLang lstr:@"About_Section_Feedback_Mail"];
-        case ASV_SECTION_FEEDBACK_USERVOICE: return [TTLang lstr:@"About_Section_Feedback_UserVoice"];
+        case ASV_SECTION_FEEDBACK: return [TTLang lstr:@"About_Section_Feedback"];
+    }
+    return nil;
+}
+
+/*!
+ * footer for section
+ */
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    if(section == ASV_SECTION_FEEDBACK){
+        return [TTLang lstr:@"About_Section_Feedback_Footer"];
     }
     return nil;
 }
@@ -132,7 +119,6 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     
-    //TottePostSettings *settings = [TottePostSettings getInstance];
     switch(indexPath.section){
         case ASV_SECTION_ABOUT:{
             UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 20, 220)];
@@ -143,72 +129,28 @@
             [cell addSubview:textView];
             break;
         }
-        /*case ASV_SECTION_USERVOICE:{
+        case ASV_SECTION_FEEDBACK:{
             switch (indexPath.row) {
-                case ASV_ROW_USERVOICE_MAIL:{
-                    NSString *email = settings.emailAddress;
-                    if(email == nil){
-                        email = [TTLang lstr:@"About_Row_UserVoice_Mail_Default"];
-                    }
-                    UILabel *label = [[UILabel alloc] init];
-                    label.text = email;
-                    label.font = [UIFont systemFontOfSize:15.0];
-                    [label sizeToFit];
-                    label.backgroundColor = [UIColor clearColor];
-                    cell.accessoryView = label;
-                    cell.textLabel.text = [TTLang lstr:@"About_Row_UserVoice_Mail_Title"];
+                case ASV_ROW_FEEDBACK_MAIL:{
+                    UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
+                    [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_Mail_Button"] forState:UIControlStateNormal];
+                    [feedbackButton addTarget:self action:@selector(handleMailFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    cell.accessoryView = feedbackButton;
+                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_Mail_Title"];
                     break;
                 }
-                case ASV_ROW_USERVOICE_USERNAME:{
-                    NSString *username = settings.username;
-                    if(username == nil){
-                        username = [TTLang lstr:@"About_Row_UserVoice_Username_Default"];
-                    }
-                    UILabel *label = [[UILabel alloc] init];
-                    label.text = username;
-                    label.font = [UIFont systemFontOfSize:15.0];
-                    [label sizeToFit];
-                    label.backgroundColor = [UIColor clearColor];
-                    cell.accessoryView = label;
-                    cell.textLabel.text = [TTLang lstr:@"About_Row_UserVoice_Username_Title"];
-                    break;
-                }
-                case ASV_ROW_USERVOICE_BUTTON:{
-                    UIButton *settingButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-                    [settingButton setTitle: [TTLang lstr:@"About_Row_UserVoice_Button"] forState:UIControlStateNormal];
-                    [settingButton addTarget:self action:@selector(handleUserVoiceSettingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                    cell.accessoryView = settingButton;
-                    cell.textLabel.text = [TTLang lstr:@"About_Row_UserVoice_Button_Title"];
+                case ASV_ROW_FEEDBACK_USERVOICE:{
+                    UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
+                    [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_UserVoice_Button"] forState:UIControlStateNormal];
+                    [feedbackButton addTarget:self action:@selector(handleUserVoiceFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    cell.accessoryView = feedbackButton;
+                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_UserVoice_Title"];
                     break;
                 }
             }
-            break;
-        }*/
-        case ASV_SECTION_FEEDBACK_MAIL:{
-            UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-            [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_Mail_Button"] forState:UIControlStateNormal];
-            [feedbackButton addTarget:self action:@selector(handleMailFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryView = feedbackButton;
-            cell.textLabel.text = [TTLang lstr:@"About_Feedback_Mail_Title"];
-            break;
-        }
-        case ASV_SECTION_FEEDBACK_USERVOICE:{
-            UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-            [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_UserVoice_Button"] forState:UIControlStateNormal];
-            [feedbackButton addTarget:self action:@selector(handleUserVoiceFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryView = feedbackButton;
-            cell.textLabel.text = [TTLang lstr:@"About_Feedback_UserVoice_Title"];
-            break;
         }
     }
     return cell;
-}
-
-/*!
- * footer for section
- */
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    return nil;    
 }
 
 /*!
@@ -231,24 +173,5 @@
         return NO;
     }
     return YES;
-}
-
-#pragma mark - UserVoiceAccountSettingViewControllerDelegate
-/*!
- * account setting view done
- */
-- (void)accountSettingViewController:(UserVoiceAccountSettingViewController *)accountSettingViewController didPresentMailAddress:(NSString *)mailAddress andUsername:(NSString *)username{
-    TottePostSettings *settings = [TottePostSettings getInstance];
-    if(mailAddress != nil){
-        settings.emailAddress = mailAddress;
-    }
-    settings.username = username;
-    [self.tableView reloadData];
-}
-
-/*!
- * account setting view is canceled
- */
-- (void)didCancelAccountSettingViewController:(UserVoiceAccountSettingViewController *)accountSettingViewController{
 }
 @end

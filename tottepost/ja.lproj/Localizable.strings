@@ -51,13 +51,6 @@
 "Account_Section_Username_Placeholder" = "kentaro.ishitoya@gmail.com";
 "Account_Section_Password_Placeholder" = "password";
 
-"UserVoice_Explanation" = "UserVoiceを利用してフィードバックするにはユーザ設定が必要です。";
-"UserVoice_Navigation_Title" = "UserVoiceプロフィール";
-"UserVoice_Section_MailAddress" = "メールアドレス";
-"UserVoice_Section_Username" = "ユーザー名";
-"UserVoice_Section_MailAddress_Placeholder" = "kentaro.ishitoya@gmail.com";
-"UserVoice_Section_Username_Placeholder" = "空欄だと匿名になります";
-
 "ProgressCell_Completed" = "完了";
 "ProgressCell_Canceled" = "中断";
 
@@ -87,20 +80,13 @@ UserVoiceでは機能追加の提案などができます。
 ";
 
 "About_Section_About" = "tottepostについて";
-"About_Section_UserVoice" = "UserVoiceの設定";
-"About_Section_Feedback_Mail" = "メールでフィードバック";
-"About_Section_Feedback_UserVoice" = "UserVoiceでフィードバック";
-"About_Row_UserVoice_Mail_Default" = "メールが設定されていません";
-"About_Row_UserVoice_Mail_Title" = "メールアドレス";
-"About_Row_UserVoice_Username_Default" = "匿名";
-"About_Row_UserVoice_Username_Title" = "ユーザ名";
-"About_Row_UserVoice_Button" = "アカウント設定";
-"About_Row_UserVoice_Button_Title" = "設定";
+"About_Section_Feedback" = "フィードバック";
+"About_Section_Feedback_Footer" = "UserVoiceを初めて利用する場合、メールアドレスの設定が必要です。立ち上がった画面のログインボタンをタップして設定をお願いします。";
 "About_Feedback_Mail_Button" = "作成";
-"About_Feedback_Mail_Title" = "メールの設定が必要です";
-"About_Feedback_UserVoice_Button" = "UserVoiceを開く";
-"About_Feedback_UserVoice_Title" = "推奨";
-"Alert_NoEmailForUserVoiceProvided" = "UserVoiceでフィードバックするにはメールアドレスが必要です。";
+"About_Feedback_Mail_Title" = "メール";
+"About_Feedback_UserVoice_Button" = "開く";
+"About_Feedback_UserVoice_Title" = "UserVoice（推奨）";
+
 
 /* 
  Localizable.strings

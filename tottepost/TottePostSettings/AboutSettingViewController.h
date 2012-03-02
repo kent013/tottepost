@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserVoiceAccountSettingViewController.h"
 
 @protocol AboutSettingViewControllerDelegate;
 
-@interface AboutSettingViewController : UITableViewController<UserVoiceAccountSettingViewControllerDelegate>{
+@interface AboutSettingViewController : UITableViewController{
 }
 @property (nonatomic, assign) id<AboutSettingViewControllerDelegate> delegate;
 @end

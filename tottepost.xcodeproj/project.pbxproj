@@ -68,7 +68,6 @@
 		790B8D3914E57D1E00B286C3 /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3514E57D1E00B286C3 /* picasa_16@2x.png */; };
 		790B8D3A14E57D1E00B286C3 /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3614E57D1E00B286C3 /* picasa_32.png */; };
 		790B8D3B14E57D1E00B286C3 /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 790B8D3714E57D1E00B286C3 /* picasa_32@2x.png */; };
-		7913BFE714FFE937003EE902 /* UserVoiceAccountSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913BFE614FFE937003EE902 /* UserVoiceAccountSettingViewController.m */; };
 		791BF27014E01FBB00697E05 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF27114E01FBB00697E05 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF26F14E01FBB00697E05 /* PDKeychainBindingsController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF29D14E01FC500697E05 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BF27514E01FC500697E05 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -495,8 +494,6 @@
 		790B8D3614E57D1E00B286C3 /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picasa_32.png; path = PhotoSubmitter/Images/picasa_32.png; sourceTree = "<group>"; };
 		790B8D3714E57D1E00B286C3 /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "picasa_32@2x.png"; path = "PhotoSubmitter/Images/picasa_32@2x.png"; sourceTree = "<group>"; };
 		7913BFD914FFCE20003EE902 /* UserVoiceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserVoiceAPIKey.h; sourceTree = "<group>"; };
-		7913BFE514FFE937003EE902 /* UserVoiceAccountSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserVoiceAccountSettingViewController.h; path = TottePostSettings/UserVoiceAccountSettingViewController.h; sourceTree = "<group>"; };
-		7913BFE614FFE937003EE902 /* UserVoiceAccountSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserVoiceAccountSettingViewController.m; path = TottePostSettings/UserVoiceAccountSettingViewController.m; sourceTree = "<group>"; };
 		791BF26C14E01FBB00697E05 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindings.h; sourceTree = "<group>"; };
 		791BF26D14E01FBB00697E05 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
 		791BF26E14E01FBB00697E05 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
@@ -1499,8 +1496,6 @@
 				79D0EAD614ECB58700CDEF76 /* PhotoSubmitterSettingTableViewProtocol.h */,
 				79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */,
 				79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */,
-				7913BFE514FFE937003EE902 /* UserVoiceAccountSettingViewController.h */,
-				7913BFE614FFE937003EE902 /* UserVoiceAccountSettingViewController.m */,
 				79D0EAD014ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.h */,
 				79D0EAD114ECB58700CDEF76 /* AlbumPhotoSubmitterSettingTableViewController.m */,
 				79D0EAD214ECB58700CDEF76 /* CreateAlbumPhotoSubmitterSettingViewController.h */,
@@ -3482,7 +3477,6 @@
 				79EC638014FD23C000FB835C /* NXOAuth2PostBodyPart.m in Sources */,
 				79EC638114FD23C000FB835C /* NXOAuth2PostBodyStream.m in Sources */,
 				79EC638214FD23C000FB835C /* NXOAuth2Request.m in Sources */,
-				7913BFE714FFE937003EE902 /* UserVoiceAccountSettingViewController.m in Sources */,
 				7948AD89150019F5004ABDAB /* UserVoice.m in Sources */,
 				7948AD8A150019F5004ABDAB /* UVActivityIndicator.m in Sources */,
 				7948AD8B150019F5004ABDAB /* UVBaseModel.m in Sources */,
