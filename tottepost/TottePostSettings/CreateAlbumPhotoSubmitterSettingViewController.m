@@ -46,8 +46,6 @@
  * UITextFieldDelegate
  */
 -(BOOL)textFieldShouldReturn:(UITextField*)textField{
-    [titleField_ resignFirstResponder];
-    [self createAlbum:titleField_.text];
     return YES;
 }
 
