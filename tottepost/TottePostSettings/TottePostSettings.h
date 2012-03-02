@@ -13,6 +13,8 @@
 @property (nonatomic, assign) BOOL commentPostEnabled;
 @property (nonatomic, assign) BOOL gpsEnabled;
 @property (nonatomic, assign) NSArray *supportedTypeIndexes;
+@property (nonatomic, assign) NSString *emailAddress;
+@property (nonatomic, assign) NSString *username;
 + (TottePostSettings *)getInstance;
 @end
 

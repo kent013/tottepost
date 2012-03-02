@@ -12,7 +12,6 @@
 
 #define TSV_SECTION_COUNT 2
 #define TSV_SECTION_ACCOUNTS 1
-#define TSV_ROW
 
 //-----------------------------------------------------------------------------
 //Private Implementations

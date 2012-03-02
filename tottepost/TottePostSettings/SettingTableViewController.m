@@ -425,9 +425,14 @@
 
 #pragma mark -
 #pragma mark AboutSettingViewController delegate
-- (void)didFeedbackButtonPressed{
+- (void)didUserVoiceFeedbackButtonPressed{
     [self.parentViewController dismissModalViewControllerAnimated:YES];
-    [self.delegate didFeedbackButtonPressed];
+    [self.delegate didUserVoiceFeedbackButtonPressed];
+}
+
+- (void)didMailFeedbackButtonPressed{
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate didMailFeedbackButtonPressed];
 }
 
 #pragma mark -

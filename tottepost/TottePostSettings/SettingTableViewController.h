@@ -31,5 +31,6 @@
 
 @protocol SettingTableViewControllerDelegate <NSObject>
 - (void) didDismissSettingTableViewController;
-- (void) didFeedbackButtonPressed;
+- (void) didMailFeedbackButtonPressed;
+- (void) didUserVoiceFeedbackButtonPressed;
 @end

@@ -13,6 +13,11 @@
 #import "TTLang.h"
 #import "UIColor-Expanded.h"
 #import "AAMFeedbackViewController.h"
+#import "UserVoiceAPIKey.h"
+#import "UserVoice.h"
+#import "UVSession.h"
+#import "UVToken.h"
+#import "NSData+Digest.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -344,7 +349,6 @@
                               delegate:nil cancelButtonTitle:[TTLang lstr:@"FirstAlert_OK"] otherButtonTitles:nil];
     [alert show];
 }
-
 @end
 
 //-----------------------------------------------------------------------------
@@ -536,8 +540,15 @@
 /*!
  * feedback button pressed
  */
-- (void)didFeedbackButtonPressed{
-    isFeedbackButtonPressed_ = YES;
+- (void)didMailFeedbackButtonPressed{
+    isMailFeedbackButtonPressed_ = YES;
+}
+
+/*!
+ * feedback button pressed
+ */
+- (void)didUserVoiceFeedbackButtonPressed{
+    isUserVoiceFeedbackButtonPressed_ = YES;
 }
 
 #pragma mark - PhotoSubmitterAuthControllerDelegate
@@ -573,14 +584,23 @@
         [self createCameraController];
         //[self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
     }
-    if(isFeedbackButtonPressed_){
-        isFeedbackButtonPressed_ = NO;
+    if(isMailFeedbackButtonPressed_){
+        isMailFeedbackButtonPressed_ = NO;
+        isUserVoiceFeedbackButtonPressed_ = NO;
         AAMFeedbackViewController *fv = [[AAMFeedbackViewController alloc] init];
         fv.toRecipients = [NSArray arrayWithObject:@"kentaro.ishitoya@gmail.com"];
         fv.bccRecipients = [NSArray arrayWithObject:@"ken45000@gmail.com"];
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fv];
         [self presentModalViewController:nvc animated:YES];
+    }else if(isUserVoiceFeedbackButtonPressed_){
+        isMailFeedbackButtonPressed_ = NO;
+        isUserVoiceFeedbackButtonPressed_ = NO;
+        
+        [UVSession clearCurrentSession];
+        [UserVoice presentUserVoiceModalViewControllerForParent:self
+                    andSite:TOTTEPOST_USERVOICE_API_SITE
+                     andKey:TOTTEPOST_USERVOICE_API_KEY
+                  andSecret:TOTTEPOST_USERVOICE_API_SECRET];
     }
 }
-
 @end

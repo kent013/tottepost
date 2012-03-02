@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserVoiceAccountSettingViewController.h"
 
 @protocol AboutSettingViewControllerDelegate;
 
-@interface AboutSettingViewController : UIViewController{
-    __strong UITextView *textView_;
-    __strong UIButton *feedbackButton_;
+@interface AboutSettingViewController : UITableViewController<UserVoiceAccountSettingViewControllerDelegate>{
 }
 @property (nonatomic, assign) id<AboutSettingViewControllerDelegate> delegate;
 @end
 
 @protocol AboutSettingViewControllerDelegate <NSObject>
-- (void) didFeedbackButtonPressed;
+- (void) didMailFeedbackButtonPressed;
+- (void) didUserVoiceFeedbackButtonPressed;
 @end

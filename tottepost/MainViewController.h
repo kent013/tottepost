@@ -15,11 +15,13 @@
 #import "PreviewPhotoView.h"
 #import "SettingIndicatorView.h"
 #import "AVFoundationCameraController.h"
+#import "PhotoSubmitterAccountTableViewController.h"
+#import "UVDelegate.h"
 
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate>{
 @protected
     __strong SettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
@@ -42,7 +44,8 @@
     BOOL refreshCameraNeeded_;
     BOOL settingViewPresented_;
     BOOL isConnected_;
-    BOOL isFeedbackButtonPressed_;
+    BOOL isMailFeedbackButtonPressed_;
+    BOOL isUserVoiceFeedbackButtonPressed_;
 }
 
 @property (nonatomic, readonly) BOOL refreshCameraNeeded;

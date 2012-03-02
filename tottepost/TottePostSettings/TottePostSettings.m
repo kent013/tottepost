@@ -17,6 +17,8 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 #define TPS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
 #define TPS_KEY_GPS_ENABLED @"gpsEnabled"
 #define TPS_KEY_SUPPORTED_TYPE_INDEXES @"supportedTypeIndexes"
+#define TPS_KEY_USER_EMAIL @"TottepostEmailAddress"
+#define TPS_KEY_USER_NAME @"TottepostUsername"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -113,6 +115,33 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  */
 - (void)setSupportedTypeIndexes:(NSArray *)supportedTypeIndexes{
     [self writeSetting:TPS_KEY_SUPPORTED_TYPE_INDEXES value:supportedTypeIndexes];
+}
+
+/*!
+ * get email address
+ */
+- (NSString *)emailAddress{
+    return [self readSetting:TPS_KEY_USER_EMAIL];
+}
+
+/*!
+ * set email address
+ */
+- (void)setEmailAddress:(NSString *)emailAddress{
+    [self writeSetting:TPS_KEY_USER_EMAIL value:emailAddress];
+}
+/*!
+ * get username
+ */
+- (NSString *)username{
+    return [self readSetting:TPS_KEY_USER_NAME];
+}
+
+/*!
+ * set username
+ */
+- (void)setUsername:(NSString *)username{
+    [self writeSetting:TPS_KEY_USER_NAME value:username];
 }
 
 #pragma mark -
