@@ -2,13 +2,14 @@ PhotoSubmitter
 ===========================
 The purpose of the PhotoSubmitter class library is to facilitate the development of photo upload application.
 
-There are a lot of Social Network Services and Cloud Storage Services. And each services have their own SDK to connect to their service. Unfortunately SDKs are not compatible each other.　Especially between Social Network Services and Cloud Storage Services is completely different. 
+There are a lot of Social Network Services and Cloud Storage Services. And each services have their own SDK to connect to their service. Unfortunately SDKs are not compatible each other.　Especially between Social Network Services and Cloud Storage Services are completely different. 
 
 So, I developed PhotoSubmitter library as an abstraction layer for this situation.
 
-The Code
+
+PhotoSubmitter Client Code
 ------------------------------------------
-PhotoSubmitter supports authentication like,
+PhotoSubmitter supports authentication with code like,
 
 ```
 [[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook] login];
@@ -33,6 +34,7 @@ PhotoSubmitterImageEntity *photo =
 
 This code is creating photo entity and submitting photo to the authenticated services asynchronously. You can receive messages from PhotoSubmitter while submitting photo with implementing `PhotoSubmitterPhotoDelegate`.
 
+
 Supported Services
 -------------------------------------------
 Below is the list of supported Social Network and Cloud Storage services.
@@ -56,7 +58,7 @@ Below is the list of supported Social Network and Cloud Storage services.
 <td>Twitter</td>
 <td>iOS</td>
 <td>-</td>
-<td>Sequencial</td>
+<td>Sequencial<sup>*1</sup></td>
 <td>NO</td>
 </tr>
 <tr>
@@ -81,7 +83,7 @@ Below is the list of supported Social Network and Cloud Storage services.
 <td>YES</td>
 </tr>
 <tr>
-<td>Picasa</td>
+<td>Picasa<sup>*2</sup></td>
 <td>OAuth (In App WebView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -95,14 +97,14 @@ Below is the list of supported Social Network and Cloud Storage services.
 <td>YES</td>
 </tr>
 <tr>
-<td>Mixi</td>
+<td>Mixi<sup>*3</sup></td>
 <td>OAuth (In App WebView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
 <td>YES</td>
 </tr>
 <tr>
-<td>Fotolife</td>
+<td>Fotolife<sup>*3</sup></td>
 <td>BASIC (In App PasswordView)</td>
 <td>PhotoSubmitterAuthControllerDelegate</td>
 <td>Concurrent</td>
@@ -117,13 +119,25 @@ Below is the list of supported Social Network and Cloud Storage services.
 </tr>
 </table>
 
+*1 Uploading multiple photo at same time will cause 400 error.
+*2 Currently Google+ does not permit write access to images.
+*3 Japanese services.
+
 Custom URL schema setting is needed for Safari or App authentication. See [Implementing Custom URL Schemes](https://developer.apple.com/library/ios/#DOCUMENTATION/iPhone/Conceptual/iPhoneOSProgrammingGuide/AdvancedAppTricks/AdvancedAppTricks.html)
  and [Launching Your Own Application via a Custom URL Scheme](http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html) for more information.
 
 UINavigationController is needed to present built-in WebView and PasswordView. To provide UINavigationController to the PhotoSubmitter, you may implement `PhotoSubmitterAuthControllerDelegate`'s method `(UINavigationController *) requestNavigationControllerToPresentAuthenticationView` in your client code.
 
+Before using OAuth services, you must submit to their developer program to obtain API-Key and API-Secret. After you've got key and secret pair, copy [PhotoSubmitterAPIKey-template.h](https://github.com/kent013/tottepost/blob/master/tottepost/PhotoSubmitter/PhotoSubmitterAPIKey-template.h)
+ as PhotoSubmitterAPIKey.h in the same directory and modify appropriate constants with your key and secret. For instance, if you want to use flickr, you may modify
 
-Library Dependency
+```
+#define PHOTO_SUBMITTER_FLICKR_API_KEY @""
+#define PHOTO_SUBMITTER_FLICKR_API_SECRET @""
+```
+these constants with your key and secret pair.
+
+Library Dependencies
 --------------------------------------
 Libraries are stored in [tottepost/Libraries](https://github.com/kent013/tottepost/tree/master/tottepost/Libraries), and Utility classes are stored in [tottepost/Util](https://github.com/kent013/tottepost/tree/master/tottepost/Util).
 
@@ -189,13 +203,20 @@ Common libraries are CoreLocation.framework, ImageIO.framework, [FBNetworkReacha
 </table>
 
 
+PhotoSubmitterSettings
+---------------------------------------
+There are useful setting component for PhotoSubmitter, provided by tottepost. PhotoSubmitterSetting component provides comment/GPS toggle switch, PhotoSubmitter toggle switches, album listing and creating.
+
+Source codes are stored in [tottepost/TottePostSettings](https://github.com/kent013/tottepost/tree/master/tottepost/TottePostSettings). The codes are containing tottepost specific feedback functionality. You may remove it before use them.
+
+
 Implementing New PhotoSubmitter
 ---------------------------------------
 Fast way to implement new PhotoSubmitter, you may copy existing PhotoSubmitter's source code.
 FacebookPhotoSubmitter is suitable for Safari or App authentication. If the service needed to present WebView, copy Mixi or Picasa. And If the service needed to present PasswordView, copy Minus or Fotolife.
 
-### PhotoSubmitter Implementation
 -
+### PhotoSubmitter Interface declaration
 * Name new class as [Hoge]PhotoSubmitter where Hoge is service name.
 * Extend `PhotoSubmitter`.
 * Implement `PhotoSubmitterInstanceProtocol`.
@@ -211,17 +232,15 @@ For example,
 @end
 ```
 
+-
 ### PhotoSubmitter Implementation
--
-
 ####Call configuration method in initialize method.  
--
 ```
-    [self setSubmitterIsConcurrent:YES 
-                      isSequencial:NO 
-                     usesOperation:YES 
-                   requiresNetwork:YES 
-                  isAlbumSupported:YES];
+[self setSubmitterIsConcurrent:YES 
+                  isSequencial:NO 
+                 usesOperation:YES 
+               requiresNetwork:YES 
+              isAlbumSupported:YES];
 ```
 <table>
 <tr>
@@ -252,8 +271,9 @@ For example,
 </tr>
 </table>
 
-#### Implement PhotoSubmitterInstanceProtocol
+
 -
+#### Implement PhotoSubmitterInstanceProtocol
 **Implement login process in `-(void)onLogin`.**  
 This method will call when `[PhotoSubmitterProtocol login]` is called. For example,
 
@@ -372,8 +392,8 @@ Return value of the method is NSURLConnection or some instance represents indivi
 }
 ```
 
-#### Override PhotoSubmitter's method.
 -
+#### Override PhotoSubmitter's method.
 **type**  
 return PhotoSubmitterType you declared.
 
@@ -401,5 +421,24 @@ return your submitter's authentication is valid.
         return YES;
     }
     return NO;
+}
+```
+
+-
+#### Add new PhotoSubmitter to PhotoSubmitterFactory.
+Currently you have to add a code to generate newly added PhotoSubmitter's instance at `
++ (id<PhotoSubmitterProtocol>)createWithType:(PhotoSubmitterType)type` in class PhotoSubmitterFatory.
+ 
+```
++ (id<PhotoSubmitterProtocol>)createWithType:(PhotoSubmitterType)type{
+    id <PhotoSubmitterProtocol> submitter = nil;
+    switch (type) {
+        case PhotoSubmitterTypeFacebook:
+            submitter = [[FacebookPhotoSubmitter alloc] init];
+            break;
+        default:
+            break;
+    }
+    return submitter;
 }
 ```
