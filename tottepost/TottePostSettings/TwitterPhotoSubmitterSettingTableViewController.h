@@ -3,7 +3,7 @@
 //  tottepost
 //
 //  Created by Kentaro ISHITOYA on 12/02/13.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
 #import "SimplePhotoSubmitterSettingTableViewController.h"
