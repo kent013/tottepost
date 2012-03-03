@@ -32,17 +32,26 @@ tottepostはシンプルさにフォーカスしています。
 できること一覧
 ------------------------------------
  * 写真をソーシャルサービスやクラウドサービスにアップロード
-   * Facebook / Twitter / Flickr / Dropbox
-   * リポジトリでサポート: Evernote / Picasa / Minus / Mixi / Fotolife
+   * Facebook / Twitter / Flickr / Dropbox / Evernote / Picasa / Minus / Mixi / Fotolife
  * ローカルのカメラロールに保存
  * コメント入力あり/なしの切り替え
  * ジオタグ埋め込みの切り替え
  * バックグラウンドでのアップロード、自動レジューム
  * アルバムの選択、作成
 
+PhotoSubmitterライブラリ
+------------------------------------
+PhotoSubmitterライブラリはtottepostのために作られたライブラリです。写真をさまざまなウェブサービスに簡単にアップロードするための抽象化レイヤーを提供します。
+
+詳細は、[https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) をご覧ください。
+
+フィードバック
+---------------------------------------------------------
+issuesに登録するか、[UserVoice](http://tottepost.uservoice.com/)までご連絡ください。
+
 作者
 ------------------------------------
- * 石戸谷 顕太朗 [@kent013](http://twitter.com/kent013) メール:ishitoya at rio.ne.jp
+ * 石戸谷 顕太朗 [@kent013](http://twitter.com/kent013) メール:kentaro.ishitoya at gmail.com
  * 渡辺 賢 [@ken4500](http://twitter.com/ken4500)
 
 配布について
@@ -59,6 +68,7 @@ Copyright (c) 2011, WATANABE Ken.
 
 変更履歴
 ------------------------------------
+AppStoreの最新バージョンは1.1です。
 [CHANGELOG](https://github.com/kent013/tottepost/blob/master/CHANGELOG.md)をご覧ください。
 
 サードパーティライブラリ

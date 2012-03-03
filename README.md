@@ -28,13 +28,24 @@ Tottepost is focusing on simplicity, thus we will not provide effects, cropping 
 FEATURE LIST
 ------------------------------------
  * Upload image to social applications and cloud services
-   * Facebook / Twitter / Flickr / Dropbox 
-   * Supported in source code: Evernote / Picasa / Minus / Mixi / Fotolife
+   * Facebook / Twitter / Flickr / Dropbox / Evernote / Picasa / Minus / Mixi / Fotolife
  * Save image to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location
  * Background upload, Automatic resume
  * Selecting target album, Creating album 
+
+
+PHOTO SUBMITTER LIBRARY
+------------------------------------
+PhotoSubmitter is a library specially developed for tottepost. It is an abstraction layer to submit photo to various web services.
+
+Please visit [https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) for more detail.
+
+
+FEEDBACK
+------------------------------------
+If you have an opinion or discovered a bug, please submit an issue on Github. Or use [UserVoice](http://tottepost.uservoice.com/).
 
 AUTHORS
 ------------------------------------
@@ -54,6 +65,7 @@ New BSD License. See [LICENSE](https://github.com/kent013/tottepost/blob/master/
 
 CHANGE LOG
 ------------------------------------
+Current Apple AppStore version is 1.1.
 See [CHANGELOG](https://github.com/kent013/tottepost/blob/master/CHANGELOG.md).
 
 3rd Party Libraries and Resources
