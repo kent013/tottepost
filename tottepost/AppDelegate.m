@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PhotoSubmitterManager.h"
+#import "Appirater.h"
 
 @implementation AppDelegate
 @synthesize window = _window;
@@ -30,6 +31,7 @@
     [self.window makeKeyAndVisible];
     
     [[PhotoSubmitterManager sharedInstance] wakeup];
+    [Appirater appLaunched:YES];
     return YES;
 }
 
@@ -48,7 +50,6 @@
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     UIApplication* app = [UIApplication sharedApplication];
-    
     [self.mainViewController determinRefreshCameraNeeded];
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
     
@@ -100,5 +101,12 @@
  */
 - (void)applicationWillTerminate:(UIApplication *)application{
     [[PhotoSubmitterManager sharedInstance] suspend];
+}
+
+/*!
+ * app will enter foreground
+ */
+- (void)applicationWillEnterForeground:(UIApplication *)application{
+    [Appirater appEnteredForeground:YES];
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AboutSettingViewController.h"
+#import "Appirater.h"
 #import "TTLang.h"
 
 #define ASV_BUTTON_TYPE 102
@@ -16,6 +17,7 @@
 
 #define ASV_ROW_FEEDBACK_USERVOICE 0
 #define ASV_ROW_FEEDBACK_MAIL 1
+#define ASV_ROW_FEEDBACK_RATE 2
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -24,6 +26,7 @@
 - (void) setupInitialState;
 - (void) handleMailFeedbackButtonTapped:(UIButton *)sender;
 - (void) handleUserVoiceFeedbackButtonTapped:(UIButton *)sender;
+- (void) handleRateFeedbackButtonTapped:(UIButton *)sender;
 @end
 
 @implementation AboutSettingViewController(PrivateImplementation)
@@ -45,6 +48,13 @@
  */
 - (void)handleMailFeedbackButtonTapped:(UIButton *)sender{
     [self.delegate didMailFeedbackButtonPressed];    
+}
+
+/*!
+ * handle rate feedback button tapped
+ */
+- (void)handleRateFeedbackButtonTapped:(UIButton *)sender{
+    [Appirater rateApp];
 }
 @end
 
@@ -79,7 +89,7 @@
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     if(section == ASV_SECTION_FEEDBACK){
-        return 2;
+        return 3;
     }
     return 1;
 }
@@ -145,6 +155,14 @@
                     [feedbackButton addTarget:self action:@selector(handleUserVoiceFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = feedbackButton;
                     cell.textLabel.text = [TTLang lstr:@"About_Feedback_UserVoice_Title"];
+                    break;
+                }
+                case ASV_ROW_FEEDBACK_RATE:{
+                    UIButton *rateButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
+                    [rateButton setTitle: [TTLang lstr:@"About_Feedback_Rate_Button"] forState:UIControlStateNormal];
+                    [rateButton addTarget:self action:@selector(handleRateFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    cell.accessoryView = rateButton;
+                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_Rate_Title"];
                     break;
                 }
             }

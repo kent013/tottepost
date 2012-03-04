@@ -264,6 +264,7 @@
 		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
+		798B1B301503B98E003EFF54 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B1B291503B98E003EFF54 /* Appirater.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E4A714F187C3005C1453 /* fotolife_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A314F187C3005C1453 /* fotolife_16.png */; };
 		7995E4A814F187C3005C1453 /* fotolife_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A414F187C3005C1453 /* fotolife_16@2x.png */; };
 		7995E4A914F187C3005C1453 /* fotolife_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A514F187C3005C1453 /* fotolife_32.png */; };
@@ -882,6 +883,8 @@
 		79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
 		79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		798B1B281503B98E003EFF54 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
+		798B1B291503B98E003EFF54 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		7995E4A314F187C3005C1453 /* fotolife_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_16.png; path = PhotoSubmitter/Images/fotolife_16.png; sourceTree = "<group>"; };
 		7995E4A414F187C3005C1453 /* fotolife_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fotolife_16@2x.png"; path = "PhotoSubmitter/Images/fotolife_16@2x.png"; sourceTree = "<group>"; };
 		7995E4A514F187C3005C1453 /* fotolife_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_32.png; path = PhotoSubmitter/Images/fotolife_32.png; sourceTree = "<group>"; };
@@ -1800,6 +1803,7 @@
 			isa = PBXGroup;
 			children = (
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
+				798B1B271503B98E003EFF54 /* appirater */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
 				791BF2C614E01FDD00697E05 /* Evernote */,
 				791BF30114E01FE400697E05 /* EVNConnect */,
@@ -2487,6 +2491,16 @@
 			path = Libraries/AAMFeedback;
 			sourceTree = "<group>";
 		};
+		798B1B271503B98E003EFF54 /* appirater */ = {
+			isa = PBXGroup;
+			children = (
+				798B1B281503B98E003EFF54 /* Appirater.h */,
+				798B1B291503B98E003EFF54 /* Appirater.m */,
+			);
+			name = appirater;
+			path = Libraries/appirater;
+			sourceTree = "<group>";
+		};
 		7995E4B914F27B2D005C1453 /* Authorize */ = {
 			isa = PBXGroup;
 			children = (
@@ -3155,6 +3169,7 @@
 				ja,
 				English,
 				fr,
+				de,
 			);
 			mainGroup = 376E152D1494C47800A34E7D;
 			productRefGroup = 376E15391494C47800A34E7D /* Products */;
@@ -3558,6 +3573,7 @@
 				7948AE471500B6BA004ABDAB /* UIFont+UVExtras.m in Sources */,
 				7948AE481500B6BA004ABDAB /* UIView+UVExtras.m in Sources */,
 				7948AE491500B6BA004ABDAB /* UVUIColorAdditions.m in Sources */,
+				798B1B301503B98E003EFF54 /* Appirater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

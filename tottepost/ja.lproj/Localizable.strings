@@ -86,6 +86,9 @@ UserVoiceでは機能追加の提案などができます。
 "About_Feedback_Mail_Title" = "メール";
 "About_Feedback_UserVoice_Button" = "開く";
 "About_Feedback_UserVoice_Title" = "UserVoice（推奨）";
+"About_Feedback_Rate_Button" = "評価";
+"About_Feedback_Rate_Title" = "AppStoreで評価する";
+
 
 
 /* 
@@ -115,3 +118,8 @@ UserVoiceでは機能追加の提案などができます。
 "AAMFeedbackTopicsOther" = "その他";
 
 "AAMFeedbackMailDidFinishWithError" = "送信に失敗しました。しばらく時間をおいてからもう一度お試しください。";
+
+"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!" = "楽しんでいただけたならば簡単なご意見をお願いします。%@を評価しますか？";
+"Rate %@" = "%@の評価";
+"No, Thanks" ="いいえ";
+"Remind me later" = "後で見る";
