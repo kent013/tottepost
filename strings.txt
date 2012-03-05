@@ -1,0 +1,301 @@
+[[General]]
+    [FirstAlert_Title]
+        tags = common
+        en = Welcome to tottepost!
+        ja = ようこそtottepostへ！
+    [FirstAlert_Message]
+        tags = common
+        en = Thank you for using this application.\n First, you tap icon of the gear wheel at the lower right.\nAnd choice service you want to upload to.
+        ja = このアプリをご使用していただき\nありがとうございます。\n右下の歯車のアイコンをタップして\n投稿するサービスを選んで下さい。
+    [FirstAlert_OK]
+        tags = common
+        en = OK
+        ja = 確認
+    [Alert_Error]
+        tags = common
+        en = Error
+        ja = エラー
+    [Alert_NoNetwork]
+        tags = common
+        en = There is no network connection. \nWe will cancel upload.
+        ja = ネットワークに接続していません。\nアップロードをキャンセルします。
+    [Alert_NoSubmittersEnabled]
+        tags = common
+        en = There is no services enabled.
+        ja = アップロード先のサービスが選択されていません。
+    [Main_Post]
+        tags = common
+        en = Post
+        ja = 投稿
+    [Main_Cancel]
+        tags = common
+        en = Cancel
+        ja = キャンセル
+    [Settings_Title]
+        tags = common
+        en = Settings
+        ja = 設定
+    [Settings_Section_General]
+        tags = common
+        en = General
+        ja = 一般
+    [Settings_Section_Accounts]
+        tags = common
+        en = Accounts
+        ja = アカウント
+    [Settings_Section_Accounts_Footer]
+        tags = common
+        en = Tap account name to enter details.
+        ja = サービス名をタップすると\n詳細画面へ移動します。
+    [Settings_Row_Comment]
+        tags = common
+        en = Comment
+        ja = コメント
+    [Settings_Row_GPSTagging]
+        tags = common
+        en = GPS Tagging
+        ja = 位置情報
+    [Settings_Row_About]
+        tags = common
+        en = About / Feedback
+        ja = アプリについて / フィードバック
+    [Detail_Section_Account]
+        tags = common
+        en =  Account
+        ja = アカウント
+    [Detail_Section_Album]
+        tags = common
+        en = Album Selection
+        ja = アルバム選択
+    [Detail_Row_AccountName]
+        tags = common
+        en = Account Name
+        ja = アカウント名
+    [Detail_Row_Logout]
+        tags = common
+        en = Logout
+        ja = ログアウト
+    [Detail_Row_LogoutButtonTitle]
+        tags = common
+        en = logout
+        ja = ログアウト
+    [Detail_Section_Twitter_Accounts]
+        tags = common
+        en = Select Account
+        ja = アカウント選択
+    [Album_Detail_Section_Album_Footer]
+        tags = common
+        en = Selected album will be used for tottepost\n If you want to delete/edit album, please do so at %@.
+        ja = 選択されたアルバムが利用されます。\nアルバムを削除、編集したい場合には%@で行ってください。
+    [Album_Detail_Section_Create_Album_Title]
+        tags = common
+        en = Create album
+        ja = アルバム作成
+    [Create_Album_Navigation_Title]
+        tags = common
+        en = Create Album
+        ja = アルバム作成
+    [Create_Album_Section_Title]
+        tags = common
+        en = Album Title
+        ja = アルバム タイトル
+    [Create_Album_Placeholder]
+        tags = common
+        en = 20XX Lunar Tour
+        ja = 20XX年 月旅行
+    [Create_Album_Create_Button_Title]
+        tags = common
+        en = create
+        ja = 作成
+    [Create_Album_Alert_Creation_Empty_Title]
+        tags = common
+        en = Error
+        ja = エラー
+    [Create_Album_Alert_Creation_Empty_Message]
+        tags = common
+        en = Empty album title is not permitted.
+        ja = タイトルを入力してください。
+    [Create_Album_Alert_Creation_Empty_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
+    [Create_Album_Alert_Creation_Failed_Title]
+        tags = common
+        en = Error
+        ja = エラー
+    [Create_Album_Alert_Creation_Failed_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
+    [ProgressCell_Completed]
+        tags = common
+        en = Completed
+        ja = 完了
+    [ProgressCell_Canceled]
+        tags = common
+        en = Canceled
+        ja = 中断
+    [Progress_Completed]
+        tags = common
+        en = Upload completed
+        ja = アップロード完了
+    [Progress_Uploading]
+        tags = common
+        en = Remaining %d
+        ja = 残り: %d
+    [Progress_Finished]
+        tags = common
+        en = Remaining %d
+        ja = 残り: %d
+    [Account_Navigation_Title]
+        tags = common
+        en = Authorization
+        ja = 認証
+    [Account_Section_Username]
+        tags = common
+        en = Username
+        ja = ユーザー名
+    [Account_Section_Password]
+        tags = common
+        en = Password
+        ja = パスワード
+    [Account_Section_Username_Placeholder]
+        tags = common
+        en = kentaro.ishitoya@gmail.com
+        ja = kentaro.ishitoya@gmail.com
+    [Account_Section_Password_Placeholder]
+        tags = common
+        en = password
+        ja = password
+    [Flash_On]
+        tags = common
+        en = On
+        ja = オン
+    [Flash_Off]
+        tags = common
+        en = Off
+        ja = オフ
+    [Flash_Auto]
+        tags = common
+        en = Auto
+        ja = 自動
+    [Alert_Title]
+        tags = common
+        en = Warning
+        ja = 確認
+    [Alert_Message]
+        tags = common
+        en = Do you cancel all uploading files?
+        ja = すべてのアップロードを中止しますか？
+    [Alert_OK]
+        tags = common
+        en = OK
+        ja = はい
+    [Alert_Cancel]
+        tags = common
+        en = Cancel
+        ja = いいえ
+    [About_Section_About]
+        tags = common
+        en = About tottepost
+        ja = tottepostについて
+    [About_Section_Feedback]
+        tags = common
+        en = Feedback
+        ja = フィードバック
+    [About_Section_Feedback_Footer]
+        tags = common
+        en = If you are new to UserVoice, EMail address is required.
+        ja = UserVoiceを初めて利用する場合、メールアドレスの設定が必要です。立ち上がった画面のログインボタンをタップして設定をお願いします。
+    [About_Feedback_Mail_Button]
+        tags = common
+        en = Mail
+        ja = 作成
+    [About_Feedback_Mail_Title]
+        tags = common
+        en = Feedback via Mail
+        ja = メール
+    [About_Feedback_UserVoice_Button]
+        tags = common
+        en = Open
+        ja = 開く
+    [About_Feedback_UserVoice_Title]
+        tags = common
+        en = Feedback via UserVoice
+        ja = UserVoice（推奨）
+    [About_Feedback_Rate_Button]
+        tags = common
+        en = Rate
+        ja = 評価
+    [About_Feedback_Rate_Title]
+        tags = common
+        en = Rate in AppStore
+        ja = AppStoreで評価する
+    [AAMFeedbackTitle]
+        tags = common, aam_feedback
+        en = Feedback
+        ja = フィードバック
+    [AAMFeedbackTopicsTitle]
+        tags = common, aam_feedback
+        en = Topics
+        ja = トピック
+    [AAMFeedbackButtonMail]
+        tags = common, aam_feedback
+        en = Mail
+        ja = メール
+    [AAMFeedbackDescriptionPlaceholder]
+        tags = common, aam_feedback
+        en = Please write for details.
+        ja = 詳細をお願いいたします。
+    [AAMFeedbackTableHeaderTopics]
+        tags = common, aam_feedback
+        en = Please Fill
+        ja = 入力事項
+    [AAMFeedbackTableHeaderBasicInfo]
+        tags = common, aam_feedback
+        en = Your Environment
+        ja = 動作環境の情報
+    [AAMFeedbackTopicsQuestion]
+        tags = common, aam_feedback
+        en = Question
+        ja = 質問
+    [AAMFeedbackTopicsRequest]
+        tags = common, aam_feedback
+        en = Request
+        ja = リクエスト
+    [AAMFeedbackTopicsBugReport]
+        tags = common, aam_feedback
+        en = Bug Report
+        ja = バグ報告
+    [AAMFeedbackTopicsMedia]
+        tags = common, aam_feedback
+        en = Media
+        ja = マスメディア
+    [AAMFeedbackTopicsBusiness]
+        tags = common, aam_feedback
+        en = Business
+        ja = ビジネス
+    [AAMFeedbackTopicsOther]
+        tags = common, aam_feedback
+        en = Other
+        ja = その他
+    [AAMFeedbackMailDidFinishWithError]
+        tags = common, aam_feedback
+        en = Failed to send your feedback. Please try later.
+        ja = 送信に失敗しました。しばらく時間をおいてからもう一度お試しください。
+    [If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!]
+        tags = common, appirater
+        en = If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!
+        ja = 楽しんでいただけたならば簡単なご意見をお願いします。%@を評価しますか？
+    [Rate %@]
+        tags = common, appirater
+        en = Rate %@
+        ja = %@の評価
+    [No, Thanks]
+        tags = common, appirater
+        en = No, Thanks
+        ja = いいえ
+    [Remind me later]
+        tags = common, appirater
+        en = Remind me later
+        ja = 後で見る
