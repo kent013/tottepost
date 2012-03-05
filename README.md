@@ -43,6 +43,15 @@ PhotoSubmitter is a library specially developed for tottepost. It is an abstract
 Please visit [https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) for more detail.
 
 
+BEFORE BUILD
+------------------------------------
+Since tottepost using AVFoundation, currently not works on simulator. Please run on device.
+And, just after cloning tottepost repository, the project fails build. Because `UserVoiceAPIKey.h` and `PhotoSubmitterAPIKey.h` is missing.
+
+`UserVoiceAPIKey.h` is needed for UserVoiceSDK. Please copy `UserVoiceAPIKey-template.h` as UserVoiceAPIKey.h. If you don't want to test UserVoice's functionality, you don't need to fill out the API-Key and API-Secret.
+
+`PhotoSubmitterAPIKey.h` is a file to define API-Keys and API-Secrets for supported services. Please copy `PhotoSubmitterAPIKey-template.h` as `PhotoSubmitterAPIKey.h`. And please fill out api-key and api-secret for services which you want to enable.
+
 LOCALIZATION
 ------------------------------------
 We currently support only japanese and english.

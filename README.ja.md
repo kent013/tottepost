@@ -45,6 +45,16 @@ PhotoSubmitterライブラリはtottepostのために作られたライブラリ
 
 詳細は、[https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) をご覧ください。
 
+ビルドする際の注意点
+------------------------------------
+tottepostはAVFoundationを使っているので、現状ではシミュレータで動作しません。実記に転送してお試しください。
+また、リポジトリをcloneした状態ではUserVoiceAPIKey.hとPhotoSubmitterAPIKey.hが存在しないのでビルドエラーになります。
+
+UserVoiceAPIKey.hはUserVoiceSDKを利用するために必要なAPI-KeyとSecretが記述するためのファイルです。UserVoiceAPIKey-template.hをコピーしてtemplateと同じ場所においてください（機能をテストする必要がない場合は、API-KeyとSecretは埋めなくてOKです）
+
+PhotoSubmitterAPIKey.hはサポートしているサービスのAPI-KeyとSecretを記述するためのファイルです。PhotoSubmitterAPIKey-template.hをコピーしてtemplateと同じ場所においてください。利用したいサービスのAPI-KeyとSecretを取得して記述してください。
+
+
 国際化について
 ------------------------------------
 現在、tottepostは英語と日本語に対応しています。またLocalization.stringsを生成するプログラムとして、[twine](https://github.com/mobiata/twine) を使っています。ローカライゼーションを変更したい場合には、先ほどのリンク先のインストラクションに従って、twineをインストールしてください。twineをインストールした後は`./strings.sh`ファイルを実行すれば、stringsファイルが生成されます。

@@ -1,6 +1,6 @@
 PhotoSubmitter
 ===========================
-The purpose of the PhotoSubmitter class library is to facilitate the development of photo upload application.
+The purpose of the PhotoSubmitter iOS class library is to facilitate the development of photo upload application.
 
 There are a lot of Social Network Services and Cloud Storage Services. And each services have their own SDK to connect to their service. Unfortunately SDKs are not compatible each other.　Especially between Social Network Services and Cloud Storage Services are completely different. 
 
