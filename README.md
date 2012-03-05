@@ -43,6 +43,13 @@ PhotoSubmitter is a library specially developed for tottepost. It is an abstract
 Please visit [https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) for more detail.
 
 
+LOCALIZATION
+------------------------------------
+We currently support only japanese and english.
+And we are using [twine](https://github.com/mobiata/twine) for generating Localizable.string.
+If you want modify localization strings, you may install twine following instruction in twine's repository. After installing twine, you can generate localization files with `./strings.sh`.
+
+
 FEEDBACK
 ------------------------------------
 If you have an opinion or discovered a bug, please submit an issue on Github. Or use [UserVoice](http://tottepost.uservoice.com/).

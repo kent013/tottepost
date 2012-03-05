@@ -45,6 +45,11 @@ PhotoSubmitterライブラリはtottepostのために作られたライブラリ
 
 詳細は、[https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) をご覧ください。
 
+国際化について
+------------------------------------
+現在、tottepostは英語と日本語に対応しています。またLocalization.stringsを生成するプログラムとして、[twine](https://github.com/mobiata/twine) を使っています。ローカライゼーションを変更したい場合には、先ほどのリンク先のインストラクションに従って、twineをインストールしてください。twineをインストールした後は`./strings.sh`ファイルを実行すれば、stringsファイルが生成されます。
+
+
 フィードバック
 ---------------------------------------------------------
 issuesに登録するか、[UserVoice](http://tottepost.uservoice.com/)までご連絡ください。
