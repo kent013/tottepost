@@ -404,19 +404,4 @@
     [authRequest_ callAPIMethodWithGET:PS_FLICKR_API_CHECK_TOKEN arguments:nil];
     //do nothing
 }
-
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFlickr;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Flickr";
-}
 @end

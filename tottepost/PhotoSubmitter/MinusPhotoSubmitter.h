@@ -11,11 +11,6 @@
 
 /*!
  * photo submitter for minus.
- *
- * get instance with using 
- * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeMinus]
- * or
- * [PhotoSubmitter minusPhotoSubmitter]
  */
 @interface MinusPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, PhotoSubmitterPasswordAuthViewDelegate, MinusRequestDelegate, MinusSessionDelegate>{
     __strong MinusConnect *minus_;

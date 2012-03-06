@@ -28,7 +28,7 @@
 /*!
  * initialize
  */
-- (id)initWithSubmitterType:(PhotoSubmitterType)inType photoHash:(NSString *)inPhotoHash{
+- (id)initWithSubmitterType:(NSString *)inType photoHash:(NSString *)inPhotoHash{
     self = [super init];
     if(self){
         type = inType;
@@ -62,7 +62,7 @@
 /*!
  * generate hash
  */
-+ (NSString *)generateProgressHash:(PhotoSubmitterType)type hash:(NSString *)hash{
++ (NSString *)generateProgressHash:(NSString *)type hash:(NSString *)hash{
     return [[PhotoSubmitterManager submitterForType:type].name stringByAppendingString:hash];
 }
 @end

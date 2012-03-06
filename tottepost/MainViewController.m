@@ -18,6 +18,9 @@
 #import "UVSession.h"
 #import "UVToken.h"
 #import "NSData+Digest.h"
+#import "FilePhotoSubmitter.h"
+
+static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -445,7 +448,7 @@
  * photo upload start
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
-    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+    if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -462,7 +465,7 @@
     
     NSString *msg = [TTLang lstr:@"ProgressCell_Completed"];
     int delay = TOTTEPOST_PROGRESS_REMOVE_DELAY;
-    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+    if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }else if(suceeded == NO){
         delay = 0;
@@ -479,7 +482,7 @@
  * photo upload progress changed
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
-    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+    if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }
     //NSLog(@"%@, %f", imageHash, progress);
@@ -494,7 +497,7 @@
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{   
     NSString *msg = [TTLang lstr:@"ProgressCell_Canceled"];
-    if(photoSubmitter.type == PhotoSubmitterTypeFile){
+    if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{

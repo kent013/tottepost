@@ -6,17 +6,25 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import <objc/runtime.h>
+#import <objc/message.h>
 #import "PhotoSubmitterManager.h"
 #import "PhotoSubmitterFactory.h"
 #import "UIImage+EXIF.h"
 #import "FBNetworkReachability.h"
+#import "RegexKitLite.h"
 
 #define PS_OPERATIONS @"PSOperations"
 
 /*!
  * singleton instance
  */
-static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
+static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance = nil;
+
+/*!
+ * photo submitter supported types
+ */
+static NSMutableArray* registeredPhotoSubmitterTypes = nil;
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -24,7 +32,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 @interface PhotoSubmitterManager(PrivateImplementation)
 - (void) setupInitialState;
 - (void) addOperation: (PhotoSubmitterOperation *)operation;
-- (PhotoSubmitterSequencialOperationQueue *) sequencialOperationQueueForType: (PhotoSubmitterType) type;
+- (PhotoSubmitterSequencialOperationQueue *) sequencialOperationQueueForType: (NSString *) type;
 - (void) pauseFinished;
 - (void) didChangeNetworkReachability:(NSNotification*)notification;
 @end
@@ -39,15 +47,10 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
     delegates_ = [[NSMutableArray alloc] init];
     sequencialOperationQueues_ = [[NSMutableDictionary alloc] init];
 
-    supportedTypes_ = [[NSMutableArray alloc] init];
-    for(int i = 0; i < PhotoSubmitterCount; i++){
-        [supportedTypes_ addObject:[NSNumber numberWithInt:i]];
-    }
     operationQueue_ = [[NSOperationQueue alloc] init];
     operationQueue_.maxConcurrentOperationCount = 6;
     self.submitPhotoWithOperations = NO;
     isPausingOperation_ = NO;
-    [self loadSubmitters];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -60,18 +63,19 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
         isConnected_ = YES;
     }
     [[FBNetworkReachability sharedInstance] startNotifier];
+    
+    [self loadSubmitters];
 }
 
 /*!
  * get sequenctial operation queue for type
  */
-- (PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueueForType:(PhotoSubmitterType)type{
-    NSNumber *key = [NSNumber numberWithInt:type];
+- (PhotoSubmitterSequencialOperationQueue *)sequencialOperationQueueForType:(NSString *)type{
     PhotoSubmitterSequencialOperationQueue *queue = 
-        [sequencialOperationQueues_ objectForKey:key];
+        [sequencialOperationQueues_ objectForKey:type];
     if(queue == nil){
         queue = [[PhotoSubmitterSequencialOperationQueue alloc] initWithPhotoSubmitterType:type andDelegate:self];
-        [sequencialOperationQueues_ setObject:queue forKey:key];
+        [sequencialOperationQueues_ setObject:queue forKey:type];
     }
     return queue;
 }
@@ -124,7 +128,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 //-----------------------------------------------------------------------------
 
 @implementation PhotoSubmitterManager
-@synthesize supportedTypes = supportedTypes_;
+@synthesize loadedSubmitterTypes = loadedSubmitterTypes_;
 @synthesize submitPhotoWithOperations;
 @synthesize location = location_;
 @synthesize isUploading;
@@ -145,16 +149,17 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 /*!
  * get submitter
  */
-- (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
-    id <PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:[NSNumber numberWithInt:type]];
+- (id<PhotoSubmitterProtocol>)submitterForType:(NSString *)type{
+    id <PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:type];
     if(submitter){
         return submitter;
     }
     submitter = [PhotoSubmitterFactory createWithType:type];
     if(submitter){
-        [submitters_ setObject:submitter forKey:[NSNumber numberWithInt:type]];
+        [submitters_ setObject:submitter forKey:type];
     }
     [submitter addPhotoDelegate:self];
+    [submitter addPhotoDelegate:photoDelegate_];
     return submitter;
 }
 
@@ -193,19 +198,35 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * set photo delegate to submitters
  */
 - (void)setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>)delegate{
-    for(NSNumber *key in submitters_){
-        id<PhotoSubmitterProtocol> submitter = [submitters_ objectForKey:key];
-        [submitter addPhotoDelegate: delegate];
-    }
+    photoDelegate_ = delegate;
 }
 
 /*!
  * load selected submitters
  */
 - (void)loadSubmitters{
-    for (NSNumber *t in supportedTypes_){
-        PhotoSubmitterType type = (PhotoSubmitterType)[t intValue];
-        [self submitterForType:type];
+    registeredPhotoSubmitterTypes = [[NSMutableArray alloc] init];
+    
+    int numClasses;
+    Class *classes = NULL;
+    
+    classes = NULL;
+    numClasses = objc_getClassList(NULL, 0);
+    
+    if (numClasses > 0 )
+    {
+        classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * numClasses);
+        numClasses = objc_getClassList(classes, numClasses);
+        for (int i = 0; i < numClasses; i++) {
+            Class cls = classes[i];
+            NSString *className = [NSString stringWithUTF8String:class_getName(cls)];
+            if([className isMatchedByRegex:@"^(.+?)PhotoSubmitter$"]){
+                id<PhotoSubmitterProtocol> submitter = [[NSClassFromString(className) alloc] init];
+                [registeredPhotoSubmitterTypes addObject:submitter.type];
+                submitter = nil;
+            }
+        }
+        free(classes);
     }
 }
 
@@ -213,8 +234,7 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
  * refresh credentials
  */
 - (void)refreshCredentials{
-    for (NSNumber *t in supportedTypes_){
-        PhotoSubmitterType type = (PhotoSubmitterType)[t intValue];
+    for (NSString *type in [PhotoSubmitterManager registeredPhotoSubmitters]){
         id<PhotoSubmitterProtocol> submitter = [self submitterForType:type];
         if([submitter isEnabled]){
             [submitter refreshCredential];
@@ -526,7 +546,22 @@ static PhotoSubmitterManager* TottePostPhotoSubmitterSingletonInstance;
 /*!
  * get submitter
  */
-+ (id<PhotoSubmitterProtocol>)submitterForType:(PhotoSubmitterType)type{
++ (id<PhotoSubmitterProtocol>)submitterForType:(NSString *)type{
     return [[PhotoSubmitterManager sharedInstance] submitterForType:type];
 }
+
+/*!
+ * photo submitter count
+ */
++ (int)registeredPhotoSubmitterCount{
+    return registeredPhotoSubmitterTypes.count;
+}
+
+/*!
+ * get photo submitters
+ */
++ (NSArray *)registeredPhotoSubmitters{
+    return registeredPhotoSubmitterTypes;
+}
+
 @end

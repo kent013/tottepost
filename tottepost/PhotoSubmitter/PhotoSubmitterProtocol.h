@@ -9,27 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "PhotoSubmitterAlbumEntity.h"
 #import "PhotoSubmitterImageEntity.h"
-/*!
- * Submitter Types
- * If you added new submitter, please add a value here and you may also add a
- * code to PhotoSubmitterFactory to create instance.
- */
-typedef enum {
-    PhotoSubmitterTypeInvalid = -1,
-    PhotoSubmitterTypeFacebook = 0,
-    PhotoSubmitterTypeTwitter,
-    PhotoSubmitterTypeFlickr,
-    PhotoSubmitterTypeDropbox,
-    PhotoSubmitterTypeEvernote,
-    PhotoSubmitterTypePicasa,
-    PhotoSubmitterTypeMixi,
-    PhotoSubmitterTypeFotolife,
-    PhotoSubmitterTypeMinus,
-    PhotoSubmitterTypeFile,
-    
-    //number of photosubmitter
-    PhotoSubmitterCount
-} PhotoSubmitterType;
 
 @protocol PhotoSubmitterAuthenticationDelegate;
 @protocol PhotoSubmitterPhotoDelegate;
@@ -43,7 +22,7 @@ typedef enum {
  */
 @protocol PhotoSubmitterProtocol <NSObject>
 @required
-@property (nonatomic, readonly) PhotoSubmitterType type;
+@property (nonatomic, readonly) NSString *type;
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *displayName;
 @property (nonatomic, readonly) UIImage *icon;
@@ -95,10 +74,10 @@ typedef enum {
  */
 @protocol PhotoSubmitterAuthenticationDelegate <NSObject>
 @required
-- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willBeginAuthorization:(PhotoSubmitterType)type;
-- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAuthorizationFinished:(PhotoSubmitterType)type;
-- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogin:(PhotoSubmitterType) type;
-- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogout:(PhotoSubmitterType) type;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willBeginAuthorization:(NSString *)type;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didAuthorizationFinished:(NSString *)type;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogin:(NSString *) type;
+- (void) photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didLogout:(NSString *) type;
 @end
 
 /*!

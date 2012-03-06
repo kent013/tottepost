@@ -111,7 +111,7 @@
  * encode
  */
 - (void)encodeWithCoder:(NSCoder*)coder {
-    [coder encodeInt:self.submitter.type forKey:@"submitter_type"];
+    [coder encodeObject:self.submitter.type forKey:@"submitter_type"];
     [coder encodeObject:self.photo forKey:@"photo"];
 }
 
@@ -123,7 +123,7 @@
     self = [super init];
     if (self) {
         self.submitter = 
-            [PhotoSubmitterManager submitterForType:[coder decodeIntForKey:@"submitter_type"]];
+            [PhotoSubmitterManager submitterForType:[coder decodeObjectForKey:@"submitter_type"]];
         self.photo = [coder decodeObjectForKey:@"photo"];
     }
     return self;

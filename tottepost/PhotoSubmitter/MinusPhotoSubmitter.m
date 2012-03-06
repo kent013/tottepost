@@ -178,21 +178,6 @@
     [self getUserInfomation];
 }
 
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeMinus;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Minus";
-}
-
 #pragma mark - MinusConnectSessionDelegate
 /*!
  * did login to minus

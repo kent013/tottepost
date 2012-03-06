@@ -199,21 +199,6 @@
     [self addRequest:request];
 }
 
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeEvernote;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Evernote";
-}
-
 #pragma mark -
 #pragma mark EvernoteRequestDelegate methods
 /*!

@@ -191,20 +191,6 @@
     return [self secureSettingForKey:PS_FOTOLIFE_AUTH_USERID];
 }
 
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFotolife;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Fotolife";
-}
 #pragma mark - PhotoSubmitterPasswordAuthDelegate
 /*!
  * did canceled

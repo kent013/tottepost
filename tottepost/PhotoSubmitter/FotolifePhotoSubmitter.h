@@ -16,11 +16,6 @@
  * see http://f.hatena.ne.jp/
  * and http://developer.hatena.ne.jp/ja/documents/fotolife/apis/atom
  * for more details.
- *
- * get instance with using 
- * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFotolife]
- * or
- * [PhotoSubmitter facebookPhotoSubmitter]
  */
 @interface FotolifePhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, PhotoSubmitterPasswordAuthViewDelegate, AtompubClientDelegate>{
     __strong NSString *userId_;

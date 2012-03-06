@@ -14,14 +14,14 @@
 @protocol PhotoSubmitterSequencialOperationQueueDelegate;
 
 @interface PhotoSubmitterSequencialOperationQueue : NSObject<PhotoSubmitterOperationDelegate>{
-    NSMutableArray *queue_;
-    PhotoSubmitterType type_;
+    __strong NSMutableArray *queue_;
+    __strong NSString *type_;
     id<PhotoSubmitterSequencialOperationQueueDelegate> delegate_;
 }
-@property (readonly, nonatomic) PhotoSubmitterType type;
+@property (readonly, nonatomic) NSString *type;
 @property (readonly, nonatomic) int count;
 @property (readonly, nonatomic) int interval;
-- (id) initWithPhotoSubmitterType:(PhotoSubmitterType) type andDelegate:(id<PhotoSubmitterSequencialOperationQueueDelegate>)delegate;
+- (id) initWithPhotoSubmitterType:(NSString *)type andDelegate:(id<PhotoSubmitterSequencialOperationQueueDelegate>)delegate;
 - (void) enqueue: (PhotoSubmitterOperation *)operation;
 - (PhotoSubmitterOperation *) dequeue;
 - (void) cancel;

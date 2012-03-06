@@ -8,6 +8,9 @@
 
 #import "SettingIndicatorView.h"
 #import "PhotoSubmitterManager.h"
+#import "FilePhotoSubmitter.h"
+
+static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -60,8 +63,7 @@
         }
     }
     int x = label_.frame.size.width + 4;
-    for (NSNumber *num in [PhotoSubmitterManager sharedInstance].supportedTypes){
-        PhotoSubmitterType type = (PhotoSubmitterType)[num intValue];
+    for (NSString *type in [PhotoSubmitterManager registeredPhotoSubmitters]){
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
         if(submitter.isEnabled){
             CGRect rect = CGRectMake(x, 0, submitter.smallIcon.size.width, submitter.smallIcon.size.height);
@@ -84,7 +86,7 @@
  * content Size
  */
 - (CGSize)contentSize{
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook];
+    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:kFilePhotoSubmitterType];
     return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * [PhotoSubmitterManager sharedInstance].enabledSubmitterCount, submitter.smallIcon.size.height);
     
 }

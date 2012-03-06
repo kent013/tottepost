@@ -20,7 +20,7 @@
 - (id) initWithFrame:(CGRect)frame andProgressSize:(CGSize)size;
 - (void) updateWithFrame:(CGRect)frame;
 - (void) update;
-- (void) addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash;
-- (void) updateProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash progress:(CGFloat)progress;
-- (void) removeProgressWithType:(PhotoSubmitterType)type forHash: (NSString *)hash message:(NSString *)message delay:(int)delay;
+- (void) addProgressWithType:(NSString *)type forHash:(NSString *)hash;
+- (void) updateProgressWithType:(NSString *)type forHash: (NSString *)hash progress:(CGFloat)progress;
+- (void) removeProgressWithType:(NSString *)type forHash: (NSString *)hash message:(NSString *)message delay:(int)delay;
 @end

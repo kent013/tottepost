@@ -21,7 +21,7 @@
     __strong NSMutableDictionary *submitters_;
     __strong NSMutableDictionary *operations_;
     __strong NSMutableDictionary *sequencialOperationQueues_;
-    __strong NSMutableArray *supportedTypes_;
+    __strong NSMutableArray *loadedSubmitterTypes_;
     __strong NSOperationQueue *operationQueue_;
     __strong NSMutableArray *delegates_;
     __strong CLLocationManager *locationManager_;
@@ -29,10 +29,12 @@
     BOOL geoTaggingEnabled_;
     BOOL isPausingOperation_;
     BOOL isConnected_;
+    
+    id<PhotoSubmitterPhotoDelegate> photoDelegate_;
 }
 
 @property (nonatomic, assign) id<PhotoSubmitterAuthControllerDelegate> authControllerDelegate;
-@property (nonatomic, readonly) NSArray* supportedTypes;
+@property (nonatomic, readonly) NSArray* loadedSubmitterTypes;
 @property (nonatomic, assign) BOOL submitPhotoWithOperations;
 @property (nonatomic, readonly) int enabledSubmitterCount;
 @property (nonatomic, readonly) int uploadOperationCount;
@@ -52,7 +54,7 @@
 - (void) refreshCredentials;
 - (void) setAuthenticationDelegate:(id<PhotoSubmitterAuthenticationDelegate>) delegate;
 - (void) setPhotoDelegate:(id<PhotoSubmitterPhotoDelegate>) delegate;
-- (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
+- (id<PhotoSubmitterProtocol>) submitterForType:(NSString *)type;
 - (BOOL) didOpenURL: (NSURL *)url;
 
 - (void) addDelegate:(id<PhotoSubmitterManagerDelegate>)delegate;
@@ -60,7 +62,9 @@
 - (void) clearDelegate:(id<PhotoSubmitterManagerDelegate>)delegate;
 
 + (PhotoSubmitterManager *)sharedInstance;
-+ (id<PhotoSubmitterProtocol>) submitterForType:(PhotoSubmitterType)type;
++ (id<PhotoSubmitterProtocol>) submitterForType:(NSString *)type;
++ (int) registeredPhotoSubmitterCount;
++ (NSArray *) registeredPhotoSubmitters;
 @end
 
 

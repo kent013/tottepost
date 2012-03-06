@@ -381,19 +381,4 @@ ofTotalByteCount:(unsigned long long)dataLength {
     self.dataDelegate = delegate;
     self.username = auth_.userEmail;
 }
-
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypePicasa;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Picasa";
-}
 @end

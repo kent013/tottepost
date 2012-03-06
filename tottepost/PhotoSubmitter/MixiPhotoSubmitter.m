@@ -259,19 +259,4 @@
     self.dataDelegate = delegate;
     [self getUserInfomation];
 }
-
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeMixi;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Mixi";
-}
 @end

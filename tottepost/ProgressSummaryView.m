@@ -12,6 +12,8 @@
 #import "TTLang.h"
 #import "FBNetworkReachability.h"
 
+static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
+
 #define PSV_RETRY_INTERVAL 2
 
 //-----------------------------------------------------------------------------
@@ -153,7 +155,7 @@
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateLabel];
-        if(suceeded && photoSubmitter.type != PhotoSubmitterTypeFile){
+        if(suceeded && [photoSubmitter.type isEqualToString:kFilePhotoSubmitterType] == false){
             operationCount_--;
             enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
             if(operationCount_ <= 0 && isVisible_){

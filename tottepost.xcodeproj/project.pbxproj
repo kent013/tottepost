@@ -265,6 +265,7 @@
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
 		798B1B301503B98E003EFF54 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B1B291503B98E003EFF54 /* Appirater.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		798B1B3615059707003EFF54 /* PhotoSubmitterSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B1B3515059707003EFF54 /* PhotoSubmitterSwitch.m */; };
 		7995E4A714F187C3005C1453 /* fotolife_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A314F187C3005C1453 /* fotolife_16.png */; };
 		7995E4A814F187C3005C1453 /* fotolife_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A414F187C3005C1453 /* fotolife_16@2x.png */; };
 		7995E4A914F187C3005C1453 /* fotolife_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7995E4A514F187C3005C1453 /* fotolife_32.png */; };
@@ -885,6 +886,8 @@
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		798B1B281503B98E003EFF54 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		798B1B291503B98E003EFF54 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
+		798B1B3415059706003EFF54 /* PhotoSubmitterSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterSwitch.h; path = TottePostSettings/PhotoSubmitterSwitch.h; sourceTree = "<group>"; };
+		798B1B3515059707003EFF54 /* PhotoSubmitterSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterSwitch.m; path = TottePostSettings/PhotoSubmitterSwitch.m; sourceTree = "<group>"; };
 		7995E4A314F187C3005C1453 /* fotolife_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_16.png; path = PhotoSubmitter/Images/fotolife_16.png; sourceTree = "<group>"; };
 		7995E4A414F187C3005C1453 /* fotolife_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fotolife_16@2x.png"; path = "PhotoSubmitter/Images/fotolife_16@2x.png"; sourceTree = "<group>"; };
 		7995E4A514F187C3005C1453 /* fotolife_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fotolife_32.png; path = PhotoSubmitter/Images/fotolife_32.png; sourceTree = "<group>"; };
@@ -1513,6 +1516,8 @@
 				79D0EADC14ECB58700CDEF76 /* TottePostSettings.m */,
 				79D0EADD14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.h */,
 				79D0EADE14ECB58700CDEF76 /* TwitterPhotoSubmitterSettingTableViewController.m */,
+				798B1B3415059706003EFF54 /* PhotoSubmitterSwitch.h */,
+				798B1B3515059707003EFF54 /* PhotoSubmitterSwitch.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3574,6 +3579,7 @@
 				7948AE481500B6BA004ABDAB /* UIView+UVExtras.m in Sources */,
 				7948AE491500B6BA004ABDAB /* UVUIColorAdditions.m in Sources */,
 				798B1B301503B98E003EFF54 /* Appirater.m in Sources */,
+				798B1B3615059707003EFF54 /* PhotoSubmitterSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

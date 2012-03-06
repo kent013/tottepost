@@ -36,12 +36,12 @@
 //Public Implementations
 //----------------------------------------------------------------------------
 @implementation PhotoSubmitterSequencialOperationQueue
-@synthesize type;
+@synthesize type = type_;
 @synthesize interval;
 /*!
  * init with photo submitter type
  */
--(id)initWithPhotoSubmitterType:(PhotoSubmitterType)inType andDelegate:(id<PhotoSubmitterSequencialOperationQueueDelegate>)inDelegate{
+-(id)initWithPhotoSubmitterType:(NSString *)inType andDelegate:(id<PhotoSubmitterSequencialOperationQueueDelegate>)inDelegate{
     self = [super init];
     if(self){
         queue_ = [[NSMutableArray alloc] init];

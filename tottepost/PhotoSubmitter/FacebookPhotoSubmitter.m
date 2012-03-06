@@ -17,7 +17,6 @@
 
 #define PS_FACEBOOK_PHOTO_WIDTH 960
 #define PS_FACEBOOK_PHOTO_HEIGHT 720
-
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -253,21 +252,6 @@
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
     [self getUserInfomation];
-}
-
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFacebook;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Facebook";
 }
 
 #pragma mark - FBSessionDelegate methods

@@ -15,7 +15,7 @@
 - (void) setupInitialState:(CGRect)frame;
 - (void) removeProgressCell:(UploadProgressEntity *)entity;
 - (void) showText:(UploadProgressEntity *)entity text:(NSString *)text;
-- (UploadProgressEntity *) progressForType:(PhotoSubmitterType)type andHash:(NSString *)hash;
+- (UploadProgressEntity *) progressForType:(NSString *)type andHash:(NSString *)hash;
 - (int) indexForProgress:(UploadProgressEntity *)e;
 @end
 
@@ -125,9 +125,9 @@
 /*!
  * get progress entity
  */
-- (UploadProgressEntity *)progressForType:(PhotoSubmitterType)type andHash:(NSString *)hash{
+- (UploadProgressEntity *)progressForType:(NSString *)type andHash:(NSString *)hash{
     for(UploadProgressEntity *e in progresses_){
-        if(e.type == type && [e.photoHash isEqualToString:hash]){
+        if([e.type isEqualToString:type] && [e.photoHash isEqualToString:hash]){
             return e;
         }
     }
@@ -140,7 +140,7 @@
 - (int)indexForProgress:(UploadProgressEntity *)e{
     int index = 0;
     for(UploadProgressEntity *ep in progresses_){
-        if(ep.type == e.type && [ep.photoHash isEqualToString:e.photoHash]){
+        if([ep.type isEqualToString:e.type] && [ep.photoHash isEqualToString:e.photoHash]){
             return index;
         }
         index++;
@@ -187,7 +187,7 @@
 /*!
  * add progress
  */
-- (void)addProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash{
+- (void)addProgressWithType:(NSString *)type forHash:(NSString *)hash{
     UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type photoHash:hash];
     if(entity == nil){
         return;
@@ -199,7 +199,7 @@
 /*!
  * update progress
  */
-- (void)updateProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash progress:(CGFloat)progress{
+- (void)updateProgressWithType:(NSString *)type forHash:(NSString *)hash progress:(CGFloat)progress{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
     if(entity == nil){
         return;
@@ -214,7 +214,7 @@
 /*! 
  * remove progress with message
  */
-- (void)removeProgressWithType:(PhotoSubmitterType)type forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
+- (void)removeProgressWithType:(NSString *)type forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
     UploadProgressEntity *entity = [self progressForType:type andHash:hash];
     if(entity == nil){
         return;

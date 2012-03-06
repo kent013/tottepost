@@ -7,12 +7,14 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import <objc/runtime.h>
 #import <ImageIO/ImageIO.h>
 #import "PhotoSubmitter.h"
 #import "PhotoSubmitterManager.h"
 #import "UIImage+Digest.h"
 #import "UIImage+EXIF.h"
 #import "PDKeychainBindings.h"
+#import "RegexKitLite.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -368,17 +370,17 @@
 /*!
  * return type
  */
-- (PhotoSubmitterType) type{
-    NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
-    return PhotoSubmitterTypeInvalid;
+- (NSString *)type{
+    return [NSString stringWithUTF8String:class_getName(self.class)];
 }
 
 /*!
  * name
  */
 - (NSString *)name{
-    NSLog(@"Must be implemented in subclass, %s", __PRETTY_FUNCTION__);
-    return nil;
+    NSString *name = [self.type stringByMatching:@"^(.+)PhotoSubmitter" capture:1L];
+    assert(name != nil);
+    return name;
 }
 
 /*!

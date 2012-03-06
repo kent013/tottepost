@@ -10,5 +10,5 @@
 #import "PhotoSubmitterProtocol.h"
 
 @interface PhotoSubmitterFactory : NSObject
-+ (id<PhotoSubmitterProtocol>)createWithType:(PhotoSubmitterType) type;
++ (id<PhotoSubmitterProtocol>)createWithType:(NSString *) type;
 @end

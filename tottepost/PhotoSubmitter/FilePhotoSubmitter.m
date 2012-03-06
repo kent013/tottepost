@@ -107,20 +107,6 @@
 
 #pragma mark - other properties
 /*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFile;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"File";
-}
-
-/*!
  * display name
  */
 - (NSString *)displayName{

@@ -22,8 +22,7 @@
 @protected
     __strong NSMutableDictionary *settingControllers_;
     __strong AboutSettingViewController *aboutSettingViewController_;
-    __strong NSMutableDictionary *switches_;
-    __strong NSMutableArray *accountTypeIndexes_;
+    __strong NSMutableArray *switches_;
 }
 - (void) updateSocialAppSwitches;
 @property (weak, nonatomic) id<SettingTableViewControllerDelegate> delegate;

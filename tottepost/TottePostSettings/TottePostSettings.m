@@ -16,7 +16,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 
 #define TPS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
 #define TPS_KEY_GPS_ENABLED @"gpsEnabled"
-#define TPS_KEY_SUPPORTED_TYPE_INDEXES @"supportedTypeIndexes"
+#define TPS_KEY_SUBMITTER_ENABLED_DATES @"submitterEnabledDates"
 #define TPS_KEY_USER_EMAIL @"TottepostEmailAddress"
 #define TPS_KEY_USER_NAME @"TottepostUsername"
 
@@ -57,8 +57,8 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
     if(self){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
-        NSArray* supportedTypes = [PhotoSubmitterManager sharedInstance].supportedTypes;
-        [defaultValue setObject:supportedTypes forKey:TPS_KEY_SUPPORTED_TYPE_INDEXES];
+        NSArray* supportedTypes = [PhotoSubmitterManager registeredPhotoSubmitters];
+        [defaultValue setObject:supportedTypes forKey:TPS_KEY_SUBMITTER_ENABLED_DATES];
         [defaults registerDefaults:defaultValue];
         [defaults synchronize];
         
@@ -106,15 +106,20 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 /*!
  * get supported type indexes
  */
-- (NSArray *)supportedTypeIndexes{
-    return [self readSetting:TPS_KEY_SUPPORTED_TYPE_INDEXES];
+- (NSMutableDictionary *)submitterEnabledDates{
+    id retval = [self readSetting:TPS_KEY_SUBMITTER_ENABLED_DATES];
+    if([retval isKindOfClass:[NSMutableDictionary class]]){
+        return retval;
+    }
+    [self writeSetting:TPS_KEY_SUBMITTER_ENABLED_DATES value:nil];
+    return nil;
 }
 
 /*!
  * set supported type indexes
  */
-- (void)setSupportedTypeIndexes:(NSArray *)supportedTypeIndexes{
-    [self writeSetting:TPS_KEY_SUPPORTED_TYPE_INDEXES value:supportedTypeIndexes];
+- (void)setSubmitterEnabledDates:(NSDictionary *)submitterEnabledDates{
+    [self writeSetting:TPS_KEY_SUBMITTER_ENABLED_DATES value:submitterEnabledDates];
 }
 
 /*!

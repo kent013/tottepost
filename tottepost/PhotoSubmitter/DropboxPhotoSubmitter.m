@@ -306,21 +306,6 @@
     //do nothing
 }
 
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeDropbox;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Dropbox";
-}
-
 #pragma mark - DBSessionDelegate methods
 /*!
  * authorization failed

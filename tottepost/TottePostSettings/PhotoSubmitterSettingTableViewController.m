@@ -31,7 +31,7 @@
 /*!
  * initialize
  */
-- (id)initWithType:(PhotoSubmitterType)inType{
+- (id)initWithType:(NSString *)inType{
     self = [super initWithStyle:UITableViewStyleGrouped];
     if(self){
         type_ = inType;
@@ -53,7 +53,7 @@
 /*!
  * type
  */
-- (PhotoSubmitterType)type{
+- (NSString *)type{
     return type_;
 }
 

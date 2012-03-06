@@ -12,11 +12,7 @@
 #import "ObjectiveFlickr.h"
 
 /*!
- * photo submitter for facebook.
- * get instance with using 
- * [[PhotoSubmitter getInstance] submitterWithType:PhotoSubmitterTypeFlickr]
- * or
- * [PhotoSubmitter flickrPhotoSubmitter]
+ * photo submitter for flicr.
  */
 @interface FlickrPhotoSubmitter : PhotoSubmitter<PhotoSubmitterInstanceProtocol, OFFlickrAPIRequestDelegate>{
     __strong OFFlickrAPIContext *flickr_;

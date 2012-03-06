@@ -236,19 +236,4 @@
     self.dataDelegate = delegate;
     [self.dataDelegate photoSubmitter:self didUsernameUpdated:self.username];
 }
-
-#pragma mark - other properties
-/*!
- * return type
- */
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeTwitter;
-}
-
-/*!
- * name
- */
-- (NSString *)name{
-    return @"Twitter";
-}
 @end
