@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SettingTableViewController.h"
-#import "TottePostSettings.h"
+#import "TottepostSettingTableViewController.h"
+#import "PhotoSubmitterSettings.h"
 #import "Facebook.h"
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
@@ -21,9 +21,9 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, SettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, PhotoSubmitterSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate>{
 @protected
-    __strong SettingTableViewController *settingViewController_;
+    __strong TottepostSettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
     __strong UINavigationController *settingNavigationController_;
     __strong AVFoundationCameraController *imagePicker_;

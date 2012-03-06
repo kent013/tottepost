@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "MainViewController.h"
-#import "TottePostSettings.h"
+#import "PhotoSubmitterSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
 #import "UIColor-Expanded.h"
@@ -61,7 +61,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //setting view
     settingViewController_ = 
-        [[SettingTableViewController alloc] init];
+        [[TottepostSettingTableViewController alloc] init];
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -117,7 +117,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
     [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:progressSummaryView_];
     [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
-      [TottePostSettings getInstance].gpsEnabled;
+      [PhotoSubmitterSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
         orientation_ = UIDeviceOrientationPortraitUpsideDown;
     }else{
@@ -152,7 +152,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on comment button tapped, switch toggle comment post
  */
 - (void) didCommentButtonTapped:(id)sender{
-    [TottePostSettings getInstance].commentPostEnabled = ![TottePostSettings getInstance].commentPostEnabled;
+    [PhotoSubmitterSettings getInstance].commentPostEnabled = ![PhotoSubmitterSettings getInstance].commentPostEnabled;
     [self updateCoordinates];
 }
 
@@ -207,7 +207,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     
     UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
-    if([TottePostSettings getInstance].commentPostEnabled){
+    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [commentButton setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
     }else{
         [commentButton setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
@@ -409,7 +409,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
     PhotoSubmitterImageEntity *photo = [[PhotoSubmitterImageEntity alloc] initWithData:data];
-    if([TottePostSettings getInstance].commentPostEnabled){
+    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewPhoto:photo];
     }else{
         [self postPhoto:photo];

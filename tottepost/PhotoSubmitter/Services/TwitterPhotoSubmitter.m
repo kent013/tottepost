@@ -8,6 +8,7 @@
 
 #import "TwitterPhotoSubmitter.h"
 #import "PhotoSubmitterAPIKey.h"
+#import "TwitterPhotoSubmitterSettingTableViewController.h"
 
 #define PS_TWITTER_USERNAME @"PSTwitterUsername"
 
@@ -235,5 +236,13 @@
 - (void)updateUsernameWithDelegate:(id<PhotoSubmitterDataDelegate>)delegate{
     self.dataDelegate = delegate;
     [self.dataDelegate photoSubmitter:self didUsernameUpdated:self.username];
+}
+
+#pragma mark - other properties
+/*!
+ * get setting view
+ */
+- (PhotoSubmitterServiceSettingTableViewController *)settingView{
+    return [[TwitterPhotoSubmitterSettingTableViewController alloc] initWithType:self.type];
 }
 @end

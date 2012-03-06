@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterServiceSettingTableViewController.h"
 
-@interface CreateAlbumPhotoSubmitterSettingViewController : PhotoSubmitterSettingTableViewController<UITextFieldDelegate, PhotoSubmitterAlbumDelegate>{
+@interface CreateAlbumPhotoSubmitterSettingViewController : PhotoSubmitterServiceSettingTableViewController<UITextFieldDelegate, PhotoSubmitterAlbumDelegate>{
     UITextField *titleField_;
 }
 @end

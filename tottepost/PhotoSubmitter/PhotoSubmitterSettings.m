@@ -6,29 +6,27 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
-#import "TottePostSettings.h"
+#import "PhotoSubmitterSettings.h"
 #import "PhotoSubmitterManager.h"
 
 /*!
  * singleton instance
  */
-static TottePostSettings* TottePostSettingsSingletonInstance;
+static PhotoSubmitterSettings* PhotoSubmitterSettingsSingletonInstance;
 
-#define TPS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
-#define TPS_KEY_GPS_ENABLED @"gpsEnabled"
-#define TPS_KEY_SUBMITTER_ENABLED_DATES @"submitterEnabledDates"
-#define TPS_KEY_USER_EMAIL @"TottepostEmailAddress"
-#define TPS_KEY_USER_NAME @"TottepostUsername"
+#define PS_KEY_COMMENT_POST_ENABLED @"commentPostEnabled"
+#define PS_KEY_GPS_ENABLED @"gpsEnabled"
+#define PS_KEY_SUBMITTER_ENABLED_DATES @"submitterEnabledDates"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface TottePostSettings(PrivateImplementation)
+@interface PhotoSubmitterSettings(PrivateImplementation)
 - (void) writeSetting:(NSString *)key value:(id)value;
 - (id)readSetting:(NSString *)key;
 @end
 
-@implementation TottePostSettings(PrivateImplementation)
+@implementation PhotoSubmitterSettings(PrivateImplementation)
 /*!
  * write settings to user defaults
  */
@@ -50,7 +48,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 //-----------------------------------------------------------------------------
 //Public Implementations
 //----------------------------------------------------------------------------
-@implementation TottePostSettings
+@implementation PhotoSubmitterSettings
 
 - (id)init{
     self = [super init];
@@ -58,7 +56,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSMutableDictionary* defaultValue = [[NSMutableDictionary alloc] init];
         NSArray* supportedTypes = [PhotoSubmitterManager registeredPhotoSubmitters];
-        [defaultValue setObject:supportedTypes forKey:TPS_KEY_SUBMITTER_ENABLED_DATES];
+        [defaultValue setObject:supportedTypes forKey:PS_KEY_SUBMITTER_ENABLED_DATES];
         [defaults registerDefaults:defaultValue];
         [defaults synchronize];
         
@@ -71,7 +69,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  * get comment post enabled
  */
 - (BOOL)commentPostEnabled{
-    NSNumber *value = (NSNumber *)[self readSetting:TPS_KEY_COMMENT_POST_ENABLED];
+    NSNumber *value = (NSNumber *)[self readSetting:PS_KEY_COMMENT_POST_ENABLED];
     if(value == nil){
         return NO;
     }
@@ -82,14 +80,14 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  * set comment post enabled
  */
 - (void)setCommentPostEnabled:(BOOL)commentPostEnabled{
-    [self writeSetting:TPS_KEY_COMMENT_POST_ENABLED value:[NSNumber numberWithBool:commentPostEnabled]];
+    [self writeSetting:PS_KEY_COMMENT_POST_ENABLED value:[NSNumber numberWithBool:commentPostEnabled]];
 }
 
 /*!
   * get gps enabled
   */
 - (BOOL)gpsEnabled{
-    NSNumber *value = (NSNumber *)[self readSetting:TPS_KEY_GPS_ENABLED];
+    NSNumber *value = (NSNumber *)[self readSetting:PS_KEY_GPS_ENABLED];
     if(value == nil){
         return NO;
     }
@@ -100,18 +98,18 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  * set gps enabled
  */
 - (void)setGpsEnabled:(BOOL)gpsEnabled{
-    [self writeSetting:TPS_KEY_GPS_ENABLED value:[NSNumber numberWithBool:gpsEnabled]];
+    [self writeSetting:PS_KEY_GPS_ENABLED value:[NSNumber numberWithBool:gpsEnabled]];
 }
 
 /*!
  * get supported type indexes
  */
 - (NSMutableDictionary *)submitterEnabledDates{
-    id retval = [self readSetting:TPS_KEY_SUBMITTER_ENABLED_DATES];
+    id retval = [self readSetting:PS_KEY_SUBMITTER_ENABLED_DATES];
     if([retval isKindOfClass:[NSMutableDictionary class]]){
         return retval;
     }
-    [self writeSetting:TPS_KEY_SUBMITTER_ENABLED_DATES value:nil];
+    [self writeSetting:PS_KEY_SUBMITTER_ENABLED_DATES value:nil];
     return nil;
 }
 
@@ -119,34 +117,7 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
  * set supported type indexes
  */
 - (void)setSubmitterEnabledDates:(NSDictionary *)submitterEnabledDates{
-    [self writeSetting:TPS_KEY_SUBMITTER_ENABLED_DATES value:submitterEnabledDates];
-}
-
-/*!
- * get email address
- */
-- (NSString *)emailAddress{
-    return [self readSetting:TPS_KEY_USER_EMAIL];
-}
-
-/*!
- * set email address
- */
-- (void)setEmailAddress:(NSString *)emailAddress{
-    [self writeSetting:TPS_KEY_USER_EMAIL value:emailAddress];
-}
-/*!
- * get username
- */
-- (NSString *)username{
-    return [self readSetting:TPS_KEY_USER_NAME];
-}
-
-/*!
- * set username
- */
-- (void)setUsername:(NSString *)username{
-    [self writeSetting:TPS_KEY_USER_NAME value:username];
+    [self writeSetting:PS_KEY_SUBMITTER_ENABLED_DATES value:submitterEnabledDates];
 }
 
 #pragma mark -
@@ -154,10 +125,10 @@ static TottePostSettings* TottePostSettingsSingletonInstance;
 /*!
  * singleton method
  */
-+ (TottePostSettings *)getInstance{
-    if(TottePostSettingsSingletonInstance == nil){
-        TottePostSettingsSingletonInstance = [[TottePostSettings alloc] init];
++ (PhotoSubmitterSettings *)getInstance{
+    if(PhotoSubmitterSettingsSingletonInstance == nil){
+        PhotoSubmitterSettingsSingletonInstance = [[PhotoSubmitterSettings alloc] init];
     }
-    return TottePostSettingsSingletonInstance;
+    return PhotoSubmitterSettingsSingletonInstance;
 }
 @end

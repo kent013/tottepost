@@ -7,7 +7,7 @@
 //
 
 #import "CreateAlbumPhotoSubmitterSettingViewController.h"
-#import "PhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterServiceSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
 #import "TTLang.h"
 

@@ -6,17 +6,17 @@
 //  Copyright (c) 2012 cocotomo All rights reserved.
 //
 
-#import "PhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterServiceSettingTableViewController.h"
 #import "TTLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface PhotoSubmitterSettingTableViewController(PrivateImplementation)
+@interface PhotoSubmitterServiceSettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
 @end
 
-@implementation PhotoSubmitterSettingTableViewController(PrivateImplementation)
+@implementation PhotoSubmitterServiceSettingTableViewController(PrivateImplementation)
 /*!
  * initialize
  */
@@ -27,7 +27,7 @@
 //-----------------------------------------------------------------------------
 //Public Implementations
 //-----------------------------------------------------------------------------
-@implementation PhotoSubmitterSettingTableViewController
+@implementation PhotoSubmitterServiceSettingTableViewController
 /*!
  * initialize
  */

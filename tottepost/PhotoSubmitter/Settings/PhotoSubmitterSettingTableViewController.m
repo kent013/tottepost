@@ -6,32 +6,18 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
-#import "SettingTableViewController.h"
-#import "TottePostSettings.h"
+#import "PhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterSettings.h"
 #import "TTLang.h"
 #import "PhotoSubmitterSwitch.h"
-
-#define SV_SECTION_GENERAL  0
-#define SV_SECTION_ACCOUNTS 1
-
-#define SV_GENERAL_COUNT 3
-#define SV_GENERAL_COMMENT 0
-#define SV_GENERAL_GPS 1
-#define SV_GENERAL_ABOUT 2
-
-#define SWITCH_NOTFOUND -1
-
-static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface SettingTableViewController(PrivateImplementation)
+@interface PhotoSubmitterSettingTableViewController(PrivateImplementation)
 - (void) setupInitialState;
-- (void) addAlbumSettingTableViewControllerWithType:(NSString *) type;
-- (PhotoSubmitterSettingTableViewController *)settingTableViewControllerForType:(NSString *) type;
+- (PhotoSubmitterServiceSettingTableViewController *)settingTableViewControllerForType:(NSString *) type;
 - (void) settingDone:(id)sender;
-- (UITableViewCell *) createGeneralSettingCell:(int)tag;
 - (UITableViewCell *) createSocialAppButtonWithTag:(int)tag;
 - (void) didSocialAppSwitchChanged:(id)sender;
 - (void) didGeneralSwitchChanged:(id)sender;
@@ -44,7 +30,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
 #pragma mark -
 #pragma mark Private Implementations
-@implementation SettingTableViewController(PrivateImplementation)
+@implementation PhotoSubmitterSettingTableViewController(PrivateImplementation)
 /*!
  * setup initial state
  */
@@ -55,21 +41,16 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     
     for(NSString *type in [PhotoSubmitterManager registeredPhotoSubmitters]){
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
-        if(submitter.isAlbumSupported &&
-           [type isEqualToString:kTwitterPhotoSubmitterType] == false){
-            [self addAlbumSettingTableViewControllerWithType:type];
+        PhotoSubmitterServiceSettingTableViewController *settingView = 
+          submitter.settingView;
+        if(settingView != nil){
+            [settingControllers_ setObject:settingView forKey:type];
         }
     }
-    [settingControllers_ 
-     setObject:[[TwitterPhotoSubmitterSettingTableViewController alloc] initWithType:kTwitterPhotoSubmitterType]
-     forKey:kTwitterPhotoSubmitterType];
-
-    aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
-    aboutSettingViewController_.delegate = self;
     
     [[PhotoSubmitterManager sharedInstance] setAuthenticationDelegate:self];
     
-    NSDictionary *submitterEnabledDates = [TottePostSettings getInstance].submitterEnabledDates;
+    NSDictionary *submitterEnabledDates = [PhotoSubmitterSettings getInstance].submitterEnabledDates;
     NSArray *keys = [submitterEnabledDates allKeys];
     if(submitterEnabledDates == nil || 
        [PhotoSubmitterManager registeredPhotoSubmitterCount] != submitterEnabledDates.count){
@@ -89,18 +70,9 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 }
 
 /*!
- * add Album setting table view controller
- */
-- (void)addAlbumSettingTableViewControllerWithType:(NSString *)type{
-    [settingControllers_ 
-     setObject:[[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:type]
-     forKey:type];
-}
-
-/*!
  * get setting table view fo type
  */
-- (PhotoSubmitterSettingTableViewController *)settingTableViewControllerForType:(NSString *)type{
+- (PhotoSubmitterServiceSettingTableViewController *)settingTableViewControllerForType:(NSString *)type{
     return [settingControllers_ objectForKey:type];
 }
 
@@ -133,7 +105,6 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     switch (section) {
         case SV_SECTION_GENERAL : return [TTLang lstr:@"Settings_Section_General"]; break;
         case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts"]; break;
-        case SV_GENERAL_ABOUT   : return [TTLang lstr:@"Settings_Section_About"]; break;
     }
     return nil;
 }
@@ -164,33 +135,6 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 }
 
 /*!
- * create general setting cell
- */
-- (UITableViewCell *)createGeneralSettingCell:(int)tag{
-    TottePostSettings *settings = [TottePostSettings getInstance];
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    UISwitch *s = nil;
-    switch (tag) {
-        case SV_GENERAL_ABOUT:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_About"];
-            break;
-        case SV_GENERAL_COMMENT:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
-            s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
-            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = s;
-            break;
-        case SV_GENERAL_GPS:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_GPSTagging"];
-            UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
-            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = s;
-            break;
-    }
-    return cell;
-}
-
-/*!
  * create social app button
  */
 -(UITableViewCell *) createSocialAppButtonWithTag:(int)tag{
@@ -214,17 +158,11 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  * on row selected
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == SV_SECTION_GENERAL){
-        switch (indexPath.row) {
-            case SV_GENERAL_ABOUT: 
-                [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
-                break;
-        }        
-    }else if(indexPath.section == SV_SECTION_ACCOUNTS){
+    if(indexPath.section == SV_SECTION_ACCOUNTS){
         NSString * type = (NSString *)[self indexToSubmitterType:indexPath.row];
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
         if(submitter.isEnabled){
-            PhotoSubmitterSettingTableViewController *vc = [self settingTableViewControllerForType:type];
+            PhotoSubmitterServiceSettingTableViewController *vc = [self settingTableViewControllerForType:type];
             if(vc != nil){
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -261,7 +199,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         }
         [enabledDates setObject:s.onEnabled forKey:s.submitterType];
     }
-    [TottePostSettings getInstance].submitterEnabledDates = enabledDates;
+    [PhotoSubmitterSettings getInstance].submitterEnabledDates = enabledDates;
 }
 
 #pragma mark -
@@ -292,7 +230,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  * if social app switch changed
  */
 - (void)didGeneralSwitchChanged:(id)sender{
-    TottePostSettings *settings = [TottePostSettings getInstance];
+    PhotoSubmitterSettings *settings = [PhotoSubmitterSettings getInstance];
     UISwitch *s = (UISwitch *)sender;
     switch(s.tag){
         case SV_GENERAL_COMMENT: 
@@ -347,7 +285,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 #pragma mark -
 #pragma mark Public Implementations
 //-----------------------------------------------------------------------------
-@implementation SettingTableViewController
+@implementation PhotoSubmitterSettingTableViewController
 @synthesize delegate;
 /*!
  * initialize with frame
@@ -373,6 +311,31 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         }
         [s setOn:isLogined animated:YES];
     }
+}
+
+
+/*!
+ * create general setting cell
+ */
+- (UITableViewCell *)createGeneralSettingCell:(int)tag{
+    PhotoSubmitterSettings *settings = [PhotoSubmitterSettings getInstance];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    UISwitch *s = nil;
+    switch (tag) {
+        case SV_GENERAL_COMMENT:
+            cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
+            s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
+            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = s;
+            break;
+        case SV_GENERAL_GPS:
+            cell.textLabel.text = [TTLang lstr:@"Settings_Row_GPSTagging"];
+            UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
+            [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = s;
+            break;
+    }
+    return cell;
 }
 
 #pragma mark -

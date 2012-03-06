@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TottePostSettings : NSObject{
+@interface PhotoSubmitterSettings : NSObject{
 }
 @property (nonatomic, assign) BOOL commentPostEnabled;
 @property (nonatomic, assign) BOOL gpsEnabled;
 @property (nonatomic, assign) NSDictionary *submitterEnabledDates;
-@property (nonatomic, assign) NSString *emailAddress;
-@property (nonatomic, assign) NSString *username;
-+ (TottePostSettings *)getInstance;
++ (PhotoSubmitterSettings *)getInstance;
 @end
 
 

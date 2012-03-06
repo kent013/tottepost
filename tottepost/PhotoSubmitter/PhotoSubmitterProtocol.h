@@ -17,6 +17,8 @@
 @protocol PhotoSubmitterAuthControllerDelegate;
 @protocol PhotoSubmitterAlbumDelegate;
 
+@class PhotoSubmitterServiceSettingTableViewController;
+
 /*!
  * protocol for submitter
  */
@@ -41,6 +43,7 @@
 @property (nonatomic, assign) PhotoSubmitterAlbumEntity *targetAlbum;
 @property (nonatomic, assign) NSString *username;
 @property (nonatomic, assign) NSArray *albumList;
+@property (nonatomic, readonly) PhotoSubmitterServiceSettingTableViewController *settingView;
 - (void) login;
 - (void) logout;
 - (void) enable;

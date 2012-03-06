@@ -11,7 +11,7 @@
 #import "PhotoSubmitterSettingTableViewProtocol.h"
 
 
-@interface PhotoSubmitterSettingTableViewController : UITableViewController<PhotoSubmitterSettingTableViewProtocol>{
+@interface PhotoSubmitterServiceSettingTableViewController : UITableViewController<PhotoSubmitterServiceSettingTableViewProtocol>{
     NSString *type_;
 }
 

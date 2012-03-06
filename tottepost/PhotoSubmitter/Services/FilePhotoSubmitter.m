@@ -112,4 +112,11 @@
 - (NSString *)displayName{
     return @"Camera Roll";
 }
+
+/*!
+ * get setting view
+ */
+- (PhotoSubmitterServiceSettingTableViewController *)settingView{
+    return nil;
+}
 @end

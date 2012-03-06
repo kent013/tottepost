@@ -15,6 +15,8 @@
 #import "UIImage+EXIF.h"
 #import "PDKeychainBindings.h"
 #import "RegexKitLite.h"
+#import "AlbumPhotoSubmitterSettingTableViewController.h"
+#import "SimplePhotoSubmitterSettingTableViewController.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -402,6 +404,16 @@
  */
 - (UIImage *)smallIcon{
     return [UIImage imageNamed:[self getIconImageNameWithSize:16]];
+}
+
+/*!
+ * setting view
+ */
+- (PhotoSubmitterServiceSettingTableViewController *)settingView{
+    if(self.isAlbumSupported){
+        return [[AlbumPhotoSubmitterSettingTableViewController alloc] initWithType:self.type];
+    }
+    return [[SimplePhotoSubmitterSettingTableViewController alloc] initWithType:self.type];
 }
 
 #pragma mark - UTILITY METHODS
