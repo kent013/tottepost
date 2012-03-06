@@ -32,9 +32,12 @@ static CGFloat kTextViewInset = 31;
 
 static const CGFloat kUITextViewVerticalPadding = 6;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
 CGRect UVRectContract(CGRect rect, CGFloat dx, CGFloat dy) {
 	return CGRectMake(rect.origin.x, rect.origin.y, rect.size.width - dx, rect.size.height - dy);
 }
+#pragma clang diagnostic pop
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
