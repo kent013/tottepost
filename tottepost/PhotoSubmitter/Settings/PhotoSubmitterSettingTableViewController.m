@@ -7,6 +7,8 @@
 //
 
 #import "PhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterSettingTableViewProtocol.h"
+#import "PhotoSubmitterServiceSettingTableViewController.h"
 #import "PhotoSubmitterSettings.h"
 #import "TTLang.h"
 #import "PhotoSubmitterSwitch.h"
@@ -381,18 +383,6 @@
     [self setTitle:[TTLang lstr:@"Settings_Title"]];
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:SV_GENERAL_COMMENT inSection:SV_SECTION_GENERAL], nil] withRowAnimation:NO];
-}
-
-#pragma mark -
-#pragma mark AboutSettingViewController delegate
-- (void)didUserVoiceFeedbackButtonPressed{
-    [self.parentViewController dismissModalViewControllerAnimated:YES];
-    [self.delegate didUserVoiceFeedbackButtonPressed];
-}
-
-- (void)didMailFeedbackButtonPressed{
-    [self.parentViewController dismissModalViewControllerAnimated:YES];
-    [self.delegate didMailFeedbackButtonPressed];
 }
 
 #pragma mark -

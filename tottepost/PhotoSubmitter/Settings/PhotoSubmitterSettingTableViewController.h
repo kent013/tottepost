@@ -7,18 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AlbumPhotoSubmitterSettingTableViewController.h"
-#import "PhotoSubmitterServiceSettingTableViewController.h"
-#import "TwitterPhotoSubmitterSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
-#import "AboutSettingViewController.h"
 
 @protocol PhotoSubmitterSettingTableViewControllerDelegate;
 
 /*!
  * setting view controller
  */
-@interface PhotoSubmitterSettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate, AboutSettingViewControllerDelegate>{
+@interface PhotoSubmitterSettingTableViewController : UITableViewController<PhotoSubmitterAuthenticationDelegate>{
 @protected
     __strong NSMutableDictionary *settingControllers_;
     __strong NSMutableArray *switches_;
@@ -30,6 +26,4 @@
 
 @protocol PhotoSubmitterSettingTableViewControllerDelegate <NSObject>
 - (void) didDismissSettingTableViewController;
-- (void) didMailFeedbackButtonPressed;
-- (void) didUserVoiceFeedbackButtonPressed;
 @end

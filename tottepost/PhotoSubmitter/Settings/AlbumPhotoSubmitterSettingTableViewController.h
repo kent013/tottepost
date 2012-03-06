@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FBConnect.h"
 #import "PhotoSubmitterProtocol.h"
 #import "SimplePhotoSubmitterSettingTableViewController.h"
 #import "CreateAlbumPhotoSubmitterSettingViewController.h"

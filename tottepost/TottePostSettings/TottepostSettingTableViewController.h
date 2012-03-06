@@ -3,13 +3,18 @@
 //  tottepost
 //
 //  Created by Kentaro ISHITOYA on 12/03/06.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
 #import "PhotoSubmitterSettingTableViewController.h"
+#import "AboutSettingViewController.h"
 
-@interface TottepostSettingTableViewController : PhotoSubmitterSettingTableViewController{
+@protocol TottepostSettingTableViewControllerDelegate;
+@interface TottepostSettingTableViewController : PhotoSubmitterSettingTableViewController<AboutSettingViewControllerDelegate>{
     __strong AboutSettingViewController *aboutSettingViewController_;
 }
-
+@end
+@protocol TottepostSettingTableViewControllerDelegate<PhotoSubmitterSettingTableViewControllerDelegate>
+- (void) didMailFeedbackButtonPressed;
+- (void) didUserVoiceFeedbackButtonPressed;
 @end

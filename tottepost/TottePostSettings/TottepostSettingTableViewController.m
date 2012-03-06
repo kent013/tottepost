@@ -9,6 +9,7 @@
 #import "TottepostSettingTableViewController.h"
 #import "TTLang.h"
 #import "PhotoSubmitterSettings.h"
+#import "PhotoSubmitterSettingTableViewProtocol.h"
 
 #define SV_SECTION_GENERAL  0
 #define SV_GENERAL_ABOUT 2
@@ -98,4 +99,18 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     }
     return cell;
 }
+
+
+#pragma mark -
+#pragma mark AboutSettingViewController delegate
+- (void)didUserVoiceFeedbackButtonPressed{
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [(id<TottepostSettingTableViewControllerDelegate>)self.delegate didUserVoiceFeedbackButtonPressed];
+}
+
+- (void)didMailFeedbackButtonPressed{
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
+    [(id<TottepostSettingTableViewControllerDelegate>)self.delegate didMailFeedbackButtonPressed];
+}
+
 @end
