@@ -12,7 +12,7 @@ PhotoSubmitter Client Code
 PhotoSubmitter supports authentication with code like,
 
 ```
-[[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeFacebook] login];
+[[PhotoSubmitterManager submitterForType:@"FacebookPhotoSubmitter"] login];
 ```
 
 This code will brings up Safari or Facebook app in your iPhone for authentication. You can receive messages from PhotoSubmitter while authenticating with implementing `PhotoSubmitterAuthenticationDelegate`. 
@@ -20,8 +20,8 @@ This code will brings up Safari or Facebook app in your iPhone for authenticatio
 There are a lot of supported services, Facebook, Twitter, Dropbox and so on. You can enable submitter with just calling login method.
 
 ```
-[[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeDropbox] login];
-[[PhotoSubmitterManager submitterForType:PhotoSubmitterTypeEvernote] login];
+[[PhotoSubmitterManager submitterForType:@"DropboxPhotoSubmitter"] login];
+[[PhotoSubmitterManager submitterForType:@"EvernotePhotoSubmitter"] login];
 ```
 
 Once PhotoSubmitter is enabled and authenticated, you can submit photo to the service like this,
@@ -205,9 +205,9 @@ Common libraries are CoreLocation.framework, ImageIO.framework, [FBNetworkReacha
 
 PhotoSubmitterSettings
 ---------------------------------------
-There are useful setting component for PhotoSubmitter, provided by tottepost. PhotoSubmitterSetting component provides comment/GPS toggle switch, PhotoSubmitter toggle switches, album listing and creating.
+There are useful setting component for PhotoSubmitter. PhotoSubmitterSetting component provides comment/GPS toggle switch, PhotoSubmitter toggle switches, album listing and creating.
 
-Source codes are stored in [tottepost/TottePostSettings](https://github.com/kent013/tottepost/tree/master/tottepost/TottePostSettings). The codes are containing tottepost specific feedback functionality. You may remove it before use them.
+Source codes are stored in [tottepost/PhotoSubmitter/Settings](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter/Settings).
 
 
 Implementing New PhotoSubmitter
@@ -217,10 +217,9 @@ FacebookPhotoSubmitter is suitable for Safari or App authentication. If the serv
 
 -
 ### PhotoSubmitter Interface declaration
-* Name new class as [Hoge]PhotoSubmitter where Hoge is service name.
+* Class name must be [Hoge]PhotoSubmitter where Hoge is service name.
 * Extend `PhotoSubmitter`.
 * Implement `PhotoSubmitterInstanceProtocol`.
-* Add new `PhotoSubmitterType`.
 
 For example,
 
@@ -394,24 +393,6 @@ Return value of the method is NSURLConnection or some instance represents indivi
 
 -
 #### Override PhotoSubmitter's method.
-**type**  
-return PhotoSubmitterType you declared.
-
-```
-- (PhotoSubmitterType) type{
-    return PhotoSubmitterTypeFacebook;
-}
-```
-
-**name**  
-return your submitter's service name like `Dropbox`, `Facebook`
-
-```
-- (NSString *)name{
-    return @"Facebook";
-}
-```
-
 **isSessionValid**  
 return your submitter's authentication is valid.
 
@@ -424,21 +405,3 @@ return your submitter's authentication is valid.
 }
 ```
 
--
-#### Add new PhotoSubmitter to PhotoSubmitterFactory.
-Currently you have to add a code to generate newly added PhotoSubmitter's instance at `
-+ (id<PhotoSubmitterProtocol>)createWithType:(PhotoSubmitterType)type` in class PhotoSubmitterFatory.
- 
-```
-+ (id<PhotoSubmitterProtocol>)createWithType:(PhotoSubmitterType)type{
-    id <PhotoSubmitterProtocol> submitter = nil;
-    switch (type) {
-        case PhotoSubmitterTypeFacebook:
-            submitter = [[FacebookPhotoSubmitter alloc] init];
-            break;
-        default:
-            break;
-    }
-    return submitter;
-}
-```
