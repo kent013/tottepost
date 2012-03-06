@@ -10,7 +10,7 @@
 #import "PhotoSubmitterManager.h"
 #import "PhotoSubmitterAlbumEntity.h"
 #import "RegexKitLite.h"
-#import "TTLang.h"
+#import "PSLang.h"
 
 #define FSV_SECTION_ACCOUNT 0
 #define FSV_SECTION_ALBUMS 1
@@ -80,7 +80,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(self.submitter.isAlbumSupported){
         switch (section) {
-            case FSV_SECTION_ALBUMS : return [TTLang lstr:@"Detail_Section_Album"]; break;
+            case FSV_SECTION_ALBUMS : return [PSLang localized:@"Detail_Section_Album"]; break;
         }
     }
     return [super tableView:tableView titleForHeaderInSection:section];
@@ -92,7 +92,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     if(self.submitter.isAlbumSupported){
         switch (section){
-            case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[TTLang lstr:@"Album_Detail_Section_Album_Footer"], self.submitter.name];
+            case FSV_SECTION_ALBUMS: return [NSString stringWithFormat:[PSLang localized:@"Album_Detail_Section_Album_Footer"], self.submitter.name];
         }
     }
     return [super tableView:tableView titleForFooterInSection:section];;
@@ -106,7 +106,7 @@
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     if(indexPath.section == FSV_SECTION_ALBUMS && self.submitter.isAlbumSupported){
         if(self.submitter.albumList.count == indexPath.row){
-            cell.textLabel.text = [TTLang lstr:@"Album_Detail_Section_Create_Album_Title"];
+            cell.textLabel.text = [PSLang localized:@"Album_Detail_Section_Create_Album_Title"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else{
             PhotoSubmitterAlbumEntity *album = [self.submitter.albumList objectAtIndex:indexPath.row];

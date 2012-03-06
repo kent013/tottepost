@@ -7,7 +7,7 @@
 //
 
 #import "PhotoSubmitterAccountTableViewController.h"
-#import "TTLang.h"
+#import "PSLang.h"
 
 #define ASV_SECTION_USERNAME 0
 #define ASV_SECTION_PASSWORD 1
@@ -28,7 +28,7 @@
 -(void)setupInitialState{
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(handleDoneButtonTapped:)];
     
-    [self.navigationItem setTitle:[TTLang lstr:@"Account_Navigation_Title"]];
+    [self.navigationItem setTitle:[PSLang localized:@"Account_Navigation_Title"]];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
 }
 
@@ -97,8 +97,8 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case ASV_SECTION_USERNAME: return [TTLang lstr:@"Account_Section_Username"];
-        case ASV_SECTION_PASSWORD: return [TTLang lstr:@"Account_Section_Password"];
+        case ASV_SECTION_USERNAME: return [PSLang localized:@"Account_Section_Username"];
+        case ASV_SECTION_PASSWORD: return [PSLang localized:@"Account_Section_Password"];
     }
     return nil;
 }
@@ -128,11 +128,11 @@
     
     switch (indexPath.section) {
         case ASV_SECTION_USERNAME : 
-            textField.placeholder = [TTLang lstr:@"Account_Section_Username_Placeholder"];
+            textField.placeholder = [PSLang localized:@"Account_Section_Username_Placeholder"];
             usernameTextField_ = textField;
             break;
         case ASV_SECTION_PASSWORD : 
-            textField.placeholder = [TTLang lstr:@"Account_Section_Password_Placeholder"];
+            textField.placeholder = [PSLang localized:@"Account_Section_Password_Placeholder"];
             textField.keyboardType = UIKeyboardTypeAlphabet;
             textField.secureTextEntry = YES;
             passwordTextField_ = textField;

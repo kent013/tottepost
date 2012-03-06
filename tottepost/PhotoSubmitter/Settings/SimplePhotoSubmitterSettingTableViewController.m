@@ -8,7 +8,7 @@
 
 #import "SimplePhotoSubmitterSettingTableViewController.h"
 #import "PhotoSubmitterServiceSettingTableViewController.h"
-#import "TTLang.h"
+#import "PSLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -65,7 +65,7 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case SV_SECTION_ACCOUNT: return [self.submitter.name stringByAppendingString:[TTLang lstr:@"Detail_Section_Account"]] ; break;
+        case SV_SECTION_ACCOUNT: return [self.submitter.name stringByAppendingString:[PSLang localized:@"Detail_Section_Account"]] ; break;
     }
     return nil;
 }
@@ -85,7 +85,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if(indexPath.section == SV_SECTION_ACCOUNT){
         if(indexPath.row == SV_ROW_ACCOUNT_NAME){
-            cell.textLabel.text = [TTLang lstr:@"Detail_Row_AccountName"];
+            cell.textLabel.text = [PSLang localized:@"Detail_Row_AccountName"];
             UILabel *label = [[UILabel alloc] init];
             label.text = self.submitter.username;
             label.font = [UIFont systemFontOfSize:15.0];
@@ -93,9 +93,9 @@
             label.backgroundColor = [UIColor clearColor];
             cell.accessoryView = label;
         }else if(indexPath.row == SV_ROW_ACCOUNT_LOGOUT){
-            cell.textLabel.text = [TTLang lstr:@"Detail_Row_Logout"];
+            cell.textLabel.text = [PSLang localized:@"Detail_Row_Logout"];
             UIButton *button = [UIButton buttonWithType:SV_BUTTON_TYPE];
-            [button setTitle:[TTLang lstr:@"Detail_Row_LogoutButtonTitle"] forState:UIControlStateNormal];
+            [button setTitle:[PSLang localized:@"Detail_Row_LogoutButtonTitle"] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(didLogoutButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             cell.accessoryView = button;
         }

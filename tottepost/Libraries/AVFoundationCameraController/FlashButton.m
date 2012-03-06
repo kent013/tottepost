@@ -55,7 +55,7 @@
     [self setText];
         
     offButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
-    [offButton_ setTitle:[TTLang lstr:@"Flash_Off"] forState:UIControlStateNormal];
+    [offButton_ setTitle:[TTLang localized:@"Flash_Off"] forState:UIControlStateNormal];
     offButton_.titleLabel.font = [UIFont systemFontOfSize:12];
     [offButton_ setTitleColor:labelColor forState:UIControlStateNormal];
     offButton_.tag = AVCaptureFlashModeOff;
@@ -64,7 +64,7 @@
     [offButton_ addTarget:self action:@selector(handleSelectFlashModeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     onButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
-    [onButton_ setTitle:[TTLang lstr:@"Flash_On"] forState:UIControlStateNormal];
+    [onButton_ setTitle:[TTLang localized:@"Flash_On"] forState:UIControlStateNormal];
     [onButton_ setTitleColor:labelColor forState:UIControlStateNormal];
     onButton_.titleLabel.font = [UIFont systemFontOfSize:12];
     onButton_.tag = AVCaptureFlashModeOn;
@@ -73,7 +73,7 @@
     [onButton_ addTarget:self action:@selector(handleSelectFlashModeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     autoButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
-    [autoButton_ setTitle:[TTLang lstr:@"Flash_Auto"] forState:UIControlStateNormal];
+    [autoButton_ setTitle:[TTLang localized:@"Flash_Auto"] forState:UIControlStateNormal];
     [autoButton_ setTitleColor:labelColor forState:UIControlStateNormal];
     autoButton_.titleLabel.font = [UIFont systemFontOfSize:12];
     autoButton_.tag = AVCaptureFlashModeAuto;
@@ -92,13 +92,13 @@
 -(void) setText{
     switch (flashMode_) {
         case AVCaptureFlashModeOn:
-            label.text = [TTLang lstr:@"Flash_On"];
+            label.text = [TTLang localized:@"Flash_On"];
             break;
         case AVCaptureFlashModeOff:
-            label.text = [TTLang lstr:@"Flash_Off"];
+            label.text = [TTLang localized:@"Flash_Off"];
             break;
         case AVCaptureFlashModeAuto:
-            label.text = [TTLang lstr:@"Flash_Auto"];
+            label.text = [TTLang localized:@"Flash_Auto"];
             break;            
         default:
             break;

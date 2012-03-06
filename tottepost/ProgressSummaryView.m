@@ -62,9 +62,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)updateLabel{
     imageView.image = cancelImage;
     if(operationCount_ == 0){
-        textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Finished"], operationCount_];
+        textLabel_.text = [NSString stringWithFormat:[TTLang localized:@"Progress_Finished"], operationCount_];
     }else{
-        textLabel_.text = [NSString stringWithFormat:[TTLang lstr:@"Progress_Uploading"], operationCount_];
+        textLabel_.text = [NSString stringWithFormat:[TTLang localized:@"Progress_Uploading"], operationCount_];
     }
     [textLabel_ sizeToFit];
     [self updateWithFrame:self.frame];
@@ -76,11 +76,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender{
     [[PhotoSubmitterManager sharedInstance] pause];
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Title"]
-                               message:[TTLang lstr:@"Alert_Message"]
+    [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Title"]
+                               message:[TTLang localized:@"Alert_Message"]
                               delegate:self 
-                     cancelButtonTitle:[TTLang lstr:@"Alert_Cancel"]
-                     otherButtonTitles:[TTLang lstr:@"Alert_OK"], nil];
+                     cancelButtonTitle:[TTLang localized:@"Alert_Cancel"]
+                     otherButtonTitles:[TTLang localized:@"Alert_OK"], nil];
     [alert show];
 }
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "PhotoSubmitterServiceSettingTableViewController.h"
-#import "TTLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations

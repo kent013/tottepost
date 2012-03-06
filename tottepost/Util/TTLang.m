@@ -12,7 +12,7 @@
 /*!
  * get localized string
  */
-+ (NSString *)lstr:(NSString *)key{
-    return NSLocalizedString(key, @"");
++ (NSString *)localized:(NSString *)key{
+    return NSLocalizedString(key, nil);
 }
 @end

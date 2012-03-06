@@ -10,7 +10,7 @@
 #import "PhotoSubmitterSettingTableViewProtocol.h"
 #import "PhotoSubmitterServiceSettingTableViewController.h"
 #import "PhotoSubmitterSettings.h"
-#import "TTLang.h"
+#import "PSLang.h"
 #import "PhotoSubmitterSwitch.h"
 
 //-----------------------------------------------------------------------------
@@ -105,8 +105,8 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case SV_SECTION_GENERAL : return [TTLang lstr:@"Settings_Section_General"]; break;
-        case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts"]; break;
+        case SV_SECTION_GENERAL : return [PSLang localized:@"Settings_Section_General"]; break;
+        case SV_SECTION_ACCOUNTS: return [PSLang localized:@"Settings_Section_Accounts"]; break;
     }
     return nil;
 }
@@ -117,7 +117,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     switch (section) {
         case SV_SECTION_GENERAL : break;
-        case SV_SECTION_ACCOUNTS: return [TTLang lstr:@"Settings_Section_Accounts_Footer"]; break;
+        case SV_SECTION_ACCOUNTS: return [PSLang localized:@"Settings_Section_Accounts_Footer"]; break;
     }
     return nil;    
 }
@@ -325,13 +325,13 @@
     UISwitch *s = nil;
     switch (tag) {
         case SV_GENERAL_COMMENT:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_Comment"];
+            cell.textLabel.text = [PSLang localized:@"Settings_Row_Comment"];
             s = [self createSwitchWithTag:tag on:settings.commentPostEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = s;
             break;
         case SV_GENERAL_GPS:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_GPSTagging"];
+            cell.textLabel.text = [PSLang localized:@"Settings_Row_GPSTagging"];
             UISwitch *s = [self createSwitchWithTag:tag on:settings.gpsEnabled];
             [s addTarget:self action:@selector(didGeneralSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = s;
@@ -380,7 +380,7 @@
     [[PhotoSubmitterManager sharedInstance] refreshCredentials];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingDone:)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-    [self setTitle:[TTLang lstr:@"Settings_Title"]];
+    [self setTitle:[PSLang localized:@"Settings_Title"]];
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:SV_GENERAL_COMMENT inSection:SV_SECTION_GENERAL], nil] withRowAnimation:NO];
 }

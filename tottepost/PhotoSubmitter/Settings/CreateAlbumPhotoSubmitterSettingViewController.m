@@ -9,7 +9,7 @@
 #import "CreateAlbumPhotoSubmitterSettingViewController.h"
 #import "PhotoSubmitterServiceSettingTableViewController.h"
 #import "PhotoSubmitterManager.h"
-#import "TTLang.h"
+#import "PSLang.h"
 
 #define CSV_SECTION_CREATE_ALBUM 0
 #define CSV_ROW_FIELD 0
@@ -38,7 +38,7 @@
 -(void)setupInitialState{
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(handleCreateButtonTapped:)];
     
-    [self.navigationItem setTitle:[TTLang lstr:@"Create_Album_Navigation_Title"]];
+    [self.navigationItem setTitle:[PSLang localized:@"Create_Album_Navigation_Title"]];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
 }
 
@@ -56,12 +56,12 @@
     if(title == nil || [title isEqualToString: @""]){
         UIAlertView *alert =
         [[UIAlertView alloc] initWithTitle:
-         [TTLang lstr:@"Create_Album_Alert_Creation_Empty_Title"] 
+         [PSLang localized:@"Create_Album_Alert_Creation_Empty_Title"] 
                                    message:
-         [TTLang lstr:@"Create_Album_Alert_Creation_Empty_Message"]
+         [PSLang localized:@"Create_Album_Alert_Creation_Empty_Message"]
                                   delegate:self 
                          cancelButtonTitle:
-         [TTLang lstr:@"Create_Album_Alert_Creation_Empty_Button_Title"]
+         [PSLang localized:@"Create_Album_Alert_Creation_Empty_Button_Title"]
                          otherButtonTitles:nil];
         [alert show];
         return;
@@ -97,7 +97,7 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case CSV_SECTION_CREATE_ALBUM: return [TTLang lstr:@"Create_Album_Section_Title"];
+        case CSV_SECTION_CREATE_ALBUM: return [PSLang localized:@"Create_Album_Section_Title"];
     }
     return nil;
 }
@@ -119,7 +119,7 @@
         titleField_ = [[UITextField alloc] init];
         titleField_.frame = CGRectInset(cell.frame, 20, 12);
         titleField_.borderStyle = UITextBorderStyleNone;
-        titleField_.placeholder = [TTLang lstr:@"Create_Album_Placeholder"];
+        titleField_.placeholder = [PSLang localized:@"Create_Album_Placeholder"];
         titleField_.clearButtonMode = UITextFieldViewModeWhileEditing;
         titleField_.spellCheckingType = UITextSpellCheckingTypeNo;
         titleField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -149,11 +149,11 @@
     }else{
         UIAlertView *alert =
         [[UIAlertView alloc] initWithTitle:
-         [TTLang lstr:@"Create_Album_Alert_Creation_Failed_Title"] 
+         [PSLang localized:@"Create_Album_Alert_Creation_Failed_Title"] 
                                    message: error.localizedDescription
                                   delegate:self 
                          cancelButtonTitle:
-         [TTLang lstr:@"Create_Album_Alert_Creation_Failed_Button_Title"]
+         [PSLang localized:@"Create_Album_Alert_Creation_Failed_Button_Title"]
                          otherButtonTitles:nil];
         [alert show];
         return;

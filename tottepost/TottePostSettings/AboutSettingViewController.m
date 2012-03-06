@@ -106,8 +106,8 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case ASV_SECTION_ABOUT: return [TTLang lstr:@"About_Section_About"];
-        case ASV_SECTION_FEEDBACK: return [TTLang lstr:@"About_Section_Feedback"];
+        case ASV_SECTION_ABOUT: return [TTLang localized:@"About_Section_About"];
+        case ASV_SECTION_FEEDBACK: return [TTLang localized:@"About_Section_Feedback"];
     }
     return nil;
 }
@@ -117,7 +117,7 @@
  */
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     if(section == ASV_SECTION_FEEDBACK){
-        return [TTLang lstr:@"About_Section_Feedback_Footer"];
+        return [TTLang localized:@"About_Section_Feedback_Footer"];
     }
     return nil;
 }
@@ -132,7 +132,7 @@
     switch(indexPath.section){
         case ASV_SECTION_ABOUT:{
             UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 20, 220)];
-            textView.text = [TTLang lstr:@"AboutText"];
+            textView.text = [TTLang localized:@"AboutText"];
             textView.backgroundColor = [UIColor clearColor];
             textView.dataDetectorTypes = UIDataDetectorTypeLink;
             textView.editable = NO;
@@ -143,26 +143,26 @@
             switch (indexPath.row) {
                 case ASV_ROW_FEEDBACK_MAIL:{
                     UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-                    [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_Mail_Button"] forState:UIControlStateNormal];
+                    [feedbackButton setTitle: [TTLang localized:@"About_Feedback_Mail_Button"] forState:UIControlStateNormal];
                     [feedbackButton addTarget:self action:@selector(handleMailFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = feedbackButton;
-                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_Mail_Title"];
+                    cell.textLabel.text = [TTLang localized:@"About_Feedback_Mail_Title"];
                     break;
                 }
                 case ASV_ROW_FEEDBACK_USERVOICE:{
                     UIButton *feedbackButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-                    [feedbackButton setTitle: [TTLang lstr:@"About_Feedback_UserVoice_Button"] forState:UIControlStateNormal];
+                    [feedbackButton setTitle: [TTLang localized:@"About_Feedback_UserVoice_Button"] forState:UIControlStateNormal];
                     [feedbackButton addTarget:self action:@selector(handleUserVoiceFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = feedbackButton;
-                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_UserVoice_Title"];
+                    cell.textLabel.text = [TTLang localized:@"About_Feedback_UserVoice_Title"];
                     break;
                 }
                 case ASV_ROW_FEEDBACK_RATE:{
                     UIButton *rateButton = [UIButton buttonWithType:ASV_BUTTON_TYPE];
-                    [rateButton setTitle: [TTLang lstr:@"About_Feedback_Rate_Button"] forState:UIControlStateNormal];
+                    [rateButton setTitle: [TTLang localized:@"About_Feedback_Rate_Button"] forState:UIControlStateNormal];
                     [rateButton addTarget:self action:@selector(handleRateFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = rateButton;
-                    cell.textLabel.text = [TTLang lstr:@"About_Feedback_Rate_Title"];
+                    cell.textLabel.text = [TTLang localized:@"About_Feedback_Rate_Title"];
                     break;
                 }
             }

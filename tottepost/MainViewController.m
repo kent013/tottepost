@@ -96,10 +96,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     settingButton_ = [[UIBarButtonItem alloc] init];
     
     //post button
-    postButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang lstr:@"Main_Post"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
+    postButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang localized:@"Main_Post"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostButtonTapped:)];
 
     //cancel button
-    postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang lstr:@"Main_Cancel"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
+    postCancelButton_ = [[UIBarButtonItem alloc] initWithTitle:[TTLang localized:@"Main_Cancel"] style:UIBarButtonItemStyleBordered target:self action:@selector(didPostCancelButtonTapped:)];
     
     //spacer for centalize camera button 
     flexSpace_ = [[UIBarButtonItem alloc]
@@ -246,7 +246,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)postPhoto:(PhotoSubmitterImageEntity *)photo{
     PhotoSubmitterManager *manager = [PhotoSubmitterManager sharedInstance];
     if(manager.enabledSubmitterCount == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"Alert_Error"] message:[TTLang lstr:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -348,8 +348,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void) firstLaunched{
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:[TTLang lstr:@"FirstAlert_Title"] message:[TTLang lstr:@"FirstAlert_Message"]
-                              delegate:nil cancelButtonTitle:[TTLang lstr:@"FirstAlert_OK"] otherButtonTitles:nil];
+    [[UIAlertView alloc] initWithTitle:[TTLang localized:@"FirstAlert_Title"] message:[TTLang localized:@"FirstAlert_Message"]
+                              delegate:nil cancelButtonTitle:[TTLang localized:@"FirstAlert_OK"] otherButtonTitles:nil];
     [alert show];
 }
 @end
@@ -463,7 +463,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
     
-    NSString *msg = [TTLang lstr:@"ProgressCell_Completed"];
+    NSString *msg = [TTLang localized:@"ProgressCell_Completed"];
     int delay = TOTTEPOST_PROGRESS_REMOVE_DELAY;
     if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
@@ -496,7 +496,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * photo submitter did canceled
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{   
-    NSString *msg = [TTLang lstr:@"ProgressCell_Canceled"];
+    NSString *msg = [TTLang localized:@"ProgressCell_Canceled"];
     if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }

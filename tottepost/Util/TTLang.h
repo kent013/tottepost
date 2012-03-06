@@ -12,5 +12,5 @@
 /*!
  * get localized string
  */
-+ (NSString *)lstr:(NSString *)key;
++ (NSString *)localized:(NSString *)key;
 @end

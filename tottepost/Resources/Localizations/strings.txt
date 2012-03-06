@@ -15,10 +15,6 @@
         tags = common
         en = Error
         ja = エラー
-    [Alert_NoNetwork]
-        tags = common
-        en = There is no network connection. \nWe will cancel upload.
-        ja = ネットワークに接続していません。\nアップロードをキャンセルします。
     [Alert_NoSubmittersEnabled]
         tags = common
         en = There is no services enabled.
@@ -31,102 +27,10 @@
         tags = common
         en = Cancel
         ja = キャンセル
-    [Settings_Title]
-        tags = common
-        en = Settings
-        ja = 設定
-    [Settings_Section_General]
-        tags = common
-        en = General
-        ja = 一般
-    [Settings_Section_Accounts]
-        tags = common
-        en = Accounts
-        ja = アカウント
-    [Settings_Section_Accounts_Footer]
-        tags = common
-        en = Tap account name to enter details.
-        ja = サービス名をタップすると\n詳細画面へ移動します。
-    [Settings_Row_Comment]
-        tags = common
-        en = Comment
-        ja = コメント
-    [Settings_Row_GPSTagging]
-        tags = common
-        en = GPS Tagging
-        ja = 位置情報
     [Settings_Row_About]
         tags = common
         en = About / Feedback
         ja = アプリについて / フィードバック
-    [Detail_Section_Account]
-        tags = common
-        en =  Account
-        ja = アカウント
-    [Detail_Section_Album]
-        tags = common
-        en = Album Selection
-        ja = アルバム選択
-    [Detail_Row_AccountName]
-        tags = common
-        en = Account Name
-        ja = アカウント名
-    [Detail_Row_Logout]
-        tags = common
-        en = Logout
-        ja = ログアウト
-    [Detail_Row_LogoutButtonTitle]
-        tags = common
-        en = logout
-        ja = ログアウト
-    [Detail_Section_Twitter_Accounts]
-        tags = common
-        en = Select Account
-        ja = アカウント選択
-    [Album_Detail_Section_Album_Footer]
-        tags = common
-        en = Selected album will be used for tottepost\n If you want to delete/edit album, please do so at %@.
-        ja = 選択されたアルバムが利用されます。\nアルバムを削除、編集したい場合には%@で行ってください。
-    [Album_Detail_Section_Create_Album_Title]
-        tags = common
-        en = Create album
-        ja = アルバム作成
-    [Create_Album_Navigation_Title]
-        tags = common
-        en = Create Album
-        ja = アルバム作成
-    [Create_Album_Section_Title]
-        tags = common
-        en = Album Title
-        ja = アルバム タイトル
-    [Create_Album_Placeholder]
-        tags = common
-        en = 20XX Lunar Tour
-        ja = 20XX年 月旅行
-    [Create_Album_Create_Button_Title]
-        tags = common
-        en = create
-        ja = 作成
-    [Create_Album_Alert_Creation_Empty_Title]
-        tags = common
-        en = Error
-        ja = エラー
-    [Create_Album_Alert_Creation_Empty_Message]
-        tags = common
-        en = Empty album title is not permitted.
-        ja = タイトルを入力してください。
-    [Create_Album_Alert_Creation_Empty_Button_Title]
-        tags = common
-        en = OK
-        ja = OK
-    [Create_Album_Alert_Creation_Failed_Title]
-        tags = common
-        en = Error
-        ja = エラー
-    [Create_Album_Alert_Creation_Failed_Button_Title]
-        tags = common
-        en = OK
-        ja = OK
     [ProgressCell_Completed]
         tags = common
         en = Completed
@@ -147,30 +51,6 @@
         tags = common
         en = Remaining %d
         ja = 残り: %d
-    [Account_Navigation_Title]
-        tags = common
-        en = Authorization
-        ja = 認証
-    [Account_Section_Username]
-        tags = common
-        en = Username
-        ja = ユーザー名
-    [Account_Section_Password]
-        tags = common
-        en = Password
-        ja = パスワード
-    [Account_Section_Username_Placeholder]
-        tags = common
-        en = kentaro.ishitoya@gmail.com
-        ja = kentaro.ishitoya@gmail.com
-    [Account_Section_Password_Placeholder]
-        tags = common
-        en = password
-        ja = password
-    [Flash_On]
-        tags = common
-        en = On
-        ja = オン
     [Flash_Off]
         tags = common
         en = Off
@@ -231,6 +111,12 @@
         tags = common
         en = Rate in AppStore
         ja = AppStoreで評価する
+	[AboutText]
+	    tags = common
+		en = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nWe provice source code on github, \nhttps://github.com/kent013/tottepost\n\nAnd we are using lots of great OSS libraries.\nTheir copyright notices are placed in github.\n\nIf you have any questions or requests, please feel free to send us feedback.\n\nYou can mail us with below button. (You need mail account)
+		ja = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nこのアプリはgithubでソースを公開しています。\nhttps://github.com/kent013/tottepost\nたくさんのOSSライブラリを使っています。\n権利情報はgithubに書いてあります。\n\n要望や質問があれば下のボタンからお気軽に。（メールアカウントが必要です）
+		
+[[AAMFeedback]]
     [AAMFeedbackTitle]
         tags = common, aam_feedback
         en = Feedback
@@ -283,6 +169,8 @@
         tags = common, aam_feedback
         en = Failed to send your feedback. Please try later.
         ja = 送信に失敗しました。しばらく時間をおいてからもう一度お試しください。
+
+[[appirater]]
     [If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!]
         tags = common, appirater
         en = If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!

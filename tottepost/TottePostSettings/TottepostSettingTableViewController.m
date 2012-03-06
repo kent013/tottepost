@@ -43,7 +43,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case SV_GENERAL_ABOUT : return [TTLang lstr:@"Settings_Section_About"]; break;
+        case SV_GENERAL_ABOUT : return [TTLang localized:@"Settings_Section_About"]; break;
         default: return [super tableView:tableView titleForHeaderInSection:section];
     }
     return nil;
@@ -93,7 +93,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     switch (tag) {
         case SV_GENERAL_ABOUT:
-            cell.textLabel.text = [TTLang lstr:@"Settings_Row_About"];
+            cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
             break;
         default: return [super createGeneralSettingCell:tag];
     }
