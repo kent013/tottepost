@@ -26,7 +26,6 @@
 		37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F0D27014A771A400680F8A /* AssetsLibrary.framework */; };
 		37F26D0F149F8C27000172EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F26D0E149F8C27000172EF /* SystemConfiguration.framework */; };
 		37F3633114A5957A00C1BB2B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F3633014A5957A00C1BB2B /* CoreLocation.framework */; };
-		37F58A1B14A361FE005C7700 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F58A1A14A361FE005C7700 /* DropboxSDK.framework */; };
 		37F58A1D14A3633A005C7700 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F58A1C14A3633A005C7700 /* Security.framework */; };
 		37F7431D149D892E002EEADD /* UploadProgressEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7431C149D892E002EEADD /* UploadProgressEntity.m */; };
 		37FB64DE1496238600387490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB64DC1496238600387490 /* MainViewController.m */; };
@@ -263,7 +262,6 @@
 		7901B046150683B6003DA0DC /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF79150683B4003DA0DC /* UIImage+Digest.m */; };
 		7901B047150683B6003DA0DC /* UIImage+EXIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF7B150683B4003DA0DC /* UIImage+EXIF.m */; };
 		791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 791BF31314E020A200697E05 /* libxml2.dylib */; };
-		7920121914E5417900D82D3D /* libObjectiveFlickr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7920121814E5417900D82D3D /* libObjectiveFlickr.a */; };
 		793EB6E514F0BC620018F220 /* libobjc-atompub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 793EB6E414F0BC620018F220 /* libobjc-atompub.a */; };
 		7948AD89150019F5004ABDAB /* UserVoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948ACF6150019F5004ABDAB /* UserVoice.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7948AD8A150019F5004ABDAB /* UVActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948ACF8150019F5004ABDAB /* UVActivityIndicator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -391,7 +389,6 @@
 		7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E66E14F4DD68005C1453 /* libz.dylib */; };
 		7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E67014F4DD92005C1453 /* MobileCoreServices.framework */; };
-		799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
@@ -440,7 +437,6 @@
 		37F0D27014A771A400680F8A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		37F26D0E149F8C27000172EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		37F3633014A5957A00C1BB2B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		37F58A1A14A361FE005C7700 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Frameworks/DropboxSDK.framework; sourceTree = "<group>"; };
 		37F58A1C14A3633A005C7700 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		37F7431B149D892E002EEADD /* UploadProgressEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadProgressEntity.h; sourceTree = "<group>"; };
 		37F7431C149D892E002EEADD /* UploadProgressEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadProgressEntity.m; sourceTree = "<group>"; };
@@ -1210,7 +1206,6 @@
 		7901B04E15068B69003DA0DC /* PicasaAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicasaAPIKey.h; sourceTree = "<group>"; };
 		7913BFD914FFCE20003EE902 /* UserVoiceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserVoiceAPIKey.h; sourceTree = "<group>"; };
 		791BF31314E020A200697E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		7920121814E5417900D82D3D /* libObjectiveFlickr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveFlickr.a; path = Frameworks/objectiveflickr/libObjectiveFlickr.a; sourceTree = "<group>"; };
 		793EB6E414F0BC620018F220 /* libobjc-atompub.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjc-atompub.a"; path = "tottepost/Libraries/objc-atompub/libobjc-atompub.a"; sourceTree = "<group>"; };
 		7948ACF6150019F5004ABDAB /* UserVoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserVoice.m; sourceTree = "<group>"; };
 		7948ACF7150019F5004ABDAB /* UVActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVActivityIndicator.h; sourceTree = "<group>"; };
@@ -1438,7 +1433,6 @@
 		7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+QueryInspector.m"; path = "Util/NSURL+QueryInspector.m"; sourceTree = "<group>"; };
 		7995E66E14F4DD68005C1453 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7995E67014F4DD92005C1453 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDataTouchStaticLib.a; path = Frameworks/GData/libGDataTouchStaticLib.a; sourceTree = "<group>"; };
 		79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutSettingViewController.h; path = TottePostSettings/AboutSettingViewController.h; sourceTree = "<group>"; };
 		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
@@ -1468,7 +1462,6 @@
 				37F3633114A5957A00C1BB2B /* CoreLocation.framework in Frameworks */,
 				7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */,
 				7980589114C86DBA006E3817 /* CoreVideo.framework in Frameworks */,
-				37F58A1B14A361FE005C7700 /* DropboxSDK.framework in Frameworks */,
 				376E153F1494C47800A34E7D /* Foundation.framework in Frameworks */,
 				37F0D26C14A710F900680F8A /* ImageIO.framework in Frameworks */,
 				376A8B3614A05F8100637B68 /* QuartzCore.framework in Frameworks */,
@@ -1477,9 +1470,7 @@
 				37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */,
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
 				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
-				799CD6E514E54ED000F8A0EC /* libGDataTouchStaticLib.a in Frameworks */,
 				793EB6E514F0BC620018F220 /* libobjc-atompub.a in Frameworks */,
-				7920121914E5417900D82D3D /* libObjectiveFlickr.a in Frameworks */,
 				791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */,
 				7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */,
 				7901AFA5150683B5003DA0DC /* DropboxSDK.framework in Frameworks */,
@@ -1576,7 +1567,6 @@
 				37F3633014A5957A00C1BB2B /* CoreLocation.framework */,
 				7980588E14C86D7F006E3817 /* CoreMedia.framework */,
 				7980589014C86DBA006E3817 /* CoreVideo.framework */,
-				37F58A1A14A361FE005C7700 /* DropboxSDK.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
 				37F0D26B14A710F900680F8A /* ImageIO.framework */,
 				79823CDE14D2C3A40094389D /* MessageUI.framework */,
@@ -1588,9 +1578,7 @@
 				37FB65CF149CB64A00387490 /* Twitter.framework */,
 				376E153C1494C47800A34E7D /* UIKit.framework */,
 				37FB65B5149C512A00387490 /* libicucore.dylib */,
-				799CD6E414E54ED000F8A0EC /* libGDataTouchStaticLib.a */,
 				793EB6E414F0BC620018F220 /* libobjc-atompub.a */,
-				7920121814E5417900D82D3D /* libObjectiveFlickr.a */,
 				791BF31314E020A200697E05 /* libxml2.dylib */,
 				7995E66E14F4DD68005C1453 /* libz.dylib */,
 			);
@@ -4082,14 +4070,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kentaro ISHITOYA";
-				EXCLUDED_SOURCE_FILE_NAMES = (
-					Base64Transcoder.h,
-					Base64Transcoder.c,
-				);
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4102,10 +4086,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/GData\"",
-					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
-					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
-					"\"$(SRCROOT)/tottepost/Libraries/UserVoiceSDK\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FlickrPhotoSubmitter/Libraries/objectiveflickr\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FotolifePhotoSubmitter/Libraries/objc-atompub\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
@@ -4125,14 +4105,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				EXCLUDED_SOURCE_FILE_NAMES = (
-					Base64Transcoder.h,
-					Base64Transcoder.c,
-				);
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4145,10 +4121,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/GData\"",
-					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
-					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
-					"\"$(SRCROOT)/tottepost/Libraries/UserVoiceSDK\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FlickrPhotoSubmitter/Libraries/objectiveflickr\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FotolifePhotoSubmitter/Libraries/objc-atompub\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
@@ -4231,14 +4203,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				EXCLUDED_SOURCE_FILE_NAMES = (
-					Base64Transcoder.h,
-					Base64Transcoder.c,
-				);
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Frameworks\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4251,10 +4219,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Frameworks/GData\"",
-					"\"$(SRCROOT)/Frameworks/objectiveflickr\"",
-					"\"$(SRCROOT)/tottepost/Libraries/objc-atompub\"",
-					"\"$(SRCROOT)/tottepost/Libraries/UserVoiceSDK\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FlickrPhotoSubmitter/Libraries/objectiveflickr\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/FotolifePhotoSubmitter/Libraries/objc-atompub\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
