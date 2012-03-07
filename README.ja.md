@@ -47,12 +47,26 @@ PhotoSubmitterライブラリはtottepostのために作られたライブラリ
 
 ビルドする際の注意点
 ------------------------------------
-tottepostはAVFoundationを使っているので、現状ではシミュレータで動作しません。実記に転送してお試しください。
-また、リポジトリをcloneした状態ではUserVoiceAPIKey.hとPhotoSubmitterAPIKey.hが存在しないのでビルドエラーになります。
+tottepostはAVFoundationを使っているので、現状ではシミュレータで動作しません。実機に転送してお試しください。
+また、リポジトリをcloneしたあと、以下のコマンドでsubmoduleをアップデートする必要があります。
+```
+git submodule init
+git submodule update
+```
+submoduleをアップデートして、`tottepost.xcodeproj`を開くと、UserVoiceAPIKey.hと`PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey.h`が存在しないのでビルドエラーになります。
 
 UserVoiceAPIKey.hはUserVoiceSDKを利用するために必要なAPI-KeyとSecretが記述するためのファイルです。UserVoiceAPIKey-template.hをコピーしてtemplateと同じ場所においてください（機能をテストする必要がない場合は、API-KeyとSecretは埋めなくてOKです）
 
-PhotoSubmitterAPIKey.hはサポートしているサービスのAPI-KeyとSecretを記述するためのファイルです。PhotoSubmitterAPIKey-template.hをコピーしてtemplateと同じ場所においてください。利用したいサービスのAPI-KeyとSecretを取得して記述してください。
+`PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey.h`はそれぞれのサービスのAPI-KeyとSecretを記述するためのファイルです。`PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey-template.h`をコピーしてtemplateと同じ場所におき、利用したいサービスのAPI-KeyとSecretを取得して記述してください。
+
+もし、すべてのサービスを使いたくない場合には、`PhotoSubmitter/Services/[ServiceName]PhotoSubmitter`をプロジェクトから削除すると機能がOFFになります。
+
+サブモジュールのアップデート
+------------------------------------------------
+開発者のためのtipsとして書き残しておきますが、PhotoSubmitterを最新バージョンにしてコミットしたい場合は、以下のコマンドを実行してからコミットしてください。
+```
+git submodule foreach 'git checkout master; git pull'
+```
 
 
 国際化について

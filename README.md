@@ -33,30 +33,47 @@ FEATURE LIST
  * Toggle comment / no comment
  * Toggle Geo location
  * Background upload, Automatic resume
- * Selecting target album, Creating album 
+ * Selecting uploading target album, Creating album 
 
 
 PHOTO SUBMITTER LIBRARY
 ------------------------------------
 PhotoSubmitter is a library specially developed for tottepost. It is an abstraction layer to submit photo to various web services.
 
-Please visit [https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter](https://github.com/kent013/tottepost/tree/master/tottepost/PhotoSubmitter) for more detail.
+Please visit [https://github.com/kent013/PhotoSubmitter](https://github.com/kent013/PhotoSubmitter) for more detail.
 
 
-BEFORE BUILD
+HOW TO BUILD
 ------------------------------------
 Since tottepost using AVFoundation, currently not works on simulator. Please run on device.
-And, just after cloning tottepost repository, the project fails build. Because `UserVoiceAPIKey.h` and `PhotoSubmitterAPIKey.h` is missing.
+
+And, just after cloning tottepost repository, you must run commands below to init and update submodule.
+```
+git submodule init
+git submodule update
+```
+After updated submodules, open the `tottepost.xcodeproj`, and you will see the project fail to build. Because `UserVoiceAPIKey.h` and `PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey.h` is missing. 
 
 `UserVoiceAPIKey.h` is needed for UserVoiceSDK. Please copy `UserVoiceAPIKey-template.h` as UserVoiceAPIKey.h. If you don't want to test UserVoice's functionality, you don't need to fill out the API-Key and API-Secret.
 
-`PhotoSubmitterAPIKey.h` is a file to define API-Keys and API-Secrets for supported services. Please copy `PhotoSubmitterAPIKey-template.h` as `PhotoSubmitterAPIKey.h`. And please fill out api-key and api-secret for services which you want to enable.
+`PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey.h` are files to define API-Keys and API-Secrets for each service. Please copy `PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey-template.h` as `PhotoSubmitter/Services/[ServiceName]PhotoSubmitter/[ServiceName]APIKey.h`. And fill out api-key and api-secret for services which you want to enable.
+
+If you don't want to use all of the provided services, you could delete `PhotoSubmitter/Services/[ServiceName]PhotoSubmitter` from project to do so.
+
+
+GIT TIPS
+------------------------------------
+For contributors reminder, if you want to update submodule to latest revision, type next command.
+```
+git submodule foreach 'git checkout master; git pull'
+```
+
 
 LOCALIZATION
 ------------------------------------
 We currently support only japanese and english.
 And we are using [twine](https://github.com/mobiata/twine) for generating Localizable.string.
-If you want modify localization strings, you may install twine following instruction in twine's repository. After installing twine, you can generate localization files with `./strings.sh`.
+If you want modify localization strings, you may install twine following instruction in twine's repository. After installing twine, you can generate localization files with /strings.sh`. 
 
 
 FEEDBACK
