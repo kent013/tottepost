@@ -55,7 +55,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     //photo submitter setting
-    [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:self];
+    [PhotoSubmitterManager sharedInstance].photoDelegate = self;
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
     [PhotoSubmitterManager sharedInstance].authControllerDelegate = self;
     
