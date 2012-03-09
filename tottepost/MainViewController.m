@@ -32,6 +32,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) didPostCancelButtonTapped: (id)sender;
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
+- (void) updateIndicatorCoordinate;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) closePreview;
 - (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
@@ -169,17 +170,16 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     frame = CGRectMake(0, 0, screen.size.width, screen.size.height);    
     [previewImageView_ updateWithFrame:frame];
     
+    CGSize indicatorContentSize = settingIndicatorView_.contentSize;
     //progress view
-    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2) - settingIndicatorView_.contentSize.height - MAINVIEW_INDICATOR_PADDING_Y)];
+    [progressTableViewController_ updateWithFrame:CGRectMake(frame.size.width - MAINVIEW_PROGRESS_WIDTH - MAINVIEW_PROGRESS_PADDING_X, MAINVIEW_PROGRESS_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, frame.size.height - MAINVIEW_PROGRESS_PADDING_Y - MAINVIEW_PROGRESS_HEIGHT - MAINVIEW_TOOLBAR_HEIGHT - (MAINVIEW_PADDING_Y * 2) - indicatorContentSize.height - MAINVIEW_INDICATOR_PADDING_Y)];
     
     //progress summary
     CGRect ptframe = progressTableViewController_.view.frame;
     [progressSummaryView_ updateWithFrame:CGRectMake(ptframe.origin.x, ptframe.origin.y + ptframe.size.height + MAINVIEW_PADDING_Y, MAINVIEW_PROGRESS_WIDTH, MAINVIEW_PROGRESS_HEIGHT)];
     
     //setting indicator
-    CGRect psframe = progressSummaryView_.frame;
-    settingIndicatorView_.frame = CGRectMake(frame.size.width - settingIndicatorView_.contentSize.width - MAINVIEW_PROGRESS_PADDING_X, psframe.origin.y + psframe.size.height + MAINVIEW_PADDING_Y, settingIndicatorView_.contentSize.width, settingIndicatorView_.contentSize.height);
-    [settingIndicatorView_ update];
+    [self updateIndicatorCoordinate];
     
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
@@ -226,6 +226,18 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     cameraIconImageView_.transform = t;
     [UIView commitAnimations];
     
+}
+
+/*!
+ * update setting indicator view coordinate
+ */
+-(void)updateIndicatorCoordinate{
+    CGRect screen = [UIScreen mainScreen].bounds;
+    CGRect frame = CGRectMake(0, 0, screen.size.width, screen.size.height);    
+    CGSize indicatorContentSize = settingIndicatorView_.contentSize;
+    CGRect psframe = progressSummaryView_.frame;
+    settingIndicatorView_.frame = CGRectMake(frame.size.width - indicatorContentSize.width - MAINVIEW_PROGRESS_PADDING_X, psframe.origin.y + psframe.size.height + MAINVIEW_PADDING_Y, indicatorContentSize.width, indicatorContentSize.height);
+    [settingIndicatorView_ update];
 }
 
 #pragma mark -
@@ -536,7 +548,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }else{
         [self updateCoordinates];
     }
-    [settingIndicatorView_ update];
+    [self updateIndicatorCoordinate];
     settingViewPresented_ = NO;
 }
 

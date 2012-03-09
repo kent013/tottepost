@@ -65,14 +65,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     int x = label_.frame.size.width + 4;
     for (NSString *type in [PhotoSubmitterManager registeredPhotoSubmitters]){
         id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
-        if(submitter.isEnabled){
+        if(submitter.isLogined){
             CGRect rect = CGRectMake(x, 0, submitter.smallIcon.size.width, submitter.smallIcon.size.height);
             UIImageView *iv = [[UIImageView alloc] initWithImage:submitter.smallIcon];
             iv.frame = rect;
             iv.backgroundColor = [UIColor clearColor];
             iv.alpha = 0.6;
             [self addSubview:iv];
-            x += submitter.smallIcon.size.width;
+            x += submitter.smallIcon.size.width + 2;
         }
     }
     if([PhotoSubmitterManager sharedInstance].enableGeoTagging){
@@ -87,7 +87,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (CGSize)contentSize{
     id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:kFilePhotoSubmitterType];
-    return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * [PhotoSubmitterManager sharedInstance].enabledSubmitterCount, submitter.smallIcon.size.height);
+    int count = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+    return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * count + (2 * count - 1), submitter.smallIcon.size.height);
     
 }
 @end
