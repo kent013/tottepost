@@ -87,7 +87,6 @@
 		7901AF95150683B5003DA0DC /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AC94150683B3003DA0DC /* UIImage+Resize.m */; };
 		7901AF96150683B5003DA0DC /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AC96150683B3003DA0DC /* UIImage+RoundedCorner.m */; };
 		7901AF97150683B5003DA0DC /* PhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AC98150683B3003DA0DC /* PhotoSubmitter.m */; };
-		7901AF98150683B5003DA0DC /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AC9A150683B3003DA0DC /* PhotoSubmitterAccountTableViewController.m */; };
 		7901AF99150683B5003DA0DC /* PhotoSubmitterAlbumEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AC9C150683B3003DA0DC /* PhotoSubmitterAlbumEntity.m */; };
 		7901AF9A150683B5003DA0DC /* PhotoSubmitterFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901ACA0150683B3003DA0DC /* PhotoSubmitterFactory.m */; };
 		7901AF9B150683B5003DA0DC /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901ACA2150683B3003DA0DC /* PhotoSubmitterImageEntity.m */; };
@@ -389,6 +388,9 @@
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
+		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
+		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
+		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
@@ -532,8 +534,6 @@
 		7901AC96150683B3003DA0DC /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		7901AC97150683B3003DA0DC /* PhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitter.h; sourceTree = "<group>"; };
 		7901AC98150683B3003DA0DC /* PhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitter.m; sourceTree = "<group>"; };
-		7901AC99150683B3003DA0DC /* PhotoSubmitterAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountTableViewController.h; sourceTree = "<group>"; };
-		7901AC9A150683B3003DA0DC /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
 		7901AC9B150683B3003DA0DC /* PhotoSubmitterAlbumEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAlbumEntity.h; sourceTree = "<group>"; };
 		7901AC9C150683B3003DA0DC /* PhotoSubmitterAlbumEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAlbumEntity.m; sourceTree = "<group>"; };
 		7901AC9F150683B3003DA0DC /* PhotoSubmitterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterFactory.h; sourceTree = "<group>"; };
@@ -1470,6 +1470,11 @@
 		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
+		79F461B5150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountTableViewController.h; sourceTree = "<group>"; };
+		79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
+		79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		79F461BA150A3C6F009787F0 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		79F461BB150A3C6F009787F0 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		EA76226D14D0312100C54159 /* FlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashButton.h; path = Libraries/AVFoundationCameraController/FlashButton.h; sourceTree = "<group>"; };
 		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
@@ -1751,8 +1756,6 @@
 				7901ACB5150683B3003DA0DC /* Services */,
 				7901AC97150683B3003DA0DC /* PhotoSubmitter.h */,
 				7901AC98150683B3003DA0DC /* PhotoSubmitter.m */,
-				7901AC99150683B3003DA0DC /* PhotoSubmitterAccountTableViewController.h */,
-				7901AC9A150683B3003DA0DC /* PhotoSubmitterAccountTableViewController.m */,
 				7901AC9B150683B3003DA0DC /* PhotoSubmitterAlbumEntity.h */,
 				7901AC9C150683B3003DA0DC /* PhotoSubmitterAlbumEntity.m */,
 				7901AC9F150683B3003DA0DC /* PhotoSubmitterFactory.h */,
@@ -1784,6 +1787,7 @@
 				7901AC85150683B3003DA0DC /* PDKeychainBindingsController */,
 				7901AC8A150683B3003DA0DC /* Reachability */,
 				7901AC8D150683B3003DA0DC /* RegexKitLite */,
+				79F461B8150A3C6F009787F0 /* SVProgressHUD */,
 				7901AC90150683B3003DA0DC /* UIImage-categories */,
 			);
 			path = Libraries;
@@ -3100,6 +3104,8 @@
 				7901AF5E150683B4003DA0DC /* AlbumPhotoSubmitterSettingTableViewController.m */,
 				7901AF5F150683B4003DA0DC /* CreateAlbumPhotoSubmitterSettingViewController.h */,
 				7901AF60150683B4003DA0DC /* CreateAlbumPhotoSubmitterSettingViewController.m */,
+				79F461B5150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.h */,
+				79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */,
 				7901AF61150683B4003DA0DC /* PhotoSubmitterServiceSettingTableViewController.h */,
 				7901AF62150683B4003DA0DC /* PhotoSubmitterServiceSettingTableViewController.m */,
 				7901AF63150683B4003DA0DC /* PhotoSubmitterSettingTableViewController.h */,
@@ -3536,6 +3542,16 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		79F461B8150A3C6F009787F0 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */,
+				79F461BA150A3C6F009787F0 /* SVProgressHUD.h */,
+				79F461BB150A3C6F009787F0 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		EAAC412014E9399400CDC2CC /* HPGrowingTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3738,6 +3754,7 @@
 				7901B034150683B6003DA0DC /* twitter_16@2x.png in Resources */,
 				7901B035150683B6003DA0DC /* twitter_32.png in Resources */,
 				7901B036150683B6003DA0DC /* twitter_32@2x.png in Resources */,
+				79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3906,7 +3923,6 @@
 				7901AF95150683B5003DA0DC /* UIImage+Resize.m in Sources */,
 				7901AF96150683B5003DA0DC /* UIImage+RoundedCorner.m in Sources */,
 				7901AF97150683B5003DA0DC /* PhotoSubmitter.m in Sources */,
-				7901AF98150683B5003DA0DC /* PhotoSubmitterAccountTableViewController.m in Sources */,
 				7901AF99150683B5003DA0DC /* PhotoSubmitterAlbumEntity.m in Sources */,
 				7901AF9A150683B5003DA0DC /* PhotoSubmitterFactory.m in Sources */,
 				7901AF9B150683B5003DA0DC /* PhotoSubmitterImageEntity.m in Sources */,
@@ -4020,6 +4036,8 @@
 				7901B045150683B6003DA0DC /* UIImage+AutoRotation.m in Sources */,
 				7901B046150683B6003DA0DC /* UIImage+Digest.m in Sources */,
 				7901B047150683B6003DA0DC /* UIImage+EXIF.m in Sources */,
+				79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */,
+				79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
