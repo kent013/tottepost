@@ -54,9 +54,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     self.view.backgroundColor = [UIColor clearColor];
     refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
-    //progress summary
-    progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
-    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate: progressSummaryView_];
     
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
@@ -117,6 +114,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //setting indicator view
     settingIndicatorView_ = [[SettingIndicatorView alloc] initWithFrame:CGRectZero];
     
+    //progress summary
+    progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
+    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate: progressSummaryView_];
     [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
       [PhotoSubmitterSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
