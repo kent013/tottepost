@@ -54,9 +54,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     self.view.backgroundColor = [UIColor clearColor];
     refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
+    //progress summary
+    progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
+    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate: progressSummaryView_];
     
     //photo submitter setting
-    [PhotoSubmitterManager sharedInstance].photoDelegate = self;
+    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
     [PhotoSubmitterManager sharedInstance].authControllerDelegate = self;
     
@@ -114,9 +117,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //setting indicator view
     settingIndicatorView_ = [[SettingIndicatorView alloc] initWithFrame:CGRectZero];
     
-    //progress summary
-    progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
-    [[PhotoSubmitterManager sharedInstance] setPhotoDelegate:progressSummaryView_];
     [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
       [PhotoSubmitterSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
@@ -249,7 +249,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 {
     imagePicker_.showsCameraControls = NO;
     cameraButton_.enabled = NO;
+#if TARGET_IPHONE_SIMULATOR
+    NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test_image.jpg"], 1.0);
+    [self cameraController:nil didFinishPickingImageData:imageData];
+#else
     [imagePicker_ takePicture];
+#endif
 }
 
 /*!
@@ -597,7 +602,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [UIApplication sharedApplication].statusBarHidden = YES;
     if(imagePicker_ == nil){
         [self createCameraController];
-        //[self performSelector:@selector(createCameraController) withObject:nil afterDelay:0.5];
     }
     if(isMailFeedbackButtonPressed_){
         isMailFeedbackButtonPressed_ = NO;
