@@ -774,20 +774,8 @@
 		79924AA2150BA7640043C16D /* DBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A41150BA7640043C16D /* DBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924AA3150BA7640043C16D /* DBRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A42150BA7640043C16D /* DBRestClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924AA4150BA7640043C16D /* DBRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A42150BA7640043C16D /* DBRestClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79924AA5150BA7640043C16D /* DBRestClient.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A43150BA7640043C16D /* DBRestClient.m.orig */; };
-		79924AA6150BA7640043C16D /* DBRestClient.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A43150BA7640043C16D /* DBRestClient.m.orig */; };
-		79924AA7150BA7640043C16D /* DBRestClient.m.rej in Resources */ = {isa = PBXBuildFile; fileRef = 79924A44150BA7640043C16D /* DBRestClient.m.rej */; };
-		79924AA8150BA7640043C16D /* DBRestClient.m.rej in Resources */ = {isa = PBXBuildFile; fileRef = 79924A44150BA7640043C16D /* DBRestClient.m.rej */; };
 		79924AA9150BA7640043C16D /* DBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A45150BA7640043C16D /* DBSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924AAA150BA7640043C16D /* DBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A45150BA7640043C16D /* DBSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79924AAB150BA7640043C16D /* DBSession.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A46150BA7640043C16D /* DBSession.m.orig */; };
-		79924AAC150BA7640043C16D /* DBSession.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A46150BA7640043C16D /* DBSession.m.orig */; };
-		79924AAD150BA7640043C16D /* DBRestClient.h.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A54150BA7640043C16D /* DBRestClient.h.orig */; };
-		79924AAE150BA7640043C16D /* DBRestClient.h.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A54150BA7640043C16D /* DBRestClient.h.orig */; };
-		79924AAF150BA7640043C16D /* DBRestClient.h.rej in Resources */ = {isa = PBXBuildFile; fileRef = 79924A55150BA7640043C16D /* DBRestClient.h.rej */; };
-		79924AB0150BA7640043C16D /* DBRestClient.h.rej in Resources */ = {isa = PBXBuildFile; fileRef = 79924A55150BA7640043C16D /* DBRestClient.h.rej */; };
-		79924AB1150BA7640043C16D /* JSON.h.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A59150BA7640043C16D /* JSON.h.orig */; };
-		79924AB2150BA7640043C16D /* JSON.h.orig in Resources */ = {isa = PBXBuildFile; fileRef = 79924A59150BA7640043C16D /* JSON.h.orig */; };
 		79924AB3150BA7640043C16D /* DropboxSDK-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79924A71150BA7640043C16D /* DropboxSDK-Info.plist */; };
 		79924AB4150BA7640043C16D /* DropboxSDK-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79924A71150BA7640043C16D /* DropboxSDK-Info.plist */; };
 		79924AB5150BA7640043C16D /* DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A76150BA7640043C16D /* DBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -840,6 +828,28 @@
 		79924AE4150BA7640043C16D /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A95150BA7640043C16D /* NSString+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924AE5150BA7640043C16D /* UIAlertView+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A96150BA7640043C16D /* UIAlertView+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924AE6150BA7640043C16D /* UIAlertView+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A96150BA7640043C16D /* UIAlertView+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79924B00150C1FFE0043C16D /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AEC150C1FFE0043C16D /* NYXImagesHelper.m */; };
+		79924B01150C1FFE0043C16D /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AEC150C1FFE0043C16D /* NYXImagesHelper.m */; };
+		79924B02150C1FFE0043C16D /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AEF150C1FFE0043C16D /* NYXProgressiveImageView.m */; };
+		79924B03150C1FFE0043C16D /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AEF150C1FFE0043C16D /* NYXProgressiveImageView.m */; };
+		79924B04150C1FFE0043C16D /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF1150C1FFE0043C16D /* UIImage+Blurring.m */; };
+		79924B05150C1FFE0043C16D /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF1150C1FFE0043C16D /* UIImage+Blurring.m */; };
+		79924B06150C1FFE0043C16D /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF3150C1FFE0043C16D /* UIImage+Enhancing.m */; };
+		79924B07150C1FFE0043C16D /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF3150C1FFE0043C16D /* UIImage+Enhancing.m */; };
+		79924B08150C1FFE0043C16D /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF5150C1FFE0043C16D /* UIImage+Filtering.m */; };
+		79924B09150C1FFE0043C16D /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF5150C1FFE0043C16D /* UIImage+Filtering.m */; };
+		79924B0A150C1FFE0043C16D /* UIImage+Masking.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF7150C1FFE0043C16D /* UIImage+Masking.m */; };
+		79924B0B150C1FFE0043C16D /* UIImage+Masking.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF7150C1FFE0043C16D /* UIImage+Masking.m */; };
+		79924B0C150C1FFE0043C16D /* UIImage+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF9150C1FFE0043C16D /* UIImage+Reflection.m */; };
+		79924B0D150C1FFE0043C16D /* UIImage+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AF9150C1FFE0043C16D /* UIImage+Reflection.m */; };
+		79924B0E150C1FFE0043C16D /* UIImage+Resizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFB150C1FFE0043C16D /* UIImage+Resizing.m */; };
+		79924B0F150C1FFE0043C16D /* UIImage+Resizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFB150C1FFE0043C16D /* UIImage+Resizing.m */; };
+		79924B10150C1FFE0043C16D /* UIImage+Rotating.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFD150C1FFE0043C16D /* UIImage+Rotating.m */; };
+		79924B11150C1FFE0043C16D /* UIImage+Rotating.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFD150C1FFE0043C16D /* UIImage+Rotating.m */; };
+		79924B12150C1FFE0043C16D /* UIImage+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFF150C1FFE0043C16D /* UIImage+Saving.m */; };
+		79924B13150C1FFE0043C16D /* UIImage+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924AFF150C1FFE0043C16D /* UIImage+Saving.m */; };
+		79924B15150C20350043C16D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79924B14150C20350043C16D /* Accelerate.framework */; };
+		79924B17150C20670043C16D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79924B16150C20670043C16D /* CoreImage.framework */; };
 		7995E52614F29F8D005C1453 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */; };
 		7995E66714F4D6E1005C1453 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66014F4D6E1005C1453 /* NSDictionary+QueryString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66914F4D6E1005C1453 /* NSString+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66414F4D6E1005C1453 /* NSString+QueryString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1906,10 +1916,7 @@
 		79924A40150BA7640043C16D /* DBQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBQuota.m; sourceTree = "<group>"; };
 		79924A41150BA7640043C16D /* DBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRequest.m; sourceTree = "<group>"; };
 		79924A42150BA7640043C16D /* DBRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRestClient.m; sourceTree = "<group>"; };
-		79924A43150BA7640043C16D /* DBRestClient.m.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DBRestClient.m.orig; sourceTree = "<group>"; };
-		79924A44150BA7640043C16D /* DBRestClient.m.rej */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DBRestClient.m.rej; sourceTree = "<group>"; };
 		79924A45150BA7640043C16D /* DBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBSession.m; sourceTree = "<group>"; };
-		79924A46150BA7640043C16D /* DBSession.m.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DBSession.m.orig; sourceTree = "<group>"; };
 		79924A48150BA7640043C16D /* DBAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAccountInfo.h; sourceTree = "<group>"; };
 		79924A49150BA7640043C16D /* DBBase64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBase64Transcoder.h; sourceTree = "<group>"; };
 		79924A4A150BA7640043C16D /* DBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBError.h; sourceTree = "<group>"; };
@@ -1922,12 +1929,9 @@
 		79924A51150BA7640043C16D /* DBQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBQuota.h; sourceTree = "<group>"; };
 		79924A52150BA7640043C16D /* DBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRequest.h; sourceTree = "<group>"; };
 		79924A53150BA7640043C16D /* DBRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRestClient.h; sourceTree = "<group>"; };
-		79924A54150BA7640043C16D /* DBRestClient.h.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DBRestClient.h.orig; sourceTree = "<group>"; };
-		79924A55150BA7640043C16D /* DBRestClient.h.rej */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DBRestClient.h.rej; sourceTree = "<group>"; };
 		79924A56150BA7640043C16D /* DBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSession.h; sourceTree = "<group>"; };
 		79924A57150BA7640043C16D /* DropboxSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxSDK.h; sourceTree = "<group>"; };
 		79924A58150BA7640043C16D /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		79924A59150BA7640043C16D /* JSON.h.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = JSON.h.orig; sourceTree = "<group>"; };
 		79924A5A150BA7640043C16D /* MPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPDebug.h; sourceTree = "<group>"; };
 		79924A5B150BA7640043C16D /* MPOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPOAuth.h; sourceTree = "<group>"; };
 		79924A5C150BA7640043C16D /* MPOAuthAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPOAuthAPI.h; sourceTree = "<group>"; };
@@ -1986,6 +1990,29 @@
 		79924A94150BA7640043C16D /* NSDictionary+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Dropbox.m"; sourceTree = "<group>"; };
 		79924A95150BA7640043C16D /* NSString+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Dropbox.m"; sourceTree = "<group>"; };
 		79924A96150BA7640043C16D /* UIAlertView+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Dropbox.m"; sourceTree = "<group>"; };
+		79924AEB150C1FFE0043C16D /* NYXImagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesHelper.h; sourceTree = "<group>"; };
+		79924AEC150C1FFE0043C16D /* NYXImagesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXImagesHelper.m; sourceTree = "<group>"; };
+		79924AED150C1FFE0043C16D /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
+		79924AEE150C1FFE0043C16D /* NYXProgressiveImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXProgressiveImageView.h; sourceTree = "<group>"; };
+		79924AEF150C1FFE0043C16D /* NYXProgressiveImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXProgressiveImageView.m; sourceTree = "<group>"; };
+		79924AF0150C1FFE0043C16D /* UIImage+Blurring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blurring.h"; sourceTree = "<group>"; };
+		79924AF1150C1FFE0043C16D /* UIImage+Blurring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blurring.m"; sourceTree = "<group>"; };
+		79924AF2150C1FFE0043C16D /* UIImage+Enhancing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Enhancing.h"; sourceTree = "<group>"; };
+		79924AF3150C1FFE0043C16D /* UIImage+Enhancing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Enhancing.m"; sourceTree = "<group>"; };
+		79924AF4150C1FFE0043C16D /* UIImage+Filtering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Filtering.h"; sourceTree = "<group>"; };
+		79924AF5150C1FFE0043C16D /* UIImage+Filtering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Filtering.m"; sourceTree = "<group>"; };
+		79924AF6150C1FFE0043C16D /* UIImage+Masking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Masking.h"; sourceTree = "<group>"; };
+		79924AF7150C1FFE0043C16D /* UIImage+Masking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Masking.m"; sourceTree = "<group>"; };
+		79924AF8150C1FFE0043C16D /* UIImage+Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Reflection.h"; sourceTree = "<group>"; };
+		79924AF9150C1FFE0043C16D /* UIImage+Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Reflection.m"; sourceTree = "<group>"; };
+		79924AFA150C1FFE0043C16D /* UIImage+Resizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resizing.h"; sourceTree = "<group>"; };
+		79924AFB150C1FFE0043C16D /* UIImage+Resizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resizing.m"; sourceTree = "<group>"; };
+		79924AFC150C1FFE0043C16D /* UIImage+Rotating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotating.h"; sourceTree = "<group>"; };
+		79924AFD150C1FFE0043C16D /* UIImage+Rotating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotating.m"; sourceTree = "<group>"; };
+		79924AFE150C1FFE0043C16D /* UIImage+Saving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Saving.h"; sourceTree = "<group>"; };
+		79924AFF150C1FFE0043C16D /* UIImage+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Saving.m"; sourceTree = "<group>"; };
+		79924B14150C20350043C16D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		79924B16150C20670043C16D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		7995E65F14F4D6E1005C1453 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+QueryString.h"; path = "Util/NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		7995E66014F4D6E1005C1453 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+QueryString.m"; path = "Util/NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		7995E66314F4D6E1005C1453 /* NSString+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+QueryString.h"; path = "Util/NSString+QueryString.h"; sourceTree = "<group>"; };
@@ -2021,10 +2048,12 @@
 				7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */,
 				79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */,
 				37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */,
+				79924B15150C20350043C16D /* Accelerate.framework in Frameworks */,
 				37F0D27114A771A400680F8A /* AssetsLibrary.framework in Frameworks */,
 				7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */,
 				37FB65781498C8A200387490 /* CFNetwork.framework in Frameworks */,
 				376E15411494C47800A34E7D /* CoreGraphics.framework in Frameworks */,
+				79924B17150C20670043C16D /* CoreImage.framework in Frameworks */,
 				37F3633114A5957A00C1BB2B /* CoreLocation.framework in Frameworks */,
 				7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */,
 				7980589114C86DBA006E3817 /* CoreVideo.framework in Frameworks */,
@@ -2133,6 +2162,8 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
+				79924B16150C20670043C16D /* CoreImage.framework */,
+				79924B14150C20350043C16D /* Accelerate.framework */,
 				7901AC52150683B2003DA0DC /* PhotoSubmitter */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
@@ -2345,6 +2376,7 @@
 				7901AC58150683B3003DA0DC /* ios-queue-object */,
 				7901AC5B150683B3003DA0DC /* json-framework */,
 				7901AC75150683B3003DA0DC /* KissXML */,
+				79924AEA150C1FFE0043C16D /* NYXImagesKit */,
 				7901AC85150683B3003DA0DC /* PDKeychainBindingsController */,
 				7901AC8A150683B3003DA0DC /* Reachability */,
 				7901AC8D150683B3003DA0DC /* RegexKitLite */,
@@ -4081,10 +4113,7 @@
 				79924A40150BA7640043C16D /* DBQuota.m */,
 				79924A41150BA7640043C16D /* DBRequest.m */,
 				79924A42150BA7640043C16D /* DBRestClient.m */,
-				79924A43150BA7640043C16D /* DBRestClient.m.orig */,
-				79924A44150BA7640043C16D /* DBRestClient.m.rej */,
 				79924A45150BA7640043C16D /* DBSession.m */,
-				79924A46150BA7640043C16D /* DBSession.m.orig */,
 				79924A47150BA7640043C16D /* DropboxSDK */,
 				79924A71150BA7640043C16D /* DropboxSDK-Info.plist */,
 				79924A72150BA7640043C16D /* DropboxSDK-Prefix.pch */,
@@ -4113,12 +4142,9 @@
 				79924A51150BA7640043C16D /* DBQuota.h */,
 				79924A52150BA7640043C16D /* DBRequest.h */,
 				79924A53150BA7640043C16D /* DBRestClient.h */,
-				79924A54150BA7640043C16D /* DBRestClient.h.orig */,
-				79924A55150BA7640043C16D /* DBRestClient.h.rej */,
 				79924A56150BA7640043C16D /* DBSession.h */,
 				79924A57150BA7640043C16D /* DropboxSDK.h */,
 				79924A58150BA7640043C16D /* JSON.h */,
-				79924A59150BA7640043C16D /* JSON.h.orig */,
 				79924A5A150BA7640043C16D /* MPDebug.h */,
 				79924A5B150BA7640043C16D /* MPOAuth.h */,
 				79924A5C150BA7640043C16D /* MPOAuthAPI.h */,
@@ -4195,6 +4221,34 @@
 				79924A84150BA7640043C16D /* DBBase64Transcoder.c */,
 			);
 			path = Crypto;
+			sourceTree = "<group>";
+		};
+		79924AEA150C1FFE0043C16D /* NYXImagesKit */ = {
+			isa = PBXGroup;
+			children = (
+				79924AEB150C1FFE0043C16D /* NYXImagesHelper.h */,
+				79924AEC150C1FFE0043C16D /* NYXImagesHelper.m */,
+				79924AED150C1FFE0043C16D /* NYXImagesKit.h */,
+				79924AEE150C1FFE0043C16D /* NYXProgressiveImageView.h */,
+				79924AEF150C1FFE0043C16D /* NYXProgressiveImageView.m */,
+				79924AF0150C1FFE0043C16D /* UIImage+Blurring.h */,
+				79924AF1150C1FFE0043C16D /* UIImage+Blurring.m */,
+				79924AF2150C1FFE0043C16D /* UIImage+Enhancing.h */,
+				79924AF3150C1FFE0043C16D /* UIImage+Enhancing.m */,
+				79924AF4150C1FFE0043C16D /* UIImage+Filtering.h */,
+				79924AF5150C1FFE0043C16D /* UIImage+Filtering.m */,
+				79924AF6150C1FFE0043C16D /* UIImage+Masking.h */,
+				79924AF7150C1FFE0043C16D /* UIImage+Masking.m */,
+				79924AF8150C1FFE0043C16D /* UIImage+Reflection.h */,
+				79924AF9150C1FFE0043C16D /* UIImage+Reflection.m */,
+				79924AFA150C1FFE0043C16D /* UIImage+Resizing.h */,
+				79924AFB150C1FFE0043C16D /* UIImage+Resizing.m */,
+				79924AFC150C1FFE0043C16D /* UIImage+Rotating.h */,
+				79924AFD150C1FFE0043C16D /* UIImage+Rotating.m */,
+				79924AFE150C1FFE0043C16D /* UIImage+Saving.h */,
+				79924AFF150C1FFE0043C16D /* UIImage+Saving.m */,
+			);
+			path = NYXImagesKit;
 			sourceTree = "<group>";
 		};
 		79D8073E14D0F78500064CB3 /* Images */ = {
@@ -4438,12 +4492,6 @@
 				7901B036150683B6003DA0DC /* twitter_32@2x.png in Resources */,
 				79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */,
 				793D3D94150AF9EF00098A79 /* test_image.jpg in Resources */,
-				79924AA5150BA7640043C16D /* DBRestClient.m.orig in Resources */,
-				79924AA7150BA7640043C16D /* DBRestClient.m.rej in Resources */,
-				79924AAB150BA7640043C16D /* DBSession.m.orig in Resources */,
-				79924AAD150BA7640043C16D /* DBRestClient.h.orig in Resources */,
-				79924AAF150BA7640043C16D /* DBRestClient.h.rej in Resources */,
-				79924AB1150BA7640043C16D /* JSON.h.orig in Resources */,
 				79924AB3150BA7640043C16D /* DropboxSDK-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4569,12 +4617,6 @@
 				793D3F14150AFAA600098A79 /* twitter_32.png in Resources */,
 				793D3F15150AFAA600098A79 /* twitter_32@2x.png in Resources */,
 				793D3F16150AFAA600098A79 /* SVProgressHUD.bundle in Resources */,
-				79924AA6150BA7640043C16D /* DBRestClient.m.orig in Resources */,
-				79924AA8150BA7640043C16D /* DBRestClient.m.rej in Resources */,
-				79924AAC150BA7640043C16D /* DBSession.m.orig in Resources */,
-				79924AAE150BA7640043C16D /* DBRestClient.h.orig in Resources */,
-				79924AB0150BA7640043C16D /* DBRestClient.h.rej in Resources */,
-				79924AB2150BA7640043C16D /* JSON.h.orig in Resources */,
 				79924AB4150BA7640043C16D /* DropboxSDK-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4884,6 +4926,16 @@
 				79924AE1150BA7640043C16D /* NSDictionary+Dropbox.m in Sources */,
 				79924AE3150BA7640043C16D /* NSString+Dropbox.m in Sources */,
 				79924AE5150BA7640043C16D /* UIAlertView+Dropbox.m in Sources */,
+				79924B00150C1FFE0043C16D /* NYXImagesHelper.m in Sources */,
+				79924B02150C1FFE0043C16D /* NYXProgressiveImageView.m in Sources */,
+				79924B04150C1FFE0043C16D /* UIImage+Blurring.m in Sources */,
+				79924B06150C1FFE0043C16D /* UIImage+Enhancing.m in Sources */,
+				79924B08150C1FFE0043C16D /* UIImage+Filtering.m in Sources */,
+				79924B0A150C1FFE0043C16D /* UIImage+Masking.m in Sources */,
+				79924B0C150C1FFE0043C16D /* UIImage+Reflection.m in Sources */,
+				79924B0E150C1FFE0043C16D /* UIImage+Resizing.m in Sources */,
+				79924B10150C1FFE0043C16D /* UIImage+Rotating.m in Sources */,
+				79924B12150C1FFE0043C16D /* UIImage+Saving.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5181,6 +5233,16 @@
 				79924AE2150BA7640043C16D /* NSDictionary+Dropbox.m in Sources */,
 				79924AE4150BA7640043C16D /* NSString+Dropbox.m in Sources */,
 				79924AE6150BA7640043C16D /* UIAlertView+Dropbox.m in Sources */,
+				79924B01150C1FFE0043C16D /* NYXImagesHelper.m in Sources */,
+				79924B03150C1FFE0043C16D /* NYXProgressiveImageView.m in Sources */,
+				79924B05150C1FFE0043C16D /* UIImage+Blurring.m in Sources */,
+				79924B07150C1FFE0043C16D /* UIImage+Enhancing.m in Sources */,
+				79924B09150C1FFE0043C16D /* UIImage+Filtering.m in Sources */,
+				79924B0B150C1FFE0043C16D /* UIImage+Masking.m in Sources */,
+				79924B0D150C1FFE0043C16D /* UIImage+Reflection.m in Sources */,
+				79924B0F150C1FFE0043C16D /* UIImage+Resizing.m in Sources */,
+				79924B11150C1FFE0043C16D /* UIImage+Rotating.m in Sources */,
+				79924B13150C1FFE0043C16D /* UIImage+Saving.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

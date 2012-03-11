@@ -12,7 +12,6 @@
 #import "PhotoSubmitterSettingTableViewProtocol.h"
 
 #define SV_SECTION_GENERAL  0
-#define SV_GENERAL_ABOUT 2
 static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
 //-----------------------------------------------------------------------------
@@ -42,9 +41,10 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  * title for section
  */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    switch (section) {
-        case SV_GENERAL_ABOUT : return [TTLang localized:@"Settings_Section_About"]; break;
-        default: return [super tableView:tableView titleForHeaderInSection:section];
+    if(section == SV_GENERAL_COUNT){
+        return [TTLang localized:@"Settings_Section_About"];
+    }else{
+        return [super tableView:tableView titleForHeaderInSection:section];
     }
     return nil;
 }
@@ -54,10 +54,8 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == SV_SECTION_GENERAL){
-        switch (indexPath.row) {
-            case SV_GENERAL_ABOUT: 
-                [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
-                break;
+        if(indexPath.row == SV_GENERAL_COUNT){
+            [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
         }        
     }else{
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
@@ -91,11 +89,10 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  */
 - (UITableViewCell *)createGeneralSettingCell:(int)tag{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    switch (tag) {
-        case SV_GENERAL_ABOUT:
-            cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
-            break;
-        default: return [super createGeneralSettingCell:tag];
+    if(tag == SV_GENERAL_COUNT){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
+    }else{
+        return [super createGeneralSettingCell:tag];
     }
     return cell;
 }
