@@ -1675,7 +1675,6 @@
 		793D3D91150AAC0100098A79 /* MixiWebViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiWebViewControllerDelegate.h; sourceTree = "<group>"; };
 		793D3D93150AF9EF00098A79 /* test_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpg; sourceTree = "<group>"; };
 		793D3F1C150AFAA600098A79 /* tottepost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tottepost.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		793D3F1E150AFAA700098A79 /* tottepost copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tottepost copy-Info.plist"; path = "/Users/ishitoya/Dropbox/tottepost/tottepost copy-Info.plist"; sourceTree = "<absolute>"; };
 		7948ACF6150019F5004ABDAB /* UserVoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserVoice.m; sourceTree = "<group>"; };
 		7948ACF7150019F5004ABDAB /* UVActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVActivityIndicator.h; sourceTree = "<group>"; };
 		7948ACF8150019F5004ABDAB /* UVActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVActivityIndicator.m; sourceTree = "<group>"; };
@@ -2169,7 +2168,6 @@
 				376E155A1494C47800A34E7D /* tottepostTests */,
 				376E153B1494C47800A34E7D /* Frameworks */,
 				376E15391494C47800A34E7D /* Products */,
-				793D3F1E150AFAA700098A79 /* tottepost copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
