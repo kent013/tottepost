@@ -306,9 +306,11 @@
         break;   
     }
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSString *errorMessage = [NSString stringWithFormat:@"Invalid Formatter %@", NSStringFromClass(theFormatter)];
     NSAssert([theFormatter conformsToProtocol:@protocol(HRFormatterProtocol)], errorMessage); 
-    
+#pragma clang diagnostic pop
     return theFormatter;
 }
 

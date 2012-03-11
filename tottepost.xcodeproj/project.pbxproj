@@ -429,7 +429,6 @@
 		79924B39150C4D340043C16D /* ObjectiveFlickr.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924B34150C4D340043C16D /* ObjectiveFlickr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924B3A150C4D340043C16D /* OFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924B36150C4D340043C16D /* OFUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924B3B150C4D340043C16D /* OFXMLMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924B38150C4D340043C16D /* OFXMLMapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79924B3F150C4F5B0043C16D /* test_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 793D3D93150AF9EF00098A79 /* test_image.jpg */; };
 		7995E52614F29F8D005C1453 /* ScreenStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EAADC3C714F2877900BEA9C2 /* ScreenStatus.m */; };
 		7995E66714F4D6E1005C1453 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66014F4D6E1005C1453 /* NSDictionary+QueryString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66914F4D6E1005C1453 /* NSString+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66414F4D6E1005C1453 /* NSString+QueryString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1714,8 +1713,6 @@
 		376E152D1494C47800A34E7D = {
 			isa = PBXGroup;
 			children = (
-				79924B16150C20670043C16D /* CoreImage.framework */,
-				79924B14150C20350043C16D /* Accelerate.framework */,
 				7901AC52150683B2003DA0DC /* PhotoSubmitter */,
 				376E15421494C47800A34E7D /* tottepost */,
 				376E155A1494C47800A34E7D /* tottepostTests */,
@@ -1736,11 +1733,13 @@
 		376E153B1494C47800A34E7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79924B14150C20350043C16D /* Accelerate.framework */,
 				37FB65D8149CDFBC00387490 /* Accounts.framework */,
 				37F0D27014A771A400680F8A /* AssetsLibrary.framework */,
 				7980588C14C86D47006E3817 /* AVFoundation.framework */,
 				37FB65771498C8A100387490 /* CFNetwork.framework */,
 				376E15401494C47800A34E7D /* CoreGraphics.framework */,
+				79924B16150C20670043C16D /* CoreImage.framework */,
 				37F3633014A5957A00C1BB2B /* CoreLocation.framework */,
 				7980588E14C86D7F006E3817 /* CoreMedia.framework */,
 				7980589014C86DBA006E3817 /* CoreVideo.framework */,
@@ -4029,7 +4028,6 @@
 				7901B036150683B6003DA0DC /* twitter_32@2x.png in Resources */,
 				79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */,
 				79924AB3150BA7640043C16D /* DropboxSDK-Info.plist in Resources */,
-				79924B3F150C4F5B0043C16D /* test_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
