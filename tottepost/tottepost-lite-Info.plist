@@ -8,11 +8,16 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>IconLite.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon.png</string>
-		<string>icon@2x.png</string>
-		<string>icon_ipad.png</string>
+		<string>IconLite.png</string>
+		<string>IconLite@2x.png</string>
+		<string>IconLite-72.png</string>
+		<string>IconLite-72@2x.png</string>
+		<string>DefaultLite.png</string>
+		<string>DefaultLite@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -20,9 +25,12 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>icon.png</string>
-				<string>icon@2x.png</string>
-				<string>icon_ipad.png</string>
+				<string>IconLite.png</string>
+				<string>IconLite@2x.png</string>
+				<string>IconLite-72.png</string>
+				<string>IconLite-72@2x.png</string>
+				<string>DefaultLite.png</string>
+				<string>DefaultLite@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>
@@ -57,6 +65,8 @@
 	<string>1.1.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UILaunchImageFile</key>
+	<string>DefaultLite.png</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -64,14 +74,10 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
