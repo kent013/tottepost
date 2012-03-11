@@ -119,7 +119,7 @@
 	    tags = common
 		en = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nWe provice source code on github, \nhttps://github.com/kent013/tottepost\n\nAnd we are using lots of great OSS libraries.\nTheir copyright notices are placed in github.\n\nIf you have any questions or requests, please feel free to send us feedback.\n\nYou can mail us with below button. (You need mail account)
 		ja = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nこのアプリはgithubでソースを公開しています。\nhttps://github.com/kent013/tottepost\nたくさんのOSSライブラリを使っています。\n権利情報はgithubに書いてあります。\n\n要望や質問があれば下のボタンからお気軽に。（メールアカウントが必要です）
-		
+
 [[AAMFeedback]]
     [AAMFeedbackTitle]
         tags = common, aam_feedback
