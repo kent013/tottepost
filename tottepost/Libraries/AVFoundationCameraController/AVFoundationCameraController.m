@@ -99,6 +99,9 @@
  * initialize camera
  */
 -(void)initCamera:(AVCaptureDevice *)cameraDevice{
+#if TARGET_IPHONE_SIMULATOR
+    return;
+#endif
     session_ = [[AVCaptureSession alloc] init];
     device_ = cameraDevice;
     NSError* error = nil;

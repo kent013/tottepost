@@ -41,18 +41,20 @@
     commentTextView_.internalTextView.backgroundColor = [UIColor clearColor];
     commentTextView_.backgroundColor = [UIColor clearColor];
 
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         commentTextView_.font = [UIFont systemFontOfSize:18];
+    }
     
     textCountview_ = [[UILabel alloc] initWithFrame:CGRectZero];
     textCountview_.backgroundColor = [UIColor clearColor];
     textCountview_.textColor = [UIColor colorWithWhite:0.1 alpha:0.8];
     textCountview_.textAlignment = UITextAlignmentRight;
     textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         textCountview_.font = [UIFont systemFontOfSize:22];
-    else
+    }else{
         textCountview_.font = [UIFont systemFontOfSize:16];
+    }
     
     [commentBackgroundView_ addSubview: commentTextView_];
     [commentBackgroundView_ addSubview:textCountview_];
@@ -98,10 +100,11 @@
     commentBackgroundView_.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];    
     NSTimeInterval animationDuration = [[[aNotification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     CGRect frame = commentBackgroundView_.frame;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - frame.size.height - MAINVIEW_PADDING_Y;
-    else
+    }else{
         frame.origin.y = self.frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - frame.size.height - MAINVIEW_PADDING_Y;        
+    }
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
     commentBackgroundView_.frame = frame;
@@ -194,13 +197,10 @@
     photo_ = photo;
     
     UIImage *image = photo.image.fixOrientation;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        if(orientation == UIDeviceOrientationLandscapeLeft){
-            image = [image UIImageRotateByAngle:270];                
-        }else if(orientation == UIDeviceOrientationLandscapeRight){
-            image = [image UIImageRotateByAngle:90];                 
-        }
+    if(orientation == UIDeviceOrientationLandscapeLeft){
+        image = [image UIImageRotateByAngle:270];                
+    }else if(orientation == UIDeviceOrientationLandscapeRight){
+        image = [image UIImageRotateByAngle:90];                 
     }
     imageView_.image = image.fixOrientation;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -245,7 +245,9 @@
  */
 - (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height{
     int dh =  height - commentBackgroundView_.frame.size.height;
-    if (dh == 0)return;
+    if (dh == 0){
+        return;
+    }
     CGRect r = commentBackgroundView_.frame;
 
     [UIView beginAnimations:@"ResizeHeight" context:nil];

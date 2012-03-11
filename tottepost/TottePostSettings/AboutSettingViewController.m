@@ -183,13 +183,10 @@
  * auto rotation
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(interfaceOrientation == UIInterfaceOrientationPortrait ||
-           interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
-            return YES;
-        }
-        return NO;
+    if(interfaceOrientation == UIInterfaceOrientationPortrait ||
+       interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown){
+        return YES;
     }
-    return YES;
+    return NO;
 }
 @end

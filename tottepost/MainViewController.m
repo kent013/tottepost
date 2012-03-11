@@ -555,6 +555,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     [self updateIndicatorCoordinate];
     settingViewPresented_ = NO;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
+    }
 }
 
 /*!
@@ -562,6 +566,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)didMailFeedbackButtonPressed{
     isMailFeedbackButtonPressed_ = YES;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
+    }
 }
 
 /*!
@@ -569,6 +576,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)didUserVoiceFeedbackButtonPressed{
     isUserVoiceFeedbackButtonPressed_ = YES;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
+    }
 }
 
 #pragma mark - PhotoSubmitterAuthControllerDelegate
@@ -585,13 +595,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * auto rotation
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        if(interfaceOrientation == UIInterfaceOrientationPortrait)
-            return YES;
-        else
-            return NO;
+    if(interfaceOrientation == UIInterfaceOrientationPortrait){
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 /*!
