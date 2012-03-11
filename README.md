@@ -25,7 +25,7 @@ Tottepost is focusing on simplicity, thus we will not provide effects, cropping 
 
 <a href="http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8&uo=4" target="itunes_store"><img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" alt="Single tap to share photo - tottepost - ISHITOYA Kentaro" style="border: 0;"/></a>
 
-FEATURE LIST
+Feature List
 ------------------------------------
  * Upload image to social applications and cloud services
    * Facebook / Twitter / Flickr / Dropbox / Evernote / Picasa / Minus / Mixi / Fotolife
@@ -36,16 +36,16 @@ FEATURE LIST
  * Selecting uploading target album, Creating album 
 
 
-PHOTO SUBMITTER LIBRARY
+PhotoSubmitter Library
 ------------------------------------
 PhotoSubmitter is a library specially developed for tottepost. It is an abstraction layer to submit photo to various web services.
 
 Please visit [https://github.com/kent013/PhotoSubmitter](https://github.com/kent013/PhotoSubmitter) for more detail.
 
 
-HOW TO BUILD
+How to Build
 ------------------------------------
-Since tottepost using AVFoundation, currently not works on simulator. Please run on device.
+Since simulator not supported camera simulation, you cannot test taking photo on simulator. So if you want to test uploading photo, tap on camera button in tottepost running on simulator. It will upload test image to web services.
 
 And, just after cloning tottepost repository, you must run commands below to init and update submodule.
 ```
@@ -61,42 +61,41 @@ After updated submodules, open the `tottepost.xcodeproj`, and you will see the p
 If you don't want to use all of the provided services, you could delete `PhotoSubmitter/Services/[ServiceName]PhotoSubmitter` from project to do so.
 
 
-GIT TIPS
-------------------------------------
+**Git Tips**
 For contributors reminder, if you want to update submodule to latest revision, type next command.
 ```
 git submodule foreach 'git checkout master; git pull'
 ```
 
 
-LOCALIZATION
+Localization
 ------------------------------------
 We currently support only japanese and english.
 And we are using [twine](https://github.com/mobiata/twine) for generating Localizable.string.
 If you want modify localization strings, you may install twine following instruction in twine's repository. After installing twine, you can generate localization files with /strings.sh`. 
 
 
-FEEDBACK
+Feedback
 ------------------------------------
 If you have an opinion or discovered a bug, please submit an issue on Github. Or use [UserVoice](http://tottepost.uservoice.com/).
 
-AUTHORS
+Authors
 ------------------------------------
  * ISHITOYA Kentaro [@kent013](http://twitter.com/kent013) mail:ishitoya at rio.ne.jp
  * WATANABE Ken [@ken4500](http://twitter.com/ken4500)
 
-REDISTRIBUTION
+Redistribution
 ------------------------------------
 If you planning to redistribute this application in Apple App Store, you must contact me via email before do so.
 
-LICENSE
+License
 ------------------------------------
 Copyright (c) 2011, ISHITOYA Kentaro.  
 Copyright (c) 2011, WATANABE Ken.  
 
 New BSD License. See [LICENSE](https://github.com/kent013/tottepost/blob/master/LICENSE) file. 
 
-CHANGE LOG
+Change Log
 ------------------------------------
 Current Apple AppStore version is 1.1.
 See [CHANGELOG](https://github.com/kent013/tottepost/blob/master/CHANGELOG.md).
