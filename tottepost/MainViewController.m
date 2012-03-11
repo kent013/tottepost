@@ -56,8 +56,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     //free mode
-    //[PhotoSubmitterManager unregisterAllPhotoSubmitters];
-    //[PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];
+#ifdef LITE_VERSION
+    [PhotoSubmitterManager unregisterAllPhotoSubmitters];
+    [PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];
+#endif
     
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
@@ -96,7 +98,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //comment button
     commentButton_ = [[UIBarButtonItem alloc] init];
-        
+            
     //setting button
     settingButton_ = [[UIBarButtonItem alloc] init];
     
@@ -210,6 +212,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
             break;
     }
     
+#ifndef LITE_VERSION
     UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [commentButton setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
@@ -218,6 +221,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     [commentButton addTarget:self action:@selector(didCommentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     commentButton_.customView = commentButton;
+#endif
 
     UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
     [settingButton setBackgroundImage:[UIImage imageNamed:@"setting.png"]forState:UIControlStateNormal];
@@ -225,7 +229,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     settingButton_.customView = settingButton;
 
     [UIView beginAnimations:@"RotateIcon" context:nil];
+#ifndef LITE_VERSION
     commentButton.transform = t;
+#endif
     settingButton.transform = t;
     cameraIconImageView_.transform = t;
     [UIView commitAnimations];
