@@ -55,6 +55,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
+    //free mode
+    //[PhotoSubmitterManager unregisterAllPhotoSubmitters];
+    //[PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];
+    
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
