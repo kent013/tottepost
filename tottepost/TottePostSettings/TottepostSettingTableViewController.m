@@ -91,6 +91,14 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if(tag == SV_GENERAL_COUNT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
+#ifdef LITE_VERSION
+    }else if(tag == SV_GENERAL_COMMENT){
+        cell = [super createGeneralSettingCell:tag];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", cell.textLabel.text, [TTLang localized:@"Settings_Row_Comment_Disabled"]];
+        [cell.textLabel setTextColor:[UIColor lightGrayColor]];
+        UISwitch *s = (UISwitch *)cell.accessoryView;
+        s.enabled = NO;
+#endif
     }else{
         return [super createGeneralSettingCell:tag];
     }

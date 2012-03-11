@@ -89,7 +89,6 @@
 		7901AF9F150683B5003DA0DC /* PhotoSubmitterSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901ACAB150683B3003DA0DC /* PhotoSubmitterSettings.m */; };
 		7901AFA0150683B5003DA0DC /* PSLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901ACAD150683B3003DA0DC /* PSLang.m */; };
 		7901AFA2150683B5003DA0DC /* PhotoSubmitter.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACB1150683B3003DA0DC /* PhotoSubmitter.strings */; };
-		7901AFA3150683B5003DA0DC /* strings.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACB4150683B3003DA0DC /* strings.txt */; };
 		7901AFA4150683B5003DA0DC /* DropboxPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901ACB8150683B3003DA0DC /* DropboxPhotoSubmitter.m */; };
 		7901AFA6150683B5003DA0DC /* dropbox_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACBD150683B3003DA0DC /* dropbox_16.png */; };
 		7901AFA7150683B5003DA0DC /* dropbox_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACBE150683B3003DA0DC /* dropbox_16@2x.png */; };
@@ -803,7 +802,6 @@
 		79924CBD150CAE180043C16D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79019FE01505DBC3003DA0DC /* InfoPlist.strings */; };
 		79924CBE150CAE180043C16D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79019FE21505DBC3003DA0DC /* Localizable.strings */; };
 		79924CBF150CAE180043C16D /* PhotoSubmitter.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACB1150683B3003DA0DC /* PhotoSubmitter.strings */; };
-		79924CC0150CAE180043C16D /* strings.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACB4150683B3003DA0DC /* strings.txt */; };
 		79924CC1150CAE180043C16D /* dropbox_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACBD150683B3003DA0DC /* dropbox_16.png */; };
 		79924CC2150CAE180043C16D /* dropbox_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACBE150683B3003DA0DC /* dropbox_16@2x.png */; };
 		79924CC3150CAE180043C16D /* dropbox_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901ACBF150683B3003DA0DC /* dropbox_32.png */; };
@@ -1027,7 +1025,6 @@
 		7901ACAD150683B3003DA0DC /* PSLang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLang.m; sourceTree = "<group>"; };
 		7901ACB2150683B3003DA0DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PhotoSubmitter.strings; sourceTree = "<group>"; };
 		7901ACB3150683B3003DA0DC /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/PhotoSubmitter.strings; sourceTree = "<group>"; };
-		7901ACB4150683B3003DA0DC /* strings.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = strings.txt; sourceTree = "<group>"; };
 		7901ACB7150683B3003DA0DC /* DropboxPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxPhotoSubmitter.h; sourceTree = "<group>"; };
 		7901ACB8150683B3003DA0DC /* DropboxPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxPhotoSubmitter.m; sourceTree = "<group>"; };
 		7901ACBD150683B3003DA0DC /* dropbox_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropbox_16.png; sourceTree = "<group>"; };
@@ -2557,7 +2554,6 @@
 			isa = PBXGroup;
 			children = (
 				7901ACB1150683B3003DA0DC /* PhotoSubmitter.strings */,
-				7901ACB4150683B3003DA0DC /* strings.txt */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
@@ -4458,7 +4454,6 @@
 				79019FFD1505DBC3003DA0DC /* InfoPlist.strings in Resources */,
 				79019FFE1505DBC3003DA0DC /* Localizable.strings in Resources */,
 				7901AFA2150683B5003DA0DC /* PhotoSubmitter.strings in Resources */,
-				7901AFA3150683B5003DA0DC /* strings.txt in Resources */,
 				7901AFA6150683B5003DA0DC /* dropbox_16.png in Resources */,
 				7901AFA7150683B5003DA0DC /* dropbox_16@2x.png in Resources */,
 				7901AFA8150683B5003DA0DC /* dropbox_32.png in Resources */,
@@ -4582,7 +4577,6 @@
 				79924CBD150CAE180043C16D /* InfoPlist.strings in Resources */,
 				79924CBE150CAE180043C16D /* Localizable.strings in Resources */,
 				79924CBF150CAE180043C16D /* PhotoSubmitter.strings in Resources */,
-				79924CC0150CAE180043C16D /* strings.txt in Resources */,
 				79924CC1150CAE180043C16D /* dropbox_16.png in Resources */,
 				79924CC2150CAE180043C16D /* dropbox_16@2x.png in Resources */,
 				79924CC3150CAE180043C16D /* dropbox_32.png in Resources */,

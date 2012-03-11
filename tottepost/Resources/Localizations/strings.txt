@@ -75,6 +75,10 @@
         tags = common
         en = Cancel
         ja = いいえ
+    [Settings_Row_Comment_Disabled]
+        tags = common
+        en = (Not in Lite)
+        ja = (Liteでは無効)
     [About_Section_About]
         tags = common
         en = About tottepost

@@ -133,7 +133,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     lastOrientation_ = orientation_;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+#ifdef LITE_VERSION
+        launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DefaultLite.png"]];
+#else
         launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+#endif
         [self.view addSubview:launchImageView_];
     }
     
