@@ -136,7 +136,7 @@
             textView.backgroundColor = [UIColor clearColor];
             textView.dataDetectorTypes = UIDataDetectorTypeLink;
             textView.editable = NO;
-            [cell addSubview:textView];
+            [cell.contentView addSubview:textView];
             break;
         }
         case ASV_SECTION_FEEDBACK:{

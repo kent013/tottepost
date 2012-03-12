@@ -16,17 +16,20 @@ version 1.1.1 (2012-03-11)
 * Added strings.txt for Localization to use twine.
 * Improved UX of creating album (#30)
 * Fixed bug that update timing of PhotoSubmitterSummary view (#27)
+* Fixed bug that status update in Twitter fail when exceeded limitation of 140 characters (#32)
 
 **PhotoSubmitter updates**
 
 * Separated PhotoSubmitterAPIKey.h to individual APIKey file.
 * Added SVProgressHUD to indicate progress of login.
 * Added feature to auto enhance image quality.
+* Added feature to set limitation of comment length.
 * Fixed bug that Fotolife sometime returns authentication cache.
 * Fixed bug that checkmarks remains after select albums.
 * Fixed bug that Mixi login switch does not turn off when login canceled.
 * Fixed bug that Minus will not accept photo with no album selected.
 * Fixed bug that Mixi will not accept photo with no album selected.
+* Fixed bug that Twitter will not attach location information.
 
 version 1.1 (2012-02-23)
 ------------------------------
