@@ -34,7 +34,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) updateCoordinates;
 - (void) updateIndicatorCoordinate;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
-- (void) closePreview;
+- (BOOL) closePreview:(BOOL)force;
 - (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
@@ -291,23 +291,27 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on post button tapped
  */
 - (void) didPostButtonTapped:(id)sender{
-    [self closePreview];
-    [self postPhoto:previewImageView_.photo];
+    if([self closePreview:NO]){
+        [self postPhoto:previewImageView_.photo];
+    }
 }
 
 /*!
  * on post cancel button tapped
  */
 - (void) didPostCancelButtonTapped:(id)sender{
-    [self closePreview];
+    [self closePreview:YES];
 }
 
 /*!
  * close preview
  */
-- (void)closePreview{
-    [previewImageView_ dissmiss];
-    [self changeCenterButtonTo:cameraButton_];
+- (BOOL)closePreview:(BOOL)force{
+    BOOL ret = [previewImageView_ dismiss:force];
+    if(ret){
+        [self changeCenterButtonTo:cameraButton_];
+    }
+    return ret;
 }
 
 /*!

@@ -28,7 +28,7 @@
 - (void) updateWithFrame:(CGRect)frame;
 - (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo;
 - (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo videoOrientation:(UIDeviceOrientation) orientation;
-- (void) dissmiss;
+- (BOOL) dismiss:(BOOL)force;
 @end
 
 @protocol PreviewPhotoViewDelegate <NSObject>

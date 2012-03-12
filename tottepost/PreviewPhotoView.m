@@ -10,6 +10,8 @@
 #import "PreviewPhotoView.h"
 #import "MainViewControllerConstants.h"
 #import "UIImage+AutoRotation.h"
+#import "PhotoSubmitterManager.h"
+#import "PSLang.h"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -125,7 +127,7 @@
         imageView_.frame = frame;
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD) / 2, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT - MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD - MAINVIEW_PADDING_Y, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
         commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD);
-        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 85, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD-30, 80, 30);
+        textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPAD - 165, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPAD-30, 160, 30);
     }
     else
     {
@@ -140,7 +142,7 @@
         }
         commentBackgroundView_.frame = CGRectMake((frame.size.width - MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE) / 2, commentY, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
         commentTextView_.frame = CGRectMake(0, 0, MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE);
-        NSString *text = @"000"; 
+        NSString *text = @"000 / 000"; 
         CGSize size = [text sizeWithFont:textCountview_.font];
         textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE - size.width - 3, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - size.height, size.width, size.height);
     }
@@ -192,7 +194,13 @@
  */
 - (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo videoOrientation:(UIDeviceOrientation) orientation{
     commentTextView_.text = @"";
-    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+    
+    int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+    if(max){
+        textCountview_.text = [NSString stringWithFormat:@"%d/%d",commentTextView_.text.length, max];    
+    }else{
+        textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+    }
     
     photo_ = photo;
     
@@ -210,13 +218,26 @@
 /*!
  * hide view
  */
-- (void)dissmiss{
-    if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
-        photo_.comment = commentTextView_.text;
+- (BOOL)dismiss:(BOOL)force{
+    if(force == NO){
+        int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+        if(max && commentTextView_.text.length > max){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[PSLang localized:@"Alert_Error"] 
+                                                            message:[PSLang localized:@"Alert_Comment_Too_Long"]
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+            [alert show]; 
+            return NO;
+        }
+        if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
+            photo_.comment = commentTextView_.text;
+        }
     }
     [self removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    return YES;
 }
 
 #pragma mark -
@@ -237,7 +258,12 @@
  * did changed text in textView
  */
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
-    textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];    
+    int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+    if(max){
+        textCountview_.text = [NSString stringWithFormat:@"%d/%d",commentTextView_.text.length, max];    
+    }else{
+        textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
+    }
 }
 
 /*!
@@ -252,7 +278,7 @@
 
     [UIView beginAnimations:@"ResizeHeight" context:nil];
     commentBackgroundView_.frame = CGRectMake(r.origin.x, r.origin.y - dh, r.size.width,height);
-    NSString *text = @"000"; 
+    NSString *text = @"000 / 000"; 
     CGSize size = [text sizeWithFont:textCountview_.font];
     textCountview_.frame = CGRectMake(r.size.width - size.width -3, height -size.height, size.width, size.height);
     [UIView commitAnimations];
