@@ -15,6 +15,8 @@
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
 #define PSV_RETRY_INTERVAL 2
+#define PSV_ALERT_RESTART 1
+#define PSV_ALERT_ABORT 2
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -59,8 +61,13 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * update Label
  */
-- (void)updateLabel{
-    imageView.image = cancelImage;
+- (void)updateLabel{        
+    if([PhotoSubmitterManager sharedInstance].isError &&
+       [PhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
+        imageView.image = retryImage;
+    }else{
+        imageView.image = cancelImage;
+    }
     if(operationCount_ == 0){
         textLabel_.text = [NSString stringWithFormat:[TTLang localized:@"Progress_Finished"], operationCount_];
     }else{
@@ -75,12 +82,24 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender{
     [[PhotoSubmitterManager sharedInstance] pause];
-    UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Title"]
-                               message:[TTLang localized:@"Alert_Message"]
-                              delegate:self 
-                     cancelButtonTitle:[TTLang localized:@"Alert_Cancel"]
-                     otherButtonTitles:[TTLang localized:@"Alert_OK"], nil];
+    UIAlertView *alert = nil;
+    
+    if([PhotoSubmitterManager sharedInstance].isError &&
+       [PhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
+        alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Restart_Alert_Message"]
+                                           message:[TTLang localized:@"Restart_Alert_Message"]
+                                          delegate:self 
+                                 cancelButtonTitle:[TTLang localized:@"Restart_Alert_Cancel"]
+                                 otherButtonTitles:[TTLang localized:@"Restart_Alert_OK"], nil];
+        alert.tag = PSV_ALERT_RESTART;
+    }else{
+        alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Abort_Alert_Title"]
+                                           message:[TTLang localized:@"Abort_Alert_Message"]
+                                          delegate:self 
+                                 cancelButtonTitle:[TTLang localized:@"Abort_Alert_Cancel"]
+                                 otherButtonTitles:[TTLang localized:@"Abort_Alert_OK"], nil];
+        alert.tag = PSV_ALERT_ABORT;
+    }
     [alert show];
 }
 @end
@@ -154,7 +173,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(suceeded && [photoSubmitter.type isEqualToString:kFilePhotoSubmitterType] == false){
+        if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
+            return;
+        }
+        if(suceeded){
             operationCount_--;
             enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
             if(operationCount_ <= 0 && isVisible_){
@@ -184,20 +206,41 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
 -(void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
-                break;
+    switch (alertView.tag) {
+        case PSV_ALERT_ABORT:{
+            switch (buttonIndex) {
+                case 0:{
+                    if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
+                        break;
+                    }
+                    [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
+                    [self updateLabel];            
+                    break;
+                }
+                case 1:{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[PhotoSubmitterManager sharedInstance] cancel];
+                        [self updateLabel];
+                    });
+                    break;
+                }
             }
-            [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
-            [self updateLabel];            
-            break;
-        case 1:
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[PhotoSubmitterManager sharedInstance] cancel];
-                [self updateLabel];
-            });
-            break;
+        }
+        case PSV_ALERT_RESTART:{
+            switch (buttonIndex) {
+                case 0:{      
+                    break;
+                }
+                case 1:{
+                    if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
+                        break;
+                    }
+                    [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
+                    [self updateLabel]; 
+                    break;
+                }
+            }
+        }
     }
 }
 

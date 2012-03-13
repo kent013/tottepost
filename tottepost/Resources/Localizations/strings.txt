@@ -59,19 +59,35 @@
         tags = common
         en = Auto
         ja = 自動
-    [Alert_Title]
+    [Abort_Alert_Title]
         tags = common
         en = Warning
         ja = 確認
-    [Alert_Message]
+    [Abort_Alert_Message]
         tags = common
         en = Do you cancel all uploading files?
         ja = すべてのアップロードを中止しますか？
-    [Alert_OK]
+    [Abort_Alert_OK]
         tags = common
         en = OK
         ja = はい
-    [Alert_Cancel]
+    [Abort_Alert_Cancel]
+        tags = common
+        en = Cancel
+        ja = いいえ
+    [Restart_Alert_Title]
+        tags = common
+        en = Warning
+        ja = 確認
+    [Restart_Alert_Message]
+        tags = common
+        en = Do you cancel all uploading files?
+        ja = アップロードを再開しますか？
+    [Restart_Alert_OK]
+        tags = common
+        en = OK
+        ja = はい
+    [Restart_Alert_Cancel]
         tags = common
         en = Cancel
         ja = いいえ
@@ -119,6 +135,14 @@
 	    tags = common
 		en = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nWe provice source code on github, \nhttps://github.com/kent013/tottepost\n\nAnd we are using lots of great OSS libraries.\nTheir copyright notices are placed in github.\n\nIf you have any questions or requests, please feel free to send us feedback.\n\nYou can mail us with below button. (You need mail account)
 		ja = Copyright (c) 2011, ISHITOYA Kentaro.\nCopyright (c) 2011, WATANABE Ken. \n\nこのアプリはgithubでソースを公開しています。\nhttps://github.com/kent013/tottepost\nたくさんのOSSライブラリを使っています。\n権利情報はgithubに書いてあります。\n\n要望や質問があれば下のボタンからお気軽に。（メールアカウントが必要です）
+    [PS_Upload_Failed]
+        tags = common
+        en = Upload Failed...
+        ja = アップロード失敗
+    [PS_Upload_Failed_Detail]
+        tags = common
+        en = You can restart upload by tapping on upload count.
+        ja = アップロード数表示をタップすると再開できます。
 
 [[AAMFeedback]]
     [AAMFeedbackTitle]

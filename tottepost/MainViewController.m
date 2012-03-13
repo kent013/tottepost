@@ -19,6 +19,7 @@
 #import "UVToken.h"
 #import "NSData+Digest.h"
 #import "FilePhotoSubmitter.h"
+#import "YRDropdownView.h"
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
@@ -510,6 +511,16 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [progressTableViewController_ removeProgressWithType:photoSubmitter.type
                                                      forHash:imageHash 
                                                      message:msg delay:delay];
+        if(suceeded == NO){
+            [YRDropdownView showDropdownInView:self.view 
+                                         title:[TTLang localized:@"PS_Upload_Failed"]
+                                        detail:[TTLang localized:@"PS_Upload_Failed_Detail"]
+                                         image:[UIImage imageNamed:@"unhappyface.png"]
+                                      animated:YES 
+                                     hideAfter:8.0 
+                                    setUIcolor:[UIColor colorWithRed:1 green:0 blue:0 alpha:1] 
+                                setPrettylayer:@"glossLayer"];
+        }
     });
 }
 
