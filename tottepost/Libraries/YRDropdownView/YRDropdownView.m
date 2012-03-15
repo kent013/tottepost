@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 One Mighty Roar. All rights reserved.
 //
 
+#if __has_feature(objc_arc)
+#error This file must be compiled with Non-ARC. use -fno-objc_arc flag (or convert project to Non-ARC)
+#endif
+
 #import "YRDropdownView.h"
 #import <QuartzCore/QuartzCore.h>
 
