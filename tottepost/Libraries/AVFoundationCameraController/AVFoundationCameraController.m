@@ -40,6 +40,7 @@
 - (void) updateCameraControls;
 - (NSData *) cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale;
 - (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
+- (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -72,6 +73,7 @@
     [self initCamera:self.backCameraDevice];
     showsCameraControls_ = YES;
     showsShutterButton_ = YES;
+    showsIndicator_ = YES;
     useTapToFocus_ = YES;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
@@ -104,16 +106,6 @@
 #endif
     session_ = [[AVCaptureSession alloc] init];
     device_ = cameraDevice;
-    NSError* error = nil;
-    AVCaptureDeviceInput* videoInput =
-    [AVCaptureDeviceInput deviceInputWithDevice:device_
-                                          error:&error];
-    if (!videoInput) {
-        NSLog(@"%s|[ERROR] %@", __PRETTY_FUNCTION__, error);
-        return;
-    }
-    
-    [session_ addInput:videoInput];
     [session_ beginConfiguration];
     session_.sessionPreset = AVCaptureSessionPresetPhoto;
     [session_ commitConfiguration];
@@ -125,12 +117,34 @@
                  options:NSKeyValueObservingOptionNew
                  context:nil];
     
+    //setup video
+    videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
+    audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
+    movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
+    
+    //setup image
     imageOutput_ = [[AVCaptureStillImageOutput alloc] init];
-    [session_ addOutput:imageOutput_];
+    [imageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                     AVVideoCodecJPEG, AVVideoCodecKey,
+                                     nil]];
     for (AVCaptureConnection* connection in imageOutput_.connections) {
         connection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
     
+    if ([session_ canAddInput:videoInput_]) {
+        [session_ addInput:videoInput_];
+    }
+    if ([session_ canAddInput:audioInput_]) {
+        [session_ addInput:audioInput_];
+    }
+    if ([session_ canAddOutput:movieFileOutput_]){
+        [session_ addOutput:movieFileOutput_];
+    }
+    if ([session_ canAddOutput:imageOutput_]){
+        [session_ addOutput:imageOutput_];
+    }
+    
+    //setup preview
     previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
     previewLayer_.automaticallyAdjustsMirroring = NO;
     previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -164,6 +178,7 @@
     [flashModeButton_ removeFromSuperview];
     [cameraDeviceButton_ removeFromSuperview];
     if(showsCameraControls_ == NO){
+        indicatorLayer_.hidden = YES;
         return;
     }
     
@@ -181,6 +196,9 @@
         cameraDeviceButton_.frame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);        
         [self.view addSubview: cameraDeviceButton_];
     }
+    if(showsIndicator_){
+        indicatorLayer_.hidden = NO;
+    }
 }
 
 /*!
@@ -188,6 +206,9 @@
  */
 - (void) handleTapGesture:(UITapGestureRecognizer *)recognizer
 {
+    if(mode_ == AVFoundationCameraModeVideo){
+        return;
+    }
     if(useTapToFocus_ == NO){
         return;
     }
@@ -206,6 +227,9 @@
  * zoom
  */
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)recognizer {
+    if(mode_ == AVFoundationCameraModeVideo){
+        return;
+    }
     CGFloat pinchScale = recognizer.scale;
     if(recognizer.state == UIGestureRecognizerStateBegan){
         lastPinchScale_ = pinchScale;
@@ -489,10 +513,22 @@
     if(rotatedRect.origin.y + rotatedRect.size.height > size.height){
         rotatedRect.origin.y = size.height - rotatedRect.size.height;
     }
-    NSLog(@"size  :%@", NSStringFromCGSize(size));
-    NSLog(@"before:%@", NSStringFromCGRect(rect));
-    NSLog(@"after :%@", NSStringFromCGRect(rotatedRect));
+    //NSLog(@"size  :%@", NSStringFromCGSize(size));
+    //NSLog(@"before:%@", NSStringFromCGRect(rect));
+    //NSLog(@"after :%@", NSStringFromCGRect(rotatedRect));
     return rotatedRect;
+}
+
+- (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections
+{
+	for ( AVCaptureConnection *connection in connections ) {
+		for ( AVCaptureInputPort *port in [connection inputPorts] ) {
+			if ( [[port mediaType] isEqual:mediaType] ) {
+				return connection;
+			}
+		}
+	}
+	return nil;
 }
 @end
 
@@ -505,7 +541,10 @@
 @synthesize showsCameraDeviceButton = showsCameraDeviceButton_;
 @synthesize showsFlashModeButton = showsFlashModeButton_;
 @synthesize showsShutterButton = showsShutterButton_;
+@synthesize showsIndicator = showsIndicator_;
 @synthesize useTapToFocus = useTapToFocus_;
+@synthesize mode = mode_;
+@synthesize isRecordingVideo;
 
 #pragma mark -
 #pragma mark public implementation
@@ -513,9 +552,10 @@
  * initializer
  * @param frame
  */
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame andMode:(AVFoundationCameraMode)mode{
     self = [super init];
     if(self){
+        mode_ = mode;
         [self setupInitialState:frame];
     }
     return self;
@@ -527,6 +567,11 @@
  */
 -(void)takePicture
 {
+    if(mode_ == AVFoundationCameraModeVideo){
+        NSLog(@"Controller is in video mode. %s", __PRETTY_FUNCTION__);
+        return;
+    }
+    session_.sessionPreset = AVCaptureSessionPresetPhoto;
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in imageOutput_.connections)
 	{
@@ -560,8 +605,73 @@
 	 }];
 }
 
+/*!
+ * start recording video
+ */
+- (void)startRecordingVideo{
+    session_.sessionPreset = AVCaptureSessionPresetMedium;
+    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+        backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
+    }
+    AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[movieFileOutput_ connections]];
+    if ([videoConnection isVideoOrientationSupported]){
+        [videoConnection setVideoOrientation:videoOrientation_];
+    }
+    
+    
+    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output.mp4", NSHomeDirectory()];
+    NSURL *url = [NSURL URLWithString:filename];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager removeItemAtURL:url error:nil];
+    [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
+}
 
+/*!
+ * stop recording video
+ */
+- (void)stopRecordingVideo{
+    [movieFileOutput_ stopRecording];
+    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+        [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
+    }	
+}
 
+/*!
+ * returns recording video
+ */
+-(BOOL)isRecordingVideo
+{
+    return [movieFileOutput_ isRecording];
+}
+
+/*!
+ * did start recording
+ */
+- (void) captureOutput:(AVCaptureFileOutput *)captureOutput
+didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
+                   fromConnections:(NSArray *)connections{
+    if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecording:)]){
+        [self.delegate cameraControllerDidStartRecordingVideo:self];
+    }
+}
+
+/*!
+ * did finish recording
+ */
+- (void) captureOutput:(AVCaptureFileOutput *)captureOutput
+didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
+                    fromConnections:(NSArray *)connections
+                              error:(NSError *)error
+{
+    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingToOutputFileURL:error:)]){
+        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL error:error];
+    }
+    if(error){
+        NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
+    }
+}        
+
+#pragma mark - public property implementations
 /*!
  * shows camera controls
  */
@@ -595,6 +705,14 @@
 }
 
 /*!
+ * shows indicator
+ */
+- (void)setShowsIndicator:(BOOL)showsIndicator{
+    showsIndicator_ = showsIndicator;
+    [self updateCameraControls];
+}
+
+/*!
  * use tap to focus
  */
 - (void)setUseTapToFocus:(BOOL)useTapToFocus{
@@ -616,7 +734,7 @@
 }
 
 /*!
- * check the device has front-facing camera device
+ * get front-facing camera device
  */
 - (AVCaptureDevice *)frontFacingCameraDevice{
     NSArray *videoDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -629,7 +747,7 @@
 }
 
 /*!
- * check the device has front-facing camera device
+ * get back camera device
  */
 - (AVCaptureDevice *)backCameraDevice{
     NSArray *videoDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -637,6 +755,18 @@
         if (device.position == AVCaptureDevicePositionBack) {
             return device;
         }
+    }
+    return nil;
+}
+
+/*!
+ * get audio device
+ */
+- (AVCaptureDevice *) audioDevice
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
+    if ([devices count] > 0) {
+        return [devices objectAtIndex:0];
     }
     return nil;
 }

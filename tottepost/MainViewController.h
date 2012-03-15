@@ -17,6 +17,7 @@
 #import "AVFoundationCameraController.h"
 #import "PhotoSubmitterAccountTableViewController.h"
 #import "UVDelegate.h"
+#import "DCRoundSwitch.h"
 
 /*!
  * Main view controller
@@ -34,11 +35,14 @@
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
     __strong UIBarButtonItem *commentButton_;
+    __strong DCRoundSwitch *cameraModeSwitch_;
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
     __strong SettingIndicatorView *settingIndicatorView_;
     __strong UIImageView *launchImageView_;
     __strong UIImageView *cameraIconImageView_;
+    __strong UIImageView *cameraModePictureImageView_;
+    __strong UIImageView *cameraModeVideoImageView_;
     UIDeviceOrientation orientation_;
     UIDeviceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;

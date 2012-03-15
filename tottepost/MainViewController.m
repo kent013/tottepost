@@ -32,6 +32,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) didPostButtonTapped: (id)sender;
 - (void) didPostCancelButtonTapped: (id)sender;
 - (void) didCameraButtonTapped: (id)sender;
+- (void) didCameraModeSwitchValueChanged:(DCRoundSwitch *)sender;
 - (void) updateCoordinates;
 - (void) updateIndicatorCoordinate;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
@@ -85,6 +86,15 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //add tool bar
     toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
     toolbar_.barStyle = UIBarStyleBlack;
+    
+    //camera switch
+    cameraModeSwitch_ = [[DCRoundSwitch alloc] initWithFrame:CGRectZero];
+    [cameraModeSwitch_ addTarget:self action:@selector(didCameraModeSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    cameraModeSwitch_.onText = @"Video";
+    cameraModeSwitch_.offText = @"Picture";
+    cameraModeSwitch_.on = NO;
+    cameraModePictureImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"picture.png"]];
+    cameraModeVideoImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video.png"]];
     
     //camera button
     UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, MAINVIEW_CAMERA_BUTTON_HEIGHT)];
@@ -168,6 +178,19 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self updateCoordinates];
 }
 
+/*!
+ * on mode switch changed, change camera mode
+ */
+- (void)didCameraModeSwitchValueChanged:(DCRoundSwitch *)sender{
+    if(sender.on){
+        imagePicker_.mode = AVFoundationCameraModeVideo;
+        imagePicker_.showsCameraControls = NO;
+    }else{
+        imagePicker_.mode = AVFoundationCameraModePhoto;
+        imagePicker_.showsCameraControls = YES;
+    }
+}
+
 #pragma mark -
 #pragma mark coordinates
 
@@ -191,6 +214,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //setting indicator
     [self updateIndicatorCoordinate];
+    
+    //camera mode switch
+    cameraModeSwitch_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X, settingIndicatorView_.frame.origin.y, 60, 16);
+    int height = cameraModeVideoImageView_.image.size.height / 2;
+    cameraModePictureImageView_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X + 3, settingIndicatorView_.frame.origin.y - height - 4, height, height);
+    cameraModeVideoImageView_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X + cameraModeSwitch_.frame.size.width - height - 3, settingIndicatorView_.frame.origin.y - height - 4, height, height);
     
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
@@ -262,14 +291,25 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)didCameraButtonTapped:(id)sender
 {
-    imagePicker_.showsCameraControls = NO;
-    cameraButton_.enabled = NO;
+    if(imagePicker_.mode == AVFoundationCameraModePhoto){
 #if TARGET_IPHONE_SIMULATOR
-    NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test_image.jpg"], 1.0);
-    [self cameraController:nil didFinishPickingImageData:imageData];
+        imagePicker_.showsCameraControls = NO;
+        cameraButton_.enabled = NO;
+        NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test_image.jpg"], 1.0);
+        [self cameraController:nil didFinishPickingImageData:imageData];
 #else
-    [imagePicker_ takePicture];
+        [imagePicker_ takePicture];
 #endif
+    }else{
+#if TARGET_IPHONE_SIMULATOR
+#else
+        if(imagePicker_.isRecordingVideo){
+            [imagePicker_ stopRecordingVideo];
+        }else{
+            [imagePicker_ startRecordingVideo];
+        }
+#endif
+    }
 }
 
 /*!
@@ -360,6 +400,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self.view addSubview:settingIndicatorView_];
     [self.view addSubview:toolbar_];
     [self.view addSubview:progressSummaryView_];  
+    [self.view addSubview:cameraModeSwitch_];
+    [self.view addSubview:cameraModePictureImageView_];
+    [self.view addSubview:cameraModeVideoImageView_];
     imagePicker_.delegate = self;
 
     [self updateCoordinates];
@@ -371,7 +414,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) createCameraController{
     [UIApplication sharedApplication].statusBarHidden = YES;
     if(imagePicker_ == nil){
-        imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame];
+        imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame andMode:AVFoundationCameraModePhoto];
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
@@ -453,9 +496,23 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 }
 
 /*!
- * dismiss launch image
+ * camera controller did initialized
  */
 - (void)cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController{
+}
+
+/*!
+ * camera controller did start to recode video
+ */
+- (void)cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *)controller{
+    
+}
+
+/*!
+ * video recording finished
+ */
+- (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error{
+    
 }
 
 /*
