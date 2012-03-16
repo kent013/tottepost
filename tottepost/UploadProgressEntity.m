@@ -23,16 +23,16 @@
 @implementation UploadProgressEntity
 @synthesize progress;
 @synthesize type;
-@synthesize photoHash;
+@synthesize contentHash;
 
 /*!
  * initialize
  */
-- (id)initWithSubmitterType:(NSString *)inType photoHash:(NSString *)inPhotoHash{
+- (id)initWithSubmitterType:(NSString *)inType contentHash:(NSString *)inPhotoHash{
     self = [super init];
     if(self){
         type = inType;
-        photoHash = inPhotoHash;
+        contentHash = inPhotoHash;
         progress = 0.0;
     }
     return self;
@@ -49,7 +49,7 @@
  * progress hash
  */
 - (NSString *)progressHash{
-    return [UploadProgressEntity generateProgressHash:self.type hash:self.photoHash];
+    return [UploadProgressEntity generateProgressHash:self.type hash:self.contentHash];
 }
 
 /*!

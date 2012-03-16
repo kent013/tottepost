@@ -32,12 +32,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) didPostButtonTapped: (id)sender;
 - (void) didPostCancelButtonTapped: (id)sender;
 - (void) didCameraButtonTapped: (id)sender;
-- (void) didCameraModeSwitchValueChanged:(DCRoundSwitch *)sender;
 - (void) updateCoordinates;
 - (void) updateIndicatorCoordinate;
 - (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
 - (BOOL) closePreview:(BOOL)force;
-- (void) postPhoto:(PhotoSubmitterImageEntity *)photo;
+- (void) postContent:(PhotoSubmitterContentEntity *)content;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
 - (void) createCameraController;
@@ -87,14 +86,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
     toolbar_.barStyle = UIBarStyleBlack;
     
-    //camera switch
-    cameraModeSwitch_ = [[DCRoundSwitch alloc] initWithFrame:CGRectZero];
-    [cameraModeSwitch_ addTarget:self action:@selector(didCameraModeSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
-    cameraModeSwitch_.onText = @"Video";
-    cameraModeSwitch_.offText = @"Picture";
-    cameraModeSwitch_.on = NO;
-    cameraModePictureImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"picture.png"]];
-    cameraModeVideoImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video.png"]];
+    cameraModeSwitchView_ = [[CameraModeSwitchView alloc] initWithFrame:CGRectZero];
+    cameraModeSwitchView_.delegate = self;
     
     //camera button
     UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, MAINVIEW_CAMERA_BUTTON_HEIGHT)];
@@ -178,17 +171,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self updateCoordinates];
 }
 
-/*!
- * on mode switch changed, change camera mode
- */
-- (void)didCameraModeSwitchValueChanged:(DCRoundSwitch *)sender{
-    if(sender.on){
-        imagePicker_.mode = AVFoundationCameraModeVideo;
-    }else{
-        imagePicker_.mode = AVFoundationCameraModePhoto;
-    }
-}
-
 #pragma mark -
 #pragma mark coordinates
 
@@ -214,10 +196,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self updateIndicatorCoordinate];
     
     //camera mode switch
-    cameraModeSwitch_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X, settingIndicatorView_.frame.origin.y, 60, 16);
-    int height = cameraModeVideoImageView_.image.size.height / 2;
-    cameraModePictureImageView_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X + 3, settingIndicatorView_.frame.origin.y - height - 4, height, height);
-    cameraModeVideoImageView_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X + cameraModeSwitch_.frame.size.width - height - 3, settingIndicatorView_.frame.origin.y - height - 4, height, height);
+    cameraModeSwitchView_.frame = CGRectMake(MAINVIEW_PROGRESS_PADDING_X, settingIndicatorView_.frame.origin.y - 16 , 60, 50);
     
     //toolbar
     [toolbar_ setFrame:CGRectMake(0, frame.size.height - MAINVIEW_TOOLBAR_HEIGHT, frame.size.width, MAINVIEW_TOOLBAR_HEIGHT)];
@@ -313,7 +292,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * post photo
  */
-- (void)postPhoto:(PhotoSubmitterImageEntity *)photo{
+- (void)postContent:(PhotoSubmitterContentEntity *)content{
     PhotoSubmitterManager *manager = [PhotoSubmitterManager sharedInstance];
     if(manager.enabledSubmitterCount == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -321,7 +300,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     
-    [manager submitPhoto:photo];
+    if(content.isPhoto){
+        [manager submitPhoto:(PhotoSubmitterImageEntity *) content];
+    }else if(content.isVideo){
+        [manager submitVideo:(PhotoSubmitterVideoEntity *)content];
+    }
 }
 
 #pragma mark -
@@ -331,7 +314,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void) didPostButtonTapped:(id)sender{
     if([self closePreview:NO]){
-        [self postPhoto:previewImageView_.photo];
+        [self postContent:previewImageView_.photo];
     }
 }
 
@@ -398,9 +381,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self.view addSubview:settingIndicatorView_];
     [self.view addSubview:toolbar_];
     [self.view addSubview:progressSummaryView_];  
-    [self.view addSubview:cameraModeSwitch_];
-    [self.view addSubview:cameraModePictureImageView_];
-    [self.view addSubview:cameraModeVideoImageView_];
+    [self.view addSubview:cameraModeSwitchView_];
     imagePicker_.delegate = self;
 
     [self updateCoordinates];
@@ -489,7 +470,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewPhoto:photo];
     }else{
-        [self postPhoto:photo];
+        [self postContent:photo];
     }    
 }
 
@@ -503,14 +484,17 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * camera controller did start to recode video
  */
 - (void)cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *)controller{
-    
 }
 
 /*!
  * video recording finished
  */
-- (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error{
-    
+- (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error{
+    if(error){
+        return;
+    }
+    PhotoSubmitterVideoEntity *video = [[PhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
+    [self postContent:video];
 }
 
 /*
@@ -633,7 +617,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     if(self.refreshCameraNeeded){
         refreshCameraNeeded_ = NO;
-        //[self performSelector:@selector(updateCameraController) withObject:nil afterDelay:0.5];
     }else{
         [self updateCoordinates];
     }
@@ -671,6 +654,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (UINavigationController *) requestNavigationControllerToPresentAuthenticationView{
     return settingNavigationController_;
+}
+
+#pragma mark - CameraModeSwitchViewDelegate
+/*!
+ * camera mode switch
+ */
+- (void)cameraModeSwitchView:(CameraModeSwitchView *)cameraModeSwitchView didModeChangedTo:(AVFoundationCameraMode)mode{
+    imagePicker_.mode = mode;
 }
 
 #pragma mark -

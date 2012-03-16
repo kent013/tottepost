@@ -700,7 +700,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
-    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingToOutputFileURL:length:error:)]){
+    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:length:error:)]){
         [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
     }
     [videoElapsedTimer_ invalidate];

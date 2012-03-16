@@ -127,7 +127,7 @@
  */
 - (UploadProgressEntity *)progressForType:(NSString *)type andHash:(NSString *)hash{
     for(UploadProgressEntity *e in progresses_){
-        if([e.type isEqualToString:type] && [e.photoHash isEqualToString:hash]){
+        if([e.type isEqualToString:type] && [e.contentHash isEqualToString:hash]){
             return e;
         }
     }
@@ -140,7 +140,7 @@
 - (int)indexForProgress:(UploadProgressEntity *)e{
     int index = 0;
     for(UploadProgressEntity *ep in progresses_){
-        if([ep.type isEqualToString:e.type] && [ep.photoHash isEqualToString:e.photoHash]){
+        if([ep.type isEqualToString:e.type] && [ep.contentHash isEqualToString:e.contentHash]){
             return index;
         }
         index++;
@@ -188,7 +188,7 @@
  * add progress
  */
 - (void)addProgressWithType:(NSString *)type forHash:(NSString *)hash{
-    UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type photoHash:hash];
+    UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type contentHash:hash];
     if(entity == nil){
         return;
     }

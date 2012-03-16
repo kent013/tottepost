@@ -16,13 +16,13 @@
 #import "SettingIndicatorView.h"
 #import "AVFoundationCameraController.h"
 #import "PhotoSubmitterAccountTableViewController.h"
+#import "CameraModeSwitchView.h"
 #import "UVDelegate.h"
-#import "DCRoundSwitch.h"
 
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate, CameraModeSwitchViewDelegate>{
 @protected
     __strong TottepostSettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
@@ -35,14 +35,12 @@
     __strong UIBarButtonItem *flexSpace_;
     __strong UIBarButtonItem *settingButton_;
     __strong UIBarButtonItem *commentButton_;
-    __strong DCRoundSwitch *cameraModeSwitch_;
     __strong ProgressSummaryView *progressSummaryView_;
     __strong PreviewPhotoView *previewImageView_;
     __strong SettingIndicatorView *settingIndicatorView_;
     __strong UIImageView *launchImageView_;
     __strong UIImageView *cameraIconImageView_;
-    __strong UIImageView *cameraModePictureImageView_;
-    __strong UIImageView *cameraModeVideoImageView_;
+    __strong CameraModeSwitchView *cameraModeSwitchView_;
     UIDeviceOrientation orientation_;
     UIDeviceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;

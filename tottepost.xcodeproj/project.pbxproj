@@ -406,10 +406,10 @@
 		7948AE471500B6BA004ABDAB /* UIFont+UVExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE371500B6BA004ABDAB /* UIFont+UVExtras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7948AE481500B6BA004ABDAB /* UIView+UVExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE391500B6BA004ABDAB /* UIView+UVExtras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7948AE491500B6BA004ABDAB /* UVUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE3B1500B6BA004ABDAB /* UVUIColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		797194691510EE8900C58A1B /* picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194671510EE8900C58A1B /* picture.png */; };
-		7971946A1510EE8900C58A1B /* picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194681510EE8900C58A1B /* picture@2x.png */; };
-		7971946E1510EE9300C58A1B /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 7971946C1510EE9300C58A1B /* video.png */; };
-		7971946F1510EE9300C58A1B /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7971946D1510EE9300C58A1B /* video@2x.png */; };
+		797194691510EE8900C58A1B /* photoMode.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194671510EE8900C58A1B /* photoMode.png */; };
+		7971946A1510EE8900C58A1B /* photoMode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194681510EE8900C58A1B /* photoMode@2x.png */; };
+		7971946E1510EE9300C58A1B /* videoMode.png in Resources */ = {isa = PBXBuildFile; fileRef = 7971946C1510EE9300C58A1B /* videoMode.png */; };
+		7971946F1510EE9300C58A1B /* videoMode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7971946D1510EE9300C58A1B /* videoMode@2x.png */; };
 		797E393014AC6A8800F17AC4 /* TTLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E392F14AC6A8800F17AC4 /* TTLang.m */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		7980247314B1076400989368 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
@@ -906,6 +906,9 @@
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
+		79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
+		79E705331513728D000C792B /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E705321513728D000C792B /* PhotoSubmitterContentEntity.m */; };
+		79E7053615138115000C792B /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */; };
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
 		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1938,10 +1941,10 @@
 		7948AE391500B6BA004ABDAB /* UIView+UVExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UVExtras.m"; sourceTree = "<group>"; };
 		7948AE3A1500B6BA004ABDAB /* UVUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVUIColorAdditions.h; sourceTree = "<group>"; };
 		7948AE3B1500B6BA004ABDAB /* UVUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVUIColorAdditions.m; sourceTree = "<group>"; };
-		797194671510EE8900C58A1B /* picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture.png; sourceTree = "<group>"; };
-		797194681510EE8900C58A1B /* picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picture@2x.png"; sourceTree = "<group>"; };
-		7971946C1510EE9300C58A1B /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
-		7971946D1510EE9300C58A1B /* video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x.png"; sourceTree = "<group>"; };
+		797194671510EE8900C58A1B /* photoMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoMode.png; sourceTree = "<group>"; };
+		797194681510EE8900C58A1B /* photoMode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photoMode@2x.png"; sourceTree = "<group>"; };
+		7971946C1510EE9300C58A1B /* videoMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoMode.png; sourceTree = "<group>"; };
+		7971946D1510EE9300C58A1B /* videoMode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoMode@2x.png"; sourceTree = "<group>"; };
 		797E392E14AC6A8800F17AC4 /* TTLang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTLang.h; path = Util/TTLang.h; sourceTree = "<group>"; };
 		797E392F14AC6A8800F17AC4 /* TTLang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTLang.m; path = Util/TTLang.m; sourceTree = "<group>"; };
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
@@ -2107,6 +2110,12 @@
 		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
+		79E7052715135C82000C792B /* CameraModeSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraModeSwitchView.h; sourceTree = "<group>"; };
+		79E7052815135C82000C792B /* CameraModeSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraModeSwitchView.m; sourceTree = "<group>"; };
+		79E705311513728D000C792B /* PhotoSubmitterContentEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterContentEntity.h; sourceTree = "<group>"; };
+		79E705321513728D000C792B /* PhotoSubmitterContentEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterContentEntity.m; sourceTree = "<group>"; };
+		79E7053415138114000C792B /* PhotoSubmitterVideoEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSubmitterVideoEntity.h; path = PhotoSubmitter/PhotoSubmitterVideoEntity.h; sourceTree = SOURCE_ROOT; };
+		79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterVideoEntity.m; path = PhotoSubmitter/PhotoSubmitterVideoEntity.m; sourceTree = SOURCE_ROOT; };
 		79F461B5150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountTableViewController.h; sourceTree = "<group>"; };
 		79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
 		79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
@@ -2201,6 +2210,8 @@
 		3704D5AF1494CD5A00380D30 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				79E7052715135C82000C792B /* CameraModeSwitchView.h */,
+				79E7052815135C82000C792B /* CameraModeSwitchView.m */,
 				376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */,
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
@@ -2409,16 +2420,16 @@
 				793AAF67150D035200285BED /* IconLite-72@2x.png */,
 				793AAF68150D035300285BED /* IconLite.png */,
 				793AAF69150D035300285BED /* IconLite@2x.png */,
-				797194671510EE8900C58A1B /* picture.png */,
-				797194681510EE8900C58A1B /* picture@2x.png */,
+				797194671510EE8900C58A1B /* photoMode.png */,
+				797194681510EE8900C58A1B /* photoMode@2x.png */,
 				79019FDB1505DBC3003DA0DC /* retry.png */,
 				79019FDC1505DBC3003DA0DC /* retry@2x.png */,
 				79019FDD1505DBC3003DA0DC /* setting.png */,
 				79019FDE1505DBC3003DA0DC /* setting@2x.png */,
 				793F4E3A150F88C30026CE62 /* unhappyface.png */,
 				793F4E3B150F88C30026CE62 /* unhappyface@2x.png */,
-				7971946C1510EE9300C58A1B /* video.png */,
-				7971946D1510EE9300C58A1B /* video@2x.png */,
+				7971946C1510EE9300C58A1B /* videoMode.png */,
+				7971946D1510EE9300C58A1B /* videoMode@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2440,19 +2451,23 @@
 				7901ACAF150683B3003DA0DC /* Resources */,
 				7901AF5C150683B4003DA0DC /* Settings */,
 				7901ACB5150683B3003DA0DC /* Services */,
+				7901ACA7150683B3003DA0DC /* PhotoSubmitterProtocol.h */,
 				7901AC97150683B3003DA0DC /* PhotoSubmitter.h */,
 				7901AC98150683B3003DA0DC /* PhotoSubmitter.m */,
-				7901AC9B150683B3003DA0DC /* PhotoSubmitterAlbumEntity.h */,
-				7901AC9C150683B3003DA0DC /* PhotoSubmitterAlbumEntity.m */,
 				7901AC9F150683B3003DA0DC /* PhotoSubmitterFactory.h */,
 				7901ACA0150683B3003DA0DC /* PhotoSubmitterFactory.m */,
+				7901AC9B150683B3003DA0DC /* PhotoSubmitterAlbumEntity.h */,
+				7901AC9C150683B3003DA0DC /* PhotoSubmitterAlbumEntity.m */,
+				79E705311513728D000C792B /* PhotoSubmitterContentEntity.h */,
+				79E705321513728D000C792B /* PhotoSubmitterContentEntity.m */,
 				7901ACA1150683B3003DA0DC /* PhotoSubmitterImageEntity.h */,
 				7901ACA2150683B3003DA0DC /* PhotoSubmitterImageEntity.m */,
+				79E7053415138114000C792B /* PhotoSubmitterVideoEntity.h */,
+				79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */,
 				7901ACA3150683B3003DA0DC /* PhotoSubmitterManager.h */,
 				7901ACA4150683B3003DA0DC /* PhotoSubmitterManager.m */,
 				7901ACA5150683B3003DA0DC /* PhotoSubmitterOperation.h */,
 				7901ACA6150683B3003DA0DC /* PhotoSubmitterOperation.m */,
-				7901ACA7150683B3003DA0DC /* PhotoSubmitterProtocol.h */,
 				7901ACA8150683B3003DA0DC /* PhotoSubmitterSequencialOperationQueue.h */,
 				7901ACA9150683B3003DA0DC /* PhotoSubmitterSequencialOperationQueue.m */,
 				7901ACAA150683B3003DA0DC /* PhotoSubmitterSettings.h */,
@@ -4646,10 +4661,10 @@
 				793F4E39150F82260026CE62 /* test_image.jpg in Resources */,
 				793F4E3C150F88C30026CE62 /* unhappyface.png in Resources */,
 				793F4E3D150F88C30026CE62 /* unhappyface@2x.png in Resources */,
-				797194691510EE8900C58A1B /* picture.png in Resources */,
-				7971946A1510EE8900C58A1B /* picture@2x.png in Resources */,
-				7971946E1510EE9300C58A1B /* video.png in Resources */,
-				7971946F1510EE9300C58A1B /* video@2x.png in Resources */,
+				797194691510EE8900C58A1B /* photoMode.png in Resources */,
+				7971946A1510EE8900C58A1B /* photoMode@2x.png in Resources */,
+				7971946E1510EE9300C58A1B /* videoMode.png in Resources */,
+				7971946F1510EE9300C58A1B /* videoMode@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5115,6 +5130,9 @@
 				793F53081510E0C10026CE62 /* DCRoundSwitchKnobLayer.m in Sources */,
 				793F53091510E0C10026CE62 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				793F530A1510E0C10026CE62 /* DCRoundSwitchToggleLayer.m in Sources */,
+				79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */,
+				79E705331513728D000C792B /* PhotoSubmitterContentEntity.m in Sources */,
+				79E7053615138115000C792B /* PhotoSubmitterVideoEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
