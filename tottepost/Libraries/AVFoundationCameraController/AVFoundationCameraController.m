@@ -581,7 +581,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         n++;
     }
     
-    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output%d.mp4", NSHomeDirectory(), n];
+    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output%d.mov", NSHomeDirectory(), n];
     NSURL *url = [NSURL URLWithString:filename];
     NSFileManager *manager = [NSFileManager defaultManager];
     [manager removeItemAtURL:url error:nil];

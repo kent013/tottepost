@@ -267,7 +267,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on camera button tapped
  */
 - (void)didCameraButtonTapped:(id)sender
-{
+{    
     if(imagePicker_.mode == AVFoundationCameraModePhoto){
 #if TARGET_IPHONE_SIMULATOR
         imagePicker_.showsCameraControls = NO;
@@ -279,6 +279,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 #endif
     }else{
 #if TARGET_IPHONE_SIMULATOR
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"test_video" withExtension:@"mov"];
+        [self cameraController:nil didFinishRecordingVideoToOutputFileURL:url length:4.0 error:nil];
 #else
         if(imagePicker_.isRecordingVideo){
             [imagePicker_ stopRecordingVideo];
