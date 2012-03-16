@@ -31,12 +31,16 @@ typedef enum {
     __strong FlashButton *flashModeButton_;
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
+    
+    __strong UILabel *videoElapsedTimeLabel_;
+    __strong NSTimer *videoElapsedTimer_;
 
     BOOL adjustingExposure_;
     BOOL showsCameraControls_;
     BOOL showsShutterButton_;
     BOOL showsFlashModeButton_;
     BOOL showsCameraDeviceButton_;
+    BOOL showsVideoElapsedTimeLabel_;
     BOOL showsIndicator_;
     BOOL useTapToFocus_;
     
@@ -61,6 +65,7 @@ typedef enum {
 @property(nonatomic, assign) BOOL showsFlashModeButton;
 @property(nonatomic, assign) BOOL showsCameraDeviceButton;
 @property(nonatomic, assign) BOOL showsIndicator;
+@property(nonatomic, assign) BOOL showsVideoElapsedTimeLabel;
 @property(nonatomic, assign) BOOL useTapToFocus;
 @property(nonatomic, assign) AVFoundationCameraMode mode;
 @property(nonatomic, readonly) BOOL hasMultipleCameraDevices;
@@ -88,7 +93,7 @@ typedef enum {
  * capture video
  */
 -(void) cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *) controller;
--(void) cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error;
+-(void) cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error;
 /*!
  * delegate raw data and metadata
  */

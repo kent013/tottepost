@@ -249,8 +249,6 @@
 		7901B045150683B6003DA0DC /* UIImage+AutoRotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF77150683B4003DA0DC /* UIImage+AutoRotation.m */; };
 		7901B046150683B6003DA0DC /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF79150683B4003DA0DC /* UIImage+Digest.m */; };
 		7901B047150683B6003DA0DC /* UIImage+EXIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF7B150683B4003DA0DC /* UIImage+EXIF.m */; };
-		791AE83A1512650300B40A87 /* KTStopwatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 791AE8391512650300B40A87 /* KTStopwatch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		791AE83C1512655100B40A87 /* KTStopwatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 791AE8391512650300B40A87 /* KTStopwatch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 791BF31314E020A200697E05 /* libxml2.dylib */; };
 		793AAF55150CEC1800285BED /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 793AAF52150CEC1800285BED /* Icon-72.png */; };
 		793AAF56150CEC1800285BED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 793AAF53150CEC1800285BED /* Icon.png */; };
@@ -1705,8 +1703,6 @@
 		7901B04D15068B5E003DA0DC /* MixiAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiAPIKey.h; sourceTree = "<group>"; };
 		7901B04E15068B69003DA0DC /* PicasaAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicasaAPIKey.h; sourceTree = "<group>"; };
 		7913BFD914FFCE20003EE902 /* UserVoiceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserVoiceAPIKey.h; sourceTree = "<group>"; };
-		791AE8381512650300B40A87 /* KTStopwatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStopwatch.h; sourceTree = "<group>"; };
-		791AE8391512650300B40A87 /* KTStopwatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStopwatch.m; sourceTree = "<group>"; };
 		791BF31314E020A200697E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		793AAF32150CE4DC00285BED /* tottepost-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tottepost-Info.plist"; sourceTree = "<group>"; };
 		793AAF35150CE54100285BED /* DefaultLite~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultLite~iphone.png"; sourceTree = "<group>"; };
@@ -2368,7 +2364,6 @@
 				376A8B3714A060B700637B68 /* FBProgressView */,
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				7948ADEF15001A0D004ABDAB /* HTTPRiot */,
-				791AE8371512650300B40A87 /* KTStopwatch */,
 				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
 				7980247014B1075000989368 /* uicolor-expanded */,
 				7948ACD7150019F5004ABDAB /* UserVoiceSDK */,
@@ -3813,16 +3808,6 @@
 			path = UtilityCategories;
 			sourceTree = "<group>";
 		};
-		791AE8371512650300B40A87 /* KTStopwatch */ = {
-			isa = PBXGroup;
-			children = (
-				791AE8381512650300B40A87 /* KTStopwatch.h */,
-				791AE8391512650300B40A87 /* KTStopwatch.m */,
-			);
-			name = KTStopwatch;
-			path = Libraries/KTStopwatch;
-			sourceTree = "<group>";
-		};
 		793F4E0A150F75C40026CE62 /* YRDropdownView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5130,7 +5115,6 @@
 				793F53081510E0C10026CE62 /* DCRoundSwitchKnobLayer.m in Sources */,
 				793F53091510E0C10026CE62 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				793F530A1510E0C10026CE62 /* DCRoundSwitchToggleLayer.m in Sources */,
-				791AE83A1512650300B40A87 /* KTStopwatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5449,7 +5433,6 @@
 				793F530C1510E0EE0026CE62 /* DCRoundSwitchKnobLayer.m in Sources */,
 				793F530D1510E0EE0026CE62 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				793F530E1510E0EE0026CE62 /* DCRoundSwitchToggleLayer.m in Sources */,
-				791AE83C1512655100B40A87 /* KTStopwatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

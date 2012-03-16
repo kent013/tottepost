@@ -184,10 +184,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)didCameraModeSwitchValueChanged:(DCRoundSwitch *)sender{
     if(sender.on){
         imagePicker_.mode = AVFoundationCameraModeVideo;
-        imagePicker_.showsCameraControls = NO;
     }else{
         imagePicker_.mode = AVFoundationCameraModePhoto;
-        imagePicker_.showsCameraControls = YES;
     }
 }
 

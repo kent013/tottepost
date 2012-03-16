@@ -41,6 +41,7 @@
 - (NSData *) cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale;
 - (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
+- (void) onVideoRecordingTimer;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -70,11 +71,21 @@
     [cameraDeviceButton_ setBackgroundImage:[UIImage imageNamed:@"camera_change.png"] forState:UIControlStateNormal];
     [cameraDeviceButton_ addTarget:self action:@selector(handleCameraDeviceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
+    videoElapsedTimeLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
+    videoElapsedTimeLabel_.backgroundColor = [UIColor clearColor];
+    [videoElapsedTimer_ invalidate];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        videoElapsedTimeLabel_.font = [UIFont systemFontOfSize:22];
+    }else{
+        videoElapsedTimeLabel_.font = [UIFont systemFontOfSize:16];
+    }
+    
     [self initCamera:self.backCameraDevice];
     showsCameraControls_ = YES;
     showsShutterButton_ = YES;
     showsIndicator_ = YES;
     useTapToFocus_ = YES;
+    showsVideoElapsedTimeLabel_ = YES;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
     }
@@ -177,27 +188,36 @@
     [shutterButton_ removeFromSuperview];
     [flashModeButton_ removeFromSuperview];
     [cameraDeviceButton_ removeFromSuperview];
-    if(showsCameraControls_ == NO){
-        indicatorLayer_.hidden = YES;
-        return;
-    }
+    [videoElapsedTimeLabel_ removeFromSuperview];
+    indicatorLayer_.hidden = YES;
     
     CGRect f = self.view.frame;
-    if(showsShutterButton_ && [shutterButton_ isDescendantOfView:self.view] == NO){
-        [shutterButton_ setFrame:CGRectMake((f.size.width - PICKER_SHUTTER_BUTTON_WIDTH) / 2    , f.size.height - PICKER_SHUTTER_BUTTON_HEIGHT - PICKER_PADDING_Y, PICKER_SHUTTER_BUTTON_WIDTH, PICKER_SHUTTER_BUTTON_HEIGHT)];
-        [self.view addSubview: shutterButton_];
-    }
-    if(showsFlashModeButton_ && [flashModeButton_ isDescendantOfView:self.view] == NO){
-        flashModeButton_.frame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
-        [self.view addSubview: flashModeButton_];
-    }
-    
-    if(showsCameraDeviceButton_ && [cameraDeviceButton_ isDescendantOfView:self.view] == NO){
-        cameraDeviceButton_.frame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);        
-        [self.view addSubview: cameraDeviceButton_];
-    }
-    if(showsIndicator_){
-        indicatorLayer_.hidden = NO;
+    if(mode_ == AVFoundationCameraModeVideo ){
+        if(showsVideoElapsedTimeLabel_ && [videoElapsedTimeLabel_ isDescendantOfView:self.view] == NO){
+            CGSize size = [@"00/00" sizeWithFont:videoElapsedTimeLabel_.font];
+            videoElapsedTimeLabel_.frame = CGRectMake(f.size.width - size.width - PICKER_PADDING_X, PICKER_PADDING_Y, size.width, size.height);        
+            [self.view addSubview: videoElapsedTimeLabel_];
+        }
+    }else{
+        if(showsCameraControls_ == NO){
+            return;
+        }
+        if(showsShutterButton_ && [shutterButton_ isDescendantOfView:self.view] == NO){
+            [shutterButton_ setFrame:CGRectMake((f.size.width - PICKER_SHUTTER_BUTTON_WIDTH) / 2    , f.size.height - PICKER_SHUTTER_BUTTON_HEIGHT - PICKER_PADDING_Y, PICKER_SHUTTER_BUTTON_WIDTH, PICKER_SHUTTER_BUTTON_HEIGHT)];
+            [self.view addSubview: shutterButton_];
+        }
+        if(showsFlashModeButton_ && [flashModeButton_ isDescendantOfView:self.view] == NO){
+            flashModeButton_.frame = CGRectMake(PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_FLASHMODE_BUTTON_WIDTH, PICKER_FLASHMODE_BUTTON_HEIGHT);
+            [self.view addSubview: flashModeButton_];
+        }
+        
+        if(showsCameraDeviceButton_ && [cameraDeviceButton_ isDescendantOfView:self.view] == NO){
+            cameraDeviceButton_.frame = CGRectMake(f.size.width - PICKER_CAMERADEVICE_BUTTON_WIDTH - PICKER_PADDING_X, PICKER_PADDING_Y, PICKER_CAMERADEVICE_BUTTON_WIDTH, PICKER_CAMERADEVICE_BUTTON_HEIGHT);        
+            [self.view addSubview: cameraDeviceButton_];
+        }
+        if(showsIndicator_){
+            indicatorLayer_.hidden = NO;
+        }
     }
 }
 
@@ -519,6 +539,9 @@
     return rotatedRect;
 }
 
+/*!
+ * get capture connection with mediatype
+ */
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections
 {
 	for ( AVCaptureConnection *connection in connections ) {
@@ -529,6 +552,16 @@
 		}
 	}
 	return nil;
+}
+
+/*!
+ * on timer
+ */
+- (void)onVideoRecordingTimer{
+    NSLog(@"%f", [videoElapsedTimer_.fireDate timeIntervalSinceNow]);
+    int minute = [videoElapsedTimer_.fireDate timeIntervalSinceNow] / 60;
+    int sec = (int)[videoElapsedTimer_.fireDate timeIntervalSinceNow] % 60;
+    videoElapsedTimeLabel_.text = [NSString stringWithFormat:@"%02d:%02d", minute, sec];
 }
 @end
 
@@ -541,6 +574,7 @@
 @synthesize showsCameraDeviceButton = showsCameraDeviceButton_;
 @synthesize showsFlashModeButton = showsFlashModeButton_;
 @synthesize showsShutterButton = showsShutterButton_;
+@synthesize showsVideoElapsedTimeLabel = showsVideoElapsedTimeLabel_;
 @synthesize showsIndicator = showsIndicator_;
 @synthesize useTapToFocus = useTapToFocus_;
 @synthesize mode = mode_;
@@ -622,7 +656,9 @@
     NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output.mp4", NSHomeDirectory()];
     NSURL *url = [NSURL URLWithString:filename];
     NSFileManager *manager = [NSFileManager defaultManager];
-    [manager removeItemAtURL:url error:nil];
+    NSError *error;
+    [manager removeItemAtURL:url error:&error];
+    NSLog(@"%@", error.description);
     [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
 }
 
@@ -649,7 +685,9 @@
  */
 - (void) captureOutput:(AVCaptureFileOutput *)captureOutput
 didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
-                   fromConnections:(NSArray *)connections{
+       fromConnections:(NSArray *)connections{
+    videoElapsedTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onVideoRecordingTimer) userInfo:nil repeats:YES];
+    [videoElapsedTimer_ fire];
     if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecording:)]){
         [self.delegate cameraControllerDidStartRecordingVideo:self];
     }
@@ -663,15 +701,24 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
-    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingToOutputFileURL:error:)]){
-        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL error:error];
+    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingToOutputFileURL:length:error:)]){
+        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
     }
+    [videoElapsedTimer_ invalidate];
     if(error){
         NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
     }
 }        
 
 #pragma mark - public property implementations
+/*!
+ * set mode
+ */
+-(void)setMode:(AVFoundationCameraMode)mode{
+    mode_ = mode;
+    [self updateCameraControls];
+}
+
 /*!
  * shows camera controls
  */
@@ -701,6 +748,14 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
  */
 - (void)setShowsShutterButton:(BOOL)showsShutterButton{
     showsShutterButton_ = showsShutterButton;
+    [self updateCameraControls];
+}
+
+/*!
+ * shows video elapsed time label
+ */
+- (void)setShowsVideoElapsedTimeLabel:(BOOL)showsVideoElapsedTimeLabel{
+    showsVideoElapsedTimeLabel = showsVideoElapsedTimeLabel;
     [self updateCameraControls];
 }
 
