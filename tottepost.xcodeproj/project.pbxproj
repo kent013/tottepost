@@ -909,6 +909,9 @@
 		79E7053615138115000C792B /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */; };
 		79E7053A1513B518000C792B /* test_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 79E705381513B518000C792B /* test_image.jpg */; };
 		79E7053B1513B518000C792B /* test_video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 79E705391513B518000C792B /* test_video.mov */; };
+		79E7053C1513CEA0000C792B /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E705321513728D000C792B /* PhotoSubmitterContentEntity.m */; };
+		79E7053D1513CEA0000C792B /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */; };
+		79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
 		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -5461,6 +5464,9 @@
 				793F530C1510E0EE0026CE62 /* DCRoundSwitchKnobLayer.m in Sources */,
 				793F530D1510E0EE0026CE62 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				793F530E1510E0EE0026CE62 /* DCRoundSwitchToggleLayer.m in Sources */,
+				79E7053C1513CEA0000C792B /* PhotoSubmitterContentEntity.m in Sources */,
+				79E7053D1513CEA0000C792B /* PhotoSubmitterVideoEntity.m in Sources */,
+				79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
