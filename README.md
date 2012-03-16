@@ -14,7 +14,7 @@ Simple Camera Application for iOS
 
 [日本語](https://github.com/kent013/tottepost/blob/master/README.ja.md)
 
-Camera application for iOS devices, focusing on simplicity, minimum operation to take photo and post it to social apps.
+Camera application for iOS devices, focusing on simplicity, minimum operation to take photo/video and post it to social apps.
 
 This application is not similar to Instagram or other kind of camera application that offer users to add effects to photo. These applications are very good when sharing nice looking photos, but often feel messy to select the effects if you want to share photos instantly.
 
@@ -27,11 +27,14 @@ Tottepost is focusing on simplicity, thus we will not provide effects, cropping 
 
 Feature List
 ------------------------------------
- * Upload image to social applications and cloud services
+ * Upload photo to social applications and cloud services
    * Facebook / Twitter / Flickr / Dropbox / Evernote / Picasa / Minus / Mixi / Fotolife
- * Save image to local camera roll
+ * Upload video to social applications and cloud services
+   * Facebook / Flickr / Dropbox / Minus
+ * Save photo/video to local camera roll
  * Toggle comment / no comment
  * Toggle Geo location
+ * Auto enhance image quality
  * Background upload, Automatic resume
  * Selecting uploading target album, Creating album 
 
