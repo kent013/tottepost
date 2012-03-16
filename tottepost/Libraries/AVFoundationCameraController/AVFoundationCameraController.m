@@ -42,6 +42,8 @@
 - (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 - (void) onVideoRecordingTimer;
+- (NSURL *) tempVideoURL;
+- (void) setupVideoWriter;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -131,7 +133,15 @@
     //setup video
     videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
     audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
-    movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
+	videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
+	videoDataOutput_.alwaysDiscardsLateVideoFrames = YES; 
+	dispatch_queue_t queue = dispatch_queue_create("AVFoundationVideoQueue", NULL);
+	[videoDataOutput_ setSampleBufferDelegate:self queue:queue];
+	dispatch_release(queue);
+	[videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], (NSString*)kCVPixelBufferPixelFormatTypeKey, nil]]; 
+    
+    //setup audio
+    audioDataOutput_ = [[AVCaptureAudioDataOutput alloc] init];
     
     //setup image
     imageOutput_ = [[AVCaptureStillImageOutput alloc] init];
@@ -148,11 +158,18 @@
     if ([session_ canAddInput:audioInput_]) {
         [session_ addInput:audioInput_];
     }
-    if ([session_ canAddOutput:movieFileOutput_]){
-        [session_ addOutput:movieFileOutput_];
-    }
-    if ([session_ canAddOutput:imageOutput_]){
-        [session_ addOutput:imageOutput_];
+    
+    if(mode_ == AVFoundationCameraModeVideo){
+        if ([session_ canAddOutput:videoDataOutput_]){
+            [session_ addOutput:videoDataOutput_];
+        }
+        if ([session_ canAddOutput:audioDataOutput_]){
+            [session_ addOutput:audioDataOutput_];
+        }
+    }else if(mode_ == AVFoundationCameraModePhoto){
+        if ([session_ canAddOutput:imageOutput_]){
+            [session_ addOutput:imageOutput_];
+        }
     }
     
     //setup preview
@@ -162,7 +179,9 @@
     previewLayer_.frame = self.view.bounds;
     [self.view.layer addSublayer:previewLayer_];
     
-    [session_ startRunning];
+    if(mode_ == AVFoundationCameraModePhoto){
+        [session_ startRunning];
+    }
     
     // add layer
     indicatorLayer_ = [CALayer layer];
@@ -180,6 +199,63 @@
         [self.delegate cameraControllerDidInitialized:self];
     }
 }
+
+/*!
+ * init video writer
+ */
+-(void)setupVideoWriter{
+    NSError *error = nil;
+    NSURL *videoURL = [self tempVideoURL];
+    videoWriter_ = [[AVAssetWriter alloc] initWithURL:videoURL fileType:AVFileTypeQuickTimeMovie error:&error];
+    
+    // Add video input
+    NSDictionary *videoCompressionProps = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           [NSNumber numberWithDouble:128.0*1024.0], AVVideoAverageBitRateKey,
+                                           nil ];
+
+    CGSize size = CGSizeMake(480, 640);
+    if(videoOrientation_ == AVCaptureVideoOrientationPortrait){
+        size = CGSizeMake(640, 480);
+    }
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   AVVideoCodecH264, AVVideoCodecKey,
+                                   [NSNumber numberWithInt:size.width], AVVideoWidthKey,
+                                   [NSNumber numberWithInt:size.height], AVVideoHeightKey,
+                                   videoCompressionProps, AVVideoCompressionPropertiesKey,
+                                   nil];
+    
+    videoWriterInput_ = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
+    videoWriterInput_.expectsMediaDataInRealTime = YES;
+    
+    
+    // Add the audio input
+    AudioChannelLayout acl;
+    bzero( &acl, sizeof(acl));
+    acl.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
+    
+    
+    NSDictionary* audioOutputSettings = nil;          
+    // should work on any device requires more space
+    audioOutputSettings = [ NSDictionary dictionaryWithObjectsAndKeys:                       
+                           [ NSNumber numberWithInt: kAudioFormatAppleLossless ], AVFormatIDKey,
+                           [ NSNumber numberWithInt: 16 ], AVEncoderBitDepthHintKey,
+                           [ NSNumber numberWithFloat: 44100.0 ], AVSampleRateKey,
+                           [ NSNumber numberWithInt: 1 ], AVNumberOfChannelsKey,                                      
+                           [ NSData dataWithBytes: &acl length: sizeof( acl ) ], AVChannelLayoutKey,
+                           nil ];
+    
+    audioWriterInput_ = [AVAssetWriterInput 
+                          assetWriterInputWithMediaType: AVMediaTypeAudio 
+                          outputSettings: audioOutputSettings ];
+    audioWriterInput_.expectsMediaDataInRealTime = YES;
+    
+    
+    
+    // add input
+    [videoWriter_ addInput:videoWriterInput_];
+    [videoWriter_ addInput:audioWriterInput_];
+}
+
 
 /*!
  * update camera controls
@@ -563,6 +639,14 @@
     int sec = (int)[videoElapsedTimer_.fireDate timeIntervalSinceNow] % 60;
     videoElapsedTimeLabel_.text = [NSString stringWithFormat:@"%02d:%02d", minute, sec];
 }
+
+/*!
+ * get temp video url
+ */
+- (NSURL *)tempVideoURL{
+    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output.mp4", NSHomeDirectory()];
+    return [NSURL URLWithString:filename];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -578,7 +662,7 @@
 @synthesize showsIndicator = showsIndicator_;
 @synthesize useTapToFocus = useTapToFocus_;
 @synthesize mode = mode_;
-@synthesize isRecordingVideo;
+@synthesize isRecordingVideo = isRecordingVideo_;
 
 #pragma mark -
 #pragma mark public implementation
@@ -643,78 +727,122 @@
  * start recording video
  */
 - (void)startRecordingVideo{
+    if(isRecordingVideo_){
+        return;
+    }
     session_.sessionPreset = AVCaptureSessionPresetMedium;
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
     }
-    AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[movieFileOutput_ connections]];
+    AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[videoDataOutput_ connections]];
     if ([videoConnection isVideoOrientationSupported]){
         [videoConnection setVideoOrientation:videoOrientation_];
     }
     
-    
-    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output.mp4", NSHomeDirectory()];
-    NSURL *url = [NSURL URLWithString:filename];
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSError *error;
-    [manager removeItemAtURL:url error:&error];
-    NSLog(@"%@", error.description);
-    [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
+    [manager removeItemAtURL:[self tempVideoURL] error:nil];
+    
+    isRecordingVideo_ = YES;
+    if([session_ canAddOutput:videoDataOutput_]){
+        [session_ addOutput:videoDataOutput_];
+    }
+    if([session_ canAddOutput:audioDataOutput_]){
+        [session_ addOutput:audioDataOutput_];
+    }
+    [self setupVideoWriter];
+    videoElapsedTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onVideoRecordingTimer) userInfo:nil repeats:YES];
+    [videoElapsedTimer_ fire];
 }
 
 /*!
  * stop recording video
  */
 - (void)stopRecordingVideo{
-    [movieFileOutput_ stopRecording];
+    if(isRecordingVideo_ == NO){
+        return;
+    }
+    [videoWriter_ finishWriting];
+    [session_ removeOutput:videoDataOutput_];
+    [session_ removeOutput:audioDataOutput_];
+    isRecordingVideo_ = NO;
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
     }	
-}
-
-/*!
- * returns recording video
- */
--(BOOL)isRecordingVideo
-{
-    return [movieFileOutput_ isRecording];
-}
-
-/*!
- * did start recording
- */
-- (void) captureOutput:(AVCaptureFileOutput *)captureOutput
-didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
-       fromConnections:(NSArray *)connections{
-    videoElapsedTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onVideoRecordingTimer) userInfo:nil repeats:YES];
-    [videoElapsedTimer_ fire];
-    if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecording:)]){
-        [self.delegate cameraControllerDidStartRecordingVideo:self];
-    }
-}
-
-/*!
- * did finish recording
- */
-- (void) captureOutput:(AVCaptureFileOutput *)captureOutput
-didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
-                    fromConnections:(NSArray *)connections
-                              error:(NSError *)error
-{
-    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingToOutputFileURL:length:error:)]){
-        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
-    }
     [videoElapsedTimer_ invalidate];
-    if(error){
-        NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
+}     
+
+/*!
+ * capture output
+ */
+- (void)captureOutput:(AVCaptureOutput *)captureOutput
+didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+       fromConnection:(AVCaptureConnection *)connection{
+    if(!CMSampleBufferDataIsReady(sampleBuffer)){
+        NSLog( @"sample buffer is not ready. Skipping sample" );
+        return;
     }
-}        
+    
+    if(isRecordingVideo_ == YES){
+        lastSampleTime_ = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        if(videoWriter_.status != AVAssetWriterStatusWriting){
+            [videoWriter_ startWriting];
+            [videoWriter_ startSessionAtSourceTime:lastSampleTime_];
+        }
+        
+        if(captureOutput == videoDataOutput_){
+            [self newVideoSample:sampleBuffer];
+        }else if(captureOutput == audioDataOutput_){
+            [self newAudioSample:sampleBuffer];
+        }
+    }
+}
+
+/*!
+ * append video sample
+ */
+-(void) newVideoSample:(CMSampleBufferRef)sampleBuffer{     
+    if(isRecordingVideo_){
+        if( videoWriter_.status > AVAssetWriterStatusWriting){
+            NSLog(@"Warning: writer status is %d", videoWriter_.status);
+            if(videoWriter_.status == AVAssetWriterStatusFailed){
+                NSLog(@"Error: %@", videoWriter_.error);
+            }
+            return;
+        }
+        if(![videoWriterInput_ appendSampleBuffer:sampleBuffer]){
+            NSLog(@"Unable to write to video input");
+        }
+        
+    }
+}
+
+/*!
+ * append audio sample
+ */
+-(void) newAudioSample:(CMSampleBufferRef)sampleBuffer{     
+    if(isRecordingVideo_){
+        if(videoWriter_.status > AVAssetWriterStatusWriting){
+            NSLog(@"Warning: writer status is %d", videoWriter_.status);
+            if(videoWriter_.status == AVAssetWriterStatusFailed){
+                NSLog(@"Error: %@", videoWriter_.error);
+            }
+            return;
+        }
+        
+        if(![audioWriterInput_ appendSampleBuffer:sampleBuffer]){
+            NSLog(@"Unable to write to audio input");
+        }
+    }
+}
 
 #pragma mark - public property implementations
 /*!
  * set mode
  */
 -(void)setMode:(AVFoundationCameraMode)mode{
+    if(mode_ == mode){
+        return;
+    }
     mode_ = mode;
     [self updateCameraControls];
 }

@@ -17,7 +17,7 @@ typedef enum {
 
 @protocol AVFoundationCameraControllerDelegate;
 
-@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate, FlashButtonDelegate,UIAccelerometerDelegate>{
+@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, FlashButtonDelegate,UIAccelerometerDelegate>{
     __strong AVCaptureDevice *device_;
     __strong AVCaptureSession *session_;
     __strong AVCaptureStillImageOutput *imageOutput_;
@@ -25,15 +25,22 @@ typedef enum {
     __strong AVCaptureDeviceInput *audioInput_;
     __strong AVCaptureDeviceInput *videoInput_;
     __strong AVCaptureVideoPreviewLayer *previewLayer_;
-    __strong AVCaptureMovieFileOutput *movieFileOutput_;
+    __strong AVCaptureVideoDataOutput *videoDataOutput_;
+    __strong AVCaptureAudioDataOutput *audioDataOutput_;
     __strong CALayer *indicatorLayer_;
     __strong UIButton *shutterButton_;
     __strong FlashButton *flashModeButton_;
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
     
+    __strong AVAssetWriter *videoWriter_;
+    __strong AVAssetWriterInput *videoWriterInput_;
+    __strong AVAssetWriterInput *audioWriterInput_;
+    
     __strong UILabel *videoElapsedTimeLabel_;
     __strong NSTimer *videoElapsedTimer_;
+    
+    CMTime lastSampleTime_;
 
     BOOL adjustingExposure_;
     BOOL showsCameraControls_;
@@ -43,6 +50,7 @@ typedef enum {
     BOOL showsVideoElapsedTimeLabel_;
     BOOL showsIndicator_;
     BOOL useTapToFocus_;
+    BOOL isRecordingVideo_;
     
     AVFoundationCameraMode mode_;
     
