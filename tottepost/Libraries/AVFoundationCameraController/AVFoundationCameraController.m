@@ -25,6 +25,8 @@
 #define PICKER_CAMERADEVICE_BUTTON_HEIGHT 30
 #define ACCELEROMETER_INTERVAL 0.4
 
+NSString *kTempVideoURL = @"kTempVideoURL";
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -42,6 +44,7 @@
 - (CGRect) normalizeCropRect:(CGRect)rect size:(CGSize)size;
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 - (void) onVideoRecordingTimer;
+- (NSURL*) tempVideoURL;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -564,6 +567,27 @@
     int sec = -(int)([videoRecordingStartedDate_ timeIntervalSinceNow] + 0.01) % 60;
     videoElapsedTimeLabel_.text = [NSString stringWithFormat:@"%02d:%02d", minute, sec];
 }
+
+/*!
+ * get temp video URL
+ */
+- (NSURL *)tempVideoURL{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *num = [defaults objectForKey:kTempVideoURL];
+    int n = [num intValue];
+    if(n > 5){
+        n = 0;
+    }else{
+        n++;
+    }
+    
+    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output%d.mp4", NSHomeDirectory(), n];
+    NSURL *url = [NSURL URLWithString:filename];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager removeItemAtURL:url error:nil];
+    [defaults setObject:[NSNumber numberWithInt:n] forKey:kTempVideoURL];
+    return url;
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -653,10 +677,7 @@
         [videoConnection setVideoOrientation:videoOrientation_];
     }
     
-    NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output.mp4", NSHomeDirectory()];
-    NSURL *url = [NSURL URLWithString:filename];
-    NSFileManager *manager = [NSFileManager defaultManager];
-    [manager removeItemAtURL:url error:nil];
+    NSURL *url = [self tempVideoURL];
     [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
 }
 
