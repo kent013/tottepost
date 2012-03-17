@@ -8,10 +8,12 @@
 
 #import "PhotoSubmitterSettingTableViewController.h"
 #import "AboutSettingViewController.h"
+#import "AVFoundationPresetTableViewController.h"
 
 @protocol TottepostSettingTableViewControllerDelegate;
 @interface TottepostSettingTableViewController : PhotoSubmitterSettingTableViewController<AboutSettingViewControllerDelegate>{
     __strong AboutSettingViewController *aboutSettingViewController_;
+    __strong AVFoundationPresetTableViewController *presetSettingViewController_;
 }
 @end
 @protocol TottepostSettingTableViewControllerDelegate<PhotoSubmitterSettingTableViewControllerDelegate>

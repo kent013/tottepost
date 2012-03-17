@@ -912,6 +912,14 @@
 		79E7053C1513CEA0000C792B /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E705321513728D000C792B /* PhotoSubmitterContentEntity.m */; };
 		79E7053D1513CEA0000C792B /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */; };
 		79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
+		79E70545151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */; };
+		79E70546151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */; };
+		79E7054915145586000C792B /* AVFoundationPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7054815145586000C792B /* AVFoundationPreset.m */; };
+		79E7054A15145586000C792B /* AVFoundationPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7054815145586000C792B /* AVFoundationPreset.m */; };
+		79E7054E15145AB4000C792B /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7054D15145AB4000C792B /* UIDevice-Hardware.m */; };
+		79E7054F15145AB4000C792B /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7054D15145AB4000C792B /* UIDevice-Hardware.m */; };
+		79E705A215151892000C792B /* TottepostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E705A115151891000C792B /* TottepostSettings.m */; };
+		79E705A315151892000C792B /* TottepostSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E705A115151891000C792B /* TottepostSettings.m */; };
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
 		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2120,6 +2128,14 @@
 		79E7053515138115000C792B /* PhotoSubmitterVideoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSubmitterVideoEntity.m; path = PhotoSubmitter/PhotoSubmitterVideoEntity.m; sourceTree = SOURCE_ROOT; };
 		79E705381513B518000C792B /* test_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpg; sourceTree = "<group>"; };
 		79E705391513B518000C792B /* test_video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test_video.mov; sourceTree = "<group>"; };
+		79E70543151450A5000C792B /* AVFoundationPresetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationPresetTableViewController.h; path = TottePostSettings/AVFoundationPresetTableViewController.h; sourceTree = "<group>"; };
+		79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationPresetTableViewController.m; path = TottePostSettings/AVFoundationPresetTableViewController.m; sourceTree = "<group>"; };
+		79E7054715145585000C792B /* AVFoundationPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationPreset.h; path = Libraries/AVFoundationCameraController/AVFoundationPreset.h; sourceTree = "<group>"; };
+		79E7054815145586000C792B /* AVFoundationPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationPreset.m; path = Libraries/AVFoundationCameraController/AVFoundationPreset.m; sourceTree = "<group>"; };
+		79E7054C15145AB4000C792B /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
+		79E7054D15145AB4000C792B /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
+		79E705A015151891000C792B /* TottepostSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TottepostSettings.h; path = TottePostSettings/TottepostSettings.h; sourceTree = "<group>"; };
+		79E705A115151891000C792B /* TottepostSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TottepostSettings.m; path = TottePostSettings/TottepostSettings.m; sourceTree = "<group>"; };
 		79F461B5150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountTableViewController.h; sourceTree = "<group>"; };
 		79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountTableViewController.m; sourceTree = "<group>"; };
 		79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
@@ -2241,8 +2257,12 @@
 			children = (
 				79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */,
 				79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */,
+				79E70543151450A5000C792B /* AVFoundationPresetTableViewController.h */,
+				79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */,
 				79019F5B1505BD06003DA0DC /* TottepostSettingTableViewController.h */,
 				79019F5C1505BD06003DA0DC /* TottepostSettingTableViewController.m */,
+				79E705A015151891000C792B /* TottepostSettings.h */,
+				79E705A115151891000C792B /* TottepostSettings.m */,
 			);
 			name = TottepostSettings;
 			sourceTree = "<group>";
@@ -2381,6 +2401,7 @@
 				7948ADEF15001A0D004ABDAB /* HTTPRiot */,
 				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
 				7980247014B1075000989368 /* uicolor-expanded */,
+				79E7054B15145AB4000C792B /* uidevice-extension */,
 				7948ACD7150019F5004ABDAB /* UserVoiceSDK */,
 				7948ADD615001A01004ABDAB /* YOAuth */,
 				793F4E0A150F75C40026CE62 /* YRDropdownView */,
@@ -4178,6 +4199,8 @@
 				79D8073E14D0F78500064CB3 /* Images */,
 				7980588914C86CC9006E3817 /* AVFoundationCameraController.h */,
 				7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */,
+				79E7054715145585000C792B /* AVFoundationPreset.h */,
+				79E7054815145586000C792B /* AVFoundationPreset.m */,
 				EA76226D14D0312100C54159 /* FlashButton.h */,
 				EA76226E14D0312100C54159 /* FlashButton.m */,
 			);
@@ -4429,6 +4452,16 @@
 				79E705391513B518000C792B /* test_video.mov */,
 			);
 			path = TestData;
+			sourceTree = "<group>";
+		};
+		79E7054B15145AB4000C792B /* uidevice-extension */ = {
+			isa = PBXGroup;
+			children = (
+				79E7054C15145AB4000C792B /* UIDevice-Hardware.h */,
+				79E7054D15145AB4000C792B /* UIDevice-Hardware.m */,
+			);
+			name = "uidevice-extension";
+			path = "Libraries/uidevice-extension";
 			sourceTree = "<group>";
 		};
 		79F461B8150A3C6F009787F0 /* SVProgressHUD */ = {
@@ -5146,6 +5179,10 @@
 				79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */,
 				79E705331513728D000C792B /* PhotoSubmitterContentEntity.m in Sources */,
 				79E7053615138115000C792B /* PhotoSubmitterVideoEntity.m in Sources */,
+				79E70545151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */,
+				79E7054915145586000C792B /* AVFoundationPreset.m in Sources */,
+				79E7054E15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
+				79E705A215151892000C792B /* TottepostSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5467,6 +5504,10 @@
 				79E7053C1513CEA0000C792B /* PhotoSubmitterContentEntity.m in Sources */,
 				79E7053D1513CEA0000C792B /* PhotoSubmitterVideoEntity.m in Sources */,
 				79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */,
+				79E70546151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */,
+				79E7054A15145586000C792B /* AVFoundationPreset.m in Sources */,
+				79E7054F15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
+				79E705A315151892000C792B /* TottepostSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

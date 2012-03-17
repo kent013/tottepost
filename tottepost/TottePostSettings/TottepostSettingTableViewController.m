@@ -31,7 +31,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case SV_SECTION_GENERAL: return SV_GENERAL_COUNT + 1;
+        case SV_SECTION_GENERAL: return SV_GENERAL_COUNT + 3;
         default:return [super tableView:table numberOfRowsInSection:section];
     }
     return 0;
@@ -55,8 +55,16 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == SV_SECTION_GENERAL){
         if(indexPath.row == SV_GENERAL_COUNT){
+            presetSettingViewController_.type = AVFoundationPresetTypePhoto;
+            presetSettingViewController_.title = [TTLang localized:@"Settings_Title_PhotoPreset"];
+            [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
+        }else if(indexPath.row == SV_GENERAL_COUNT + 1){
+            presetSettingViewController_.type = AVFoundationPresetTypeVideo;
+            presetSettingViewController_.title = [TTLang localized:@"Settings_Title_VideoPreset"];
+            [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
+        }else if(indexPath.row == SV_GENERAL_COUNT + 2){
             [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
-        }        
+        }
     }else{
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
         return;
@@ -80,6 +88,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     if(self){
         aboutSettingViewController_ = [[AboutSettingViewController alloc] init];
         aboutSettingViewController_.delegate = self;
+        presetSettingViewController_ = [[AVFoundationPresetTableViewController alloc] init];
     }
     return self;
 }
@@ -90,6 +99,12 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 - (UITableViewCell *)createGeneralSettingCell:(int)tag{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if(tag == SV_GENERAL_COUNT){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if(tag == SV_GENERAL_COUNT + 1){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if(tag == SV_GENERAL_COUNT + 2){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
 #ifdef LITE_VERSION
     }else if(tag == SV_GENERAL_COMMENT){

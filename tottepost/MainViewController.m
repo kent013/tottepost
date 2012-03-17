@@ -20,6 +20,7 @@
 #import "NSData+Digest.h"
 #import "FilePhotoSubmitter.h"
 #import "YRDropdownView.h"
+#import "TottepostSettings.h"
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
@@ -399,6 +400,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
+        
+        imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
+        imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
     }
     [self updateCameraController];
 }
@@ -624,6 +628,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     [self updateIndicatorCoordinate];
     settingViewPresented_ = NO;
+    
+    imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
+    imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];

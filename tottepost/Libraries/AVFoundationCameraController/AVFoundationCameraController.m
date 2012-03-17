@@ -12,6 +12,7 @@
 #import "UIImage+Resize.h"
 #import "UIImage+AutoRotation.h"
 #import "ScreenStatus.h"
+#import "AVFoundationPreset.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 3 
@@ -84,6 +85,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     
     [self initCamera:self.backCameraDevice];
+    
     showsCameraControls_ = YES;
     showsShutterButton_ = YES;
     showsIndicator_ = YES;
@@ -99,6 +101,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:ACCELEROMETER_INTERVAL];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+    
+    photoPreset_ = AVCaptureSessionPresetPhoto;
+    videoPreset_ = AVCaptureSessionPresetMedium;
 }
 
 /*!
@@ -604,6 +609,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize useTapToFocus = useTapToFocus_;
 @synthesize mode = mode_;
 @synthesize isRecordingVideo;
+@synthesize photoPreset = photoPreset_;
+@synthesize videoPreset = videoPreset_;
 
 #pragma mark -
 #pragma mark public implementation
@@ -630,7 +637,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         NSLog(@"Controller is in video mode. %s", __PRETTY_FUNCTION__);
         return;
     }
-    session_.sessionPreset = AVCaptureSessionPresetPhoto;
+    session_.sessionPreset = photoPreset_;
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in imageOutput_.connections)
 	{
@@ -668,7 +675,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * start recording video
  */
 - (void)startRecordingVideo{
-    session_.sessionPreset = AVCaptureSessionPresetMedium;
+    session_.sessionPreset = videoPreset_;
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
     }

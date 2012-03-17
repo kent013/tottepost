@@ -34,6 +34,9 @@ typedef enum {
     
     __strong UILabel *videoElapsedTimeLabel_;
     __strong NSTimer *videoElapsedTimer_;
+    
+    __strong NSString *photoPreset_;
+    __strong NSString *videoPreset_;
 
     BOOL adjustingExposure_;
     BOOL showsCameraControls_;
@@ -78,6 +81,8 @@ typedef enum {
 @property(nonatomic, readonly) BOOL backCameraAvailable;
 @property(nonatomic, readonly) BOOL isRecordingVideo;
 
+@property(nonatomic, strong) NSString *photoPreset;
+@property(nonatomic, strong) NSString *videoPreset;
 
 - (id) initWithFrame:(CGRect)frame andMode:(AVFoundationCameraMode) mode;
 - (void) takePicture;

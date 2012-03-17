@@ -31,6 +31,22 @@
         tags = common
         en = About / Feedback
         ja = アプリについて / フィードバック
+    [Settings_Row_PhotoPreset]
+        tags = common
+        en = Photo Resolution
+        ja = 写真画質
+    [Settings_Row_VideoPreset]
+        tags = common
+        en = Video Resolution
+        ja = ビデオ画質
+    [Settings_Title_PhotoPreset]
+        tags = common
+        en = Photo Resolution
+        ja = 写真画質
+    [Settings_Title_VideoPreset]
+        tags = common
+        en = Video Resolution
+        ja = ビデオ画質
     [ProgressCell_Completed]
         tags = common
         en = Completed
