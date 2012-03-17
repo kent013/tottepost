@@ -707,6 +707,13 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 }
 
 /*!
+ * restart session
+ */
+- (void)restartSession{
+    [session_ startRunning];
+}
+
+/*!
  * did start recording
  */
 - (void) captureOutput:(AVCaptureFileOutput *)captureOutput

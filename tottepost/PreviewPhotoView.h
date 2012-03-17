@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 #import "PhotoSubmitterImageEntity.h"
 #import "HPGrowingTextView.h"
 
@@ -17,17 +18,18 @@
     __strong UIView *commentBackgroundView_;
     __strong UILabel* textCountview_;
     __strong UIImageView *imageView_;
-    __strong PhotoSubmitterImageEntity *photo_;
+    __strong MPMoviePlayerViewController *moviePlayerView_;
+    __strong PhotoSubmitterContentEntity *content_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
     BOOL isKeyboardPresented_;
     CGRect keyboardRect_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
-@property (readonly, nonatomic) PhotoSubmitterImageEntity *photo;
+@property (readonly, nonatomic) PhotoSubmitterContentEntity *content;
 
 - (void) updateWithFrame:(CGRect)frame;
-- (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo;
-- (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo videoOrientation:(UIDeviceOrientation) orientation;
+- (void) presentWithContent:(PhotoSubmitterContentEntity *)content;
+- (void) presentWithContent:(PhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation;
 - (BOOL) dismiss:(BOOL)force;
 @end
 

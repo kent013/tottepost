@@ -19,12 +19,13 @@
 @interface PreviewPhotoView(PrivateImplementation)
 - (void) setupInitialState:(CGRect)frame;
 - (void) updateCoordinates:(CGRect)frame;
-- (void) didImageViewTapped:(id)sender;
+- (void) didContentViewTapped:(id)sender;
 @end
 
 @implementation PreviewPhotoView(PrivateImplementation)
 - (void)setupInitialState:(CGRect)frame{
     imageView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
+    
     commentBackgroundView_ = [[UIView alloc] initWithFrame:CGRectZero];
     commentBackgroundView_.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.6];
     [commentBackgroundView_.layer setCornerRadius:5.0];
@@ -33,7 +34,6 @@
     [commentBackgroundView_.layer setBorderWidth:1.0];
     
     commentTextView_ = [[HPGrowingTextView alloc] initWithFrame:CGRectZero];
-//    commentTextView_.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
 	commentTextView_.minNumberOfLines = 2;
 	commentTextView_.maxNumberOfLines = 9;
@@ -65,10 +65,9 @@
     [self updateCoordinates:frame];
     
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] init];
-    [recognizer addTarget:self action:@selector(didImageViewTapped:)];
+    [recognizer addTarget:self action:@selector(didContentViewTapped:)];
     recognizer.numberOfTapsRequired = 1;
-    [imageView_ addGestureRecognizer:recognizer];
-    
+    [self addGestureRecognizer:recognizer];
 }
 
 #pragma mark -
@@ -151,7 +150,7 @@
 /*!
  * did image view tapped
  */
-- (void) didImageViewTapped:(id)sender{
+- (void) didContentViewTapped:(id)sender{
 	[commentTextView_ resignFirstResponder];   
 }
 
@@ -162,7 +161,7 @@
 //----------------------------------------------------------------------------
 @implementation PreviewPhotoView
 @synthesize delegate;
-@synthesize photo = photo_;
+@synthesize content = content_;
 /*!
  * initialize
  */
@@ -184,15 +183,15 @@
 /*!
  * show view
  */
-- (void)presentWithPhoto:(PhotoSubmitterImageEntity *)photo {
+- (void)presentWithContent:(PhotoSubmitterContentEntity *)content {
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    [self presentWithPhoto:photo videoOrientation:orientation];
+    [self presentWithContent:content videoOrientation:orientation];
 }
 
 /*!
  * show view
  */
-- (void) presentWithPhoto:(PhotoSubmitterImageEntity *)photo videoOrientation:(UIDeviceOrientation) orientation{
+- (void) presentWithContent:(PhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation{
     commentTextView_.text = @"";
     
     int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
@@ -202,17 +201,38 @@
         textCountview_.text = [NSString stringWithFormat:@"%d",commentTextView_.text.length];
     }
     
-    photo_ = photo;
+    content_ = content;
     
-    UIImage *image = photo.image.fixOrientation;
-    if(orientation == UIDeviceOrientationLandscapeLeft){
-        image = [image UIImageRotateByAngle:270];                
-    }else if(orientation == UIDeviceOrientationLandscapeRight){
-        image = [image UIImageRotateByAngle:90];                 
+    [imageView_ removeFromSuperview];
+    [moviePlayerView_.view removeFromSuperview];
+    [commentBackgroundView_ removeFromSuperview];
+    
+    if(content.isPhoto){
+        PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
+        UIImage *image = photo.image.fixOrientation;
+        if(orientation == UIDeviceOrientationLandscapeLeft){
+            image = [image UIImageRotateByAngle:270];                
+        }else if(orientation == UIDeviceOrientationLandscapeRight){
+            image = [image UIImageRotateByAngle:90];                 
+        }
+        imageView_.image = image.fixOrientation;
+        [self addSubview:imageView_];      
+    }else if(content.isVideo){
+        PhotoSubmitterVideoEntity *video = (PhotoSubmitterVideoEntity *)content;
+        moviePlayerView_ = [[MPMoviePlayerViewController alloc] initWithContentURL:video.url];
+        CGRect frame = moviePlayerView_.view.frame;
+        frame.origin.y = -40;
+        moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleNone;
+        //moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
+        moviePlayerView_.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
+        //[moviePlayerView_.moviePlayer setFullscreen:YES];
+        //moviePlayerView_.view.frame = frame;
+        [self addSubview:moviePlayerView_.view];
+        [moviePlayerView_.moviePlayer play];
     }
-    imageView_.image = image.fixOrientation;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];       
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil]; 
+    [self addSubview:commentBackgroundView_];
 }
 
 /*!
@@ -231,9 +251,11 @@
             return NO;
         }
         if(commentTextView_.text != nil && [commentTextView_.text isEqualToString:@""] == false){
-            photo_.comment = commentTextView_.text;
+            content_.comment = commentTextView_.text;
         }
     }
+    [moviePlayerView_.moviePlayer stop];
+    [moviePlayerView_.view removeFromSuperview];
     [self removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];

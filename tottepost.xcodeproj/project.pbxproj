@@ -404,6 +404,8 @@
 		7948AE471500B6BA004ABDAB /* UIFont+UVExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE371500B6BA004ABDAB /* UIFont+UVExtras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7948AE481500B6BA004ABDAB /* UIView+UVExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE391500B6BA004ABDAB /* UIView+UVExtras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7948AE491500B6BA004ABDAB /* UVUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7948AE3B1500B6BA004ABDAB /* UVUIColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7964DD0015153D8500FB7D2D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */; };
+		7964DD02151540D600FB7D2D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */; };
 		797194691510EE8900C58A1B /* photoMode.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194671510EE8900C58A1B /* photoMode.png */; };
 		7971946A1510EE8900C58A1B /* photoMode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797194681510EE8900C58A1B /* photoMode@2x.png */; };
 		7971946E1510EE9300C58A1B /* videoMode.png in Resources */ = {isa = PBXBuildFile; fileRef = 7971946C1510EE9300C58A1B /* videoMode.png */; };
@@ -1951,6 +1953,7 @@
 		7948AE391500B6BA004ABDAB /* UIView+UVExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UVExtras.m"; sourceTree = "<group>"; };
 		7948AE3A1500B6BA004ABDAB /* UVUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVUIColorAdditions.h; sourceTree = "<group>"; };
 		7948AE3B1500B6BA004ABDAB /* UVUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVUIColorAdditions.m; sourceTree = "<group>"; };
+		7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		797194671510EE8900C58A1B /* photoMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoMode.png; sourceTree = "<group>"; };
 		797194681510EE8900C58A1B /* photoMode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photoMode@2x.png"; sourceTree = "<group>"; };
 		7971946C1510EE9300C58A1B /* videoMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoMode.png; sourceTree = "<group>"; };
@@ -2156,6 +2159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7964DD02151540D600FB7D2D /* MediaPlayer.framework in Frameworks */,
 				7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */,
 				79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */,
 				37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */,
@@ -2197,6 +2201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7964DD0015153D8500FB7D2D /* MediaPlayer.framework in Frameworks */,
 				79924C71150CAE180043C16D /* MobileCoreServices.framework in Frameworks */,
 				79924C72150CAE180043C16D /* MessageUI.framework in Frameworks */,
 				79924C73150CAE180043C16D /* Accounts.framework in Frameworks */,
@@ -2312,6 +2317,7 @@
 				7980589014C86DBA006E3817 /* CoreVideo.framework */,
 				376E153E1494C47800A34E7D /* Foundation.framework */,
 				37F0D26B14A710F900680F8A /* ImageIO.framework */,
+				7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */,
 				79823CDE14D2C3A40094389D /* MessageUI.framework */,
 				7995E67014F4DD92005C1453 /* MobileCoreServices.framework */,
 				376A8B3514A05F8000637B68 /* QuartzCore.framework */,

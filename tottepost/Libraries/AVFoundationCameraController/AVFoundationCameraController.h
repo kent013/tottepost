@@ -88,6 +88,7 @@ typedef enum {
 - (void) takePicture;
 - (void) startRecordingVideo;
 - (void) stopRecordingVideo;
+- (void) restartSession;
 @end
 
 @protocol AVFoundationCameraControllerDelegate <NSObject>

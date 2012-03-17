@@ -35,7 +35,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
 - (void) updateIndicatorCoordinate;
-- (void) previewPhoto:(PhotoSubmitterImageEntity *)photo;
+- (void) previewContent:(PhotoSubmitterContentEntity *)content;
 - (BOOL) closePreview:(BOOL)force;
 - (void) postContent:(PhotoSubmitterContentEntity *)content;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
@@ -317,7 +317,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void) didPostButtonTapped:(id)sender{
     if([self closePreview:NO]){
-        [self postContent:previewImageView_.photo];
+        [self postContent:previewImageView_.content];
     }
 }
 
@@ -336,15 +336,16 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if(ret){
         [self changeCenterButtonTo:cameraButton_];
     }
+    [imagePicker_ restartSession];
     return ret;
 }
 
 /*!
- * preview photo
+ * preview content
  */
-- (void)previewPhoto:(PhotoSubmitterImageEntity *)photo{
+- (void)previewContent:(PhotoSubmitterContentEntity *)content{
     [self.view addSubview:previewImageView_];
-    [previewImageView_ presentWithPhoto:photo videoOrientation:orientation_];
+    [previewImageView_ presentWithContent:content videoOrientation:orientation_];
     [self.view bringSubviewToFront:toolbar_];
     [self changeCenterButtonTo:postButton_];
 }
@@ -474,7 +475,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     imagePicker_.showsCameraControls = YES;
     PhotoSubmitterImageEntity *photo = [[PhotoSubmitterImageEntity alloc] initWithData:data];
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
-        [self previewPhoto:photo];
+        [self previewContent:photo];
     }else{
         [self postContent:photo];
     }    
@@ -500,7 +501,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     PhotoSubmitterVideoEntity *video = [[PhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
-    [self postContent:video];
+    
+    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
+        [self previewContent:video];
+    }else{
+        [self postContent:video];        
+    }
 }
 
 /*
