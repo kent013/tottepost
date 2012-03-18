@@ -53,8 +53,8 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>photosubmitter</string>
-				<string>fb206421902773102</string>
+				<string>photosubmittertottepostpaid</string>
+				<string>fb206421902773102tottepostpaid</string>
 				<string>db-c7b81ze0w3widag</string>
 			</array>
 		</dict>

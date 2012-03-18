@@ -57,10 +57,17 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
+    //if you want to set schema suffix, do this before everything else
+#ifdef LITE_VERSION
+    [PhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostlite"];
+#else
+    [PhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostpaid"];
+#endif
+    
     //free mode
 #ifdef LITE_VERSION
-    [PhotoSubmitterManager unregisterAllPhotoSubmitters];
-    [PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];
+    //[PhotoSubmitterManager unregisterAllPhotoSubmitters];
+    //[PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];    
 #endif
     
     //photo submitter setting
