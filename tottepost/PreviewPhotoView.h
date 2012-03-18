@@ -18,11 +18,19 @@
     __strong UIView *commentBackgroundView_;
     __strong UILabel* textCountview_;
     __strong UIImageView *imageView_;
+    
     __strong MPMoviePlayerViewController *moviePlayerView_;
+    __strong UIView *movieOverlayView_;
+    __strong UILabel *movieTimeLabel_;
+    __strong UISlider *movieSlider_;
+    __strong NSTimer *movieTimer_;
+    BOOL isMovieSeeking_;
+    
     __strong PhotoSubmitterContentEntity *content_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
     BOOL isKeyboardPresented_;
     CGRect keyboardRect_;
+    CGFloat lastMovieSliderValue_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
 @property (readonly, nonatomic) PhotoSubmitterContentEntity *content;

@@ -77,6 +77,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     
     videoElapsedTimeLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
     videoElapsedTimeLabel_.backgroundColor = [UIColor clearColor];
+    videoElapsedTimeLabel_.textColor = [UIColor whiteColor];
     [videoElapsedTimer_ invalidate];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         videoElapsedTimeLabel_.font = [UIFont systemFontOfSize:22];

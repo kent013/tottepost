@@ -20,6 +20,11 @@
 - (void) setupInitialState:(CGRect)frame;
 - (void) updateCoordinates:(CGRect)frame;
 - (void) didContentViewTapped:(id)sender;
+- (void) didMoviePlayerViewTapped:(id)sender;
+- (void) didMovieSliderValueChanged:(UISlider *)slider;
+- (void) didMovieSliderTouchUp:(UISlider *)slider;
+- (void) didMovieSliderTouchDown:(UISlider *)slider;
+- (void) updateMovieTimeLabel;
 @end
 
 @implementation PreviewPhotoView(PrivateImplementation)
@@ -57,6 +62,22 @@
     }else{
         textCountview_.font = [UIFont systemFontOfSize:16];
     }
+
+    movieOverlayView_ = [[UIView alloc] initWithFrame:CGRectZero];
+    movieTimeLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
+    movieSlider_ = [[UISlider alloc] initWithFrame:CGRectZero];
+    movieSlider_.alpha = 0.9;
+    [movieSlider_ addTarget:self action:@selector(didMovieSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [movieSlider_ addTarget:self action:@selector(didMovieSliderTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [movieSlider_ addTarget:self action:@selector(didMovieSliderTouchUp:) forControlEvents:UIControlEventTouchUpInside];
+    [movieSlider_ addTarget:self action:@selector(didMovieSliderTouchUp:) forControlEvents:UIControlEventTouchUpOutside];
+    
+    movieTimeLabel_.text = @"00:00";
+    movieTimeLabel_.font = [UIFont systemFontOfSize:12.0];
+    movieTimeLabel_.textColor = [UIColor whiteColor];
+    movieTimeLabel_.backgroundColor = [UIColor clearColor];
+    [movieOverlayView_ addSubview:movieTimeLabel_];    
+    [movieOverlayView_ addSubview:movieSlider_];
     
     [commentBackgroundView_ addSubview: commentTextView_];
     [commentBackgroundView_ addSubview:textCountview_];
@@ -64,10 +85,15 @@
     [self addSubview:commentBackgroundView_];
     [self updateCoordinates:frame];
     
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] init];
-    [recognizer addTarget:self action:@selector(didContentViewTapped:)];
-    recognizer.numberOfTapsRequired = 1;
-    [self addGestureRecognizer:recognizer];
+    UITapGestureRecognizer *recognizer1 = [[UITapGestureRecognizer alloc] init];
+    [recognizer1 addTarget:self action:@selector(didContentViewTapped:)];
+    recognizer1.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:recognizer1];
+    
+    UITapGestureRecognizer *recognizer2 = [[UITapGestureRecognizer alloc] init];
+    [recognizer2 addTarget:self action:@selector(didMoviePlayerViewTapped:)];
+    recognizer2.numberOfTapsRequired = 1;
+    [movieOverlayView_ addGestureRecognizer:recognizer2];
 }
 
 #pragma mark -
@@ -145,6 +171,10 @@
         CGSize size = [text sizeWithFont:textCountview_.font];
         textCountview_.frame = CGRectMake(MAINVIEW_COMMENT_VIEW_WIDTH_FOR_IPHONE - size.width - 3, MAINVIEW_COMMENT_VIEW_HEIGHT_FOR_IPHONE - size.height, size.width, size.height);
     }
+    movieOverlayView_.frame = imageView_.frame;
+    CGSize s = [@"00:00" sizeWithFont:movieTimeLabel_.font];
+    movieSlider_.frame = CGRectMake(movieOverlayView_.frame.size.width / 4 + s.width + 3, 10, movieOverlayView_.frame.size.width / 2 - s.width - 3, 20);
+    movieTimeLabel_.frame = CGRectMake(movieOverlayView_.frame.size.width / 4, movieSlider_.frame.origin.y + 3, s.width, s.height);
 }
 
 /*!
@@ -154,6 +184,71 @@
 	[commentTextView_ resignFirstResponder];   
 }
 
+/*!
+ * did movie player view tapped
+ */
+- (void) didMoviePlayerViewTapped:(id)sender{
+	[commentTextView_ resignFirstResponder];
+    if(moviePlayerView_.moviePlayer.playbackState == MPMoviePlaybackStatePlaying){
+        [moviePlayerView_.moviePlayer pause];
+    }else{
+        [moviePlayerView_.moviePlayer play];
+    }
+    [self onMovieTimer];
+}
+
+/*!
+ * on timer
+ */
+- (void)onMovieTimer{
+    if(isMovieSeeking_){
+        return;
+    }
+    CGFloat value = moviePlayerView_.moviePlayer.currentPlaybackTime / moviePlayerView_.moviePlayer.playableDuration;
+    if(value > 1.0 || value < 0 || isnan(value)){
+        value = 0;
+    }
+    movieSlider_.value = value;
+    [self updateMovieTimeLabel];
+}
+
+/*!
+ * update movie time label
+ */
+- (void)updateMovieTimeLabel{
+    int minute = moviePlayerView_.moviePlayer.currentPlaybackTime / 60;
+    int sec = (int)(moviePlayerView_.moviePlayer.currentPlaybackTime) % 60;
+    if(minute >= 0 && minute < 60 && sec >= 0 && sec < 60){
+        movieTimeLabel_.text = [NSString stringWithFormat:@"%02d:%02d", minute, sec];
+    }else{  
+        movieTimeLabel_.text = @"00:00";
+    }
+}
+
+/*!
+ * on slider changed
+ */
+- (void)didMovieSliderValueChanged:(UISlider *)slider{    moviePlayerView_.moviePlayer.currentPlaybackTime = moviePlayerView_.moviePlayer.playableDuration * slider.value;
+    [self updateMovieTimeLabel];
+}
+
+/*!
+ * slider touch down
+ */
+- (void)didMovieSliderTouchDown:(UISlider *)slider{
+    [moviePlayerView_.moviePlayer pause];   
+    //[moviePlayerView_.moviePlayer beginSeekingForward];
+    isMovieSeeking_ = YES;
+}
+
+/*!
+ * slider touch up
+ */
+- (void)didMovieSliderTouchUp:(UISlider *)slider{
+    isMovieSeeking_ = NO;
+    //[moviePlayerView_.moviePlayer endSeeking];
+    [moviePlayerView_.moviePlayer play];    
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -206,6 +301,8 @@
     [imageView_ removeFromSuperview];
     [moviePlayerView_.view removeFromSuperview];
     [commentBackgroundView_ removeFromSuperview];
+    [movieOverlayView_ removeFromSuperview];
+    [movieTimer_ invalidate];
     
     if(content.isPhoto){
         PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
@@ -220,8 +317,6 @@
     }else if(content.isVideo){
         PhotoSubmitterVideoEntity *video = (PhotoSubmitterVideoEntity *)content;
         moviePlayerView_ = [[MPMoviePlayerViewController alloc] initWithContentURL:video.url];
-        CGRect frame = moviePlayerView_.view.frame;
-        frame.origin.y = -40;
         moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleNone;
         //moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
         moviePlayerView_.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
@@ -229,6 +324,13 @@
         //moviePlayerView_.view.frame = frame;
         [self addSubview:moviePlayerView_.view];
         [moviePlayerView_.moviePlayer play];
+        CGRect frame = moviePlayerView_.view.frame;
+        frame.origin.y = -40;
+        moviePlayerView_.view.frame = frame;
+        [self addSubview:movieOverlayView_];
+        
+        movieTimer_ = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(onMovieTimer) userInfo:nil repeats:YES];
+        [movieTimer_ fire];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil]; 
@@ -239,6 +341,13 @@
  * hide view
  */
 - (BOOL)dismiss:(BOOL)force{
+    [movieTimer_ invalidate];
+    [moviePlayerView_.moviePlayer stop];
+    [moviePlayerView_.view removeFromSuperview];
+    [self removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
     if(force == NO){
         int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
         if(max && commentTextView_.text.length > max){
@@ -254,11 +363,6 @@
             content_.comment = commentTextView_.text;
         }
     }
-    [moviePlayerView_.moviePlayer stop];
-    [moviePlayerView_.view removeFromSuperview];
-    [self removeFromSuperview];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     return YES;
 }
 
