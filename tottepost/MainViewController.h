@@ -22,7 +22,7 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate, CameraModeSwitchViewDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterAuthControllerDelegate, UVDelegate, CameraModeSwitchViewDelegate, PhotoSubmitterSettingViewFactoryProtocol>{
 @protected
     __strong TottepostSettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;

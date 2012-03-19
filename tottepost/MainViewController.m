@@ -21,6 +21,7 @@
 #import "FilePhotoSubmitter.h"
 #import "YRDropdownView.h"
 #import "TottepostSettings.h"
+#import "LiteAlbumPhotoSubmitterSettingTableViewController.h"
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
@@ -57,7 +58,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     refreshCameraNeeded_ = NO;
     [UIApplication sharedApplication].statusBarHidden = YES;
     
-    //if you want to set schema suffix, do this before everything else
+    //if you want to set schema suffix, call this before anything else
 #ifdef LITE_VERSION
     [PhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostlite"];
 #else
@@ -67,13 +68,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //free mode
 #ifdef LITE_VERSION
     [PhotoSubmitterManager unregisterAllPhotoSubmitters];
-    [PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", nil]];    
+    [PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", @"mixi", nil]];    
 #endif
     
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
     [PhotoSubmitterManager sharedInstance].authControllerDelegate = self;
+    [PhotoSubmitterManager sharedInstance].settingViewFactory = self;
     
     //setting view
     settingViewController_ = 
@@ -403,6 +405,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         
         imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
         imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
+        imagePicker_.mode = AVFoundationCameraModePhoto;
     }
     [self updateCameraController];
 }
@@ -490,12 +493,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * camera controller did start to recode video
  */
 - (void)cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *)controller{
+    cameraModeSwitchView_.enabled = NO;
 }
 
 /*!
  * video recording finished
  */
 - (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error{
+    cameraModeSwitchView_.enabled = YES;
     if(error){
         return;
     }
@@ -636,6 +641,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
     imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
+    [imagePicker_ applyPreset];
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
@@ -668,6 +674,19 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (UINavigationController *) requestNavigationControllerToPresentAuthenticationView{
     return settingNavigationController_;
+}
+
+#pragma mark - PhotoSubmitterSettingViewFactoryProtocol
+/*!
+ * create setting view
+ */
+- (id)createSettingViewWithSubmitter:(id<PhotoSubmitterProtocol>)submitter{
+#ifdef LITE_VERSION
+    if(submitter.isAlbumSupported){
+        return [[LiteAlbumPhotoSubmitterSettingTableViewController alloc] initWithType:submitter.type];
+    }
+#endif
+    return nil;
 }
 
 #pragma mark - CameraModeSwitchViewDelegate

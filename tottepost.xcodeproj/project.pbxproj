@@ -452,6 +452,10 @@
 		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
+		79842705151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
+		798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
+		7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
+		7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
 		798B1B301503B98E003EFF54 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B1B291503B98E003EFF54 /* Appirater.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924A97150BA7640043C16D /* DBAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A3B150BA7640043C16D /* DBAccountInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924A99150BA7640043C16D /* DBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 79924A3D150BA7640043C16D /* DBError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1992,6 +1996,10 @@
 		79823CD514D2BCDE0094389D /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
 		79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		79842703151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterServiceSettingViewFactory.h; sourceTree = "<group>"; };
+		79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterServiceSettingViewFactory.m; sourceTree = "<group>"; };
+		7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteAlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiteAlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		798B1B281503B98E003EFF54 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		798B1B291503B98E003EFF54 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		79924995150BA67E0043C16D /* DBBase64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DBBase64Transcoder.c; sourceTree = "<group>"; };
@@ -2290,6 +2298,8 @@
 				79019F5C1505BD06003DA0DC /* TottepostSettingTableViewController.m */,
 				79E705A015151891000C792B /* TottepostSettings.h */,
 				79E705A115151891000C792B /* TottepostSettings.m */,
+				7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */,
+				7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */,
 			);
 			name = TottepostSettings;
 			sourceTree = "<group>";
@@ -3809,6 +3819,8 @@
 				7901AF67150683B4003DA0DC /* PhotoSubmitterSwitch.m */,
 				7901AF68150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.h */,
 				7901AF69150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m */,
+				79842703151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.h */,
+				79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -5233,6 +5245,8 @@
 				79E705A215151892000C792B /* TottepostSettings.m in Sources */,
 				79FEA728151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
 				79FEA72A151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
+				79842705151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
+				7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5559,6 +5573,8 @@
 				79E705A315151892000C792B /* TottepostSettings.m in Sources */,
 				79FEA729151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
 				79FEA72B151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
+				798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
+				7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

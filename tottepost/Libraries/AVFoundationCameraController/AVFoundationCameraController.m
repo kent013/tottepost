@@ -638,7 +638,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         NSLog(@"Controller is in video mode. %s", __PRETTY_FUNCTION__);
         return;
     }
-    session_.sessionPreset = photoPreset_;
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in imageOutput_.connections)
 	{
@@ -676,7 +675,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * start recording video
  */
 - (void)startRecordingVideo{
-    session_.sessionPreset = videoPreset_;
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
     }
@@ -723,7 +721,7 @@ didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
     videoRecordingStartedDate_ = [NSDate date];
     videoElapsedTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onVideoRecordingTimer) userInfo:nil repeats:YES];
     [videoElapsedTimer_ fire];
-    if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecording:)]){
+    if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecordingVideo:)]){
         [self.delegate cameraControllerDidStartRecordingVideo:self];
     }
 }
@@ -762,7 +760,18 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     }else{
         [session_ addOutput:movieFileOutput_];
     }
+    [self applyPreset];
     [self updateCameraControls];
+}
+/*!
+ * apply preset
+ */
+- (void)applyPreset{
+    if(mode_ == AVFoundationCameraModePhoto){
+        session_.sessionPreset = photoPreset_;
+    }else{
+        session_.sessionPreset = videoPreset_;
+    }    
 }
 
 /*!

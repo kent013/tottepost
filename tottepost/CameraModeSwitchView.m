@@ -40,6 +40,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:recognizer];
+    enabled_ = YES;
 }
 
 /*!
@@ -60,7 +61,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * handle tap gesture
  */
 - (void)handleTapGesture:(UITapGestureRecognizer *)recognizer{
-    [cameraModeSwitch_ setOn:!cameraModeSwitch_.on animated:YES ignoreControlEvents:NO];
+    if(enabled_){
+        [cameraModeSwitch_ setOn:!cameraModeSwitch_.on animated:YES ignoreControlEvents:NO];
+    }
 }
 @end
 
@@ -68,6 +71,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 //Public Implementations
 //----------------------------------------------------------------------------
 @implementation CameraModeSwitchView
+@synthesize enabled = enabled_;
 @synthesize delegate;
 /*!
  * initialize
@@ -90,6 +94,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     cameraModePictureImageView_.frame = CGRectMake(3, 0, height, height);
     cameraModeVideoImageView_.frame = CGRectMake(self.frame.size.width- height - 3, 0, height, height);
     cameraModeSwitch_.frame = CGRectMake(0, height + 4, self.frame.size.width, 16);
+}
+
+/*!
+ * set disable
+ */
+- (void)setEnabled:(BOOL)enabled{
+    enabled_ = enabled;
+    cameraModeSwitch_.enabled = enabled;
 }
 @end
 
