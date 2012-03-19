@@ -445,7 +445,6 @@
 		7964DDD21515EDCC00FB7D2D /* test_video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 79E705391513B518000C792B /* test_video.mov */; };
 		797E393014AC6A8800F17AC4 /* TTLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E392F14AC6A8800F17AC4 /* TTLang.m */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
-		7980247314B1076400989368 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
 		7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */; };
 		7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588C14C86D47006E3817 /* AVFoundation.framework */; };
 		7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588E14C86D7F006E3817 /* CoreMedia.framework */; };
@@ -519,7 +518,6 @@
 		79924B50150CAE180043C16D /* FBProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 376A8B3914A0617400637B68 /* FBProgressView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924B51150CAE180043C16D /* TTLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E392F14AC6A8800F17AC4 /* TTLang.m */; };
 		79924B52150CAE180043C16D /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
-		79924B53150CAE180043C16D /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980247214B1076400989368 /* UIColor-Expanded.m */; };
 		79924B54150CAE180043C16D /* AVFoundationCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */; };
 		79924B55150CAE180043C16D /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		79924B56150CAE180043C16D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -943,6 +941,10 @@
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
 		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79FEA728151713AB0071A3E5 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA725151713AB0071A3E5 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79FEA729151713AB0071A3E5 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA725151713AB0071A3E5 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79FEA72A151713AB0071A3E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79FEA72B151713AB0071A3E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
@@ -1980,8 +1982,6 @@
 		797E392F14AC6A8800F17AC4 /* TTLang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTLang.m; path = Util/TTLang.m; sourceTree = "<group>"; };
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
 		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
-		7980247114B1076400989368 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor-Expanded.h"; path = "Libraries/uicolor-utilities/UIColor-Expanded.h"; sourceTree = "<group>"; };
-		7980247214B1076400989368 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor-Expanded.m"; path = "Libraries/uicolor-utilities/UIColor-Expanded.m"; sourceTree = "<group>"; };
 		7980588914C86CC9006E3817 /* AVFoundationCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationCameraController.h; path = Libraries/AVFoundationCameraController/AVFoundationCameraController.h; sourceTree = "<group>"; };
 		7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationCameraController.m; path = Libraries/AVFoundationCameraController/AVFoundationCameraController.m; sourceTree = "<group>"; };
 		7980588C14C86D47006E3817 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2162,6 +2162,10 @@
 		79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		79F461BA150A3C6F009787F0 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		79F461BB150A3C6F009787F0 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		79FEA724151713AB0071A3E5 /* MAConfirmButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAConfirmButton.h; sourceTree = "<group>"; };
+		79FEA725151713AB0071A3E5 /* MAConfirmButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAConfirmButton.m; sourceTree = "<group>"; };
+		79FEA726151713AB0071A3E5 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		EA76226D14D0312100C54159 /* FlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashButton.h; path = Libraries/AVFoundationCameraController/FlashButton.h; sourceTree = "<group>"; };
 		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
@@ -2423,8 +2427,8 @@
 				376A8B3714A060B700637B68 /* FBProgressView */,
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				7948ADEF15001A0D004ABDAB /* HTTPRiot */,
+				79FEA723151713AB0071A3E5 /* MAConfirmButton */,
 				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
-				7980247014B1075000989368 /* uicolor-expanded */,
 				79E7054B15145AB4000C792B /* uidevice-extension */,
 				7948ACD7150019F5004ABDAB /* UserVoiceSDK */,
 				7948ADD615001A01004ABDAB /* YOAuth */,
@@ -4208,15 +4212,6 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		7980247014B1075000989368 /* uicolor-expanded */ = {
-			isa = PBXGroup;
-			children = (
-				7980247114B1076400989368 /* UIColor-Expanded.h */,
-				7980247214B1076400989368 /* UIColor-Expanded.m */,
-			);
-			name = "uicolor-expanded";
-			sourceTree = "<group>";
-		};
 		7980588814C86CB7006E3817 /* AVFoundationCameraController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4496,6 +4491,18 @@
 				79F461BB150A3C6F009787F0 /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		79FEA723151713AB0071A3E5 /* MAConfirmButton */ = {
+			isa = PBXGroup;
+			children = (
+				79FEA724151713AB0071A3E5 /* MAConfirmButton.h */,
+				79FEA725151713AB0071A3E5 /* MAConfirmButton.m */,
+				79FEA726151713AB0071A3E5 /* UIColor-Expanded.h */,
+				79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */,
+			);
+			name = MAConfirmButton;
+			path = Libraries/MAConfirmButton;
 			sourceTree = "<group>";
 		};
 		EAAC412014E9399400CDC2CC /* HPGrowingTextView */ = {
@@ -4928,7 +4935,6 @@
 				376A8B3A14A0617400637B68 /* FBProgressView.m in Sources */,
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
-				7980247314B1076400989368 /* UIColor-Expanded.m in Sources */,
 				7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */,
 				EA76226F14D0312100C54159 /* FlashButton.m in Sources */,
 				79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */,
@@ -5225,6 +5231,8 @@
 				79E7054915145586000C792B /* AVFoundationPreset.m in Sources */,
 				79E7054E15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A215151892000C792B /* TottepostSettings.m in Sources */,
+				79FEA728151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
+				79FEA72A151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5253,7 +5261,6 @@
 				79924B50150CAE180043C16D /* FBProgressView.m in Sources */,
 				79924B51150CAE180043C16D /* TTLang.m in Sources */,
 				79924B52150CAE180043C16D /* SettingIndicatorView.m in Sources */,
-				79924B53150CAE180043C16D /* UIColor-Expanded.m in Sources */,
 				79924B54150CAE180043C16D /* AVFoundationCameraController.m in Sources */,
 				79924B55150CAE180043C16D /* FlashButton.m in Sources */,
 				79924B56150CAE180043C16D /* AAMFeedbackTopicsViewController.m in Sources */,
@@ -5550,6 +5557,8 @@
 				79E7054A15145586000C792B /* AVFoundationPreset.m in Sources */,
 				79E7054F15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A315151892000C792B /* TottepostSettings.m in Sources */,
+				79FEA729151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
+				79FEA72B151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

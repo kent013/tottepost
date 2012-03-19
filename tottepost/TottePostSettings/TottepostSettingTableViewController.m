@@ -10,6 +10,7 @@
 #import "TTLang.h"
 #import "PhotoSubmitterSettings.h"
 #import "PhotoSubmitterSettingTableViewProtocol.h"
+#import "MAConfirmButton.h"
 
 #define SV_SECTION_GENERAL  0
 static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
@@ -55,13 +56,17 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == SV_SECTION_GENERAL){
         if(indexPath.row == SV_GENERAL_COUNT){
+#ifndef LITE_VERSION
             presetSettingViewController_.type = AVFoundationPresetTypePhoto;
             presetSettingViewController_.title = [TTLang localized:@"Settings_Title_PhotoPreset"];
             [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
+#endif
         }else if(indexPath.row == SV_GENERAL_COUNT + 1){
+#ifndef LITE_VERSION
             presetSettingViewController_.type = AVFoundationPresetTypeVideo;
             presetSettingViewController_.title = [TTLang localized:@"Settings_Title_VideoPreset"];
             [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
+#endif
         }else if(indexPath.row == SV_GENERAL_COUNT + 2){
             [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
         }
@@ -100,20 +105,25 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if(tag == SV_GENERAL_COUNT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
+#ifdef LITE_VERSION
+        MAConfirmButton *disabledButton = [MAConfirmButton buttonWithDisabledTitle:@"PRO"];
+        cell.accessoryView = disabledButton;
+        cell.textLabel.textColor = [UIColor grayColor];
+#else
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#endif
+
     }else if(tag == SV_GENERAL_COUNT + 1){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
+#ifdef LITE_VERSION
+        MAConfirmButton *disabledButton = [MAConfirmButton buttonWithDisabledTitle:@"PRO"];
+        cell.accessoryView = disabledButton;
+        cell.textLabel.textColor = [UIColor grayColor];
+#else
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#endif
     }else if(tag == SV_GENERAL_COUNT + 2){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
-#ifdef LITE_VERSION
-    }else if(tag == SV_GENERAL_COMMENT){
-        cell = [super createGeneralSettingCell:tag];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", cell.textLabel.text, [TTLang localized:@"Settings_Row_Comment_Disabled"]];
-        [cell.textLabel setTextColor:[UIColor lightGrayColor]];
-        UISwitch *s = (UISwitch *)cell.accessoryView;
-        s.enabled = NO;
-#endif
     }else{
         return [super createGeneralSettingCell:tag];
     }
