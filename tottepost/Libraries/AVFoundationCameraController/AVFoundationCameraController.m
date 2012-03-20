@@ -65,7 +65,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [self.view addGestureRecognizer:tapRecognizer];
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.view addGestureRecognizer:pinchRecognizer];
-    
     shutterButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [shutterButton_ setTitle:@"Shutter" forState:UIControlStateNormal]; 
     [shutterButton_ addTarget:self action:@selector(handleShutterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
