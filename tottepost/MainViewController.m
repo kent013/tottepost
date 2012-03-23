@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 #import "MainViewController.h"
 #import "PhotoSubmitterSettings.h"
 #import "MainViewControllerConstants.h"
@@ -22,6 +23,7 @@
 #import "YRDropdownView.h"
 #import "TottepostSettings.h"
 #import "LiteAlbumPhotoSubmitterSettingTableViewController.h"
+
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
@@ -46,6 +48,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) onVideoButtonTimer;
 - (void) updateCameraIconImageView;
 - (void) cleanupVideoMode;
+- (BOOL) isVideoCameraAvailable;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -99,8 +102,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     toolbar_ = [[UIToolbar alloc] initWithFrame:CGRectZero];
     toolbar_.barStyle = UIBarStyleBlack;
     
-    cameraModeSwitchView_ = [[CameraModeSwitchView alloc] initWithFrame:CGRectZero];
-    cameraModeSwitchView_.delegate = self;
+    if([self isVideoCameraAvailable]){
+        cameraModeSwitchView_ = [[CameraModeSwitchView alloc] initWithFrame:CGRectZero];
+        cameraModeSwitchView_.delegate = self;
+    }
     
     //camera button
     UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MAINVIEW_CAMERA_BUTTON_WIDTH, MAINVIEW_CAMERA_BUTTON_HEIGHT)];
@@ -394,7 +399,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self.view addSubview:settingIndicatorView_];
     [self.view addSubview:toolbar_];
     [self.view addSubview:progressSummaryView_];  
-    [self.view addSubview:cameraModeSwitchView_];
+    if([self isVideoCameraAvailable]){
+        [self.view addSubview:cameraModeSwitchView_];
+    }
     imagePicker_.delegate = self;
 
     [self updateCoordinates];
@@ -462,6 +469,29 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     videoButtonTimer_ = nil;
     videoButtonFlush_ = NO;
     [self updateCameraIconImageView];
+}
+
+/*!
+ * check for video camera availability
+ */
+- (BOOL) isVideoCameraAvailable{
+#if TARGET_IPHONE_SIMULATOR
+    return YES;
+#endif
+    static BOOL isAlreadyExamined = NO;
+    static BOOL result = NO;
+
+    if(isAlreadyExamined){
+        return result;
+    }
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    NSArray *sourceTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+    
+    if ([sourceTypes containsObject:(NSString *)kUTTypeMovie]){
+        result = YES;
+    }
+    isAlreadyExamined = YES;
+    return result;
 }
 @end
 

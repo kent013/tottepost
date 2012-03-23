@@ -66,6 +66,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>still-camera</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
