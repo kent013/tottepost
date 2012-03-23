@@ -445,6 +445,10 @@
 		7964DDD21515EDCC00FB7D2D /* test_video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 79E705391513B518000C792B /* test_video.mov */; };
 		797E393014AC6A8800F17AC4 /* TTLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E392F14AC6A8800F17AC4 /* TTLang.m */; };
 		797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
+		797EDEA6151C77B10055D23F /* videoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA2151C77B10055D23F /* videoButton.png */; };
+		797EDEA7151C77B10055D23F /* videoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA3151C77B10055D23F /* videoButton@2x.png */; };
+		797EDEA8151C77B10055D23F /* videoButtonActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA4151C77B10055D23F /* videoButtonActive.png */; };
+		797EDEA9151C77B10055D23F /* videoButtonActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA5151C77B10055D23F /* videoButtonActive@2x.png */; };
 		7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */; };
 		7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588C14C86D47006E3817 /* AVFoundation.framework */; };
 		7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588E14C86D7F006E3817 /* CoreMedia.framework */; };
@@ -1986,6 +1990,10 @@
 		797E392F14AC6A8800F17AC4 /* TTLang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTLang.m; path = Util/TTLang.m; sourceTree = "<group>"; };
 		797E395214B0377200F17AC4 /* SettingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingIndicatorView.h; sourceTree = "<group>"; };
 		797E395314B0377200F17AC4 /* SettingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingIndicatorView.m; sourceTree = "<group>"; };
+		797EDEA2151C77B10055D23F /* videoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoButton.png; sourceTree = "<group>"; };
+		797EDEA3151C77B10055D23F /* videoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoButton@2x.png"; sourceTree = "<group>"; };
+		797EDEA4151C77B10055D23F /* videoButtonActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoButtonActive.png; sourceTree = "<group>"; };
+		797EDEA5151C77B10055D23F /* videoButtonActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoButtonActive@2x.png"; sourceTree = "<group>"; };
 		7980588914C86CC9006E3817 /* AVFoundationCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationCameraController.h; path = Libraries/AVFoundationCameraController/AVFoundationCameraController.h; sourceTree = "<group>"; };
 		7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationCameraController.m; path = Libraries/AVFoundationCameraController/AVFoundationCameraController.m; sourceTree = "<group>"; };
 		7980588C14C86D47006E3817 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -4218,6 +4226,10 @@
 				7964DD821515A7DE00FB7D2D /* setting@2x.png */,
 				7964DD831515A7DE00FB7D2D /* unhappyface.png */,
 				7964DD841515A7DE00FB7D2D /* unhappyface@2x.png */,
+				797EDEA2151C77B10055D23F /* videoButton.png */,
+				797EDEA3151C77B10055D23F /* videoButton@2x.png */,
+				797EDEA4151C77B10055D23F /* videoButtonActive.png */,
+				797EDEA5151C77B10055D23F /* videoButtonActive@2x.png */,
 				7964DD851515A7DE00FB7D2D /* videoMode.png */,
 				7964DD861515A7DE00FB7D2D /* videoMode@2x.png */,
 			);
@@ -4761,6 +4773,10 @@
 				7964DDA51515A7DE00FB7D2D /* unhappyface@2x.png in Resources */,
 				7964DDA61515A7DE00FB7D2D /* videoMode.png in Resources */,
 				7964DDA71515A7DE00FB7D2D /* videoMode@2x.png in Resources */,
+				797EDEA6151C77B10055D23F /* videoButton.png in Resources */,
+				797EDEA7151C77B10055D23F /* videoButton@2x.png in Resources */,
+				797EDEA8151C77B10055D23F /* videoButtonActive.png in Resources */,
+				797EDEA9151C77B10055D23F /* videoButtonActive@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

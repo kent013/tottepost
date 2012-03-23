@@ -43,6 +43,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) updateCameraController;
 - (void) createCameraController;
 - (void) firstLaunched;
+- (void) onVideoButtonTimer;
+- (void) updateCameraIconImageView;
+- (void) cleanupVideoMode;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -269,7 +272,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on camera button tapped
  */
 - (void)didCameraButtonTapped:(id)sender
-{    
+{
     if(imagePicker_.mode == AVFoundationCameraModePhoto){
 #if TARGET_IPHONE_SIMULATOR
         imagePicker_.showsCameraControls = NO;
@@ -281,8 +284,13 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 #endif
     }else{
 #if TARGET_IPHONE_SIMULATOR
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"test_video" withExtension:@"mov"];
-        [self cameraController:nil didFinishRecordingVideoToOutputFileURL:url length:4.0 error:nil];
+        if(videoButtonTimer_ == nil){
+            [self cameraControllerDidStartRecordingVideo:nil];
+        }else{            
+            [self cleanupVideoMode];
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"test_video" withExtension:@"mov"];
+            [self cameraController:nil didFinishRecordingVideoToOutputFileURL:url length:4.0 error:nil];
+        }
 #else
         if(imagePicker_.isRecordingVideo){
             [imagePicker_ stopRecordingVideo];
@@ -419,6 +427,41 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
                               delegate:nil cancelButtonTitle:[TTLang localized:@"FirstAlert_OK"] otherButtonTitles:nil];
     [alert show];
 }
+
+/*!
+ * on video button timer
+ */
+- (void)onVideoButtonTimer{
+    videoButtonFlush_ = !videoButtonFlush_;
+    [self updateCameraIconImageView];
+}
+
+/*!
+ * update video button
+ */
+- (void)updateCameraIconImageView{
+    if(imagePicker_.mode == AVFoundationCameraModePhoto){
+        cameraIconImageView_.image = [UIImage imageNamed:@"camera.png"];
+    }else{
+        if(videoButtonFlush_){
+            cameraIconImageView_.image = [UIImage imageNamed:@"videoButtonActive.png"];
+        }else{
+            cameraIconImageView_.image = [UIImage imageNamed:@"videoButton.png"];
+        }    
+    }
+}
+
+/*!
+ * cleaup video mode
+ */
+- (void)cleanupVideoMode{
+    cameraButton_.enabled = YES;
+    imagePicker_.showsCameraControls = YES;
+    [videoButtonTimer_ invalidate];
+    videoButtonTimer_ = nil;
+    videoButtonFlush_ = NO;
+    [self updateCameraIconImageView];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -473,8 +516,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * take photo
  */
 - (void)cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data{
-    cameraButton_.enabled = YES;
-    imagePicker_.showsCameraControls = YES;
+    [self cleanupVideoMode];
     PhotoSubmitterImageEntity *photo = [[PhotoSubmitterImageEntity alloc] initWithData:data];
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewContent:photo];
@@ -494,6 +536,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *)controller{
     cameraModeSwitchView_.enabled = NO;
+    videoButtonFlush_ = NO;
+    videoButtonTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onVideoButtonTimer) userInfo:nil repeats:YES];
+    [videoButtonTimer_ fire];
 }
 
 /*!
@@ -511,26 +556,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }else{
         [self postContent:video];        
     }
-}
-
-/*
- * did rotated device orientation
- */
-- (void) didRotatedDeviceOrientation:(UIDeviceOrientation) orientation{
-    if(orientation == UIDeviceOrientationPortrait ||
-       orientation == UIDeviceOrientationPortraitUpsideDown ||
-       orientation == UIDeviceOrientationLandscapeLeft ||
-       orientation == UIDeviceOrientationLandscapeRight)
-    {
-        orientation_ = orientation;
-    }
-    
-    if(orientation_ == lastOrientation_)
-    {
-        return;
-    }
-    lastOrientation_ = orientation_;
-    [self updateCoordinates];
 }
 
 #pragma mark -
@@ -695,6 +720,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)cameraModeSwitchView:(CameraModeSwitchView *)cameraModeSwitchView didModeChangedTo:(AVFoundationCameraMode)mode{
     imagePicker_.mode = mode;
+    [self updateCameraIconImageView];
 }
 
 #pragma mark -
@@ -736,5 +762,25 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
                      andKey:TOTTEPOST_USERVOICE_API_KEY
                   andSecret:TOTTEPOST_USERVOICE_API_SECRET];
     }
+}
+
+/*
+ * did rotated device orientation
+ */
+- (void) didRotatedDeviceOrientation:(UIDeviceOrientation) orientation{
+    if(orientation == UIDeviceOrientationPortrait ||
+       orientation == UIDeviceOrientationPortraitUpsideDown ||
+       orientation == UIDeviceOrientationLandscapeLeft ||
+       orientation == UIDeviceOrientationLandscapeRight)
+    {
+        orientation_ = orientation;
+    }
+    
+    if(orientation_ == lastOrientation_)
+    {
+        return;
+    }
+    lastOrientation_ = orientation_;
+    [self updateCoordinates];
 }
 @end

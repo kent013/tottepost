@@ -11,8 +11,8 @@
 #import "FlashButton.h"
 
 typedef enum {
-    AVFoundationCameraModeVideo,
-    AVFoundationCameraModePhoto
+    AVFoundationCameraModePhoto = 0,
+    AVFoundationCameraModeVideo
 } AVFoundationCameraMode;
 
 @protocol AVFoundationCameraControllerDelegate;
