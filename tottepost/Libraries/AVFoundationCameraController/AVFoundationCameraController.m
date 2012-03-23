@@ -46,8 +46,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 - (void) onVideoRecordingTimer;
 - (NSURL*) tempVideoURL;
-- (void) showFreezePhotoViewWithData:(NSData *)data forInterval:(NSTimeInterval)interval;
-- (void) hideFreezePhotoView;
+- (void) freezeCaptureForInterval:(NSTimeInterval)interval;
+- (void) unfreezeCapture;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -86,8 +86,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         videoElapsedTimeLabel_.font = [UIFont systemFontOfSize:16];
     }
     
-    freezePhotoView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
-    
     [self initCamera:self.backCameraDevice];
     
     showsCameraControls_ = YES;
@@ -96,7 +94,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     useTapToFocus_ = YES;
     showsVideoElapsedTimeLabel_ = YES;
     freezeAfterShutter_ = YES;
-    self.freezeInterval = 0.2;
+    self.freezeInterval = 0.1;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
     }
@@ -603,21 +601,16 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 /*!
  * show freeze photo view
  */
-- (void)showFreezePhotoViewWithData:(NSData *)data forInterval:(NSTimeInterval)interval{
-    //freezePhotoView_.frame = self.view.frame;
-    //freezePhotoView_.image = [UIImage imageWithData:data];
-    //[self.view addSubview: freezePhotoView_];
+- (void)freezeCaptureForInterval:(NSTimeInterval)interval{
     [session_ stopRunning];
-    [self performSelector:@selector(hideFreezePhotoView) withObject:nil afterDelay:interval];
+    [self performSelector:@selector(unfreezeCapture) withObject:nil afterDelay:interval];
 }
 
 /*!
  * hide freeze photo view
  */
-- (void)hideFreezePhotoView{
+- (void)unfreezeCapture{
     [session_ startRunning];
-    //freezePhotoView_.image = nil;
-    //[freezePhotoView_ removeFromSuperview];
 }
 @end
 
@@ -699,7 +692,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
              [self.delegate cameraController:self didFinishPickingImageData:imageData];
          }
          if(freezeAfterShutter_){
-             [self showFreezePhotoViewWithData:imageData forInterval:self.freezeInterval];
+             [self freezeCaptureForInterval:self.freezeInterval];
          }
 	 }];
 }
@@ -800,11 +793,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
  * apply preset
  */
 - (void)applyPreset{
+    [session_ beginConfiguration];
     if(mode_ == AVFoundationCameraModePhoto){
         session_.sessionPreset = photoPreset_;
     }else{
         session_.sessionPreset = videoPreset_;
     }    
+    [session_ commitConfiguration];
 }
 
 /*!

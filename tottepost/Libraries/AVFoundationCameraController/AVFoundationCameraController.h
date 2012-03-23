@@ -32,8 +32,6 @@ typedef enum {
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
     
-    __strong UIImageView *freezePhotoView_;
-    
     __strong UILabel *videoElapsedTimeLabel_;
     __strong NSTimer *videoElapsedTimer_;
     
