@@ -46,6 +46,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 - (void) onVideoRecordingTimer;
 - (NSURL*) tempVideoURL;
+- (void) showFreezePhotoViewWithData:(NSData *)data forInterval:(NSTimeInterval)interval;
+- (void) hideFreezePhotoView;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -84,6 +86,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         videoElapsedTimeLabel_.font = [UIFont systemFontOfSize:16];
     }
     
+    freezePhotoView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
+    
     [self initCamera:self.backCameraDevice];
     
     showsCameraControls_ = YES;
@@ -91,6 +95,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     showsIndicator_ = YES;
     useTapToFocus_ = YES;
     showsVideoElapsedTimeLabel_ = YES;
+    freezeAfterShutter_ = YES;
+    self.freezeInterval = 0.2;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
     }
@@ -593,6 +599,26 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [defaults setObject:[NSNumber numberWithInt:n] forKey:kTempVideoURL];
     return url;
 }
+
+/*!
+ * show freeze photo view
+ */
+- (void)showFreezePhotoViewWithData:(NSData *)data forInterval:(NSTimeInterval)interval{
+    //freezePhotoView_.frame = self.view.frame;
+    //freezePhotoView_.image = [UIImage imageWithData:data];
+    //[self.view addSubview: freezePhotoView_];
+    [session_ stopRunning];
+    [self performSelector:@selector(hideFreezePhotoView) withObject:nil afterDelay:interval];
+}
+
+/*!
+ * hide freeze photo view
+ */
+- (void)hideFreezePhotoView{
+    [session_ startRunning];
+    //freezePhotoView_.image = nil;
+    //[freezePhotoView_ removeFromSuperview];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -607,6 +633,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize showsVideoElapsedTimeLabel = showsVideoElapsedTimeLabel_;
 @synthesize showsIndicator = showsIndicator_;
 @synthesize useTapToFocus = useTapToFocus_;
+@synthesize freezeAfterShutter = freezeAfterShutter_;
+@synthesize freezeInterval;
 @synthesize mode = mode_;
 @synthesize isRecordingVideo;
 @synthesize photoPreset = photoPreset_;
@@ -635,6 +663,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 {
     if(mode_ == AVFoundationCameraModeVideo){
         NSLog(@"Controller is in video mode. %s", __PRETTY_FUNCTION__);
+        return;
+    }
+    if(session_.isRunning == NO){
         return;
     }
 	AVCaptureConnection *videoConnection = nil;
@@ -666,6 +697,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
          
          if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:)]){
              [self.delegate cameraController:self didFinishPickingImageData:imageData];
+         }
+         if(freezeAfterShutter_){
+             [self showFreezePhotoViewWithData:imageData forInterval:self.freezeInterval];
          }
 	 }];
 }

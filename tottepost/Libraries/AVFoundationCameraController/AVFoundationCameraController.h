@@ -32,6 +32,8 @@ typedef enum {
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
     
+    __strong UIImageView *freezePhotoView_;
+    
     __strong UILabel *videoElapsedTimeLabel_;
     __strong NSTimer *videoElapsedTimer_;
     
@@ -46,6 +48,7 @@ typedef enum {
     BOOL showsVideoElapsedTimeLabel_;
     BOOL showsIndicator_;
     BOOL useTapToFocus_;
+    BOOL freezeAfterShutter_;
     
     NSDate *videoRecordingStartedDate_;
     
@@ -72,7 +75,9 @@ typedef enum {
 @property(nonatomic, assign) BOOL showsIndicator;
 @property(nonatomic, assign) BOOL showsVideoElapsedTimeLabel;
 @property(nonatomic, assign) BOOL useTapToFocus;
+@property(nonatomic, assign) BOOL freezeAfterShutter;
 @property(nonatomic, assign) AVFoundationCameraMode mode;
+@property(nonatomic, assign) NSTimeInterval freezeInterval;
 @property(nonatomic, readonly) BOOL hasMultipleCameraDevices;
 @property(nonatomic, readonly) AVCaptureDevice *backCameraDevice;
 @property(nonatomic, readonly) AVCaptureDevice *frontFacingCameraDevice;
