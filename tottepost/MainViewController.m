@@ -455,6 +455,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * cleaup video mode
  */
 - (void)cleanupVideoMode{
+    cameraModeSwitchView_.enabled = YES;
     cameraButton_.enabled = YES;
     imagePicker_.showsCameraControls = YES;
     [videoButtonTimer_ invalidate];
@@ -545,7 +546,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * video recording finished
  */
 - (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error{
-    cameraModeSwitchView_.enabled = YES;
+    [self cleanupVideoMode];
     if(error){
         return;
     }

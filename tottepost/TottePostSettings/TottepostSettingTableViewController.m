@@ -19,6 +19,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface TottepostSettingTableViewController(PrivateImplementation)
+- (void) handleProButtonTapped:(id)sender;
 @end
 
 #pragma mark -
@@ -26,6 +27,14 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 @implementation TottepostSettingTableViewController(PrivateImplementation)
 #pragma mark -
 #pragma mark tableview methods
+/*!
+ * open app store
+ */
+- (void) handleProButtonTapped:(id)sender{
+    NSString *stringURL = [TTLang localized:@"AppStore_Url_Pro"];
+    NSURL *url = [NSURL URLWithString:stringURL];
+    [[UIApplication sharedApplication] openURL:url]; 
+}
 /*!
  * get row number
  */
@@ -106,8 +115,10 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     if(tag == SV_GENERAL_COUNT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
 #ifdef LITE_VERSION
-        MAConfirmButton *disabledButton = [MAConfirmButton buttonWithDisabledTitle:@"PRO"];
-        cell.accessoryView = disabledButton;
+        MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
+        [proButton setTintColor:[UIColor colorWithRed:0.176 green:0.569 blue:0.820 alpha:1]];
+        [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = proButton;
         cell.textLabel.textColor = [UIColor grayColor];
 #else
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -116,8 +127,10 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     }else if(tag == SV_GENERAL_COUNT + 1){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
 #ifdef LITE_VERSION
-        MAConfirmButton *disabledButton = [MAConfirmButton buttonWithDisabledTitle:@"PRO"];
-        cell.accessoryView = disabledButton;
+        MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
+        [proButton setTintColor:[UIColor colorWithRed:0.176 green:0.569 blue:0.820 alpha:1]];
+        [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = proButton;
         cell.textLabel.textColor = [UIColor grayColor];
 #else
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

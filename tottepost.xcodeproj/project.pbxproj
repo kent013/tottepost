@@ -927,6 +927,10 @@
 		7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E66E14F4DD68005C1453 /* libz.dylib */; };
 		7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E67014F4DD92005C1453 /* MobileCoreServices.framework */; };
+		79B0DDBE151CE29700D90483 /* videoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA2151C77B10055D23F /* videoButton.png */; };
+		79B0DDBF151CE29700D90483 /* videoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA3151C77B10055D23F /* videoButton@2x.png */; };
+		79B0DDC0151CE29700D90483 /* videoButtonActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA4151C77B10055D23F /* videoButtonActive.png */; };
+		79B0DDC1151CE29700D90483 /* videoButtonActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA5151C77B10055D23F /* videoButtonActive@2x.png */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
@@ -4924,6 +4928,10 @@
 				7964DDD01515ED7000FB7D2D /* videoMode@2x.png in Resources */,
 				7964DDD11515EDCC00FB7D2D /* test_image.jpg in Resources */,
 				7964DDD21515EDCC00FB7D2D /* test_video.mov in Resources */,
+				79B0DDBE151CE29700D90483 /* videoButton.png in Resources */,
+				79B0DDBF151CE29700D90483 /* videoButton@2x.png in Resources */,
+				79B0DDC0151CE29700D90483 /* videoButtonActive.png in Resources */,
+				79B0DDC1151CE29700D90483 /* videoButtonActive@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
