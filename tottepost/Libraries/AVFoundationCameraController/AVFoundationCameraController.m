@@ -48,6 +48,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (NSURL*) tempVideoURL;
 - (void) freezeCaptureForInterval:(NSTimeInterval)interval;
 - (void) unfreezeCapture;
+- (void) playShutterSound;
+- (void) playVideoBeepSound;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -108,6 +110,13 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     
     photoPreset_ = AVCaptureSessionPresetPhoto;
     videoPreset_ = AVCaptureSessionPresetMedium;
+    
+    shutterSoundURL_ = (__bridge_retained CFURLRef)[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"];
+    videoBeepSoundURL_ = (__bridge_retained CFURLRef)[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"];
+    AudioServicesCreateSystemSoundID(shutterSoundURL_, &shutterSoundId_);
+    AudioServicesCreateSystemSoundID(videoBeepSoundURL_, &videoBeepSoundId_);
+    
+    
 }
 
 /*!
@@ -157,9 +166,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     if ([session_ canAddInput:videoInput_]) {
         [session_ addInput:videoInput_];
     }
-    if ([session_ canAddInput:audioInput_]) {
-        [session_ addInput:audioInput_];
-    }
     if (mode_ == AVFoundationCameraModeVideo && 
         [session_ canAddOutput:movieFileOutput_]){
         [session_ addOutput:movieFileOutput_];
@@ -208,7 +214,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     CGRect f = self.view.frame;
     if(mode_ == AVFoundationCameraModeVideo ){
         if(showsVideoElapsedTimeLabel_ && [videoElapsedTimeLabel_ isDescendantOfView:self.view] == NO){
-            CGSize size = [@"00/00" sizeWithFont:videoElapsedTimeLabel_.font];
+            CGSize size = [@"00:00" sizeWithFont:videoElapsedTimeLabel_.font];
             videoElapsedTimeLabel_.frame = CGRectMake(f.size.width - size.width - PICKER_PADDING_X, PICKER_PADDING_Y, size.width, size.height);        
             [self.view addSubview: videoElapsedTimeLabel_];
         }
@@ -612,6 +618,27 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void)unfreezeCapture{
     [session_ startRunning];
 }
+
+/*!
+ * play shutter sound
+ */
+- (void)playShutterSound{
+    AudioServicesPlaySystemSound(shutterSoundId_);
+}
+
+/*!
+ * play video sound
+ */
+- (void)playVideoBeepSound{
+    AudioServicesPlaySystemSound(videoBeepSoundId_);
+}
+
+- (void)dealloc{
+    CFRelease(shutterSoundURL_);
+    CFRelease(videoBeepSoundURL_);
+    AudioServicesDisposeSystemSoundID(shutterSoundId_);
+    AudioServicesDisposeSystemSoundID(videoBeepSoundId_);    
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -701,6 +728,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * start recording video
  */
 - (void)startRecordingVideo{
+    [self playVideoBeepSound];
+    [session_ addInput:audioInput_];
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
     }
@@ -720,7 +749,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [movieFileOutput_ stopRecording];
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
-    }	
+    }
 }
 
 /*!
@@ -760,13 +789,16 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
-    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:length:error:)]){
-        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
-    }
+    [session_ removeInput:audioInput_];
+    [self playVideoBeepSound];
     [videoElapsedTimer_ invalidate];
     videoElapsedTimeLabel_.text = @"";
     if(error){
         NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
+    }
+    
+    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:length:error:)]){
+        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
     }
 }        
 

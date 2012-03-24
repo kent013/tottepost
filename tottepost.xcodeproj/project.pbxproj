@@ -927,6 +927,12 @@
 		7995E66A14F4D6E1005C1453 /* NSURL+QueryInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E66E14F4DD68005C1453 /* libz.dylib */; };
 		7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E67014F4DD92005C1453 /* MobileCoreServices.framework */; };
+		79A7F9BA151DBD6600984F07 /* AVFoundationShutter.wav in Resources */ = {isa = PBXBuildFile; fileRef = 79A7F9B8151DBD6600984F07 /* AVFoundationShutter.wav */; };
+		79A7F9BB151DBD6600984F07 /* AVFoundationVideoBeep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 79A7F9B9151DBD6600984F07 /* AVFoundationVideoBeep.wav */; };
+		79A7F9BE151DC78500984F07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A7F9BD151DC78500984F07 /* AudioToolbox.framework */; };
+		79A7F9BF151DC7A000984F07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A7F9BD151DC78500984F07 /* AudioToolbox.framework */; };
+		79A7F9C4151DCD4000984F07 /* AVFoundationShutter.wav in Resources */ = {isa = PBXBuildFile; fileRef = 79A7F9B8151DBD6600984F07 /* AVFoundationShutter.wav */; };
+		79A7F9C5151DCD4000984F07 /* AVFoundationVideoBeep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 79A7F9B9151DBD6600984F07 /* AVFoundationVideoBeep.wav */; };
 		79B0DDBE151CE29700D90483 /* videoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA2151C77B10055D23F /* videoButton.png */; };
 		79B0DDBF151CE29700D90483 /* videoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA3151C77B10055D23F /* videoButton@2x.png */; };
 		79B0DDC0151CE29700D90483 /* videoButtonActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA4151C77B10055D23F /* videoButtonActive.png */; };
@@ -2155,6 +2161,9 @@
 		7995E66614F4D6E1005C1453 /* NSURL+QueryInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+QueryInspector.m"; path = "Util/NSURL+QueryInspector.m"; sourceTree = "<group>"; };
 		7995E66E14F4DD68005C1453 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7995E67014F4DD92005C1453 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		79A7F9B8151DBD6600984F07 /* AVFoundationShutter.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AVFoundationShutter.wav; sourceTree = "<group>"; };
+		79A7F9B9151DBD6600984F07 /* AVFoundationVideoBeep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AVFoundationVideoBeep.wav; sourceTree = "<group>"; };
+		79A7F9BD151DC78500984F07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutSettingViewController.h; path = TottePostSettings/AboutSettingViewController.h; sourceTree = "<group>"; };
 		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
@@ -2195,6 +2204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A7F9BE151DC78500984F07 /* AudioToolbox.framework in Frameworks */,
 				7964DD02151540D600FB7D2D /* MediaPlayer.framework in Frameworks */,
 				7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */,
 				79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */,
@@ -2262,6 +2272,7 @@
 				79924C86150CAE180043C16D /* libz.dylib in Frameworks */,
 				79924C87150CAE180043C16D /* libobjc-atompub.a in Frameworks */,
 				79924C88150CAE180043C16D /* libGDataTouchStaticLib.a in Frameworks */,
+				79A7F9BF151DC7A000984F07 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2346,6 +2357,7 @@
 				79924B14150C20350043C16D /* Accelerate.framework */,
 				37FB65D8149CDFBC00387490 /* Accounts.framework */,
 				37F0D27014A771A400680F8A /* AssetsLibrary.framework */,
+				79A7F9BD151DC78500984F07 /* AudioToolbox.framework */,
 				7980588C14C86D47006E3817 /* AVFoundation.framework */,
 				37FB65771498C8A100387490 /* CFNetwork.framework */,
 				376E15401494C47800A34E7D /* CoreGraphics.framework */,
@@ -4247,6 +4259,7 @@
 			isa = PBXGroup;
 			children = (
 				79D8073E14D0F78500064CB3 /* Images */,
+				79A7F9B7151DBD6600984F07 /* Sounds */,
 				7980588914C86CC9006E3817 /* AVFoundationCameraController.h */,
 				7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */,
 				79E7054715145585000C792B /* AVFoundationPreset.h */,
@@ -4484,6 +4497,16 @@
 				79924B38150C4D340043C16D /* OFXMLMapper.m */,
 			);
 			path = ObjectiveFlickr;
+			sourceTree = "<group>";
+		};
+		79A7F9B7151DBD6600984F07 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				79A7F9B8151DBD6600984F07 /* AVFoundationShutter.wav */,
+				79A7F9B9151DBD6600984F07 /* AVFoundationVideoBeep.wav */,
+			);
+			name = Sounds;
+			path = Libraries/AVFoundationCameraController/Sounds;
 			sourceTree = "<group>";
 		};
 		79D8073E14D0F78500064CB3 /* Images */ = {
@@ -4770,6 +4793,8 @@
 				797EDEA7151C77B10055D23F /* videoButton@2x.png in Resources */,
 				797EDEA8151C77B10055D23F /* videoButtonActive.png in Resources */,
 				797EDEA9151C77B10055D23F /* videoButtonActive@2x.png in Resources */,
+				79A7F9BA151DBD6600984F07 /* AVFoundationShutter.wav in Resources */,
+				79A7F9BB151DBD6600984F07 /* AVFoundationVideoBeep.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4919,6 +4944,8 @@
 				79B0DDBF151CE29700D90483 /* videoButton@2x.png in Resources */,
 				79B0DDC0151CE29700D90483 /* videoButtonActive.png in Resources */,
 				79B0DDC1151CE29700D90483 /* videoButtonActive@2x.png in Resources */,
+				79A7F9C4151DCD4000984F07 /* AVFoundationShutter.wav in Resources */,
+				79A7F9C5151DCD4000984F07 /* AVFoundationVideoBeep.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

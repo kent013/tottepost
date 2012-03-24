@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "FlashButton.h"
 
 typedef enum {
@@ -63,6 +64,11 @@ typedef enum {
     UIDeviceOrientation viewOrientation_;
     UIDeviceOrientation deviceOrientation_;
     UIBackgroundTaskIdentifier backgroundRecordingId_;
+    
+    CFURLRef shutterSoundURL_;
+    CFURLRef videoBeepSoundURL_;
+    SystemSoundID shutterSoundId_;
+    SystemSoundID videoBeepSoundId_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;
