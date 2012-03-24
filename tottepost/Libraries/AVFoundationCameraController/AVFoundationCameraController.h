@@ -65,10 +65,8 @@ typedef enum {
     UIDeviceOrientation deviceOrientation_;
     UIBackgroundTaskIdentifier backgroundRecordingId_;
     
-    CFURLRef shutterSoundURL_;
-    CFURLRef videoBeepSoundURL_;
-    SystemSoundID shutterSoundId_;
-    SystemSoundID videoBeepSoundId_;
+    AVAudioPlayer *shutterSoundPlayer_;
+    AVAudioPlayer *videoBeepSoundPlayer_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;

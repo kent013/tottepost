@@ -111,12 +111,18 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     photoPreset_ = AVCaptureSessionPresetPhoto;
     videoPreset_ = AVCaptureSessionPresetMedium;
     
-    shutterSoundURL_ = (__bridge_retained CFURLRef)[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"];
-    videoBeepSoundURL_ = (__bridge_retained CFURLRef)[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"];
-    AudioServicesCreateSystemSoundID(shutterSoundURL_, &shutterSoundId_);
-    AudioServicesCreateSystemSoundID(videoBeepSoundURL_, &videoBeepSoundId_);
+    shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
+    videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
+    [shutterSoundPlayer_ prepareToPlay];
+    [videoBeepSoundPlayer_ prepareToPlay];
     
+    AudioSessionInitialize(NULL, NULL, NULL, NULL);  
+    UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
+    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
     
+    UInt32 mixWithOthers = 1;  
+    AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
+    [[AVAudioSession sharedInstance] setActive: YES error: nil];
 }
 
 /*!
@@ -623,21 +629,14 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * play shutter sound
  */
 - (void)playShutterSound{
-    AudioServicesPlaySystemSound(shutterSoundId_);
+    [shutterSoundPlayer_ play];
 }
 
 /*!
  * play video sound
  */
 - (void)playVideoBeepSound{
-    AudioServicesPlaySystemSound(videoBeepSoundId_);
-}
-
-- (void)dealloc{
-    CFRelease(shutterSoundURL_);
-    CFRelease(videoBeepSoundURL_);
-    AudioServicesDisposeSystemSoundID(shutterSoundId_);
-    AudioServicesDisposeSystemSoundID(videoBeepSoundId_);    
+    [videoBeepSoundPlayer_ play];
 }
 @end
 
