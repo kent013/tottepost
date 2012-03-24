@@ -116,7 +116,6 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
-        [proButton setTintColor:[UIColor colorWithRed:0.176 green:0.569 blue:0.820 alpha:1]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = proButton;
         cell.textLabel.textColor = [UIColor grayColor];
@@ -128,7 +127,6 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
-        [proButton setTintColor:[UIColor colorWithRed:0.176 green:0.569 blue:0.820 alpha:1]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = proButton;
         cell.textLabel.textColor = [UIColor grayColor];

@@ -235,6 +235,10 @@
 		7901B046150683B6003DA0DC /* UIImage+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF79150683B4003DA0DC /* UIImage+Digest.m */; };
 		7901B047150683B6003DA0DC /* UIImage+EXIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF7B150683B4003DA0DC /* UIImage+EXIF.m */; };
 		791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 791BF31314E020A200697E05 /* libxml2.dylib */; };
+		792721DD151D897F00807529 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DA151D897F00807529 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DC151D897F00807529 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DA151D897F00807529 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DC151D897F00807529 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E11150F75C40026CE62 /* YRDropdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 793F4E0E150F75C40026CE62 /* YRDropdownView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E13150F7C500026CE62 /* YRDropdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 793F4E0E150F75C40026CE62 /* YRDropdownView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E25150F81130026CE62 /* bg-glossLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 793F4E1B150F81120026CE62 /* bg-glossLayer.png */; };
@@ -949,10 +953,6 @@
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
 		79F461BD150A3C6F009787F0 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461BB150A3C6F009787F0 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79FEA728151713AB0071A3E5 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA725151713AB0071A3E5 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79FEA729151713AB0071A3E5 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA725151713AB0071A3E5 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79FEA72A151713AB0071A3E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		79FEA72B151713AB0071A3E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
@@ -1732,6 +1732,10 @@
 		7901B04E15068B69003DA0DC /* PicasaAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicasaAPIKey.h; sourceTree = "<group>"; };
 		7913BFD914FFCE20003EE902 /* UserVoiceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserVoiceAPIKey.h; sourceTree = "<group>"; };
 		791BF31314E020A200697E05 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		792721D9151D897F00807529 /* MAConfirmButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAConfirmButton.h; sourceTree = "<group>"; };
+		792721DA151D897F00807529 /* MAConfirmButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAConfirmButton.m; sourceTree = "<group>"; };
+		792721DB151D897F00807529 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		792721DC151D897F00807529 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		793AAF32150CE4DC00285BED /* tottepost-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tottepost-Info.plist"; sourceTree = "<group>"; };
 		793D3D91150AAC0100098A79 /* MixiWebViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiWebViewControllerDelegate.h; sourceTree = "<group>"; };
 		793F4E0D150F75C40026CE62 /* YRDropdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDropdownView.h; sourceTree = "<group>"; };
@@ -2176,10 +2180,6 @@
 		79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		79F461BA150A3C6F009787F0 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		79F461BB150A3C6F009787F0 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
-		79FEA724151713AB0071A3E5 /* MAConfirmButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAConfirmButton.h; sourceTree = "<group>"; };
-		79FEA725151713AB0071A3E5 /* MAConfirmButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAConfirmButton.m; sourceTree = "<group>"; };
-		79FEA726151713AB0071A3E5 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
-		79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		EA76226D14D0312100C54159 /* FlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashButton.h; path = Libraries/AVFoundationCameraController/FlashButton.h; sourceTree = "<group>"; };
 		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
@@ -2443,7 +2443,6 @@
 				376A8B3714A060B700637B68 /* FBProgressView */,
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
 				7948ADEF15001A0D004ABDAB /* HTTPRiot */,
-				79FEA723151713AB0071A3E5 /* MAConfirmButton */,
 				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
 				79E7054B15145AB4000C792B /* uidevice-extension */,
 				7948ACD7150019F5004ABDAB /* UserVoiceSDK */,
@@ -2515,6 +2514,7 @@
 				7901AC58150683B3003DA0DC /* ios-queue-object */,
 				7901AC5B150683B3003DA0DC /* json-framework */,
 				7901AC75150683B3003DA0DC /* KissXML */,
+				792721D8151D897F00807529 /* MAConfirmButton */,
 				79924AEA150C1FFE0043C16D /* NYXImagesKit */,
 				7901AC85150683B3003DA0DC /* PDKeychainBindingsController */,
 				7901AC8A150683B3003DA0DC /* Reachability */,
@@ -3854,6 +3854,17 @@
 			path = UtilityCategories;
 			sourceTree = "<group>";
 		};
+		792721D8151D897F00807529 /* MAConfirmButton */ = {
+			isa = PBXGroup;
+			children = (
+				792721D9151D897F00807529 /* MAConfirmButton.h */,
+				792721DA151D897F00807529 /* MAConfirmButton.m */,
+				792721DB151D897F00807529 /* UIColor-Expanded.h */,
+				792721DC151D897F00807529 /* UIColor-Expanded.m */,
+			);
+			path = MAConfirmButton;
+			sourceTree = "<group>";
+		};
 		793F4E0A150F75C40026CE62 /* YRDropdownView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4511,18 +4522,6 @@
 				79F461BB150A3C6F009787F0 /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		79FEA723151713AB0071A3E5 /* MAConfirmButton */ = {
-			isa = PBXGroup;
-			children = (
-				79FEA724151713AB0071A3E5 /* MAConfirmButton.h */,
-				79FEA725151713AB0071A3E5 /* MAConfirmButton.m */,
-				79FEA726151713AB0071A3E5 /* UIColor-Expanded.h */,
-				79FEA727151713AB0071A3E5 /* UIColor-Expanded.m */,
-			);
-			name = MAConfirmButton;
-			path = Libraries/MAConfirmButton;
 			sourceTree = "<group>";
 		};
 		EAAC412014E9399400CDC2CC /* HPGrowingTextView */ = {
@@ -5255,10 +5254,10 @@
 				79E7054915145586000C792B /* AVFoundationPreset.m in Sources */,
 				79E7054E15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A215151892000C792B /* TottepostSettings.m in Sources */,
-				79FEA728151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
-				79FEA72A151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
 				79842705151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
 				7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
+				792721DD151D897F00807529 /* MAConfirmButton.m in Sources */,
+				792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5583,10 +5582,10 @@
 				79E7054A15145586000C792B /* AVFoundationPreset.m in Sources */,
 				79E7054F15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A315151892000C792B /* TottepostSettings.m in Sources */,
-				79FEA729151713AB0071A3E5 /* MAConfirmButton.m in Sources */,
-				79FEA72B151713AB0071A3E5 /* UIColor-Expanded.m in Sources */,
 				798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
 				7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
+				792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */,
+				792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
