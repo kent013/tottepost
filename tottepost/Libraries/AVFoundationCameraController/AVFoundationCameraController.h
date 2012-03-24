@@ -16,12 +16,17 @@ typedef enum {
     AVFoundationCameraModeVideo
 } AVFoundationCameraMode;
 
+typedef enum {
+    AVFoundationCameraDeviceTypeFront = 0,
+    AVFoundationCameraDeviceTypeBack = 1
+} AVFoundationCameraDeviceType;
+
 @protocol AVFoundationCameraControllerDelegate;
 
 @interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate, FlashButtonDelegate,UIAccelerometerDelegate>{
     __strong AVCaptureDevice *device_;
     __strong AVCaptureSession *session_;
-    __strong AVCaptureStillImageOutput *imageOutput_;
+    __strong AVCaptureVideoDataOutput *videoDataOutput_;
     __strong AVCaptureDeviceInput *imageInput_;
     __strong AVCaptureDeviceInput *audioInput_;
     __strong AVCaptureDeviceInput *videoInput_;
@@ -52,6 +57,7 @@ typedef enum {
     NSDate *videoRecordingStartedDate_;
     
     AVFoundationCameraMode mode_;
+    AVFoundationCameraDeviceType cameraDeviceType_;
     
     CGPoint pointOfInterest_;
     CGRect defaultBounds_;
@@ -67,6 +73,9 @@ typedef enum {
     
     AVAudioPlayer *shutterSoundPlayer_;
     AVAudioPlayer *videoBeepSoundPlayer_;
+    NSMutableArray *imageDataStack_;
+    
+    BOOL isVideoFrameCapturing_;
 }
 
 @property(nonatomic, assign) id<AVFoundationCameraControllerDelegate> delegate;
