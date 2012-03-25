@@ -34,7 +34,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 //-----------------------------------------------------------------------------
 @interface AVFoundationCameraController(PrivateImplementation)
 - (void) setupInitialState:(CGRect)frame;
-- (void) initCamera:(AVCaptureDevice *)cameraDevice;
+- (void) initCamera;
 - (void) handleTapGesture: (UITapGestureRecognizer *)recognizer;
 - (void) handlePinchGesture: (UIPinchGestureRecognizer *)recognizer;
 - (void) handleShutterButtonTapped:(UIButton *)sender;
@@ -92,7 +92,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     
     cameraDeviceType_ = AVFoundationCameraDeviceTypeBack;
-    [self initCamera:self.backCameraDevice];
+    stillCameraMethod_ = AVFoundationStillCameraMethodStandard;
+    [self initCamera];
     
     showsCameraControls_ = YES;
     showsShutterButton_ = YES;
@@ -142,12 +143,17 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 /*!
  * initialize camera
  */
--(void)initCamera:(AVCaptureDevice *)cameraDevice{
+-(void)initCamera{
 #if TARGET_IPHONE_SIMULATOR
     return;
 #endif
+    if(cameraDeviceType_ == AVFoundationCameraDeviceTypeBack){
+        device_ = self.backCameraDevice;
+    }else{
+        device_ = self.frontFacingCameraDevice;
+    }
+    
     session_ = [[AVCaptureSession alloc] init];
-    device_ = cameraDevice;
     [session_ beginConfiguration];
     session_.sessionPreset = AVCaptureSessionPresetPhoto;
     
@@ -163,13 +169,23 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
     movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
     
-    //setup image
+    //setup image with still image output
+    stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
+    [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                     AVVideoCodecJPEG, AVVideoCodecKey,
+                                     nil]];
+    for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+    }
+    
+    //setup image with video data output
     videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
     [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
     [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
     dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
     [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
     dispatch_release(queue);
+    
     for (AVCaptureConnection* connection in videoDataOutput_.connections) {
         connection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
@@ -181,11 +197,14 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         [session_ canAddOutput:movieFileOutput_]){
         [session_ addOutput:movieFileOutput_];
     }
-    if (mode_ == AVFoundationCameraModePhoto && 
-        [session_ canAddOutput:videoDataOutput_]){
-        [session_ addOutput:videoDataOutput_];
-        
-
+    if (mode_ == AVFoundationCameraModePhoto){
+        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard &&
+           [session_ canAddOutput:stillImageOutput_]){
+            [session_ addOutput:stillImageOutput_];
+        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture &&
+                 [session_ canAddOutput:videoDataOutput_]){
+            [session_ addOutput:videoDataOutput_];
+        }
     }
     
     //setup preview
@@ -460,10 +479,10 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void)handleCameraDeviceButtonTapped:(UIButton *)sender{
     if(device_.position == AVCaptureDevicePositionBack){
         cameraDeviceType_ = AVFoundationCameraDeviceTypeFront;
-        [self initCamera:self.frontFacingCameraDevice];
+        [self initCamera];
     }else{
         cameraDeviceType_ = AVFoundationCameraDeviceTypeBack;
-        [self initCamera:self.backCameraDevice];
+        [self initCamera];
     }
     [self updateCameraControls];
 }
@@ -718,9 +737,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize freezeAfterShutter = freezeAfterShutter_;
 @synthesize freezeInterval;
 @synthesize mode = mode_;
+@synthesize cameraDevicetype = cameraDeviceType_;
+@synthesize stillCameraMethod = stillCameraMethod_;
 @synthesize isRecordingVideo;
 @synthesize photoPreset = photoPreset_;
 @synthesize videoPreset = videoPreset_;
+@synthesize soundVolume = soundVolume_;
 
 #pragma mark -
 #pragma mark public implementation
@@ -750,7 +772,43 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     if(session_.isRunning == NO){
         return;
     }
-    isVideoFrameCapturing_ = YES;
+    if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+        AVCaptureConnection *videoConnection = nil;
+        for (AVCaptureConnection *connection in stillImageOutput_.connections)
+        {
+            for (AVCaptureInputPort *port in [connection inputPorts])
+            {
+                if ([[port mediaType] isEqual:AVMediaTypeVideo] )
+                {
+                    videoConnection = connection;
+                    break;
+                }
+            }
+            if (videoConnection) { break; }
+        }
+        [stillImageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
+         {
+             if(freezeAfterShutter_){
+                 [self freezeCaptureForInterval:self.freezeInterval];
+             }
+             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+             
+             UIImage *image = nil;
+             if(scale_ != 1.0){
+                 imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
+             }
+             if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
+                 image = [[UIImage alloc] initWithData:imageData];
+                 [self.delegate cameraController:self didFinishPickingImage:image];
+             }
+             
+             if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:)]){
+                 [self.delegate cameraController:self didFinishPickingImageData:imageData];
+             }
+         }];
+    }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+        isVideoFrameCapturing_ = YES;
+    }
 }
 
 /*!
@@ -887,9 +945,14 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     mode_ = mode;
     [session_ beginConfiguration];
     [session_ removeOutput:videoDataOutput_];
+    [session_ removeOutput:stillImageOutput_];
     [session_ removeOutput:movieFileOutput_];
     if(mode_ == AVFoundationCameraModePhoto){
-        [session_ addOutput:videoDataOutput_];
+        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+            [session_ addOutput:stillImageOutput_];            
+        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+            [session_ addOutput:videoDataOutput_];
+        }
     }else{
         [session_ addOutput:movieFileOutput_];
     }
@@ -897,6 +960,29 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [self applyPreset];
     [self updateCameraControls];
 }
+
+/*!
+ * set still capture mode
+ */
+- (void)setStillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod{
+    if(stillCameraMethod_ == stillCameraMethod){
+        return;
+    }
+    if(mode_ != AVFoundationCameraModePhoto){
+        return;
+    }
+    stillCameraMethod_ = stillCameraMethod;
+    [session_ beginConfiguration];
+    [session_ removeOutput:videoDataOutput_];
+    [session_ removeOutput:stillImageOutput_];
+    if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+        [session_ addOutput:stillImageOutput_];            
+    }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+        [session_ addOutput:videoDataOutput_];
+    }    
+    [session_ commitConfiguration];
+}
+
 /*!
  * apply preset
  */
@@ -1029,6 +1115,15 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
  */
 - (BOOL)backCameraAvailable{
     return self.backCameraDevice != nil;
+}
+
+/*!
+ * set volume
+ */
+- (void)setSoundVolume:(CGFloat)soundVolume{
+    soundVolume_ = soundVolume;
+    [shutterSoundPlayer_ setVolume:soundVolume];
+    [videoBeepSoundPlayer_ setVolume:soundVolume];
 }
 
 #pragma mark -

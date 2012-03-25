@@ -49,6 +49,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) updateCameraIconImageView;
 - (void) cleanupVideoMode;
 - (BOOL) isVideoCameraAvailable;
+- (void) applyCameraConfiguration;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -417,10 +418,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
-        
-        imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
-        imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
-        imagePicker_.mode = AVFoundationCameraModePhoto;
+        [self applyCameraConfiguration];
     }
     [self updateCameraController];
 }
@@ -492,6 +490,24 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     isAlreadyExamined = YES;
     return result;
+}
+
+/*!
+ * apply camera configuration
+ */
+- (void)applyCameraConfiguration{
+    imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
+    imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
+    imagePicker_.mode = AVFoundationCameraModePhoto;
+    
+    if([TottepostSettings sharedInstance].useSilentMode){
+        imagePicker_.stillCameraMethod = AVFoundationStillCameraMethodVideoCapture;
+    }else{
+        imagePicker_.stillCameraMethod = AVFoundationStillCameraMethodStandard;
+    }
+    if([TottepostSettings sharedInstance].useSilentMode){
+        imagePicker_.soundVolume = [TottepostSettings sharedInstance].shutterSoundVolume;
+    }
 }
 @end
 
@@ -695,10 +711,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [self updateIndicatorCoordinate];
     settingViewPresented_ = NO;
     
-    imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
-    imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
-    [imagePicker_ applyPreset];
-    
+    [self applyCameraConfiguration];    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
     }

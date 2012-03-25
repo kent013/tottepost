@@ -17,6 +17,11 @@ typedef enum {
 } AVFoundationCameraMode;
 
 typedef enum {
+    AVFoundationStillCameraMethodStandard,
+    AVFoundationStillCameraMethodVideoCapture
+} AVFoundationStillCameraMethod;
+
+typedef enum {
     AVFoundationCameraDeviceTypeFront = 0,
     AVFoundationCameraDeviceTypeBack = 1
 } AVFoundationCameraDeviceType;
@@ -32,6 +37,7 @@ typedef enum {
     __strong AVCaptureDeviceInput *videoInput_;
     __strong AVCaptureVideoPreviewLayer *previewLayer_;
     __strong AVCaptureMovieFileOutput *movieFileOutput_;
+    __strong AVCaptureStillImageOutput *stillImageOutput_;
     __strong CALayer *indicatorLayer_;
     __strong UIButton *shutterButton_;
     __strong FlashButton *flashModeButton_;
@@ -58,6 +64,7 @@ typedef enum {
     
     AVFoundationCameraMode mode_;
     AVFoundationCameraDeviceType cameraDeviceType_;
+    AVFoundationStillCameraMethod stillCameraMethod_;
     
     CGPoint pointOfInterest_;
     CGRect defaultBounds_;
@@ -74,6 +81,7 @@ typedef enum {
     AVAudioPlayer *shutterSoundPlayer_;
     AVAudioPlayer *videoBeepSoundPlayer_;
     NSMutableArray *imageDataStack_;
+    CGFloat soundVolume_;
     
     BOOL isVideoFrameCapturing_;
 }
@@ -87,7 +95,10 @@ typedef enum {
 @property(nonatomic, assign) BOOL showsVideoElapsedTimeLabel;
 @property(nonatomic, assign) BOOL useTapToFocus;
 @property(nonatomic, assign) BOOL freezeAfterShutter;
+@property(nonatomic, assign) CGFloat soundVolume;
 @property(nonatomic, assign) AVFoundationCameraMode mode;
+@property(nonatomic, assign) AVFoundationCameraDeviceType cameraDevicetype;
+@property(nonatomic, assign) AVFoundationStillCameraMethod stillCameraMethod;
 @property(nonatomic, assign) NSTimeInterval freezeInterval;
 @property(nonatomic, readonly) BOOL hasMultipleCameraDevices;
 @property(nonatomic, readonly) AVCaptureDevice *backCameraDevice;

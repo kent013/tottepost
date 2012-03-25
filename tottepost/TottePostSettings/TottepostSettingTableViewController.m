@@ -11,8 +11,16 @@
 #import "PhotoSubmitterSettings.h"
 #import "PhotoSubmitterSettingTableViewProtocol.h"
 #import "MAConfirmButton.h"
+#import "TottepostSettings.h"
 
 #define SV_SECTION_GENERAL  0
+#define SV_GENERAL_ROW_PHOTO_PRESET SV_GENERAL_COUNT
+#define SV_GENERAL_ROW_VIDEO_PRESET SV_GENERAL_COUNT + 1
+#define SV_GENERAL_ROW_SILENT_MODE SV_GENERAL_COUNT + 2
+#define SV_GENERAL_ROW_SHUTTER_VOLUME SV_GENERAL_COUNT + 3
+#define SV_GENERAL_ROW_ABOUT SV_GENERAL_COUNT + 4
+#define SV_GENERAL_COUNT_TOTTEPOST SV_GENERAL_COUNT + 5
+
 static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
 //-----------------------------------------------------------------------------
@@ -20,6 +28,8 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 //-----------------------------------------------------------------------------
 @interface TottepostSettingTableViewController(PrivateImplementation)
 - (void) handleProButtonTapped:(id)sender;
+- (void) handleUseSlientModeSwitchChanged:(UISwitch *)sender;
+- (void) handleShutterVolumeChanged:(UISlider *)sender;
 @end
 
 #pragma mark -
@@ -35,13 +45,47 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     NSURL *url = [NSURL URLWithString:stringURL];
     [[UIApplication sharedApplication] openURL:url]; 
 }
+
+/*!
+ * on silent mode switch changed
+ */
+- (void) handleUseSlientModeSwitchChanged:(UISwitch *)sender{
+    if(sender.on){
+        UIAlertView *alert =
+        [[UIAlertView alloc] initWithTitle:
+         [TTLang localized:@"Silent_Mode_Alert_Title"] 
+                                   message:
+         [TTLang localized:@"Silent_Mode_Alert_Message"]
+                                  delegate:self 
+                         cancelButtonTitle:
+         [TTLang localized:@"Silent_Mode_Alert_Cancel_Button_Title"]
+                         otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    [TottepostSettings sharedInstance].useSilentMode = sender.on;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:SV_GENERAL_ROW_SHUTTER_VOLUME inSection:SV_SECTION_GENERAL]] withRowAnimation:NO];
+}
+
+/*!
+ * on shutter volume value changed
+ */
+- (void)handleShutterVolumeChanged:(UISlider *)sender{
+    if(sender.value < 0.1){
+        sender.value = 0.1;
+    }
+    [TottepostSettings sharedInstance].shutterSoundVolume = sender.value;
+}
+ 
+
+#pragma mark - UITableViewDelegate
 /*!
  * get row number
  */
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case SV_SECTION_GENERAL: return SV_GENERAL_COUNT + 3;
+        case SV_SECTION_GENERAL: return SV_GENERAL_COUNT_TOTTEPOST;
         default:return [super tableView:table numberOfRowsInSection:section];
     }
     return 0;
@@ -64,19 +108,22 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  */
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == SV_SECTION_GENERAL){
-        if(indexPath.row == SV_GENERAL_COUNT){
+        if(indexPath.row == SV_GENERAL_ROW_PHOTO_PRESET){
 #ifndef LITE_VERSION
             presetSettingViewController_.type = AVFoundationPresetTypePhoto;
             presetSettingViewController_.title = [TTLang localized:@"Settings_Title_PhotoPreset"];
             [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
 #endif
-        }else if(indexPath.row == SV_GENERAL_COUNT + 1){
+        }else if(indexPath.row == SV_GENERAL_ROW_VIDEO_PRESET){
 #ifndef LITE_VERSION
             presetSettingViewController_.type = AVFoundationPresetTypeVideo;
             presetSettingViewController_.title = [TTLang localized:@"Settings_Title_VideoPreset"];
             [self.navigationController pushViewController:presetSettingViewController_ animated:YES];
 #endif
-        }else if(indexPath.row == SV_GENERAL_COUNT + 2){
+        }else if(indexPath.row == SV_GENERAL_ROW_SILENT_MODE){
+        }else if(indexPath.row == SV_GENERAL_ROW_SHUTTER_VOLUME){
+            
+        }else if(indexPath.row == SV_GENERAL_ROW_ABOUT){
             [self.navigationController pushViewController:aboutSettingViewController_ animated:YES];
         }
     }else{
@@ -112,7 +159,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  */
 - (UITableViewCell *)createGeneralSettingCell:(int)tag{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    if(tag == SV_GENERAL_COUNT){
+    if(tag == SV_GENERAL_ROW_PHOTO_PRESET){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
@@ -123,7 +170,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 #endif
 
-    }else if(tag == SV_GENERAL_COUNT + 1){
+    }else if(tag == SV_GENERAL_ROW_VIDEO_PRESET){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
@@ -133,7 +180,31 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 #else
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 #endif
-    }else if(tag == SV_GENERAL_COUNT + 2){
+    }else if(tag == SV_GENERAL_ROW_SILENT_MODE){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_Silent"];
+#ifdef LITE_VERSION
+        MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
+        [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = proButton;
+        cell.textLabel.textColor = [UIColor grayColor];
+#else
+        UISwitch *s = [[UISwitch alloc] init];
+        s.on = [TottepostSettings sharedInstance].useSilentMode;
+        s.tag = tag;
+        [s addTarget:self action:@selector(handleUseSlientModeSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = s;
+#endif
+    }else if(tag == SV_GENERAL_ROW_SHUTTER_VOLUME){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_Shutter_Volume"];
+        UISlider *slider = [[UISlider alloc] init];
+        [slider addTarget:self action:@selector(handleShutterVolumeChanged:) forControlEvents:UIControlEventValueChanged];
+        slider.value = [TottepostSettings sharedInstance].shutterSoundVolume;
+        if([TottepostSettings sharedInstance].useSilentMode == NO){
+            slider.enabled = NO;
+            cell.textLabel.textColor = [UIColor grayColor];
+        }
+        cell.accessoryView = slider;
+    }else if(tag == SV_GENERAL_ROW_ABOUT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
     }else{
         return [super createGeneralSettingCell:tag];

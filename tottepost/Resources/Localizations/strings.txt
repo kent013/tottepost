@@ -47,6 +47,26 @@
         tags = common
         en = Video Resolution
         ja = ビデオ画質
+    [Settings_Row_Silent]
+        tags = common
+        en = Silent Mode
+        ja = 静音モード
+    [Silent_Mode_Alert_Title]
+        tags = common
+        en = What's this.
+        ja = 注意
+    [Silent_Mode_Alert_Message]
+        tags = common
+        en = This feature is usable only in Japan, people living outside Japan not needed since you can mute shutter sound. So please turn off it.
+        ja = 静音モードにしてもある程度の音は出ます。また静音モードではカメラメタデータが一切埋め込まれません。
+    [Silent_Mode_Alert_Cancel_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
+    [Settings_Row_Shutter_Volume]
+        tags = common
+        en = Shutter Volume
+        ja = シャッター音量
     [Settings_Title_PhotoPreset]
         tags = common
         en = Photo Resolution

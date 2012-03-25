@@ -21,13 +21,15 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
 
 #define TP_KEY_PHOTO_PRESET @"TottepostPhotoPreset"
 #define TP_KEY_VIDEO_PRESET @"TottepostVideoPreset"
+#define TP_KEY_USE_SILENT_MODE @"TottepostUseSilentMode"
+#define TP_KEY_SHUTTER_SOUND_VOLUME @"TottepostShutterSoundVolume"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface TottepostSettings(PrivateImplementation)
 - (void) writeSetting:(NSString *)key value:(id)value;
-- (id)readSetting:(NSString *)key;
+- (id) readSetting:(NSString *)key;
 @end
 
 @implementation TottepostSettings(PrivateImplementation)
@@ -107,10 +109,54 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
 }
 
 /*!
- * set photo preset
+ * set video preset
  */
 - (void)setVideoPreset:(AVFoundationPreset *)videoPreset{
     [self writeSetting:TP_KEY_VIDEO_PRESET value:videoPreset];
+}
+
+/*!
+ * get use silint mode
+ */
+- (BOOL)useSilentMode{
+    id retval = [self readSetting:TP_KEY_USE_SILENT_MODE];
+    if([retval isKindOfClass:[NSNumber class]]){
+        return [retval boolValue];
+    }
+    if(retval == nil){
+        return NO;
+    }
+    [self writeSetting:TP_KEY_USE_SILENT_MODE value:nil];
+    return NO;
+}
+
+/*!
+ * set use silint mode
+ */
+- (void)setUseSilentMode:(BOOL)useSilentMode{
+    [self writeSetting:TP_KEY_USE_SILENT_MODE value:[NSNumber numberWithBool:useSilentMode]];
+}
+
+/*!
+ * set shutter sound volume 
+ */
+- (CGFloat)shutterSoundVolume{
+    id retval = [self readSetting:TP_KEY_SHUTTER_SOUND_VOLUME];
+    if([retval isKindOfClass:[NSNumber class]]){
+        return [retval floatValue];
+    }
+    if(retval == nil){
+        return NO;
+    }
+    [self writeSetting:TP_KEY_SHUTTER_SOUND_VOLUME value:nil];
+    return 0.5;
+}
+
+/*!
+ * get shutter sound volume 
+ */
+- (void)setShutterSoundVolume:(CGFloat)shutterSoundVolume{
+    [self writeSetting:TP_KEY_SHUTTER_SOUND_VOLUME value:[NSNumber numberWithFloat:shutterSoundVolume]];
 }
 
 #pragma mark -
