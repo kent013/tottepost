@@ -28,7 +28,7 @@ typedef enum {
 
 @protocol AVFoundationCameraControllerDelegate;
 
-@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate, FlashButtonDelegate,UIAccelerometerDelegate>{
+@interface AVFoundationCameraController : UIViewController<UIGestureRecognizerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate, FlashButtonDelegate,UIAccelerometerDelegate, AVAudioSessionDelegate>{
     __strong AVCaptureDevice *device_;
     __strong AVCaptureSession *session_;
     __strong AVCaptureVideoDataOutput *videoDataOutput_;

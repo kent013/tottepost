@@ -116,18 +116,26 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     photoPreset_ = AVCaptureSessionPresetPhoto;
     videoPreset_ = AVCaptureSessionPresetMedium;
     
-    shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
-    videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
-    [shutterSoundPlayer_ prepareToPlay];
-    [videoBeepSoundPlayer_ prepareToPlay];
-    
     AudioSessionInitialize(NULL, NULL, NULL, NULL);  
+    NSError *audioError;
+    [[AVAudioSession sharedInstance] setDelegate:self];
+    [[AVAudioSession sharedInstance]
+     setCategory: AVAudioSessionCategoryPlayback
+     error: &audioError];
+    NSLog(@"%@", audioError.description);
     UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
     AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
     
     UInt32 mixWithOthers = 1;  
     AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
-    [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    [[AVAudioSession sharedInstance] setActive: YES error: &audioError];
+    NSLog(@"%@", audioError.description);
+    AudioSessionSetActive(YES);
+    
+    shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
+    videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
+    [shutterSoundPlayer_ prepareToPlay];
+    [videoBeepSoundPlayer_ prepareToPlay];
 }
 
 /*!
