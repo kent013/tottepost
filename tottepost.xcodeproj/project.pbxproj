@@ -35,6 +35,8 @@
 		37FB65C5149C53D000387490 /* FBRequest+UploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */; };
 		37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65CF149CB64A00387490 /* Twitter.framework */; };
 		37FB65D9149CDFBD00387490 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB65D8149CDFBC00387490 /* Accounts.framework */; };
+		7901886D151F3B590097B3B0 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901886C151F3B590097B3B0 /* UncaughtExceptionHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7901886F151F3BA50097B3B0 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901886C151F3B590097B3B0 /* UncaughtExceptionHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79019F5D1505BD06003DA0DC /* TottepostSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79019F5C1505BD06003DA0DC /* TottepostSettingTableViewController.m */; };
 		79019FFD1505DBC3003DA0DC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79019FE01505DBC3003DA0DC /* InfoPlist.strings */; };
 		79019FFE1505DBC3003DA0DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79019FE21505DBC3003DA0DC /* Localizable.strings */; };
@@ -1017,6 +1019,8 @@
 		37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBRequest+UploadProgress.m"; path = "Util/FBRequest+UploadProgress.m"; sourceTree = "<group>"; };
 		37FB65CF149CB64A00387490 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		37FB65D8149CDFBC00387490 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		7901886B151F3B590097B3B0 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		7901886C151F3B590097B3B0 /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		79019F5B1505BD06003DA0DC /* TottepostSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TottepostSettingTableViewController.h; path = TottePostSettings/TottepostSettingTableViewController.h; sourceTree = "<group>"; };
 		79019F5C1505BD06003DA0DC /* TottepostSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TottepostSettingTableViewController.m; path = TottePostSettings/TottepostSettingTableViewController.m; sourceTree = "<group>"; };
 		79019FE11505DBC3003DA0DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2457,11 +2461,22 @@
 				7948ADEF15001A0D004ABDAB /* HTTPRiot */,
 				EAADC3C414F2875B00BEA9C2 /* ScreenStatus */,
 				79E7054B15145AB4000C792B /* uidevice-extension */,
+				7901886A151F3B590097B3B0 /* UncaughtExceptionHandler */,
 				7948ACD7150019F5004ABDAB /* UserVoiceSDK */,
 				7948ADD615001A01004ABDAB /* YOAuth */,
 				793F4E0A150F75C40026CE62 /* YRDropdownView */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		7901886A151F3B590097B3B0 /* UncaughtExceptionHandler */ = {
+			isa = PBXGroup;
+			children = (
+				7901886B151F3B590097B3B0 /* UncaughtExceptionHandler.h */,
+				7901886C151F3B590097B3B0 /* UncaughtExceptionHandler.m */,
+			);
+			name = UncaughtExceptionHandler;
+			path = Libraries/UncaughtExceptionHandler;
 			sourceTree = "<group>";
 		};
 		79019FC71505DBC3003DA0DC /* Resources */ = {
@@ -5285,6 +5300,7 @@
 				7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 				792721DD151D897F00807529 /* MAConfirmButton.m in Sources */,
 				792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */,
+				7901886D151F3B590097B3B0 /* UncaughtExceptionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5613,6 +5629,7 @@
 				7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
 				792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */,
 				792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */,
+				7901886F151F3BA50097B3B0 /* UncaughtExceptionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

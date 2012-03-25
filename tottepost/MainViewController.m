@@ -305,6 +305,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         }
 #endif
     }
+    @throw [[NSException alloc] initWithName:@"some" reason:@"reason" userInfo:nil];
 }
 
 /*!

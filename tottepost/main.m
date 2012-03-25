@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
+#import "UncaughtExceptionHandler.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
+        InstallUncaughtExceptionHandler();
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
