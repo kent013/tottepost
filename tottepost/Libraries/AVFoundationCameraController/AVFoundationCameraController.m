@@ -116,26 +116,26 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     photoPreset_ = AVCaptureSessionPresetPhoto;
     videoPreset_ = AVCaptureSessionPresetMedium;
     
-    AudioSessionInitialize(NULL, NULL, NULL, NULL);  
-    NSError *audioError;
-    [[AVAudioSession sharedInstance] setDelegate:self];
-    [[AVAudioSession sharedInstance]
-     setCategory: AVAudioSessionCategoryPlayback
-     error: &audioError];
-    NSLog(@"%@", audioError.description);
-    UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
-    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
-    
-    UInt32 mixWithOthers = 1;  
-    AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
-    [[AVAudioSession sharedInstance] setActive: YES error: &audioError];
-    NSLog(@"%@", audioError.description);
-    AudioSessionSetActive(YES);
-    
-    shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
-    videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
-    [shutterSoundPlayer_ prepareToPlay];
-    [videoBeepSoundPlayer_ prepareToPlay];
+    if(TARGET_IPHONE_SIMULATOR == NO){
+        AudioSessionInitialize(NULL, NULL, NULL, NULL);  
+        NSError *audioError;
+        [[AVAudioSession sharedInstance] setDelegate:self];
+        [[AVAudioSession sharedInstance]
+         setCategory: AVAudioSessionCategoryPlayback
+         error: &audioError];
+        UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
+        AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
+        
+        UInt32 mixWithOthers = 1;  
+        AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
+        [[AVAudioSession sharedInstance] setActive: YES error: &audioError];
+        AudioSessionSetActive(YES);
+        
+        shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
+        videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
+        [shutterSoundPlayer_ prepareToPlay];
+        [videoBeepSoundPlayer_ prepareToPlay];
+    }
 }
 
 /*!
@@ -957,7 +957,10 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [session_ removeOutput:movieFileOutput_];
     if(mode_ == AVFoundationCameraModePhoto){
         if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-            [session_ addOutput:stillImageOutput_];            
+            [session_ addOutput:stillImageOutput_];
+            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                connection.videoOrientation = videoOrientation_;
+            }            
         }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
             [session_ addOutput:videoDataOutput_];
         }
@@ -984,7 +987,10 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [session_ removeOutput:videoDataOutput_];
     [session_ removeOutput:stillImageOutput_];
     if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-        [session_ addOutput:stillImageOutput_];            
+        [session_ addOutput:stillImageOutput_];
+        for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+            connection.videoOrientation = videoOrientation_;
+        }
     }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
         [session_ addOutput:videoDataOutput_];
     }    
@@ -1173,8 +1179,8 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
         return;
     }
     [session_ beginConfiguration];
-    for (AVCaptureConnection* connection in videoDataOutput_.connections) {
-        //connection.videoOrientation = videoOrientation_;
+    for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+        connection.videoOrientation = videoOrientation_;
     }
     [session_ commitConfiguration];
     
