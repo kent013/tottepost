@@ -145,10 +145,7 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
     if([retval isKindOfClass:[NSNumber class]]){
         return [retval floatValue];
     }
-    if(retval == nil){
-        return NO;
-    }
-    [self writeSetting:TP_KEY_SHUTTER_SOUND_VOLUME value:nil];
+    [self writeSetting:TP_KEY_SHUTTER_SOUND_VOLUME value:[NSNumber numberWithFloat:0.5]];
     return 0.5;
 }
 
