@@ -74,8 +74,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //free mode
 #ifdef LITE_VERSION
-    [PhotoSubmitterManager unregisterAllPhotoSubmitters];
-    [PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", @"mixi", nil]];    
+    //[PhotoSubmitterManager unregisterAllPhotoSubmitters];
+    //[PhotoSubmitterManager registerPhotoSubmitterWithTypeNames:[NSArray arrayWithObjects: @"facebook", @"twitter", @"dropbox", @"minus", @"file", @"mixi", nil]];    
 #endif
     
     //photo submitter setting
