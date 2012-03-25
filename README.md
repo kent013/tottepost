@@ -35,9 +35,14 @@ Feature List
  * Toggle comment / no comment
  * Toggle Geo location
  * Auto enhance image quality
+ * Selecting resolution of photo and video<sup>*1</sup>
+ * Silent Mode<sup>*1*2</sup>
  * Background upload, Automatic resume
- * Selecting uploading target album, Creating album 
+ * Selecting uploading target album
+ * Creating album<sup>*1</sup>
 
+*1 Not available in LITE mode
+*2 Because silent mode using AVFoundationVideoDataOutput, there are no metadata attached.
 
 PhotoSubmitter Library
 ------------------------------------

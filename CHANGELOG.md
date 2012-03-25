@@ -3,6 +3,22 @@ Change Log
 
 You can download each version of tottepost from [tags](https://github.com/kent013/tottepost/tags).
 
+version 1.2 (2012-03-25)
+------------------------------
+**tottepost updates**
+
+* Added video support.  
+  Dropbox/Minus/Facebook/Flickr are able to upload video.
+* Added video preview.
+* Added feature to select resolution of photo and video.
+* Added feature to freeze preview when take photo.
+* Added feature to indicate error.
+* Fixed bug in restart uploads.
+
+**PhotoSubmitter updates**
+
+* Added video support
+* Fixed bug in twitter account page did not appears on iOS5.1. #1
 
 version 1.1.1 (2012-03-11)
 ------------------------------
