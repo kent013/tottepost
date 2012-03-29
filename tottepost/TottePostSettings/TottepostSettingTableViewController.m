@@ -161,6 +161,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if(tag == SV_GENERAL_ROW_PHOTO_PRESET){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
+        cell.imageView.image = [UIImage imageNamed:@"photoResolution.png"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,6 +173,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
     }else if(tag == SV_GENERAL_ROW_VIDEO_PRESET){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_VideoPreset"];
+        cell.imageView.image = [UIImage imageNamed:@"movieResolution.png"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,6 +184,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 #endif
     }else if(tag == SV_GENERAL_ROW_SILENT_MODE){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_Silent"];
+        cell.imageView.image = [UIImage imageNamed:@"silentMode.png"];
 #ifdef LITE_VERSION
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -196,6 +199,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 #endif
     }else if(tag == SV_GENERAL_ROW_SHUTTER_VOLUME){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_Shutter_Volume"];
+        cell.imageView.image = [UIImage imageNamed:@"blank.png"];
         UISlider *slider = [[UISlider alloc] init];
         [slider addTarget:self action:@selector(handleShutterVolumeChanged:) forControlEvents:UIControlEventValueChanged];
         slider.value = [TottepostSettings sharedInstance].shutterSoundVolume;
@@ -206,6 +210,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
         cell.accessoryView = slider;
     }else if(tag == SV_GENERAL_ROW_ABOUT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
+        cell.imageView.image = [UIImage imageNamed:@"feedback.png"];
     }else{
         return [super createGeneralSettingCell:tag];
     }

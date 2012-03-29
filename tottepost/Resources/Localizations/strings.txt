@@ -38,7 +38,7 @@
     [Settings_Row_About]
         tags = common
         en = About / Feedback
-        ja = アプリについて / フィードバック
+        ja = アプリについて/フィードバック
     [Settings_Row_PhotoPreset]
         tags = common
         en = Photo Resolution
@@ -157,7 +157,7 @@
         ja = 作成
     [About_Feedback_Mail_Title]
         tags = common
-        en = Feedback via Mail
+        en = Mail
         ja = メール
     [About_Feedback_UserVoice_Button]
         tags = common
@@ -165,7 +165,7 @@
         ja = 開く
     [About_Feedback_UserVoice_Title]
         tags = common
-        en = Feedback via UserVoice
+        en = UserVoice
         ja = UserVoice（推奨）
     [About_Feedback_Rate_Button]
         tags = common

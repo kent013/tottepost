@@ -147,6 +147,7 @@
                     [feedbackButton addTarget:self action:@selector(handleMailFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = feedbackButton;
                     cell.textLabel.text = [TTLang localized:@"About_Feedback_Mail_Title"];
+                    cell.imageView.image = [UIImage imageNamed:@"mail.png"];
                     break;
                 }
                 case ASV_ROW_FEEDBACK_USERVOICE:{
@@ -155,6 +156,7 @@
                     [feedbackButton addTarget:self action:@selector(handleUserVoiceFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = feedbackButton;
                     cell.textLabel.text = [TTLang localized:@"About_Feedback_UserVoice_Title"];
+                    cell.imageView.image = [UIImage imageNamed:@"uservoice.png"];
                     break;
                 }
                 case ASV_ROW_FEEDBACK_RATE:{
@@ -163,6 +165,7 @@
                     [rateButton addTarget:self action:@selector(handleRateFeedbackButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     cell.accessoryView = rateButton;
                     cell.textLabel.text = [TTLang localized:@"About_Feedback_Rate_Title"];
+                    cell.imageView.image = [UIImage imageNamed:@"appStore.png"];
                     break;
                 }
             }
