@@ -1,4 +1,12 @@
 [[General]]
+    [Alert_Invalid_Camera]
+        tags = common
+        en = We couldn't initialize camera. Please restart your device to get work.
+        ja = カメラを初期化できませんでした。デバイスを再起動してください。
+    [Alert_Invalid_Camera_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
     [AppStore_Url_Pro]
         tags = common
         en = http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8
