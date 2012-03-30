@@ -548,6 +548,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 }
 
 /*!
+ * application will resign active{
+ */
+- (void)applicationWillResignActivate{
+}
+
+/*!
  * determin refresh needed
  */
 - (void)determinRefreshCameraNeeded{

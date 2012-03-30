@@ -57,6 +57,7 @@
 
 - (id) initWithFrame:(CGRect)frame;
 - (void) applicationDidBecomeActive;
+- (void) applicationWillResignActivate;
 - (void) determinRefreshCameraNeeded;
 @end
 

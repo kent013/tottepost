@@ -49,6 +49,7 @@
  */
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    [self.mainViewController applicationWillResignActivate];
     UIApplication* app = [UIApplication sharedApplication];
     [self.mainViewController determinRefreshCameraNeeded];
     NSAssert(backgroundTaskIdentifer == UIBackgroundTaskInvalid, nil);
@@ -100,6 +101,7 @@
  * When the application terminate
  */
 - (void)applicationWillTerminate:(UIApplication *)application{
+    NSLog(@"term");
     [[PhotoSubmitterManager sharedInstance] suspend];
 }
 

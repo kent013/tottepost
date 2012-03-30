@@ -53,13 +53,33 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void) playVideoBeepSound;
 - (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 - (int) getImageRotationAngle;
+
+- (void) applicationWillResignActive;
+- (void) applicationDidEnterBackground;
+- (void) applicationDidBecomeActive;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
 /*!
  * initialize view
  */
--(void)setupInitialState:(CGRect)frame{
+-(void)setupInitialState:(CGRect)frame{    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationWillResignActive)
+     name:UIApplicationWillResignActiveNotification 
+     object:NULL];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidBecomeActive)
+     name:UIApplicationDidBecomeActiveNotification 
+     object:NULL];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidEnterBackground)
+     name:UIApplicationDidEnterBackgroundNotification 
+     object:NULL];
+
     self.view.frame = frame;
     self.view.backgroundColor = [UIColor clearColor];
     pointOfInterest_ = CGPointMake(frame.size.width / 2, frame.size.height / 2);
@@ -164,6 +184,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     session_ = [[AVCaptureSession alloc] init];
     [session_ beginConfiguration];
     session_.sessionPreset = AVCaptureSessionPresetPhoto;
+
     
     [self autofocus];
     
@@ -223,7 +244,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [self.view.layer addSublayer:previewLayer_];
     [session_ commitConfiguration];
     
-    [session_ startRunning];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [session_ startRunning];
+    });
     
     // add layer
     indicatorLayer_ = [CALayer layer];
@@ -659,7 +682,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * hide freeze photo view
  */
 - (void)unfreezeCapture{
-    [session_ startRunning];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [session_ startRunning];
+    });
 }
 
 /*!
@@ -727,6 +752,42 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     /* CVBufferRelease(imageBuffer); */  // do not call this!
     
     return newImage;
+}
+
+/*!
+ * application will resign active
+ */
+- (void)applicationWillResignActive{
+    if([self isRecordingVideo]){
+        backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (backgroundRecordingId_ != UIBackgroundTaskInvalid) {
+                    [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
+                    backgroundRecordingId_ = UIBackgroundTaskInvalid;
+                }
+            });
+        }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self stopRecordingVideo];
+            while(backgroundRecordingId_ != UIBackgroundTaskInvalid){
+                [NSThread sleepForTimeInterval:1];
+            }
+        });
+    }
+}
+
+/*!
+ * application did enter background
+ */
+- (void)applicationDidEnterBackground{
+}
+
+/*!
+ * application did become active
+ */
+- (void)applicationDidBecomeActive{
+    [self restartSession];
 }
 @end
 
@@ -827,9 +888,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [session_ beginConfiguration];
     [session_ addInput:audioInput_];
     [session_ commitConfiguration];
-    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-        backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
-    }
+    //if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+    //    backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
+    //}
     AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[movieFileOutput_ connections]];
     if ([videoConnection isVideoOrientationSupported]){
         [videoConnection setVideoOrientation:videoOrientation_];
@@ -884,10 +945,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * stop recording video
  */
 - (void)stopRecordingVideo{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self playVideoBeepSound];
+        [videoElapsedTimer_ invalidate];
+        videoElapsedTimeLabel_.text = @"";
+    });
     [movieFileOutput_ stopRecording];
-    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-        [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
-    }
 }
 
 /*!
@@ -902,7 +965,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * restart session
  */
 - (void)restartSession{
-    [session_ startRunning];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [session_ startRunning];
+    });
 }
 
 /*!
@@ -916,7 +981,7 @@ didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
     [videoElapsedTimer_ fire];
     if([self.delegate respondsToSelector:@selector(cameraControllerDidStartRecordingVideo:)]){
         [self.delegate cameraControllerDidStartRecordingVideo:self];
-    }
+    }    
 }
 
 /*!
@@ -927,18 +992,22 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
-    [session_ beginConfiguration];
-    [session_ removeInput:audioInput_];
-    [session_ commitConfiguration];
-    [self playVideoBeepSound];
-    [videoElapsedTimer_ invalidate];
-    videoElapsedTimeLabel_.text = @"";
     if(error){
         NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
-    }
+    }  
     
     if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:length:error:)]){
         [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [session_ beginConfiguration];
+        [session_ removeInput:audioInput_];
+        [session_ commitConfiguration];
+    });
+
+    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+        [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
+        backgroundRecordingId_ = UIBackgroundTaskInvalid;
     }
 }   
 
