@@ -278,7 +278,7 @@
 - (void)applicationWillResignActive{
     isApplicationActive_ = NO;
     if(content_.isVideo){
-        [moviePlayerView_.moviePlayer pause];
+        [moviePlayerView_.moviePlayer stop];
     }
 }
 
@@ -288,7 +288,7 @@
 - (void)applicationDidEnterBackground{
     isApplicationActive_ = NO;
     if(content_.isVideo){
-        [moviePlayerView_.moviePlayer pause];
+        [moviePlayerView_.moviePlayer stop];
     }
 }
 
@@ -367,18 +367,12 @@
         PhotoSubmitterVideoEntity *video = (PhotoSubmitterVideoEntity *)content;
         moviePlayerView_ = [[MPMoviePlayerViewController alloc] initWithContentURL:video.url];
         moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleNone;
-        //moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
         moviePlayerView_.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
-        //[moviePlayerView_.moviePlayer setFullscreen:YES];
-        //moviePlayerView_.view.frame = frame;
+        moviePlayerView_.moviePlayer.shouldAutoplay = isApplicationActive_;
         [self addSubview:moviePlayerView_.view];
-        if(isApplicationActive_){
-            [moviePlayerView_.moviePlayer play];
-        }else{
-            [moviePlayerView_.moviePlayer pause];
-        }
+        [moviePlayerView_.moviePlayer stop];
         CGRect frame = moviePlayerView_.view.frame;
-        frame.origin.y = -40;
+        frame.origin.y = -30;
         moviePlayerView_.view.frame = frame;
         [self addSubview:movieOverlayView_];
         
@@ -397,6 +391,7 @@
     [movieTimer_ invalidate];
     [moviePlayerView_.moviePlayer stop];
     [moviePlayerView_.view removeFromSuperview];
+    moviePlayerView_ = nil;
     [self removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];

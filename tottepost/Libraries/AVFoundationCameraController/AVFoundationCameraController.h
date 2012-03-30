@@ -12,6 +12,8 @@
 #import "FlashButton.h"
 
 typedef enum {
+    AVFoundationCameraModeNotInitialized = -2,
+    AVFoundationCameraModeInvalid = -1,
     AVFoundationCameraModePhoto = 0,
     AVFoundationCameraModeVideo
 } AVFoundationCameraMode;
@@ -81,6 +83,7 @@ typedef enum {
     UIDeviceOrientation viewOrientation_;
     UIDeviceOrientation deviceOrientation_;
     UIBackgroundTaskIdentifier backgroundRecordingId_;
+    UIBackgroundTaskIdentifier backgroundVideoSavingId_;
     
     AVAudioPlayer *shutterSoundPlayer_;
     AVAudioPlayer *videoBeepSoundPlayer_;

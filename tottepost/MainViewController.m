@@ -174,6 +174,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on setting button tapped, open setting view
  */
 - (void) didSettingButtonTapped:(id)sender{
+    if(imagePicker_.isRecordingVideo){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Info"] message:[TTLang localized:@"Alert_Open_Setting"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Open_Setting_Button_Title"] otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     [UIApplication sharedApplication].statusBarHidden = NO;
     [self presentModalViewController:settingNavigationController_ animated:YES];
     settingViewPresented_ = YES;
@@ -611,8 +616,12 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error{
     [self cleanupVideoMode];
-    if(error && error.code != -11818 && error.code != -12894){
-        if(error.code == -11803){
+    if(error && error.code != -11818){
+        if(error.code == -12894){
+            NSLog(@"%@", error.description);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_Lost_Video"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Lost_Video_Title"] otherButtonTitles:nil];
+            [alert show];            
+        }else if(error.code == -11803 || error.code == -12780){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_Invalid_Camera"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Invalid_Camera_Button_Title"] otherButtonTitles:nil];
             [alert show];
         }

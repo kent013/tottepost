@@ -7,6 +7,30 @@
         tags = common
         en = OK
         ja = OK
+    [Alert_Invalid_Camera_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
+    [Alert_Info]
+        tags = common
+        en = Info
+        ja = Info
+    [Alert_Open_Setting]
+        tags = common
+        en = You can't open setting while recording video.
+        ja = ビデオの撮影中は設定を開けません。
+    [Alert_Open_Setting_Button_Title]
+        tags = common
+        en = OK
+        ja = OK
+    [Alert_Lost_Video]
+        tags = common
+        en = We are sorry that your video is lost. Because of iOS issue...
+        ja = 申し訳ありません。iOSの問題でビデオが失われました...
+    [Alert_Lost_Video_Title]
+        tags = common
+        en = OK
+        ja = OK
     [AppStore_Url_Pro]
         tags = common
         en = http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8
