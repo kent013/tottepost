@@ -29,6 +29,7 @@
     __strong PhotoSubmitterContentEntity *content_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
     BOOL isKeyboardPresented_;
+    BOOL isApplicationActive_;
     CGRect keyboardRect_;
     CGFloat lastMovieSliderValue_;
 }

@@ -64,6 +64,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * initialize view
  */
 -(void)setupInitialState:(CGRect)frame{    
+    isApplicationActive_ = YES;
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(applicationWillResignActive)
@@ -758,6 +759,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * application will resign active
  */
 - (void)applicationWillResignActive{
+    isApplicationActive_ = NO;
     if([self isRecordingVideo]){
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -770,8 +772,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self stopRecordingVideo];
-            while(backgroundRecordingId_ != UIBackgroundTaskInvalid){
+            while(backgroundRecordingId_ != UIBackgroundTaskInvalid ||
+                  isApplicationActive_){
                 [NSThread sleepForTimeInterval:1];
+            }
+            if(isApplicationActive_ == NO){
+                [session_ stopRunning];
             }
         });
     }
@@ -781,12 +787,18 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * application did enter background
  */
 - (void)applicationDidEnterBackground{
+    isApplicationActive_ = NO;
 }
 
 /*!
  * application did become active
  */
 - (void)applicationDidBecomeActive{
+    [self stopRecordingVideo];
+    if(backgroundRecordingId_ != UIBackgroundTaskInvalid){
+        backgroundRecordingId_ = UIBackgroundTaskInvalid;
+    }
+    isApplicationActive_ = YES;
     [self restartSession];
 }
 @end
@@ -897,6 +909,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     
     NSURL *url = [self tempVideoURL];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager removeItemAtURL:url error:nil];
+    currentVideoURL_ = url;
     [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
 }
 
@@ -946,11 +961,13 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  */
 - (void)stopRecordingVideo{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self playVideoBeepSound];
         [videoElapsedTimer_ invalidate];
         videoElapsedTimeLabel_.text = @"";
     });
-    [movieFileOutput_ stopRecording];
+    if(self.isRecordingVideo){
+        [self playVideoBeepSound];
+        [movieFileOutput_ stopRecording];
+    }
 }
 
 /*!
@@ -993,13 +1010,15 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                               error:(NSError *)error
 {
     if(error){
-        NSLog(@"%s, %@", __PRETTY_FUNCTION__, error.description);
+        NSLog(@"%s, %@, %@", __PRETTY_FUNCTION__, anOutputFileURL, error.description);
     }  
     
-    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:length:error:)]){
-        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL length:videoElapsedTimer_.timeInterval error:error];
+    if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:error:)]){
+        currentVideoURL_ = nil;
+        [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL error:error];
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //dispatch_async(dispatch_get_main_queue(), ^{
         [session_ beginConfiguration];
         [session_ removeInput:audioInput_];
         [session_ commitConfiguration];
@@ -1007,7 +1026,9 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
 
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
-        backgroundRecordingId_ = UIBackgroundTaskInvalid;
+        @synchronized(self){
+            backgroundRecordingId_ = UIBackgroundTaskInvalid;
+        }
     }
 }   
 
@@ -1019,7 +1040,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     if(mode_ == mode){
         return;
     }
+    [UIView beginAnimations: @"TransitionAnimation" context:nil];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+                            forView:self.view
+                              cache:YES];
+    [UIView setAnimationDuration:1.0];
     mode_ = mode;
+    
     [session_ beginConfiguration];
     [session_ removeOutput:videoDataOutput_];
     [session_ removeOutput:stillImageOutput_];
@@ -1039,6 +1066,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [session_ commitConfiguration];
     [self applyPreset];
     [self updateCameraControls];
+    [UIView commitAnimations];
 }
 
 /*!

@@ -62,7 +62,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)handleTapGesture:(UITapGestureRecognizer *)recognizer{
     if(enabled_){
+        self.enabled = NO;
         [cameraModeSwitch_ setOn:!cameraModeSwitch_.on animated:YES ignoreControlEvents:NO];
+        [self performSelector:@selector(setEnabled:) withObject:[NSNumber numberWithBool:YES] afterDelay:5.0];
     }
 }
 @end

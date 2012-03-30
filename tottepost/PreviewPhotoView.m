@@ -25,10 +25,31 @@
 - (void) didMovieSliderTouchUp:(UISlider *)slider;
 - (void) didMovieSliderTouchDown:(UISlider *)slider;
 - (void) updateMovieTimeLabel;
+
+- (void) applicationWillResignActive;
+- (void) applicationDidEnterBackground;
+- (void) applicationDidBecomeActive;
 @end
 
 @implementation PreviewPhotoView(PrivateImplementation)
-- (void)setupInitialState:(CGRect)frame{
+- (void)setupInitialState:(CGRect)frame{    
+    isApplicationActive_ = YES;
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationWillResignActive)
+     name:UIApplicationWillResignActiveNotification 
+     object:NULL];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidBecomeActive)
+     name:UIApplicationDidBecomeActiveNotification 
+     object:NULL];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidEnterBackground)
+     name:UIApplicationDidEnterBackgroundNotification 
+     object:NULL];
+
     imageView_ = [[UIImageView alloc] initWithFrame:CGRectZero];
     
     commentBackgroundView_ = [[UIView alloc] initWithFrame:CGRectZero];
@@ -249,6 +270,34 @@
     //[moviePlayerView_.moviePlayer endSeeking];
     [moviePlayerView_.moviePlayer play];    
 }
+
+
+/*!
+ * application will resign active
+ */
+- (void)applicationWillResignActive{
+    isApplicationActive_ = NO;
+    if(content_.isVideo){
+        [moviePlayerView_.moviePlayer pause];
+    }
+}
+
+/*!
+ * application did enter background
+ */
+- (void)applicationDidEnterBackground{
+    isApplicationActive_ = NO;
+    if(content_.isVideo){
+        [moviePlayerView_.moviePlayer pause];
+    }
+}
+
+/*!
+ * application did become active
+ */
+- (void)applicationDidBecomeActive{
+    isApplicationActive_ = YES;
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -323,7 +372,11 @@
         //[moviePlayerView_.moviePlayer setFullscreen:YES];
         //moviePlayerView_.view.frame = frame;
         [self addSubview:moviePlayerView_.view];
-        [moviePlayerView_.moviePlayer play];
+        if(isApplicationActive_){
+            [moviePlayerView_.moviePlayer play];
+        }else{
+            [moviePlayerView_.moviePlayer pause];
+        }
         CGRect frame = moviePlayerView_.view.frame;
         frame.origin.y = -40;
         moviePlayerView_.view.frame = frame;

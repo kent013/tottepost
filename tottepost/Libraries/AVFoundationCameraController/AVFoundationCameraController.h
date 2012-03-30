@@ -49,6 +49,10 @@ typedef enum {
     
     __strong NSString *photoPreset_;
     __strong NSString *videoPreset_;
+    
+    __strong NSURL *currentVideoURL_;
+    
+    BOOL isApplicationActive_;
 
     BOOL adjustingExposure_;
     BOOL showsCameraControls_;
@@ -129,7 +133,7 @@ typedef enum {
  * capture video
  */
 -(void) cameraControllerDidStartRecordingVideo:(AVFoundationCameraController *) controller;
--(void) cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error;
+-(void) cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error;
 /*!
  * delegate raw data and metadata
  */

@@ -50,6 +50,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) cleanupVideoMode;
 - (BOOL) isVideoCameraAvailable;
 - (void) applyCameraConfiguration;
+- (void) enableCameraButton;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -289,13 +290,18 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [imagePicker_ takePicture];
 #endif
     }else{
+        if(cameraButton_.enabled == NO){
+            return;
+        }
+        cameraButton_.enabled = NO;
+        [self performSelector:@selector(enableCameraButton) withObject:nil afterDelay:3.0];
 #if TARGET_IPHONE_SIMULATOR
         if(videoButtonTimer_ == nil){
             [self cameraControllerDidStartRecordingVideo:nil];
         }else{            
             [self cleanupVideoMode];
             NSURL *url = [[NSBundle mainBundle] URLForResource:@"test_video" withExtension:@"mov"];
-            [self cameraController:nil didFinishRecordingVideoToOutputFileURL:url length:4.0 error:nil];
+            [self cameraController:nil didFinishRecordingVideoToOutputFileURL:url error:nil];
         }
 #else
         if(imagePicker_.isRecordingVideo){
@@ -306,6 +312,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 #endif
     }
     //@throw [[NSException alloc] initWithName:@"some" reason:@"reason" userInfo:nil];
+}
+
+- (void)enableCameraButton{
+    cameraButton_.enabled = YES;
 }
 
 /*!
@@ -420,6 +430,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
         [self applyCameraConfiguration];
+        [launchImageView_ removeFromSuperview];
     }
     [self updateCameraController];
 }
@@ -598,9 +609,13 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * video recording finished
  */
-- (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL length:(CGFloat)length error:(NSError *)error{
+- (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error{
     [self cleanupVideoMode];
-    if(error){
+    if(error && error.code != -11818 && error.code != -12894){
+        if(error.code == -11803){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_Invalid_Camera"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Invalid_Camera_Button_Title"] otherButtonTitles:nil];
+            [alert show];
+        }
         return;
     }
     PhotoSubmitterVideoEntity *video = [[PhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
