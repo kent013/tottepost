@@ -23,6 +23,8 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
 #define TP_KEY_VIDEO_PRESET @"TottepostVideoPreset"
 #define TP_KEY_USE_SILENT_MODE @"TottepostUseSilentMode"
 #define TP_KEY_SHUTTER_SOUND_VOLUME @"TottepostShutterSoundVolume"
+#define TP_KEY_USE_TOOLTIP @"TottepostUseToolTip"
+#define TP_KEY_TOOLTIP_HISTORY @"TottepostUseToolTipHistory"
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -116,7 +118,7 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
 }
 
 /*!
- * get use silint mode
+ * get use silent mode
  */
 - (BOOL)useSilentMode{
     id retval = [self readSetting:TP_KEY_USE_SILENT_MODE];
@@ -131,7 +133,7 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
 }
 
 /*!
- * set use silint mode
+ * set use silent mode
  */
 - (void)setUseSilentMode:(BOOL)useSilentMode{
     [self writeSetting:TP_KEY_USE_SILENT_MODE value:[NSNumber numberWithBool:useSilentMode]];
@@ -154,6 +156,48 @@ static TottepostSettings* TottepostSettingsSingletonInstance_;
  */
 - (void)setShutterSoundVolume:(CGFloat)shutterSoundVolume{
     [self writeSetting:TP_KEY_SHUTTER_SOUND_VOLUME value:[NSNumber numberWithFloat:shutterSoundVolume]];
+}
+
+
+/*!
+ * get use tooltip (default:yes)
+ */
+- (BOOL)useTooltip{
+    id retval = [self readSetting:TP_KEY_USE_TOOLTIP];
+    if([retval isKindOfClass:[NSNumber class]]){
+        return [retval boolValue];
+    }
+    [self writeSetting:TP_KEY_USE_TOOLTIP value:[NSNumber numberWithBool:YES]];
+    return YES;
+}
+
+/*!
+ * set use tooltip
+ */
+- (void)setUseTooltip:(BOOL)useTooltip{
+    if(useTooltip){
+        self.tooltipHistory = nil;
+    }
+    [self writeSetting:TP_KEY_USE_TOOLTIP value:[NSNumber numberWithBool:useTooltip]];
+}
+
+/*!
+ * get tooltip History
+ */
+- (NSDictionary *)tooltipHistory{
+    id retval = [self readSetting:TP_KEY_TOOLTIP_HISTORY];
+    if([retval isKindOfClass:[NSDictionary class]]){
+        return retval;
+    }
+    [self writeSetting:TP_KEY_TOOLTIP_HISTORY value:nil];
+    return nil;
+}
+
+/*!
+ * set tooltip History
+ */
+- (void)setTooltipHistory:(NSDictionary *)tooltipHistory{
+    [self writeSetting:TP_KEY_TOOLTIP_HISTORY value:tooltipHistory];
 }
 
 #pragma mark -

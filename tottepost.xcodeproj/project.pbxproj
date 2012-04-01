@@ -982,6 +982,14 @@
 		79B0DDC0151CE29700D90483 /* videoButtonActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA4151C77B10055D23F /* videoButtonActive.png */; };
 		79B0DDC1151CE29700D90483 /* videoButtonActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797EDEA5151C77B10055D23F /* videoButtonActive@2x.png */; };
 		79D0EADF14ECB58700CDEF76 /* AboutSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */; };
+		79D76F8115280D5A0051339E /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D76F8015280D5A0051339E /* CMPopTipView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79D76F8515280DC60051339E /* CMPopTipViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D76F8415280DC60051339E /* CMPopTipViewManager.m */; };
+		79D76F861528138A0051339E /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D76F8015280D5A0051339E /* CMPopTipView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		79D76F87152813900051339E /* CMPopTipViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D76F8415280DC60051339E /* CMPopTipViewManager.m */; };
+		79D76F8A1528247F0051339E /* tooltip.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D76F881528247F0051339E /* tooltip.png */; };
+		79D76F8B1528247F0051339E /* tooltip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D76F891528247F0051339E /* tooltip@2x.png */; };
+		79D76F8C152824890051339E /* tooltip.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D76F881528247F0051339E /* tooltip.png */; };
+		79D76F8D152824890051339E /* tooltip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D76F891528247F0051339E /* tooltip@2x.png */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
 		79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
@@ -2232,6 +2240,12 @@
 		79A7F9BD151DC78500984F07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		79D0EACE14ECB58700CDEF76 /* AboutSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutSettingViewController.h; path = TottePostSettings/AboutSettingViewController.h; sourceTree = "<group>"; };
 		79D0EACF14ECB58700CDEF76 /* AboutSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutSettingViewController.m; path = TottePostSettings/AboutSettingViewController.m; sourceTree = "<group>"; };
+		79D76F7F15280D5A0051339E /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
+		79D76F8015280D5A0051339E /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		79D76F8315280DC60051339E /* CMPopTipViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipViewManager.h; sourceTree = "<group>"; };
+		79D76F8415280DC60051339E /* CMPopTipViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipViewManager.m; sourceTree = "<group>"; };
+		79D76F881528247F0051339E /* tooltip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tooltip.png; sourceTree = "<group>"; };
+		79D76F891528247F0051339E /* tooltip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tooltip@2x.png"; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
 		79E7052715135C82000C792B /* CameraModeSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraModeSwitchView.h; sourceTree = "<group>"; };
@@ -2366,6 +2380,8 @@
 				797E395214B0377200F17AC4 /* SettingIndicatorView.h */,
 				797E395314B0377200F17AC4 /* SettingIndicatorView.m */,
 				7913BFD914FFCE20003EE902 /* UserVoiceAPIKey.h */,
+				79D76F8315280DC60051339E /* CMPopTipViewManager.h */,
+				79D76F8415280DC60051339E /* CMPopTipViewManager.m */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -2517,6 +2533,7 @@
 				79823CD214D2BCDE0094389D /* AAMFeedback */,
 				798B1B271503B98E003EFF54 /* appirater */,
 				7980588814C86CB7006E3817 /* AVFoundationCameraController */,
+				79D76F7E15280D5A0051339E /* CMPopTipView */,
 				793F52FE1510E0C00026CE62 /* DCRoundSwitch */,
 				376A8B3714A060B700637B68 /* FBProgressView */,
 				EAAC412014E9399400CDC2CC /* HPGrowingTextView */,
@@ -4348,6 +4365,8 @@
 				7964DD821515A7DE00FB7D2D /* setting@2x.png */,
 				79602397152478A70009A7C6 /* silentMode.png */,
 				79602398152478A70009A7C6 /* silentMode@2x.png */,
+				79D76F881528247F0051339E /* tooltip.png */,
+				79D76F891528247F0051339E /* tooltip@2x.png */,
 				7964DD831515A7DE00FB7D2D /* unhappyface.png */,
 				7964DD841515A7DE00FB7D2D /* unhappyface@2x.png */,
 				796023AF1524920E0009A7C6 /* uservoice.png */,
@@ -4614,6 +4633,16 @@
 			);
 			name = Sounds;
 			path = Libraries/AVFoundationCameraController/Sounds;
+			sourceTree = "<group>";
+		};
+		79D76F7E15280D5A0051339E /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				79D76F7F15280D5A0051339E /* CMPopTipView.h */,
+				79D76F8015280D5A0051339E /* CMPopTipView.m */,
+			);
+			name = CMPopTipView;
+			path = Libraries/CMPopTipView;
 			sourceTree = "<group>";
 		};
 		79D8073E14D0F78500064CB3 /* Images */ = {
@@ -4922,6 +4951,8 @@
 				796023B31524920E0009A7C6 /* uservoice@2x.png in Resources */,
 				796023B7152492260009A7C6 /* mail.png in Resources */,
 				796023B9152492260009A7C6 /* mail@2x.png in Resources */,
+				79D76F8A1528247F0051339E /* tooltip.png in Resources */,
+				79D76F8B1528247F0051339E /* tooltip@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5093,6 +5124,8 @@
 				796023B41524920E0009A7C6 /* uservoice@2x.png in Resources */,
 				796023B8152492260009A7C6 /* mail.png in Resources */,
 				796023BA152492260009A7C6 /* mail@2x.png in Resources */,
+				79D76F8C152824890051339E /* tooltip.png in Resources */,
+				79D76F8D152824890051339E /* tooltip@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5433,6 +5466,8 @@
 				792721DD151D897F00807529 /* MAConfirmButton.m in Sources */,
 				792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */,
 				7901886D151F3B590097B3B0 /* UncaughtExceptionHandler.m in Sources */,
+				79D76F8115280D5A0051339E /* CMPopTipView.m in Sources */,
+				79D76F8515280DC60051339E /* CMPopTipViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5762,6 +5797,8 @@
 				792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */,
 				792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */,
 				7901886F151F3BA50097B3B0 /* UncaughtExceptionHandler.m in Sources */,
+				79D76F861528138A0051339E /* CMPopTipView.m in Sources */,
+				79D76F87152813900051339E /* CMPopTipViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

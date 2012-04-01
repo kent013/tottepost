@@ -18,8 +18,9 @@
 #define SV_GENERAL_ROW_VIDEO_PRESET SV_GENERAL_COUNT + 1
 #define SV_GENERAL_ROW_SILENT_MODE SV_GENERAL_COUNT + 2
 #define SV_GENERAL_ROW_SHUTTER_VOLUME SV_GENERAL_COUNT + 3
-#define SV_GENERAL_ROW_ABOUT SV_GENERAL_COUNT + 4
-#define SV_GENERAL_COUNT_TOTTEPOST SV_GENERAL_COUNT + 5
+#define SV_GENERAL_ROW_TOOLTIP SV_GENERAL_COUNT + 4
+#define SV_GENERAL_ROW_ABOUT SV_GENERAL_COUNT + 5
+#define SV_GENERAL_COUNT_TOTTEPOST SV_GENERAL_COUNT + 6
 
 static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
@@ -30,6 +31,7 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 - (void) handleProButtonTapped:(id)sender;
 - (void) handleUseSlientModeSwitchChanged:(UISwitch *)sender;
 - (void) handleShutterVolumeChanged:(UISlider *)sender;
+- (void) handleUseTooltipSwitchChanged:(UISwitch *)sender;
 @end
 
 #pragma mark -
@@ -76,7 +78,13 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     }
     [TottepostSettings sharedInstance].shutterSoundVolume = sender.value;
 }
- 
+
+/*!
+ * on tooltip switch changed
+ */
+- (void) handleUseTooltipSwitchChanged:(UISwitch *)sender{
+    [TottepostSettings sharedInstance].useTooltip = sender.on;
+}
 
 #pragma mark - UITableViewDelegate
 /*!
@@ -208,6 +216,14 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
             cell.textLabel.textColor = [UIColor grayColor];
         }
         cell.accessoryView = slider;
+    }else if(tag == SV_GENERAL_ROW_TOOLTIP){
+        cell.textLabel.text = [TTLang localized:@"Settings_Row_Tooltip"];
+        cell.imageView.image = [UIImage imageNamed:@"tooltip.png"];
+        UISwitch *s = [[UISwitch alloc] init];
+        s.on = [TottepostSettings sharedInstance].useTooltip;
+        s.tag = tag;
+        [s addTarget:self action:@selector(handleUseTooltipSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = s;
     }else if(tag == SV_GENERAL_ROW_ABOUT){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_About"];
         cell.imageView.image = [UIImage imageNamed:@"feedback.png"];

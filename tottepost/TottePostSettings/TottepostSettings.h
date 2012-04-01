@@ -15,5 +15,7 @@
 @property (nonatomic, assign) AVFoundationPreset *videoPreset;
 @property (nonatomic, assign) BOOL useSilentMode;
 @property (nonatomic, assign) CGFloat shutterSoundVolume; 
+@property (nonatomic, assign) BOOL useTooltip;
+@property (nonatomic, assign) NSDictionary *tooltipHistory;
 + (TottepostSettings *)sharedInstance;
 @end

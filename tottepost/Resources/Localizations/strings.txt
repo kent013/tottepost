@@ -1,4 +1,28 @@
 [[General]]
+    [Tooltip_Dismiss]
+        tags = common, tooltip
+        en = Tap this popup to dismiss
+        ja = タップすると消えます
+    [Tooltip_Main_Video]
+        tags = common, tooltip
+        en = You are now video mode. Tap this button to start recording, second tap to end recording. *ATTENTION* Please be careful, if you turn off your device (also when automaticaly entered to power save mode) or switch app will end recording.
+        ja = 動画撮影モードになりました。このボタンをタップすると撮影が開始され、もう一回タップすると終了します。デバイスの電源ボタンを押したりアプリケーションが切り替わると撮影が終了しますのでご注意ください。
+    [Tooltip_Main_Setting]
+        tags = common, tooltip
+        en = This is setting button, you can configure GPS, resolution, services and so on.
+        ja = これは設定ボタンです。タップするとアップロードするサービスの設定や解像度などの設定ができます。
+    [Tooltip_Main_Comment]
+        tags = common, tooltip
+        en = This is comment toggle button, enable to show preview, disable to post immediately.
+        ja = これはコメントをオン/オフするボタンです。オンにするとプレビューが表示されコメントをつける事ができます。オフにすると撮った瞬間に投稿が開始されます。
+    [Tooltip_Main_CameraSwitch]
+        tags = common, tooltip
+        en = This is camera mode toggle switch, you can toggle photo mode and video mode.
+        ja = これはカメラモードを切り替えるボタンです。photoだと写真が、videoだと動画を撮影できます。
+    [Tooltip_Main_SummaryView]
+        tags = common, tooltip
+        en = This is upload summary view. If you want to cancel upload or resume upload, tap here.
+        ja = これはアップロードサマリです。アップロードをキャンセルしたり再開したりする場合はここをタップしてください。
     [Alert_Invalid_Camera]
         tags = common
         en = We couldn't initialize camera. Please restart your device to get work.
@@ -45,8 +69,8 @@
         ja = ようこそtottepostへ！
     [FirstAlert_Message]
         tags = common
-        en = Thank you for using this application.\n First, you tap icon of the gear wheel at the lower right.\nAnd choice service you want to upload to.
-        ja = このアプリをご使用していただき\nありがとうございます。\n右下の歯車のアイコンをタップして\n投稿するサービスを選んで下さい。
+        en = Thank you for using tottepost.\nFirst of all, please tap on gear wheel icon at the lower right corner. And then configure service you want to upload photos.
+        ja = tottepostを使っていただき、ありがとうございます。まずは、右下の歯車のアイコンをタップして投稿するサービスを選んで下さい。
     [FirstAlert_OK]
         tags = common
         en = OK
@@ -99,6 +123,10 @@
         tags = common
         en = Shutter Volume
         ja = シャッター音量
+    [Settings_Row_Tooltip]
+        tags = common
+        en = Help tip
+        ja = ヘルプ
     [Settings_Title_PhotoPreset]
         tags = common
         en = Photo Resolution

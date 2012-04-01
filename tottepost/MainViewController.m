@@ -23,6 +23,7 @@
 #import "YRDropdownView.h"
 #import "TottepostSettings.h"
 #import "LiteAlbumPhotoSubmitterSettingTableViewController.h"
+#import "CMPopTipViewManager.h"
 
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
@@ -51,6 +52,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (BOOL) isVideoCameraAvailable;
 - (void) applyCameraConfiguration;
 - (void) enableCameraButton;
+- (void) showTooltips;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -264,6 +266,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     cameraIconImageView_.transform = t;
     [UIView commitAnimations];
     
+    [self performSelector:@selector(showTooltips) withObject:nil afterDelay:2.0];
+    
 }
 
 /*!
@@ -350,6 +354,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if([self closePreview:NO]){
         [self postContent:previewImageView_.content];
     }
+    [[CMPopTipViewManager sharedInstance] markAsArchived:CMPopTipTargetMainCommentButton];
 }
 
 /*!
@@ -525,6 +530,17 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.soundVolume = [TottepostSettings sharedInstance].shutterSoundVolume;
     }
 }
+
+/*!
+ * show tooltips
+ */
+- (void)showTooltips{
+    [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainSettingButton message:[TTLang localized:@"Tooltip_Main_Setting"] atView:settingButton_ inView:nil animated:YES];
+    [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainCommentButton message:[TTLang localized:@"Tooltip_Main_Comment"] atView:commentButton_ inView:nil animated:YES];
+    if(self.isVideoCameraAvailable){
+        [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainCameraSwitch message:[TTLang localized:@"Tooltip_Main_CameraSwitch"] atView:cameraModeSwitchView_ inView:self.view animated:YES];
+    }
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -632,6 +648,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }else{
         [self postContent:video];        
     }
+    [[CMPopTipViewManager sharedInstance] markAsArchived:CMPopTipTargetMainVideoCamera];
 }
 
 #pragma mark -
@@ -646,6 +663,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     dispatch_async(dispatch_get_main_queue(), ^{
         [progressTableViewController_ addProgressWithType:photoSubmitter.type
                                                   forHash:imageHash];
+        [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainProgressSummary message:[TTLang localized:@"Tooltip_Main_SummaryView"] atView:progressSummaryView_ inView:self.view animated:YES];
     });
 }
 
@@ -744,6 +762,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:1.0];
     }
+    [[CMPopTipViewManager sharedInstance] markAsArchived:CMPopTipTargetMainSettingButton];
 }
 
 /*!
@@ -794,6 +813,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)cameraModeSwitchView:(CameraModeSwitchView *)cameraModeSwitchView didModeChangedTo:(AVFoundationCameraMode)mode{
     imagePicker_.mode = mode;
     [self updateCameraIconImageView];
+    [[CMPopTipViewManager sharedInstance] markAsArchived:CMPopTipTargetMainCameraSwitch];
+    if(mode == AVFoundationCameraModeVideo){
+        [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainVideoCamera message:[TTLang localized:@"Tooltip_Main_Video"] atView:cameraButton_ inView:nil animated:YES];
+    }
 }
 
 #pragma mark -
