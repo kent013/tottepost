@@ -515,7 +515,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void)applyCameraConfiguration{
     imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
     imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
-    imagePicker_.mode = AVFoundationCameraModePhoto;
     
     if([TottepostSettings sharedInstance].useSilentMode){
         imagePicker_.stillCameraMethod = AVFoundationStillCameraMethodVideoCapture;
@@ -616,12 +615,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)cameraController:(AVFoundationCameraController *)controller didFinishRecordingVideoToOutputFileURL:(NSURL *)outputFileURL error:(NSError *)error{
     [self cleanupVideoMode];
-    if(error && error.code != -11818){
+    if(error && error.code != AVErrorSessionWasInterrupted){
         if(error.code == -12894){
-            NSLog(@"%@", error.description);
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_Lost_Video"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Lost_Video_Title"] otherButtonTitles:nil];
             [alert show];            
-        }else if(error.code == -11803 || error.code == -12780){
+        }else if(error.code == AVErrorSessionNotRunning || error.code == -12780){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_Invalid_Camera"] delegate:self cancelButtonTitle:[TTLang localized:@"Alert_Invalid_Camera_Button_Title"] otherButtonTitles:nil];
             [alert show];
         }

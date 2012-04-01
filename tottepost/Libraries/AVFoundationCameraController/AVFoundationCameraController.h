@@ -69,6 +69,7 @@ typedef enum {
     NSDate *videoRecordingStartedDate_;
     
     AVFoundationCameraMode mode_;
+    AVFoundationCameraMode lastMode_;
     AVFoundationCameraDeviceType cameraDeviceType_;
     AVFoundationStillCameraMethod stillCameraMethod_;
     
@@ -83,7 +84,6 @@ typedef enum {
     UIDeviceOrientation viewOrientation_;
     UIDeviceOrientation deviceOrientation_;
     UIBackgroundTaskIdentifier backgroundRecordingId_;
-    UIBackgroundTaskIdentifier backgroundVideoSavingId_;
     
     AVAudioPlayer *shutterSoundPlayer_;
     AVAudioPlayer *videoBeepSoundPlayer_;

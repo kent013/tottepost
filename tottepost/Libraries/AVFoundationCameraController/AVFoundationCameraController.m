@@ -28,10 +28,6 @@
 #define ACCELEROMETER_INTERVAL 0.4
 
 NSString *kTempVideoURL = @"kTempVideoURL";
-static void capture_cleanup(void* p)
-{
-    NSLog(@"cleanup");
-}
 
 //-----------------------------------------------------------------------------
 //Private Implementations
@@ -44,6 +40,7 @@ static void capture_cleanup(void* p)
 - (void) handleShutterButtonTapped:(UIButton *)sender;
 - (void) handleCameraDeviceButtonTapped:(UIButton *)sender;
 - (void) setFocus:(CGPoint)point;
+- (void) setupAVFoundation:(AVFoundationCameraMode)mode;
 - (void) autofocus;
 - (void) updateCameraControls;
 - (NSData *) cropImageData:(NSData *)data withViewRect:(CGRect)viewRect andScale:(CGFloat)scale;
@@ -61,6 +58,8 @@ static void capture_cleanup(void* p)
 - (void) applicationWillResignActive;
 - (void) applicationDidEnterBackground;
 - (void) applicationDidBecomeActive;
+
+- (void) startRecordingVideoInternal:(NSURL *)url;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -191,8 +190,7 @@ static void capture_cleanup(void* p)
     indicatorLayer_.hidden = NO;
 
     //set mode initializes session
-    self.mode = mode;
-    [self autofocus];
+    [self setupAVFoundation:mode];
     
     [device_ addObserver:self
               forKeyPath:@"adjustingExposure"
@@ -605,10 +603,17 @@ static void capture_cleanup(void* p)
     
     NSString *filename = [NSString stringWithFormat:@"file://%@/tmp/output%d.mov", NSHomeDirectory(), n];
     NSURL *url = [NSURL URLWithString:filename];
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSError *error;
-    [manager removeItemAtURL:url error:&error];
-    [defaults setObject:[NSNumber numberWithInt:n] forKey:kTempVideoURL];
+    @synchronized(self){
+        NSFileManager *manager = [NSFileManager defaultManager];
+        if([manager fileExistsAtPath:url.path]){
+            [manager removeItemAtURL:url error:nil];
+        }
+        while([manager fileExistsAtPath:url.path]){
+            [NSThread sleepForTimeInterval:1];
+        }
+        //NSLog(@"deleted");
+        [defaults setObject:[NSNumber numberWithInt:n] forKey:kTempVideoURL];
+    };
     return url;
 }
 
@@ -625,7 +630,9 @@ static void capture_cleanup(void* p)
  */
 - (void)unfreezeCapture{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [session_ startRunning];
+        if(session_.isRunning == NO){
+            [session_ startRunning];
+        }
     });
 }
 
@@ -677,10 +684,9 @@ static void capture_cleanup(void* p)
  */
 - (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer {
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer); 
-    CVPixelBufferLockBaseAddress(imageBuffer,0);        // Lock the image buffer 
+    CVPixelBufferLockBaseAddress(imageBuffer,0);
     
-    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);   // Get information of the image 
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer); 
+    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer); 
     size_t width = CVPixelBufferGetWidth(imageBuffer); 
     size_t height = CVPixelBufferGetHeight(imageBuffer); 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB(); 
@@ -691,7 +697,6 @@ static void capture_cleanup(void* p)
     
     CGColorSpaceRelease(colorSpace); 
     CVPixelBufferUnlockBaseAddress(imageBuffer,0); 
-    /* CVBufferRelease(imageBuffer); */  // do not call this!
     
     return newImage;
 }
@@ -701,34 +706,10 @@ static void capture_cleanup(void* p)
  */
 - (void)applicationWillResignActive{
     isApplicationActive_ = NO;
-    if([self isRecordingVideo]){
-        backgroundVideoSavingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (backgroundVideoSavingId_ != UIBackgroundTaskInvalid) {
-                    [[UIApplication sharedApplication] endBackgroundTask:backgroundVideoSavingId_];
-                    backgroundVideoSavingId_ = UIBackgroundTaskInvalid;
-                }
-            });
-        }];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [videoElapsedTimer_ invalidate];
-                videoElapsedTimeLabel_.text = @"";
-            });
-            if(self.isRecordingVideo){
-                [movieFileOutput_ stopRecording];
-            }
-            while(backgroundVideoSavingId_ != UIBackgroundTaskInvalid ||
-                  isApplicationActive_){
-                [NSThread sleepForTimeInterval:1];
-            }
-            //[self playVideoBeepSound];
-            backgroundRecordingId_ = UIBackgroundTaskInvalid;
-            backgroundVideoSavingId_ = UIBackgroundTaskInvalid;
-        });
+    if(self.isRecordingVideo == NO){
+        return;
     }
+    [self stopRecordingVideo];
 }
 
 /*!
@@ -742,15 +723,110 @@ static void capture_cleanup(void* p)
  * application did become active
  */
 - (void)applicationDidBecomeActive{
-    [self stopRecordingVideo];
     if(backgroundRecordingId_ != UIBackgroundTaskInvalid){
         backgroundRecordingId_ = UIBackgroundTaskInvalid;
     }
-    if(backgroundVideoSavingId_ != UIBackgroundTaskInvalid){
-        backgroundVideoSavingId_ = UIBackgroundTaskInvalid;
-    }
     isApplicationActive_ = YES;
-    [self restartSession];        
+    if(session_.isRunning == NO){
+        [session_ startRunning];
+    }
+}
+
+/*!
+ * setup AVFoundation
+ */
+- (void)setupAVFoundation:(AVFoundationCameraMode)mode{    
+    [session_ stopRunning];
+    session_ = [[AVCaptureSession alloc] init];
+    [session_ beginConfiguration];
+    [session_ removeInput:videoInput_];
+    [session_ removeInput:audioInput_];
+    [session_ removeOutput:videoDataOutput_];
+    [session_ removeOutput:stillImageOutput_];
+    [session_ removeOutput:movieFileOutput_];
+    
+    videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
+    if([session_ canAddInput:videoInput_]){
+        [session_ addInput:videoInput_];
+    }
+    if(mode == AVFoundationCameraModePhoto){
+        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+            stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
+            [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                                  AVVideoCodecJPEG, AVVideoCodecKey,
+                                                  nil]];
+            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            }
+            if([session_ canAddOutput:stillImageOutput_]){
+                [session_ addOutput:stillImageOutput_];
+            }
+            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                connection.videoOrientation = videoOrientation_;
+            }            
+        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+            videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
+            [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
+            [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+            dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
+            [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
+            dispatch_release(queue);
+            
+            if([session_ canAddOutput:videoDataOutput_]){
+                [session_ addOutput:videoDataOutput_];
+            }
+            for (AVCaptureConnection* connection in videoDataOutput_.connections) {
+                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            }
+        }
+    }else{
+        audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
+        if([session_ canAddInput:audioInput_]){
+            [session_ addInput:audioInput_];
+        }
+        movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
+        if([session_ canAddOutput:movieFileOutput_]){
+            [session_ addOutput:movieFileOutput_];
+        }
+        for (AVCaptureConnection* connection in movieFileOutput_.connections) {
+            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+        }
+    }
+    [session_ commitConfiguration];
+    
+    [indicatorLayer_ removeFromSuperlayer];
+    [previewLayer_ removeFromSuperlayer];
+    previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
+    previewLayer_.automaticallyAdjustsMirroring = NO;
+    previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    previewLayer_.frame = self.view.bounds;
+    [self.view.layer addSublayer:previewLayer_];
+    [self.view.layer addSublayer:indicatorLayer_];
+    
+    if(lastMode_ != AVFoundationCameraModeNotInitialized){
+        [UIView beginAnimations: @"TransitionAnimation" context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+                               forView:self.view
+                                 cache:YES];
+        [UIView setAnimationDuration:1.0];
+        [UIView commitAnimations];
+    }
+    mode_ = mode;
+    [self applyPreset];
+    [self autofocus];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if(session_.isRunning == NO){
+            [session_ startRunning];
+        }
+    });
+    [self updateCameraControls];
+}
+
+/*!
+ * start recording
+ */
+- (void)startRecordingVideoInternal:(NSURL *)url{
+    [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
 }
 @end
 
@@ -786,6 +862,7 @@ static void capture_cleanup(void* p)
     self = [super init];
     if(self){
         mode_ = AVFoundationCameraModeNotInitialized;
+        lastMode_ = AVFoundationCameraModeNotInitialized;
         [self setupInitialState:frame andMode:mode];
     }
     return self;
@@ -849,6 +926,9 @@ static void capture_cleanup(void* p)
 - (void)startRecordingVideo{
     [self playVideoBeepSound];
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+        if(backgroundRecordingId_ != UIBackgroundTaskInvalid){
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
+        }
         backgroundRecordingId_ = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
             if (backgroundRecordingId_ != UIBackgroundTaskInvalid) {
                 [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
@@ -856,16 +936,24 @@ static void capture_cleanup(void* p)
             }
         }];
     }
-    AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[movieFileOutput_ connections]];
-    if ([videoConnection isVideoOrientationSupported]){
-        [videoConnection setVideoOrientation:videoOrientation_];
+    
+    [session_ beginConfiguration];
+    [session_ removeOutput:movieFileOutput_];
+    movieFileOutput_ = nil;
+    movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
+    if([session_ canAddOutput:movieFileOutput_]){
+        [session_ addOutput:movieFileOutput_];
     }
+    for (AVCaptureConnection* connection in movieFileOutput_.connections) {
+        if ([connection isVideoOrientationSupported]){
+            connection.videoOrientation = videoOrientation_;
+        }
+    }
+    [session_ commitConfiguration];
     
     NSURL *url = [self tempVideoURL];
-    NSFileManager *manager = [NSFileManager defaultManager];
-    [manager removeItemAtURL:url error:nil];
     currentVideoURL_ = url;
-    [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
+    [self performSelector:@selector(startRecordingVideoInternal:) withObject:url afterDelay:2.0];
 }
 
 /*!
@@ -898,11 +986,15 @@ static void capture_cleanup(void* p)
                 imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
             }
             if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
-                [self.delegate cameraController:self didFinishPickingImage:image];
+                @synchronized(self){
+                    [self.delegate cameraController:self didFinishPickingImage:image];
+                }
             }
             
             if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImageData:)]){
-                [self.delegate cameraController:self didFinishPickingImageData:imageData];
+                @synchronized(self){
+                    [self.delegate cameraController:self didFinishPickingImageData:imageData];
+                }
             }
         });
         CVPixelBufferUnlockBaseAddress(buffer, 0);
@@ -926,8 +1018,7 @@ static void capture_cleanup(void* p)
 /*!
  * returns recording video
  */
--(BOOL)isRecordingVideo
-{
+-(BOOL)isRecordingVideo{
     return [movieFileOutput_ isRecording];
 }
 
@@ -936,7 +1027,9 @@ static void capture_cleanup(void* p)
  */
 - (void)restartSession{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [session_ startRunning];
+        if(session_.isRunning == NO){
+            [session_ startRunning];
+        }
     });
 }
 
@@ -962,25 +1055,25 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
+    /*
+    for(AVCaptureInput *input in session_.inputs){
+        NSLog(@"%@", input.description);        
+    }
+    for(AVCaptureOutput *output in session_.outputs){
+        NSLog(@"%@", output.description);
+    }
     if(error){
-        NSLog(@"%s, %@, %@", __PRETTY_FUNCTION__, anOutputFileURL, error.description);
-    }  
+        NSLog(@"%s, %@, %@, %@", __PRETTY_FUNCTION__, anOutputFileURL, error.description, [error.userInfo objectForKey:AVErrorRecordingSuccessfullyFinishedKey]);
+    }*/ 
     
     if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:error:)]){
         currentVideoURL_ = nil;
         [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL error:error];
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [session_ beginConfiguration];
-        [session_ removeInput:audioInput_];
-        [session_ commitConfiguration];
-    });
 
     if ([[UIDevice currentDevice] isMultitaskingSupported]) {
         [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingId_];
         backgroundRecordingId_ = UIBackgroundTaskInvalid;
-        [[UIApplication sharedApplication] endBackgroundTask:backgroundVideoSavingId_];
-        backgroundVideoSavingId_ = UIBackgroundTaskInvalid;
     }
 }   
 
@@ -992,87 +1085,9 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     if(mode_ == mode){
         return;
     }
-    [session_ stopRunning];
-    session_ = [[AVCaptureSession alloc] init];
-    [session_ beginConfiguration];
-    [session_ removeInput:videoInput_];
-    [session_ removeInput:audioInput_];
-    [session_ removeOutput:videoDataOutput_];
-    [session_ removeOutput:stillImageOutput_];
-    [session_ removeOutput:movieFileOutput_];
-
-    videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
-    if([session_ canAddInput:videoInput_]){
-        [session_ addInput:videoInput_];
-    }
-    if(mode == AVFoundationCameraModePhoto){
-        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-            stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
-            [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
-                                                  AVVideoCodecJPEG, AVVideoCodecKey,
-                                                  nil]];
-            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-            }
-            if([session_ canAddOutput:stillImageOutput_]){
-                [session_ addOutput:stillImageOutput_];
-            }
-            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-                connection.videoOrientation = videoOrientation_;
-            }            
-        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
-            videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
-            [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
-            [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-            dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
-            [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
-            dispatch_release(queue);
-            
-            if([session_ canAddOutput:videoDataOutput_]){
-                [session_ addOutput:videoDataOutput_];
-            }
-            for (AVCaptureConnection* connection in videoDataOutput_.connections) {
-                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-            }
-        }
-    }else{
-        audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
-        if([session_ canAddInput:audioInput_]){
-            [session_ addInput:audioInput_];
-        }
-        movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
-        if([session_ canAddOutput:movieFileOutput_]){
-            [session_ addOutput:movieFileOutput_];
-        }
-        for (AVCaptureConnection* connection in movieFileOutput_.connections) {
-            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-        }
-    }
-    [session_ commitConfiguration];
-    
-    [indicatorLayer_ removeFromSuperlayer];
-    [previewLayer_ removeFromSuperlayer];
-    previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
-    previewLayer_.automaticallyAdjustsMirroring = NO;
-    previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    previewLayer_.frame = self.view.bounds;
-    [self.view.layer addSublayer:previewLayer_];
-    [self.view.layer addSublayer:indicatorLayer_];
-    
-    if(mode_ != AVFoundationCameraModeNotInitialized){
-        [UIView beginAnimations: @"TransitionAnimation" context:nil];
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
-                               forView:self.view
-                                 cache:YES];
-        [UIView setAnimationDuration:1.0];
-        [UIView commitAnimations];
-    }
+    lastMode_ = mode_;
     mode_ = mode;
-    [self applyPreset];
-    [self updateCameraControls];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [session_ startRunning];
-    });
+    [self setupAVFoundation:mode];
 }
 
 /*!
