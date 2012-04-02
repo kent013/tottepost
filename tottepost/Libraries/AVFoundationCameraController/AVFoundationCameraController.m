@@ -179,6 +179,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     
     // add layer
+    [indicatorLayer_ removeFromSuperlayer];
     indicatorLayer_ = [CALayer layer];
     indicatorLayer_.borderColor = [[UIColor whiteColor] CGColor];
     indicatorLayer_.borderWidth = 1.0;
@@ -793,7 +794,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         }
     }
     [session_ commitConfiguration];
-    
     [indicatorLayer_ removeFromSuperlayer];
     [previewLayer_ removeFromSuperlayer];
     previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
