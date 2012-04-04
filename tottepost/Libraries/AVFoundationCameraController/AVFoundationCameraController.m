@@ -1105,13 +1105,34 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [session_ removeOutput:videoDataOutput_];
     [session_ removeOutput:stillImageOutput_];
     if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-        [session_ addOutput:stillImageOutput_];
+        stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
+        [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                              AVVideoCodecJPEG, AVVideoCodecKey,
+                                              nil]];
+        for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+        }
+        if([session_ canAddOutput:stillImageOutput_]){
+            [session_ addOutput:stillImageOutput_];
+        }
         for (AVCaptureConnection* connection in stillImageOutput_.connections) {
             connection.videoOrientation = videoOrientation_;
-        }
+        }            
     }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
-        [session_ addOutput:videoDataOutput_];
-    }    
+        videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
+        [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
+        [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+        dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
+        [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
+        dispatch_release(queue);
+        
+        if([session_ canAddOutput:videoDataOutput_]){
+            [session_ addOutput:videoDataOutput_];
+        }
+        for (AVCaptureConnection* connection in videoDataOutput_.connections) {
+            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+        }
+    }
     [session_ commitConfiguration];
 }
 

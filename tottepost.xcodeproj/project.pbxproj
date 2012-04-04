@@ -226,7 +226,7 @@
 		7901B03C150683B6003DA0DC /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF64150683B4003DA0DC /* PhotoSubmitterSettingTableViewController.m */; };
 		7901B03D150683B6003DA0DC /* PhotoSubmitterSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF67150683B4003DA0DC /* PhotoSubmitterSwitch.m */; };
 		7901B03E150683B6003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF69150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m */; };
-		7901B040150683B6003DA0DC /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6C150683B4003DA0DC /* base64.c */; };
+		7901B040150683B6003DA0DC /* ps_base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6C150683B4003DA0DC /* ps_base64.c */; };
 		7901B041150683B6003DA0DC /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6F150683B4003DA0DC /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7901B042150683B6003DA0DC /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF71150683B4003DA0DC /* NSData+Digest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7901B043150683B6003DA0DC /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF73150683B4003DA0DC /* NSString+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -791,7 +791,7 @@
 		79924C32150CAE180043C16D /* PhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF64150683B4003DA0DC /* PhotoSubmitterSettingTableViewController.m */; };
 		79924C33150CAE180043C16D /* PhotoSubmitterSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF67150683B4003DA0DC /* PhotoSubmitterSwitch.m */; };
 		79924C34150CAE180043C16D /* SimplePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF69150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m */; };
-		79924C35150CAE180043C16D /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6C150683B4003DA0DC /* base64.c */; };
+		79924C35150CAE180043C16D /* ps_base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6C150683B4003DA0DC /* ps_base64.c */; };
 		79924C36150CAE180043C16D /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF6F150683B4003DA0DC /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924C37150CAE180043C16D /* NSData+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF71150683B4003DA0DC /* NSData+Digest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924C38150CAE180043C16D /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF73150683B4003DA0DC /* NSString+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1005,6 +1005,8 @@
 		79F58B6B152B3E8200EB98F5 /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B65152B3E8200EB98F5 /* PhotoSubmitterContentEntity.m */; };
 		79F58B6C152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */; };
 		79F58B6D152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */; };
+		79F58BA1152B455400EB98F5 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F58B97152B453B00EB98F5 /* libRestKit.a */; };
+		79F58BA4152B457900EB98F5 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F58B97152B453B00EB98F5 /* libRestKit.a */; };
 		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
@@ -1017,6 +1019,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 376E15371494C47800A34E7D;
 			remoteInfo = tottepost;
+		};
+		79F58B96152B453B00EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		79F58B98152B453B00EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		79F58B9A152B453B00EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		79F58B9C152B453B00EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		79F58B9F152B454C00EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		79F58BA2152B457400EB98F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1757,8 +1801,8 @@
 		7901AF67150683B4003DA0DC /* PhotoSubmitterSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterSwitch.m; sourceTree = "<group>"; };
 		7901AF68150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7901AF69150683B4003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
-		7901AF6C150683B4003DA0DC /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
-		7901AF6D150683B4003DA0DC /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		7901AF6C150683B4003DA0DC /* ps_base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ps_base64.c; sourceTree = "<group>"; };
+		7901AF6D150683B4003DA0DC /* ps_base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ps_base64.h; sourceTree = "<group>"; };
 		7901AF6E150683B4003DA0DC /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		7901AF6F150683B4003DA0DC /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		7901AF70150683B4003DA0DC /* NSData+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Digest.h"; sourceTree = "<group>"; };
@@ -2265,6 +2309,7 @@
 		79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
 		79F58B68152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterVideoEntity.h; sourceTree = "<group>"; };
 		79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterVideoEntity.m; sourceTree = "<group>"; };
+		79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		EA76226D14D0312100C54159 /* FlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashButton.h; path = Libraries/AVFoundationCameraController/FlashButton.h; sourceTree = "<group>"; };
 		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
@@ -2302,6 +2347,7 @@
 				37FB65D0149CB64A00387490 /* Twitter.framework in Frameworks */,
 				376E153D1494C47800A34E7D /* UIKit.framework in Frameworks */,
 				37FB65B6149C512A00387490 /* libicucore.dylib in Frameworks */,
+				79F58BA1152B455400EB98F5 /* libRestKit.a in Frameworks */,
 				791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */,
 				7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */,
 				7901AFF0150683B5003DA0DC /* libobjc-atompub.a in Frameworks */,
@@ -2345,6 +2391,7 @@
 				79924C83150CAE180043C16D /* UIKit.framework in Frameworks */,
 				79924C84150CAE180043C16D /* libicucore.dylib in Frameworks */,
 				79924C85150CAE180043C16D /* libxml2.dylib in Frameworks */,
+				79F58BA4152B457900EB98F5 /* libRestKit.a in Frameworks */,
 				79924C86150CAE180043C16D /* libz.dylib in Frameworks */,
 				79924C87150CAE180043C16D /* libobjc-atompub.a in Frameworks */,
 				79924C88150CAE180043C16D /* libGDataTouchStaticLib.a in Frameworks */,
@@ -2604,6 +2651,7 @@
 		7901AC54150683B3003DA0DC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */,
 				79924993150BA67E0043C16D /* MPOAuth */,
 				7901AC55150683B3003DA0DC /* FBNetworkReachability */,
 				7901AC58150683B3003DA0DC /* ios-queue-object */,
@@ -3930,8 +3978,8 @@
 		7901AF6B150683B4003DA0DC /* UtilityCategories */ = {
 			isa = PBXGroup;
 			children = (
-				7901AF6C150683B4003DA0DC /* base64.c */,
-				7901AF6D150683B4003DA0DC /* base64.h */,
+				7901AF6C150683B4003DA0DC /* ps_base64.c */,
+				7901AF6D150683B4003DA0DC /* ps_base64.h */,
 				7901AF6E150683B4003DA0DC /* NSData+Base64.h */,
 				7901AF6F150683B4003DA0DC /* NSData+Base64.m */,
 				7901AF70150683B4003DA0DC /* NSData+Digest.h */,
@@ -4687,6 +4735,17 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		79F58B8D152B453A00EB98F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79F58B97152B453B00EB98F5 /* libRestKit.a */,
+				79F58B99152B453B00EB98F5 /* RestKitTests.octest */,
+				79F58B9B152B453B00EB98F5 /* RestKit.framework */,
+				79F58B9D152B453B00EB98F5 /* RestKitFrameworkTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		EAAC412014E9399400CDC2CC /* HPGrowingTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4721,6 +4780,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				79F58BA0152B454C00EB98F5 /* PBXTargetDependency */,
 			);
 			name = tottepost;
 			productName = tottepost;
@@ -4757,6 +4817,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				79F58BA3152B457400EB98F5 /* PBXTargetDependency */,
 			);
 			name = "tottepost lite";
 			productName = tottepost;
@@ -4785,6 +4846,12 @@
 			mainGroup = 376E152D1494C47800A34E7D;
 			productRefGroup = 376E15391494C47800A34E7D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 79F58B8D152B453A00EB98F5 /* Products */;
+					ProjectRef = 79F58B8C152B453A00EB98F5 /* RestKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				376E15371494C47800A34E7D /* tottepost */,
@@ -4793,6 +4860,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		79F58B97152B453B00EB98F5 /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = 79F58B96152B453B00EB98F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79F58B99152B453B00EB98F5 /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = 79F58B98152B453B00EB98F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79F58B9B152B453B00EB98F5 /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = 79F58B9A152B453B00EB98F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79F58B9D152B453B00EB98F5 /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = 79F58B9C152B453B00EB98F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		376E15361494C47800A34E7D /* Resources */ = {
@@ -5392,7 +5490,7 @@
 				7901B03C150683B6003DA0DC /* PhotoSubmitterSettingTableViewController.m in Sources */,
 				7901B03D150683B6003DA0DC /* PhotoSubmitterSwitch.m in Sources */,
 				7901B03E150683B6003DA0DC /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
-				7901B040150683B6003DA0DC /* base64.c in Sources */,
+				7901B040150683B6003DA0DC /* ps_base64.c in Sources */,
 				7901B041150683B6003DA0DC /* NSData+Base64.m in Sources */,
 				7901B042150683B6003DA0DC /* NSData+Digest.m in Sources */,
 				7901B043150683B6003DA0DC /* NSString+Base64.m in Sources */,
@@ -5723,7 +5821,7 @@
 				79924C32150CAE180043C16D /* PhotoSubmitterSettingTableViewController.m in Sources */,
 				79924C33150CAE180043C16D /* PhotoSubmitterSwitch.m in Sources */,
 				79924C34150CAE180043C16D /* SimplePhotoSubmitterSettingTableViewController.m in Sources */,
-				79924C35150CAE180043C16D /* base64.c in Sources */,
+				79924C35150CAE180043C16D /* ps_base64.c in Sources */,
 				79924C36150CAE180043C16D /* NSData+Base64.m in Sources */,
 				79924C37150CAE180043C16D /* NSData+Digest.m in Sources */,
 				79924C38150CAE180043C16D /* NSString+Base64.m in Sources */,
@@ -5809,6 +5907,16 @@
 			isa = PBXTargetDependency;
 			target = 376E15371494C47800A34E7D /* tottepost */;
 			targetProxy = 376E15581494C47800A34E7D /* PBXContainerItemProxy */;
+		};
+		79F58BA0152B454C00EB98F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = 79F58B9F152B454C00EB98F5 /* PBXContainerItemProxy */;
+		};
+		79F58BA3152B457400EB98F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = 79F58BA2152B457400EB98F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -5945,7 +6053,7 @@
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries/DropboxSDK\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = tottepost;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -5982,7 +6090,7 @@
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries/DropboxSDK\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = tottepost;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -6043,7 +6151,8 @@
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/**",
-					/usr/include/libxml2,
+					"/usr/include/libxml2/**",
+					"PhotoSubmitter/Libraries/RestKit/**",
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-lite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -6082,7 +6191,8 @@
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/**",
-					/usr/include/libxml2,
+					"/usr/include/libxml2/**",
+					"PhotoSubmitter/Libraries/RestKit/**",
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-lite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -6122,7 +6232,8 @@
 				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/**",
-					/usr/include/libxml2,
+					"/usr/include/libxml2/**",
+					"PhotoSubmitter/Libraries/RestKit/**",
 				);
 				INFOPLIST_FILE = "tottepost/tottepost-lite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -6201,7 +6312,7 @@
 					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
 					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries/DropboxSDK\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = tottepost;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
