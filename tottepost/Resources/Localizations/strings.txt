@@ -57,8 +57,8 @@
         ja = OK
     [AppStore_Url_Pro]
         tags = common
-        en = http://itunes.apple.com/us/app/single-tap-to-share-photo/id498769617?mt=8
-        ja = http://itunes.apple.com/jp/app/1tappude-xie-zhen-gong-you/id498769617?mt=8
+        en = http://itunes.apple.com/us/app/id498769617
+        ja = http://itunes.apple.com/jp/app/id498769617
     [AppStore_Open]
         tags = common
         en = Open in AppStore

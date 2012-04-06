@@ -421,6 +421,10 @@
 		796023B8152492260009A7C6 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 796023B5152492260009A7C6 /* mail.png */; };
 		796023B9152492260009A7C6 /* mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 796023B6152492260009A7C6 /* mail@2x.png */; };
 		796023BA152492260009A7C6 /* mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 796023B6152492260009A7C6 /* mail@2x.png */; };
+		79645A4D152E85B4004813E0 /* PhotoSubmitterAlbumEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B63152B3E8200EB98F5 /* PhotoSubmitterAlbumEntity.m */; };
+		79645A4E152E85B4004813E0 /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B65152B3E8200EB98F5 /* PhotoSubmitterContentEntity.m */; };
+		79645A4F152E85B4004813E0 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */; };
+		79645A50152E85B4004813E0 /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */; };
 		7964DD0015153D8500FB7D2D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */; };
 		7964DD02151540D600FB7D2D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7964DCFF15153D8500FB7D2D /* MediaPlayer.framework */; };
 		7964DD871515A7DE00FB7D2D /* button_template.png in Resources */ = {isa = PBXBuildFile; fileRef = 7964DD661515A7DD00FB7D2D /* button_template.png */; };
@@ -5897,6 +5901,10 @@
 				7901886F151F3BA50097B3B0 /* UncaughtExceptionHandler.m in Sources */,
 				79D76F861528138A0051339E /* CMPopTipView.m in Sources */,
 				79D76F87152813900051339E /* CMPopTipViewManager.m in Sources */,
+				79645A4D152E85B4004813E0 /* PhotoSubmitterAlbumEntity.m in Sources */,
+				79645A4E152E85B4004813E0 /* PhotoSubmitterContentEntity.m in Sources */,
+				79645A4F152E85B4004813E0 /* PhotoSubmitterImageEntity.m in Sources */,
+				79645A50152E85B4004813E0 /* PhotoSubmitterVideoEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

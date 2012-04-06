@@ -1104,6 +1104,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     [session_ beginConfiguration];
     [session_ removeOutput:videoDataOutput_];
     [session_ removeOutput:stillImageOutput_];
+
     if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
         stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
         [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
