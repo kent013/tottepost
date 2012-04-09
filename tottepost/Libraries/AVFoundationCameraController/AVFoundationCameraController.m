@@ -170,6 +170,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  */
 -(void)initCameraWithMode:(AVFoundationCameraMode)mode{
 #if TARGET_IPHONE_SIMULATOR
+    mode_ = mode;
     return;
 #endif
     if(cameraDeviceType_ == AVFoundationCameraDeviceTypeBack){

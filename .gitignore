@@ -1,10 +1,9 @@
 .DS_Store
-tottepost/PhotoSubmitter/PhotoSubmitterAPIKey.h
-tottepost.xcodeproj/project.xcworkspace/xcuserdata/
-tottepost.xcodeproj/xcuserdata/
+xcuserdata
+xcuserdatad
 *.swp
 .svn
 .#*
-
-tottepost.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 tottepost/UserVoiceAPIKey.h
+tottepost/PhotoSubmitter/PhotoSubmitterAPIKey.h
+tottepost.xcworkspace/xcuserdata/ishitoya.xcuserdatad/UserInterfaceState.xcuserstate
