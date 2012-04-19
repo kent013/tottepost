@@ -63,8 +63,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         }
     }
     int x = label_.frame.size.width + 4;
-    for (NSString *type in [PhotoSubmitterManager registeredPhotoSubmitters]){
-        id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:type];
+    NSArray *submitters = [PhotoSubmitterManager sharedInstance].submitters;
+    for (id<PhotoSubmitterProtocol> submitter in submitters){
         if(submitter.isLogined){
             CGRect rect = CGRectMake(x, 0, submitter.smallIcon.size.width, submitter.smallIcon.size.height);
             UIImageView *iv = [[UIImageView alloc] initWithImage:submitter.smallIcon];
@@ -86,7 +86,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * content Size
  */
 - (CGSize)contentSize{
-    id<PhotoSubmitterProtocol> submitter = [PhotoSubmitterManager submitterForType:kFilePhotoSubmitterType];
+    id<PhotoSubmitterProtocol> submitter = [[PhotoSubmitterManager sharedInstance].submitters objectAtIndex:0];
     int count = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
     return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * count + (2 * count - 1), submitter.smallIcon.size.height);
     

@@ -661,7 +661,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [progressTableViewController_ addProgressWithType:photoSubmitter.type
+        [progressTableViewController_ addProgressWithAccount:photoSubmitter.account
                                                   forHash:imageHash];
         [[CMPopTipViewManager sharedInstance] showTipsWithTarget:CMPopTipTargetMainProgressSummary message:[TTLang localized:@"Tooltip_Main_SummaryView"] atView:progressSummaryView_ inView:self.view animated:YES];
     });
@@ -682,7 +682,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         msg = @"";
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [progressTableViewController_ removeProgressWithType:photoSubmitter.type
+        [progressTableViewController_ removeProgressWithAccount:photoSubmitter.account
                                                      forHash:imageHash 
                                                      message:msg delay:delay];
         if(suceeded == NO){
@@ -707,7 +707,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     //NSLog(@"%@, %f", imageHash, progress);
     dispatch_async(dispatch_get_main_queue(), ^{
-        [progressTableViewController_ updateProgressWithType:photoSubmitter.type 
+        [progressTableViewController_ updateProgressWithAccount:photoSubmitter.account 
                                                      forHash:imageHash progress:progress];
     });
 }
@@ -721,7 +721,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [progressTableViewController_ removeProgressWithType:photoSubmitter.type
+        [progressTableViewController_ removeProgressWithAccount:photoSubmitter.account
                                                      forHash:imageHash 
                                                      message:msg delay:0];
     });
@@ -800,7 +800,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (id)createSettingViewWithSubmitter:(id<PhotoSubmitterProtocol>)submitter{
 #ifdef LITE_VERSION
     if(submitter.isAlbumSupported){
-        return [[LiteAlbumPhotoSubmitterSettingTableViewController alloc] initWithType:submitter.type];
+        return [[LiteAlbumPhotoSubmitterSettingTableViewController alloc] initWithAccount:submitter.account];
     }
 #endif
     return nil;
@@ -845,7 +845,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         isUserVoiceFeedbackButtonPressed_ = NO;
         AAMFeedbackViewController *fv = [[AAMFeedbackViewController alloc] init];
         fv.toRecipients = [NSArray arrayWithObject:@"kentaro.ishitoya@gmail.com"];
-        fv.bccRecipients = [NSArray arrayWithObject:@"ken45000@gmail.com"];
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fv];
         [self presentModalViewController:nvc animated:YES];
     }else if(isUserVoiceFeedbackButtonPressed_){

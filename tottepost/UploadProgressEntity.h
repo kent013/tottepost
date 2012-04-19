@@ -11,11 +11,11 @@
 
 @interface UploadProgressEntity : NSObject
 @property (nonatomic, assign) CGFloat progress;
-@property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) PhotoSubmitterAccount *account;
 @property (nonatomic, readonly) id<PhotoSubmitterProtocol> submitter;
 @property (nonatomic, readonly) NSString *progressHash;
 @property (strong, nonatomic) NSString *contentHash;
 
-- (id)initWithSubmitterType:(NSString *)type contentHash:(NSString *)contentHash;
-+ (NSString *) generateProgressHash:(NSString *)type hash:(NSString *)hash;
+- (id)initWithAccount:(PhotoSubmitterAccount *)account contentHash:(NSString *)contentHash;
++ (NSString *) generateProgressHashWithAccount:(PhotoSubmitterAccount *)account hash:(NSString *)hash;
 @end

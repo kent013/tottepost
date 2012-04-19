@@ -15,7 +15,7 @@
 - (void) setupInitialState:(CGRect)frame;
 - (void) removeProgressCell:(UploadProgressEntity *)entity;
 - (void) showText:(UploadProgressEntity *)entity text:(NSString *)text;
-- (UploadProgressEntity *) progressForType:(NSString *)type andHash:(NSString *)hash;
+- (UploadProgressEntity *) progressForAccount:(PhotoSubmitterAccount *)account andHash:(NSString *)hash;
 - (int) indexForProgress:(UploadProgressEntity *)e;
 @end
 
@@ -125,9 +125,10 @@
 /*!
  * get progress entity
  */
-- (UploadProgressEntity *)progressForType:(NSString *)type andHash:(NSString *)hash{
+- (UploadProgressEntity *)progressForAccount:(PhotoSubmitterAccount *)account andHash:(NSString *)hash{
     for(UploadProgressEntity *e in progresses_){
-        if([e.type isEqualToString:type] && [e.contentHash isEqualToString:hash]){
+        if([e.account.accountHash isEqualToString:account.accountHash] && 
+           [e.contentHash isEqualToString:hash]){
             return e;
         }
     }
@@ -140,7 +141,8 @@
 - (int)indexForProgress:(UploadProgressEntity *)e{
     int index = 0;
     for(UploadProgressEntity *ep in progresses_){
-        if([ep.type isEqualToString:e.type] && [ep.contentHash isEqualToString:e.contentHash]){
+        if([ep.account.accountHash isEqualToString:e.account.accountHash] &&
+           [ep.contentHash isEqualToString:e.contentHash]){
             return index;
         }
         index++;
@@ -187,8 +189,8 @@
 /*!
  * add progress
  */
-- (void)addProgressWithType:(NSString *)type forHash:(NSString *)hash{
-    UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithSubmitterType:type contentHash:hash];
+- (void)addProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash{
+    UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithAccount:account contentHash:hash];
     if(entity == nil){
         return;
     }
@@ -199,8 +201,8 @@
 /*!
  * update progress
  */
-- (void)updateProgressWithType:(NSString *)type forHash:(NSString *)hash progress:(CGFloat)progress{
-    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+- (void)updateProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash progress:(CGFloat)progress{
+    UploadProgressEntity *entity = [self progressForAccount:account andHash:hash];
     if(entity == nil){
         return;
     }
@@ -214,8 +216,8 @@
 /*! 
  * remove progress with message
  */
-- (void)removeProgressWithType:(NSString *)type forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
-    UploadProgressEntity *entity = [self progressForType:type andHash:hash];
+- (void)removeProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
+    UploadProgressEntity *entity = [self progressForAccount:account andHash:hash];
     if(entity == nil){
         return;
     }

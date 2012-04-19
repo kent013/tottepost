@@ -515,6 +515,10 @@
 		798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
 		7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
 		7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
+		79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
+		79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
+		79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
+		79865F8E153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
 		7988272915315A6200DCDB67 /* SalesforcePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */; };
 		7988272A15315A6200DCDB67 /* SalesforcePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */; };
 		798827791531729400DCDB67 /* SFAuthContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988274D1531729400DCDB67 /* SFAuthContext.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2183,6 +2187,10 @@
 		79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterServiceSettingViewFactory.m; sourceTree = "<group>"; };
 		7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteAlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiteAlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79865F87153DA3A000085CCE /* PhotoSubmitterAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccount.h; sourceTree = "<group>"; };
+		79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccount.m; sourceTree = "<group>"; };
+		79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountManager.h; sourceTree = "<group>"; };
+		79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountManager.m; sourceTree = "<group>"; };
 		7988272715315A6200DCDB67 /* SalesforcePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforcePhotoSubmitter.h; sourceTree = "<group>"; };
 		7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalesforcePhotoSubmitter.m; sourceTree = "<group>"; };
 		7988272D1531625A00DCDB67 /* SalesforceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceAPIKey.h; sourceTree = "<group>"; };
@@ -2735,6 +2743,10 @@
 				7901ACA7150683B3003DA0DC /* PhotoSubmitterProtocol.h */,
 				7901AC97150683B3003DA0DC /* PhotoSubmitter.h */,
 				7901AC98150683B3003DA0DC /* PhotoSubmitter.m */,
+				79865F87153DA3A000085CCE /* PhotoSubmitterAccount.h */,
+				79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */,
+				79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */,
+				79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */,
 				7901AC9F150683B3003DA0DC /* PhotoSubmitterFactory.h */,
 				7901ACA0150683B3003DA0DC /* PhotoSubmitterFactory.m */,
 				7901ACA3150683B3003DA0DC /* PhotoSubmitterManager.h */,
@@ -5825,6 +5837,8 @@
 				791015411533193300BBE088 /* SFUserFeedPage.m in Sources */,
 				79F24BAC15331C9B00E15CB2 /* SFObjectFetcher.m in Sources */,
 				79F24BBE1533383600E15CB2 /* SFRefreshToken.m in Sources */,
+				79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */,
+				79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6170,6 +6184,8 @@
 				791015421533193300BBE088 /* SFUserFeedPage.m in Sources */,
 				79F24BAD15331CB100E15CB2 /* SFObjectFetcher.m in Sources */,
 				79F24BBF1533383600E15CB2 /* SFRefreshToken.m in Sources */,
+				79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */,
+				79865F8E153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,17 +22,17 @@
 //----------------------------------------------------------------------------
 @implementation UploadProgressEntity
 @synthesize progress;
-@synthesize type;
+@synthesize account;
 @synthesize contentHash;
 
 /*!
  * initialize
  */
-- (id)initWithSubmitterType:(NSString *)inType contentHash:(NSString *)inPhotoHash{
+- (id)initWithAccount:(PhotoSubmitterAccount *)inAccount contentHash:(NSString *)inContentHash{
     self = [super init];
     if(self){
-        type = inType;
-        contentHash = inPhotoHash;
+        account = inAccount;
+        contentHash = inContentHash;
         progress = 0.0;
     }
     return self;
@@ -49,20 +49,20 @@
  * progress hash
  */
 - (NSString *)progressHash{
-    return [UploadProgressEntity generateProgressHash:self.type hash:self.contentHash];
+    return [UploadProgressEntity generateProgressHashWithAccount:account hash:self.contentHash];
 }
 
 /*!
  * submitter
  */
 - (id<PhotoSubmitterProtocol>)submitter{
-    return [PhotoSubmitterManager submitterForType:self.type];
+    return [PhotoSubmitterManager submitterForAccount:self.account];
 }
 
 /*!
  * generate hash
  */
-+ (NSString *)generateProgressHash:(NSString *)type hash:(NSString *)hash{
-    return [[PhotoSubmitterManager submitterForType:type].name stringByAppendingString:hash];
++ (NSString *)generateProgressHashWithAccount:(PhotoSubmitterAccount *)account hash:(NSString *)hash{
+    return [account.accountHash stringByAppendingString:hash];
 }
 @end
