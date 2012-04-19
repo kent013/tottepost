@@ -6468,6 +6468,10 @@
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-DLITE_VERSION=1",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "tottepost lite";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -6507,6 +6511,10 @@
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-DLITE_VERSION=1",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "tottepost lite";
 				PROVISIONING_PROFILE = "";
@@ -6548,6 +6556,10 @@
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-DLITE_VERSION=1",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "tottepost lite";
 				PROVISIONING_PROFILE = "";
