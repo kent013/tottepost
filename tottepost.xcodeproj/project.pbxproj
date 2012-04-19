@@ -506,7 +506,6 @@
 		7980588D14C86D47006E3817 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588C14C86D47006E3817 /* AVFoundation.framework */; };
 		7980588F14C86D7F006E3817 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980588E14C86D7F006E3817 /* CoreMedia.framework */; };
 		7980589114C86DBA006E3817 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7980589014C86DBA006E3817 /* CoreVideo.framework */; };
-		7982199915328B3600979417 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7982198E15328B1B00979417 /* libRestKit.a */; };
 		7982199B15328D2900979417 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7982199A15328D2900979417 /* CoreData.framework */; };
 		79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -515,6 +514,8 @@
 		798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
 		7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
 		7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
+		798461F4153FF5BD004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
+		798461F5153FF5C4004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
 		79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
@@ -1050,7 +1051,6 @@
 		79F24BCD1533526500E15CB2 /* salesforce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F24BC61533526500E15CB2 /* salesforce_32.png */; };
 		79F24BCE1533526500E15CB2 /* salesforce_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F24BC71533526500E15CB2 /* salesforce_32@2x.png */; };
 		79F24BCF1533526500E15CB2 /* salesforce_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F24BC71533526500E15CB2 /* salesforce_32@2x.png */; };
-		79F24BD21533536C00E15CB2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7982198E15328B1B00979417 /* libRestKit.a */; };
 		79F24BD3153353D100E15CB2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7982199A15328D2900979417 /* CoreData.framework */; };
 		79F461B7150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F461B6150A23C2009787F0 /* PhotoSubmitterAccountTableViewController.m */; };
 		79F461BC150A3C6F009787F0 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79F461B9150A3C6F009787F0 /* SVProgressHUD.bundle */; };
@@ -1072,51 +1072,51 @@
 			remoteGlobalIDString = 376E15371494C47800A34E7D;
 			remoteInfo = tottepost;
 		};
-		7982198D15328B1B00979417 /* PBXContainerItemProxy */ = {
+		798461E7153FF59D004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160D1614564E810060A5C5;
 			remoteInfo = RestKit;
 		};
-		7982198F15328B1B00979417 /* PBXContainerItemProxy */ = {
+		798461E9153FF59D004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160D2614564E820060A5C5;
 			remoteInfo = RestKitTests;
 		};
-		7982199115328B1B00979417 /* PBXContainerItemProxy */ = {
+		798461EB153FF59D004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160E62145651060060A5C5;
 			remoteInfo = RestKitFramework;
 		};
-		7982199315328B1B00979417 /* PBXContainerItemProxy */ = {
+		798461ED153FF59D004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160E78145651060060A5C5;
 			remoteInfo = RestKitFrameworkTests;
 		};
-		7982199515328B1B00979417 /* PBXContainerItemProxy */ = {
+		798461EF153FF59D004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 259C301615128079003066A2;
 			remoteInfo = RestKitResources;
 		};
-		7982199715328B2D00979417 /* PBXContainerItemProxy */ = {
+		798461F2153FF5B6004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 25160D1514564E810060A5C5;
 			remoteInfo = RestKit;
 		};
-		79F24BD01533536700E15CB2 /* PBXContainerItemProxy */ = {
+		798461F6153FF5C9004FD9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+			containerPortal = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 25160D1514564E810060A5C5;
 			remoteInfo = RestKit;
@@ -2176,7 +2176,6 @@
 		7980588C14C86D47006E3817 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7980588E14C86D7F006E3817 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		7980589014C86DBA006E3817 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		7982198215328B1A00979417 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		7982199A15328D2900979417 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		79823CD314D2BCDE0094389D /* AAMFeedbackTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackTopicsViewController.h; sourceTree = "<group>"; };
 		79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackTopicsViewController.m; sourceTree = "<group>"; };
@@ -2187,6 +2186,7 @@
 		79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterServiceSettingViewFactory.m; sourceTree = "<group>"; };
 		7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteAlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiteAlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		79865F87153DA3A000085CCE /* PhotoSubmitterAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccount.h; sourceTree = "<group>"; };
 		79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccount.m; sourceTree = "<group>"; };
 		79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountManager.h; sourceTree = "<group>"; };
@@ -2433,8 +2433,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798461F4153FF5BD004FD9B2 /* libRestKit.a in Frameworks */,
 				7982199B15328D2900979417 /* CoreData.framework in Frameworks */,
-				7982199915328B3600979417 /* libRestKit.a in Frameworks */,
 				79A7F9BE151DC78500984F07 /* AudioToolbox.framework in Frameworks */,
 				7964DD02151540D600FB7D2D /* MediaPlayer.framework in Frameworks */,
 				7995E67114F4DD92005C1453 /* MobileCoreServices.framework in Frameworks */,
@@ -2478,7 +2478,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79F24BD21533536C00E15CB2 /* libRestKit.a in Frameworks */,
+				798461F5153FF5C4004FD9B2 /* libRestKit.a in Frameworks */,
 				7964DD0015153D8500FB7D2D /* MediaPlayer.framework in Frameworks */,
 				79924C71150CAE180043C16D /* MobileCoreServices.framework in Frameworks */,
 				79924C72150CAE180043C16D /* MessageUI.framework in Frameworks */,
@@ -2766,7 +2766,7 @@
 		7901AC54150683B3003DA0DC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				7982198215328B1A00979417 /* RestKit.xcodeproj */,
+				798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */,
 				79924993150BA67E0043C16D /* MPOAuth */,
 				7901AC55150683B3003DA0DC /* FBNetworkReachability */,
 				7901AC58150683B3003DA0DC /* ios-queue-object */,
@@ -4506,18 +4506,6 @@
 			name = AVFoundationCameraController;
 			sourceTree = "<group>";
 		};
-		7982198315328B1A00979417 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7982198E15328B1B00979417 /* libRestKit.a */,
-				7982199015328B1B00979417 /* RestKitTests.octest */,
-				7982199215328B1B00979417 /* RestKit.framework */,
-				7982199415328B1B00979417 /* RestKitFrameworkTests.octest */,
-				7982199615328B1B00979417 /* RestKitResources.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		79823CD214D2BCDE0094389D /* AAMFeedback */ = {
 			isa = PBXGroup;
 			children = (
@@ -4528,6 +4516,18 @@
 			);
 			name = AAMFeedback;
 			path = Libraries/AAMFeedback;
+			sourceTree = "<group>";
+		};
+		798461DD153FF59C004FD9B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				798461E8153FF59D004FD9B2 /* libRestKit.a */,
+				798461EA153FF59D004FD9B2 /* RestKitTests.octest */,
+				798461EC153FF59D004FD9B2 /* RestKit.framework */,
+				798461EE153FF59D004FD9B2 /* RestKitFrameworkTests.octest */,
+				798461F0153FF59D004FD9B2 /* RestKitResources.bundle */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		798827091531559E00DCDB67 /* SalesforcePhotoSubmitter */ = {
@@ -5012,7 +5012,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				7982199815328B2D00979417 /* PBXTargetDependency */,
+				798461F3153FF5B6004FD9B2 /* PBXTargetDependency */,
 			);
 			name = tottepost;
 			productName = tottepost;
@@ -5049,7 +5049,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				79F24BD11533536700E15CB2 /* PBXTargetDependency */,
+				798461F7153FF5C9004FD9B2 /* PBXTargetDependency */,
 			);
 			name = "tottepost lite";
 			productName = tottepost;
@@ -5080,8 +5080,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 7982198315328B1A00979417 /* Products */;
-					ProjectRef = 7982198215328B1A00979417 /* RestKit.xcodeproj */;
+					ProductGroup = 798461DD153FF59C004FD9B2 /* Products */;
+					ProjectRef = 798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -5094,39 +5094,39 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7982198E15328B1B00979417 /* libRestKit.a */ = {
+		798461E8153FF59D004FD9B2 /* libRestKit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRestKit.a;
-			remoteRef = 7982198D15328B1B00979417 /* PBXContainerItemProxy */;
+			remoteRef = 798461E7153FF59D004FD9B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7982199015328B1B00979417 /* RestKitTests.octest */ = {
+		798461EA153FF59D004FD9B2 /* RestKitTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RestKitTests.octest;
-			remoteRef = 7982198F15328B1B00979417 /* PBXContainerItemProxy */;
+			remoteRef = 798461E9153FF59D004FD9B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7982199215328B1B00979417 /* RestKit.framework */ = {
+		798461EC153FF59D004FD9B2 /* RestKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = RestKit.framework;
-			remoteRef = 7982199115328B1B00979417 /* PBXContainerItemProxy */;
+			remoteRef = 798461EB153FF59D004FD9B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7982199415328B1B00979417 /* RestKitFrameworkTests.octest */ = {
+		798461EE153FF59D004FD9B2 /* RestKitFrameworkTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RestKitFrameworkTests.octest;
-			remoteRef = 7982199315328B1B00979417 /* PBXContainerItemProxy */;
+			remoteRef = 798461ED153FF59D004FD9B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7982199615328B1B00979417 /* RestKitResources.bundle */ = {
+		798461F0153FF59D004FD9B2 /* RestKitResources.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RestKitResources.bundle;
-			remoteRef = 7982199515328B1B00979417 /* PBXContainerItemProxy */;
+			remoteRef = 798461EF153FF59D004FD9B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -6197,15 +6197,15 @@
 			target = 376E15371494C47800A34E7D /* tottepost */;
 			targetProxy = 376E15581494C47800A34E7D /* PBXContainerItemProxy */;
 		};
-		7982199815328B2D00979417 /* PBXTargetDependency */ = {
+		798461F3153FF5B6004FD9B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = RestKit;
-			targetProxy = 7982199715328B2D00979417 /* PBXContainerItemProxy */;
+			targetProxy = 798461F2153FF5B6004FD9B2 /* PBXContainerItemProxy */;
 		};
-		79F24BD11533536700E15CB2 /* PBXTargetDependency */ = {
+		798461F7153FF5C9004FD9B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = RestKit;
-			targetProxy = 79F24BD01533536700E15CB2 /* PBXContainerItemProxy */;
+			targetProxy = 798461F6153FF5C9004FD9B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6280,7 +6280,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "8D5E70B4-2B2A-464F-8C4D-2EEB46DB0697";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D5E70B4-2B2A-464F-8C4D-2EEB46DB0697";
@@ -6304,7 +6304,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
@@ -6574,7 +6574,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "57FDFC23-A344-4785-8490-78FAE82A2FFA";

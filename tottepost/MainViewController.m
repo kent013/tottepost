@@ -201,10 +201,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * update control coodinates
  */
 - (void)updateCoordinates{ 
-    CGRect frame = self.view.frame;
     CGRect screen = [UIScreen mainScreen].bounds;
 
-    frame = CGRectMake(0, 0, screen.size.width, screen.size.height);    
+    CGRect frame = CGRectMake(0, 0, screen.size.width, screen.size.height);    
     [previewImageView_ updateWithFrame:frame];
     
     CGSize indicatorContentSize = settingIndicatorView_.contentSize;
@@ -227,24 +226,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     postButton_.width = MAINVIEW_POST_BUTTON_WIDTH;
     postCancelButton_.width = MAINVIEW_POSTCANCEL_BUTTON_WIDTH;
-
-    CGAffineTransform t;
-    switch (orientation_) {
-        case UIDeviceOrientationPortrait:
-            t = CGAffineTransformMakeRotation(0 * M_PI / 180);
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            t = CGAffineTransformMakeRotation(90 * M_PI / 180);
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            t = CGAffineTransformMakeRotation(270 * M_PI / 180);
-            break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            t = CGAffineTransformMakeRotation(180 * M_PI / 180);
-            break;
-        default:
-            break;
-    }
     
     UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
@@ -259,7 +240,20 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [settingButton setBackgroundImage:[UIImage imageNamed:@"setting.png"]forState:UIControlStateNormal];
     [settingButton addTarget:self action:@selector(didSettingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     settingButton_.customView = settingButton;
-
+    
+    double angle = 0;
+    switch (orientation_) {
+        case UIDeviceOrientationLandscapeLeft:
+            angle = 90 * M_PI / 180; break;
+        case UIDeviceOrientationLandscapeRight:
+            angle = 270 * M_PI / 180; break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            angle = 180 * M_PI / 180; break;
+        default:
+            break;
+    }
+    CGAffineTransform t = CGAffineTransformMakeRotation(angle);
+    
     [UIView beginAnimations:@"RotateIcon" context:nil];
     commentButton.transform = t;
     settingButton.transform = t;

@@ -52,7 +52,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void) unfreezeCapture;
 - (void) playShutterSound;
 - (void) playVideoBeepSound;
-- (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
+- (CGImageRef) newCGImageRefFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 - (int) getImageRotationAngle;
 
 - (void) applicationWillResignActive;
@@ -475,7 +475,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     double centerYRate = pointOfInterest_.y / defaultBounds_.size.height;
     int w = image.size.width / scale;
     int h = image.size.height / scale;
-    int x,y;
+    int x = 0; 
+    int y = 0;
     switch(videoOrientation_){
         case AVCaptureVideoOrientationPortrait:
             x = centerXRate * image.size.width - w / 2;
@@ -507,12 +508,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     
     //read exif data
     CGImageSourceRef cfImage = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
-    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
+    NSDictionary *metadata = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(cfImage, 0, nil);
     
     //write back exif info
     CGImageSourceRef croppedCFImage = CGImageSourceCreateWithData((__bridge CFDataRef)croppedData, NULL);
     
-    NSMutableDictionary *croppedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(croppedCFImage, 0, nil)];
+    NSMutableDictionary *croppedMetadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(croppedCFImage, 0, nil)];
     NSMutableDictionary *exifMetadata = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
     [croppedMetadata setValue:exifMetadata forKey:(NSString *)kCGImagePropertyExifDictionary];
 	CGImageDestinationRef dest = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)croppedData, CGImageSourceGetType(croppedImage), 1, NULL);
@@ -684,7 +685,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * create image from sample buffer
  * http://stackoverflow.com/questions/3305862/uiimage-created-from-cmsamplebufferref-not-displayed-in-uiimageview
  */
-- (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer {
+- (CGImageRef) newCGImageRefFromSampleBuffer:(CMSampleBufferRef) sampleBuffer {
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer); 
     CVPixelBufferLockBaseAddress(imageBuffer,0);
     
@@ -968,7 +969,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         }
         CVImageBufferRef buffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CVPixelBufferLockBaseAddress(buffer, 0);
-        CGImageRef cgImage = [self imageFromSampleBuffer:sampleBuffer];
+        CGImageRef cgImage = [self newCGImageRefFromSampleBuffer:sampleBuffer];
         UIImage *sampleImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
         
