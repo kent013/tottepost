@@ -757,9 +757,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
             [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
                                                   AVVideoCodecJPEG, AVVideoCodecKey,
                                                   nil]];
-            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-            }
             if([session_ canAddOutput:stillImageOutput_]){
                 [session_ addOutput:stillImageOutput_];
             }
@@ -976,7 +973,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         CGImageRelease(cgImage);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            int angle = [self getImageRotationAngle];
+            int angle = [self getImageRotationAngle] + 90;
             UIImage *image = sampleImage;
             if(angle != 0){
                 image = [sampleImage UIImageRotateByAngle:angle];
@@ -1056,17 +1053,6 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
                     fromConnections:(NSArray *)connections
                               error:(NSError *)error
 {
-    /*
-    for(AVCaptureInput *input in session_.inputs){
-        NSLog(@"%@", input.description);        
-    }
-    for(AVCaptureOutput *output in session_.outputs){
-        NSLog(@"%@", output.description);
-    }
-    if(error){
-        NSLog(@"%s, %@, %@, %@", __PRETTY_FUNCTION__, anOutputFileURL, error.description, [error.userInfo objectForKey:AVErrorRecordingSuccessfullyFinishedKey]);
-    }*/ 
-    
     if([self.delegate respondsToSelector:@selector(cameraController:didFinishRecordingVideoToOutputFileURL:error:)]){
         currentVideoURL_ = nil;
         [self.delegate cameraController:self didFinishRecordingVideoToOutputFileURL:anOutputFileURL error:error];
