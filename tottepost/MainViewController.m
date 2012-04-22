@@ -84,7 +84,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //photo submitter setting
     [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
     [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
-    [PhotoSubmitterManager sharedInstance].authControllerDelegate = self;
+    [PhotoSubmitterManager sharedInstance].navigationControllerDelegate = self;
     [PhotoSubmitterManager sharedInstance].settingViewFactory = self;
     
     //setting view
@@ -783,8 +783,15 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * request UINavigationController to present authentication view
  */
-- (UINavigationController *) requestNavigationControllerToPresentAuthenticationView{
+- (UINavigationController *) requestNavigationControllerForPresentAuthenticationView{
     return settingNavigationController_;
+}
+
+/*!
+ * request to present modalview
+ */
+- (UIViewController *)requestRootViewControllerForPresentModalView{
+    return self;
 }
 
 #pragma mark - PhotoSubmitterSettingViewFactoryProtocol

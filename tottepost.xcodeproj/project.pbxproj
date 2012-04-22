@@ -516,6 +516,18 @@
 		7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
 		798461F4153FF5BD004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
 		798461F5153FF5C4004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
+		7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
+		7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
+		7985C64E154299E400083F0C /* mail_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C648154299E400083F0C /* mail_16.png */; };
+		7985C64F154299E400083F0C /* mail_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C648154299E400083F0C /* mail_16.png */; };
+		7985C650154299E400083F0C /* mail_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C649154299E400083F0C /* mail_16@2x.png */; };
+		7985C651154299E400083F0C /* mail_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C649154299E400083F0C /* mail_16@2x.png */; };
+		7985C652154299E400083F0C /* mail_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C64A154299E400083F0C /* mail_32.png */; };
+		7985C653154299E400083F0C /* mail_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C64A154299E400083F0C /* mail_32.png */; };
+		7985C654154299E400083F0C /* mail_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C64B154299E400083F0C /* mail_32@2x.png */; };
+		7985C655154299E400083F0C /* mail_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C64B154299E400083F0C /* mail_32@2x.png */; };
+		7985C65815429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */; };
+		7985C65915429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */; };
 		79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
@@ -2187,6 +2199,14 @@
 		7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteAlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiteAlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		7985C644154299E400083F0C /* MailPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitter.h; sourceTree = "<group>"; };
+		7985C645154299E400083F0C /* MailPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitter.m; sourceTree = "<group>"; };
+		7985C648154299E400083F0C /* mail_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail_16.png; sourceTree = "<group>"; };
+		7985C649154299E400083F0C /* mail_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mail_16@2x.png"; sourceTree = "<group>"; };
+		7985C64A154299E400083F0C /* mail_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail_32.png; sourceTree = "<group>"; };
+		7985C64B154299E400083F0C /* mail_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mail_32@2x.png"; sourceTree = "<group>"; };
+		7985C65615429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		79865F87153DA3A000085CCE /* PhotoSubmitterAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccount.h; sourceTree = "<group>"; };
 		79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccount.m; sourceTree = "<group>"; };
 		79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountManager.h; sourceTree = "<group>"; };
@@ -2901,6 +2921,7 @@
 				7901AD49150683B4003DA0DC /* FilePhotoSubmitter */,
 				7901AD52150683B4003DA0DC /* FlickrPhotoSubmitter */,
 				7901AD67150683B4003DA0DC /* FotolifePhotoSubmitter */,
+				7985C643154299E400083F0C /* MailPhotoSubmitter */,
 				7901AD8E150683B4003DA0DC /* MinusPhotoSubmitter */,
 				7901ADC0150683B4003DA0DC /* MixiPhotoSubmitter */,
 				7901AE0A150683B4003DA0DC /* PicasaPhotoSubmitter */,
@@ -4530,6 +4551,37 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		7985C643154299E400083F0C /* MailPhotoSubmitter */ = {
+			isa = PBXGroup;
+			children = (
+				7985C646154299E400083F0C /* Resources */,
+				7985C644154299E400083F0C /* MailPhotoSubmitter.h */,
+				7985C645154299E400083F0C /* MailPhotoSubmitter.m */,
+				7985C65615429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.h */,
+				7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */,
+			);
+			path = MailPhotoSubmitter;
+			sourceTree = "<group>";
+		};
+		7985C646154299E400083F0C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7985C647154299E400083F0C /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7985C647154299E400083F0C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7985C648154299E400083F0C /* mail_16.png */,
+				7985C649154299E400083F0C /* mail_16@2x.png */,
+				7985C64A154299E400083F0C /* mail_32.png */,
+				7985C64B154299E400083F0C /* mail_32@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		798827091531559E00DCDB67 /* SalesforcePhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -5301,6 +5353,10 @@
 				79F24BCA1533526500E15CB2 /* salesforce_16@2x.png in Resources */,
 				79F24BCC1533526500E15CB2 /* salesforce_32.png in Resources */,
 				79F24BCE1533526500E15CB2 /* salesforce_32@2x.png in Resources */,
+				7985C64E154299E400083F0C /* mail_16.png in Resources */,
+				7985C650154299E400083F0C /* mail_16@2x.png in Resources */,
+				7985C652154299E400083F0C /* mail_32.png in Resources */,
+				7985C654154299E400083F0C /* mail_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5481,6 +5537,10 @@
 				79F24BCB1533526500E15CB2 /* salesforce_16@2x.png in Resources */,
 				79F24BCD1533526500E15CB2 /* salesforce_32.png in Resources */,
 				79F24BCF1533526500E15CB2 /* salesforce_32@2x.png in Resources */,
+				7985C64F154299E400083F0C /* mail_16.png in Resources */,
+				7985C651154299E400083F0C /* mail_16@2x.png in Resources */,
+				7985C653154299E400083F0C /* mail_32.png in Resources */,
+				7985C655154299E400083F0C /* mail_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5839,6 +5899,8 @@
 				79F24BBE1533383600E15CB2 /* SFRefreshToken.m in Sources */,
 				79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */,
 				79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
+				7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
+				7985C65815429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6186,6 +6248,8 @@
 				79F24BBF1533383600E15CB2 /* SFRefreshToken.m in Sources */,
 				79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */,
 				79865F8E153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
+				7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
+				7985C65915429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
