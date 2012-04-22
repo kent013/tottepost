@@ -41,6 +41,7 @@
     __strong UIImageView *launchImageView_;
     __strong UIImageView *cameraIconImageView_;
     __strong CameraModeSwitchView *cameraModeSwitchView_;
+    __strong id<PhotoSubmitterServiceSettingTableViewDelegate> settingTableViewDelegate_;
     UIDeviceOrientation orientation_;
     UIDeviceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;

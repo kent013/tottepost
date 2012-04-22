@@ -512,8 +512,8 @@
 		79823CDF14D2C3A40094389D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79823CDE14D2C3A40094389D /* MessageUI.framework */; };
 		79842705151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
 		798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */; };
-		7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
-		7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */; };
+		7984270A15174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */; };
+		7984270B1517509F00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */; };
 		798461F4153FF5BD004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
 		798461F5153FF5C4004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
 		7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
@@ -2196,8 +2196,8 @@
 		79823CDE14D2C3A40094389D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		79842703151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterServiceSettingViewFactory.h; sourceTree = "<group>"; };
 		79842704151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterServiceSettingViewFactory.m; sourceTree = "<group>"; };
-		7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiteAlbumPhotoSubmitterSettingTableViewController.h; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
-		7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiteAlbumPhotoSubmitterSettingTableViewController.m; path = TottePostSettings/LiteAlbumPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		7984270815174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LitePhotoSubmitterSettingTableProvider.h; path = TottePostSettings/LitePhotoSubmitterSettingTableProvider.h; sourceTree = "<group>"; };
+		7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LitePhotoSubmitterSettingTableProvider.m; path = TottePostSettings/LitePhotoSubmitterSettingTableProvider.m; sourceTree = "<group>"; };
 		798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		7985C644154299E400083F0C /* MailPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitter.h; sourceTree = "<group>"; };
 		7985C645154299E400083F0C /* MailPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitter.m; sourceTree = "<group>"; };
@@ -2570,8 +2570,8 @@
 				79019F5C1505BD06003DA0DC /* TottepostSettingTableViewController.m */,
 				79E705A015151891000C792B /* TottepostSettings.h */,
 				79E705A115151891000C792B /* TottepostSettings.m */,
-				7984270815174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.h */,
-				7984270915174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m */,
+				7984270815174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.h */,
+				7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */,
 			);
 			name = TottepostSettings;
 			sourceTree = "<group>";
@@ -5868,7 +5868,7 @@
 				79E7054E15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A215151892000C792B /* TottepostSettings.m in Sources */,
 				79842705151744B200D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
-				7984270A15174E8D00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
+				7984270A15174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m in Sources */,
 				792721DD151D897F00807529 /* MAConfirmButton.m in Sources */,
 				792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */,
 				7901886D151F3B590097B3B0 /* UncaughtExceptionHandler.m in Sources */,
@@ -6217,7 +6217,7 @@
 				79E7054F15145AB4000C792B /* UIDevice-Hardware.m in Sources */,
 				79E705A315151892000C792B /* TottepostSettings.m in Sources */,
 				798427071517481500D79FD6 /* PhotoSubmitterServiceSettingViewFactory.m in Sources */,
-				7984270B1517509F00D79FD6 /* LiteAlbumPhotoSubmitterSettingTableViewController.m in Sources */,
+				7984270B1517509F00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m in Sources */,
 				792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */,
 				792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */,
 				7901886F151F3BA50097B3B0 /* UncaughtExceptionHandler.m in Sources */,

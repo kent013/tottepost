@@ -22,7 +22,7 @@
 #import "FilePhotoSubmitter.h"
 #import "YRDropdownView.h"
 #import "TottepostSettings.h"
-#import "LiteAlbumPhotoSubmitterSettingTableViewController.h"
+#import "LitePhotoSubmitterSettingTableProvider.h"
 #import "CMPopTipViewManager.h"
 
 
@@ -88,12 +88,17 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [PhotoSubmitterManager sharedInstance].settingViewFactory = self;
     
     //setting view
+    
     settingViewController_ = 
         [[TottepostSettingTableViewController alloc] init];
     settingNavigationController_ = [[UINavigationController alloc] initWithRootViewController:settingViewController_];
     settingNavigationController_.modalPresentationStyle = UIModalPresentationFormSheet;
     settingNavigationController_.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     settingViewController_.delegate = self;
+#ifdef LITE_VERSION
+    settingTableViewDelegate_ = [[LitePhotoSubmitterSettingTableProvider alloc] init];
+    settingViewController_.tableViewDelegate = settingTableViewDelegate_;
+#endif
     
     //preview image view
     previewImageView_ = [[PreviewPhotoView alloc] initWithFrame:CGRectZero];
@@ -799,11 +804,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * create setting view
  */
 - (id)createSettingViewWithSubmitter:(id<PhotoSubmitterProtocol>)submitter{
-#ifdef LITE_VERSION
-    if(submitter.isAlbumSupported){
-        return [[LiteAlbumPhotoSubmitterSettingTableViewController alloc] initWithAccount:submitter.account];
-    }
-#endif
     return nil;
 }
 

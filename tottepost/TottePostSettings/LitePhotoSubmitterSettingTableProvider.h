@@ -7,7 +7,8 @@
 //
 
 #import "AlbumPhotoSubmitterSettingTableViewController.h"
+#import "PhotoSubmitterServiceSettingTableViewController.h"
 
-@interface LiteAlbumPhotoSubmitterSettingTableViewController : AlbumPhotoSubmitterSettingTableViewController
+@interface LitePhotoSubmitterSettingTableProvider: NSObject<PhotoSubmitterServiceSettingTableViewDelegate>
 
 @end
