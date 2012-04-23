@@ -434,7 +434,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) createCameraController{
     [UIApplication sharedApplication].statusBarHidden = YES;
     if(imagePicker_ == nil){
-        imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame andMode:AVFoundationCameraModePhoto];
+        AVFoundationStillCameraMethod method = AVFoundationStillCameraMethodStandard;
+        if([TottepostSettings sharedInstance].useSilentMode){
+            method = AVFoundationStillCameraMethodVideoCapture;
+        }
+        imagePicker_ = [[AVFoundationCameraController alloc] initWithFrame:self.view.frame cameraMode:AVFoundationCameraModePhoto stillCameraMethod:method];
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
@@ -520,9 +524,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     imagePicker_.photoPreset = [TottepostSettings sharedInstance].photoPreset.name;
     imagePicker_.videoPreset = [TottepostSettings sharedInstance].videoPreset.name;
     
-    if([TottepostSettings sharedInstance].useSilentMode){
+    if([TottepostSettings sharedInstance].useSilentMode && imagePicker_.stillCameraMethod != AVFoundationStillCameraMethodVideoCapture){
         imagePicker_.stillCameraMethod = AVFoundationStillCameraMethodVideoCapture;
-    }else{
+    }else if([TottepostSettings sharedInstance].useSilentMode == NO &&
+             imagePicker_.stillCameraMethod != AVFoundationStillCameraMethodStandard){
         imagePicker_.stillCameraMethod = AVFoundationStillCameraMethodStandard;
     }
     if([TottepostSettings sharedInstance].useSilentMode){

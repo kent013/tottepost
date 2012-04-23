@@ -118,7 +118,7 @@ typedef enum {
 @property(nonatomic, strong) NSString *photoPreset;
 @property(nonatomic, strong) NSString *videoPreset;
 
-- (id) initWithFrame:(CGRect)frame andMode:(AVFoundationCameraMode) mode;
+- (id) initWithFrame:(CGRect)frame cameraMode:(AVFoundationCameraMode)mode stillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod;
 - (void) takePicture;
 - (void) startRecordingVideo;
 - (void) stopRecordingVideo;

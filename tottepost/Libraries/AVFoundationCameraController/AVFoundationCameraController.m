@@ -33,7 +33,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface AVFoundationCameraController(PrivateImplementation)
-- (void) setupInitialState:(CGRect)frame andMode:(AVFoundationCameraMode)mode;
+- (void) setupInitialState:(CGRect)frame cameraMode:(AVFoundationCameraMode)mode stillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod;
 - (void) initCameraWithMode:(AVFoundationCameraMode)mode;
 - (void) handleTapGesture: (UITapGestureRecognizer *)recognizer;
 - (void) handlePinchGesture: (UIPinchGestureRecognizer *)recognizer;
@@ -66,7 +66,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 /*!
  * initialize view
  */
--(void)setupInitialState:(CGRect)frame andMode:(AVFoundationCameraMode)mode{    
+-(void)setupInitialState:(CGRect)frame cameraMode:(AVFoundationCameraMode)mode stillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod{
     isApplicationActive_ = YES;
     NSNotificationCenter *notify = [NSNotificationCenter defaultCenter];
     [notify addObserver:self selector:@selector(applicationWillResignActive)
@@ -108,7 +108,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     
     cameraDeviceType_ = AVFoundationCameraDeviceTypeBack;
-    stillCameraMethod_ = AVFoundationStillCameraMethodStandard;
+    stillCameraMethod_ = stillCameraMethod;
     
     photoPreset_ = AVCaptureSessionPresetPhoto;
     videoPreset_ = AVCaptureSessionPresetMedium;
@@ -134,24 +134,26 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     
     if(TARGET_IPHONE_SIMULATOR == NO){
-        AudioSessionInitialize(NULL, NULL, NULL, NULL);  
-        NSError *audioError;
-        [[AVAudioSession sharedInstance] setDelegate:self];
-        [[AVAudioSession sharedInstance]
-         setCategory: AVAudioSessionCategoryPlayback
-         error: &audioError];
-        UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
-        AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
-        
-        UInt32 mixWithOthers = 1;  
-        AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
-        [[AVAudioSession sharedInstance] setActive: YES error: &audioError];
-        AudioSessionSetActive(YES);
-        
-        shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
-        videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
-        [shutterSoundPlayer_ prepareToPlay];
-        [videoBeepSoundPlayer_ prepareToPlay];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AudioSessionInitialize(NULL, NULL, NULL, NULL);  
+            NSError *audioError;
+            [[AVAudioSession sharedInstance] setDelegate:self];
+            [[AVAudioSession sharedInstance]
+             setCategory: AVAudioSessionCategoryPlayback
+             error: &audioError];
+            UInt32 ssnCate = kAudioSessionCategory_MediaPlayback;  
+            AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(ssnCate), &ssnCate);  
+            
+            UInt32 mixWithOthers = 1;  
+            AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(mixWithOthers), &mixWithOthers);  
+            [[AVAudioSession sharedInstance] setActive: YES error: &audioError];
+            AudioSessionSetActive(YES);
+            
+            shutterSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationShutter" withExtension:@"wav"] error:nil];
+            videoBeepSoundPlayer_ = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"AVFoundationVideoBeep" withExtension:@"wav"] error:nil]; 
+            [shutterSoundPlayer_ prepareToPlay];
+            [videoBeepSoundPlayer_ prepareToPlay];
+        });
     }
 }
 
@@ -738,87 +740,89 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 /*!
  * setup AVFoundation
  */
-- (void)setupAVFoundation:(AVFoundationCameraMode)mode{    
-    [session_ stopRunning];
-    session_ = [[AVCaptureSession alloc] init];
-    [session_ beginConfiguration];
-    [session_ removeInput:videoInput_];
-    [session_ removeInput:audioInput_];
-    [session_ removeOutput:videoDataOutput_];
-    [session_ removeOutput:stillImageOutput_];
-    [session_ removeOutput:movieFileOutput_];
-    
-    videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
-    if([session_ canAddInput:videoInput_]){
-        [session_ addInput:videoInput_];
-    }
-    if(mode == AVFoundationCameraModePhoto){
-        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-            stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
-            [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
-                                                  AVVideoCodecJPEG, AVVideoCodecKey,
-                                                  nil]];
-            if([session_ canAddOutput:stillImageOutput_]){
-                [session_ addOutput:stillImageOutput_];
+- (void)setupAVFoundation:(AVFoundationCameraMode)mode{  
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        [session_ stopRunning];
+        session_ = [[AVCaptureSession alloc] init];
+        [session_ beginConfiguration];
+        [session_ removeInput:videoInput_];
+        [session_ removeInput:audioInput_];
+        [session_ removeOutput:videoDataOutput_];
+        [session_ removeOutput:stillImageOutput_];
+        [session_ removeOutput:movieFileOutput_];
+        
+        videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
+        if([session_ canAddInput:videoInput_]){
+            [session_ addInput:videoInput_];
+        }
+        if(mode == AVFoundationCameraModePhoto){
+            if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+                stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
+                [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                                      AVVideoCodecJPEG, AVVideoCodecKey,
+                                                      nil]];
+                if([session_ canAddOutput:stillImageOutput_]){
+                    [session_ addOutput:stillImageOutput_];
+                }
+                for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                    connection.videoOrientation = videoOrientation_;
+                }            
+            }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+                videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
+                [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
+                [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+                dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
+                [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
+                dispatch_release(queue);
+                
+                if([session_ canAddOutput:videoDataOutput_]){
+                    [session_ addOutput:videoDataOutput_];
+                }
+                for (AVCaptureConnection* connection in videoDataOutput_.connections) {
+                    connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+                }
             }
-            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-                connection.videoOrientation = videoOrientation_;
-            }            
-        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
-            videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
-            [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
-            [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-            dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
-            [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
-            dispatch_release(queue);
-            
-            if([session_ canAddOutput:videoDataOutput_]){
-                [session_ addOutput:videoDataOutput_];
+        }else{
+            audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
+            if([session_ canAddInput:audioInput_]){
+                [session_ addInput:audioInput_];
             }
-            for (AVCaptureConnection* connection in videoDataOutput_.connections) {
+            movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
+            if([session_ canAddOutput:movieFileOutput_]){
+                [session_ addOutput:movieFileOutput_];
+            }
+            for (AVCaptureConnection* connection in movieFileOutput_.connections) {
                 connection.videoOrientation = AVCaptureVideoOrientationPortrait;
             }
         }
-    }else{
-        audioInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:self.audioDevice error:nil];
-        if([session_ canAddInput:audioInput_]){
-            [session_ addInput:audioInput_];
+        [session_ commitConfiguration];
+        [indicatorLayer_ removeFromSuperlayer];
+        [previewLayer_ removeFromSuperlayer];
+        previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
+        previewLayer_.automaticallyAdjustsMirroring = NO;
+        previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        previewLayer_.frame = self.view.bounds;
+        [self.view.layer addSublayer:previewLayer_];
+        [self.view.layer addSublayer:indicatorLayer_];
+        
+        if(lastMode_ != AVFoundationCameraModeNotInitialized){
+            [UIView beginAnimations: @"TransitionAnimation" context:nil];
+            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+                                   forView:self.view
+                                     cache:YES];
+            [UIView setAnimationDuration:1.0];
+            [UIView commitAnimations];
         }
-        movieFileOutput_ = [[AVCaptureMovieFileOutput alloc] init];
-        if([session_ canAddOutput:movieFileOutput_]){
-            [session_ addOutput:movieFileOutput_];
-        }
-        for (AVCaptureConnection* connection in movieFileOutput_.connections) {
-            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-        }
-    }
-    [session_ commitConfiguration];
-    [indicatorLayer_ removeFromSuperlayer];
-    [previewLayer_ removeFromSuperlayer];
-    previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
-    previewLayer_.automaticallyAdjustsMirroring = NO;
-    previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    previewLayer_.frame = self.view.bounds;
-    [self.view.layer addSublayer:previewLayer_];
-    [self.view.layer addSublayer:indicatorLayer_];
-    
-    if(lastMode_ != AVFoundationCameraModeNotInitialized){
-        [UIView beginAnimations: @"TransitionAnimation" context:nil];
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
-                               forView:self.view
-                                 cache:YES];
-        [UIView setAnimationDuration:1.0];
-        [UIView commitAnimations];
-    }
-    mode_ = mode;
-    [self applyPreset];
-    [self autofocus];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if(session_.isRunning == NO){
-            [session_ startRunning];
-        }
-    });
-    [self updateCameraControls];
+        mode_ = mode;
+        [self applyPreset];
+        [self autofocus];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if(session_.isRunning == NO){
+                [session_ startRunning];
+            }
+        });
+        [self updateCameraControls];
+    //});
 }
 
 /*!
@@ -857,12 +861,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * initializer
  * @param frame
  */
-- (id)initWithFrame:(CGRect)frame andMode:(AVFoundationCameraMode)mode{
+- (id)initWithFrame:(CGRect)frame cameraMode:(AVFoundationCameraMode)mode stillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod{
     self = [super init];
     if(self){
         mode_ = AVFoundationCameraModeNotInitialized;
         lastMode_ = AVFoundationCameraModeNotInitialized;
-        [self setupInitialState:frame andMode:mode];
+        [self setupInitialState:frame cameraMode:mode stillCameraMethod:stillCameraMethod];
     }
     return self;
 }
@@ -1082,47 +1086,49 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
  * set still capture mode
  */
 - (void)setStillCameraMethod:(AVFoundationStillCameraMethod)stillCameraMethod{
-    if(stillCameraMethod_ == stillCameraMethod){
-        return;
-    }
-    if(mode_ != AVFoundationCameraModePhoto){
-        return;
-    }
-    stillCameraMethod_ = stillCameraMethod;
-    [session_ beginConfiguration];
-    [session_ removeOutput:videoDataOutput_];
-    [session_ removeOutput:stillImageOutput_];
-
-    if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
-        stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
-        [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
-                                              AVVideoCodecJPEG, AVVideoCodecKey,
-                                              nil]];
-        for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(stillCameraMethod_ == stillCameraMethod){
+            return;
         }
-        if([session_ canAddOutput:stillImageOutput_]){
-            [session_ addOutput:stillImageOutput_];
+        if(mode_ != AVFoundationCameraModePhoto){
+            return;
         }
-        for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-            connection.videoOrientation = videoOrientation_;
-        }            
-    }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
-        videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
-        [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
-        [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-        dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
-        [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
-        dispatch_release(queue);
+        stillCameraMethod_ = stillCameraMethod;
+        [session_ beginConfiguration];
+        [session_ removeOutput:videoDataOutput_];
+        [session_ removeOutput:stillImageOutput_];
         
-        if([session_ canAddOutput:videoDataOutput_]){
-            [session_ addOutput:videoDataOutput_];
+        if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
+            stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
+            [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                                  AVVideoCodecJPEG, AVVideoCodecKey,
+                                                  nil]];
+            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            }
+            if([session_ canAddOutput:stillImageOutput_]){
+                [session_ addOutput:stillImageOutput_];
+            }
+            for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+                connection.videoOrientation = videoOrientation_;
+            }            
+        }else if(stillCameraMethod_ == AVFoundationStillCameraMethodVideoCapture){
+            videoDataOutput_ = [[AVCaptureVideoDataOutput alloc] init];
+            [videoDataOutput_ setAlwaysDiscardsLateVideoFrames:YES];
+            [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+            dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
+            [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
+            dispatch_release(queue);
+            
+            if([session_ canAddOutput:videoDataOutput_]){
+                [session_ addOutput:videoDataOutput_];
+            }
+            for (AVCaptureConnection* connection in videoDataOutput_.connections) {
+                connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            }
         }
-        for (AVCaptureConnection* connection in videoDataOutput_.connections) {
-            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-        }
-    }
-    [session_ commitConfiguration];
+        [session_ commitConfiguration];
+    });
 }
 
 /*!
@@ -1306,11 +1312,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
     }else{
         return;
     }
-    [session_ beginConfiguration];
-    for (AVCaptureConnection* connection in stillImageOutput_.connections) {
-        connection.videoOrientation = videoOrientation_;
-    }
-    [session_ commitConfiguration];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [session_ beginConfiguration];
+        for (AVCaptureConnection* connection in stillImageOutput_.connections) {
+            connection.videoOrientation = videoOrientation_;
+        }
+        [session_ commitConfiguration];
+    });
     
     viewOrientation_ = deviceOrientation;
 }
