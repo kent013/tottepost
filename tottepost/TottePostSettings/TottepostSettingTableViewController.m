@@ -66,7 +66,17 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     }
     
     [TottepostSettings sharedInstance].useSilentMode = sender.on;
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:SV_GENERAL_ROW_SHUTTER_VOLUME inSection:SV_SECTION_GENERAL]] withRowAnimation:NO];
+    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:SV_GENERAL_ROW_SHUTTER_VOLUME inSection:SV_SECTION_GENERAL]];
+    UISlider *slider = (UISlider *)cell.accessoryView;
+    if(slider && [slider isKindOfClass:[UISlider class]]){
+        if([TottepostSettings sharedInstance].useSilentMode == NO){
+            slider.enabled = NO;
+            cell.textLabel.textColor = [UIColor grayColor];
+        }else{
+            slider.enabled = YES;
+            cell.textLabel.textColor = [UIColor blackColor];
+        }
+    }
 }
 
 /*!
@@ -166,7 +176,13 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
  * create general setting cell
  */
 - (UITableViewCell *)createGeneralSettingCell:(int)tag{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    NSString *identifier = [NSString stringWithFormat:@"general_%d", tag];
+    UITableViewCell *cell = [cells_ objectForKey:identifier];
+    if(cell){
+        return cell;
+    }
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+    
     if(tag == SV_GENERAL_ROW_PHOTO_PRESET){
         cell.textLabel.text = [TTLang localized:@"Settings_Row_PhotoPreset"];
         cell.imageView.image = [UIImage imageNamed:@"photoResolution.png"];
@@ -230,9 +246,14 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
     }else{
         return [super createGeneralSettingCell:tag];
     }
+    
+    [cells_ setObject:cell forKey:identifier];
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+
+}
 
 #pragma mark -
 #pragma mark AboutSettingViewController delegate
