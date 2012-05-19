@@ -159,6 +159,10 @@
         tags = common
         en = Off
         ja = オフ
+    [Flash_On]
+        tags = common
+        en = On
+        ja = オン
     [Flash_Auto]
         tags = common
         en = Auto

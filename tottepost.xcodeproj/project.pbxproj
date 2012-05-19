@@ -532,6 +532,8 @@
 		79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
 		79865F8E153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
+		7986EE151564E8DB00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7986EE131564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7986EE161564E8DC00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7986EE131564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7988272915315A6200DCDB67 /* SalesforcePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */; };
 		7988272A15315A6200DCDB67 /* SalesforcePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */; };
 		798827791531729400DCDB67 /* SFAuthContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7988274D1531729400DCDB67 /* SFAuthContext.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -623,7 +625,7 @@
 		79924B51150CAE180043C16D /* TTLang.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E392F14AC6A8800F17AC4 /* TTLang.m */; };
 		79924B52150CAE180043C16D /* SettingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797E395314B0377200F17AC4 /* SettingIndicatorView.m */; };
 		79924B54150CAE180043C16D /* AVFoundationCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */; };
-		79924B55150CAE180043C16D /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
+		79924B55150CAE180043C16D /* AVFoundationFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */; };
 		79924B56150CAE180043C16D /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD414D2BCDE0094389D /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924B57150CAE180043C16D /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79823CD614D2BCDE0094389D /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		79924B58150CAE180043C16D /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
@@ -1071,7 +1073,7 @@
 		79F58B6B152B3E8200EB98F5 /* PhotoSubmitterContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B65152B3E8200EB98F5 /* PhotoSubmitterContentEntity.m */; };
 		79F58B6C152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */; };
 		79F58B6D152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */; };
-		EA76226F14D0312100C54159 /* FlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* FlashButton.m */; };
+		EA76226F14D0312100C54159 /* AVFoundationFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
 /* End PBXBuildFile section */
@@ -2211,6 +2213,8 @@
 		79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccount.m; sourceTree = "<group>"; };
 		79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountManager.h; sourceTree = "<group>"; };
 		79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccountManager.m; sourceTree = "<group>"; };
+		7986EE121564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiSDKAuthorizerWebViewController.h; sourceTree = "<group>"; };
+		7986EE131564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixiSDKAuthorizerWebViewController.m; sourceTree = "<group>"; };
 		7988272715315A6200DCDB67 /* SalesforcePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforcePhotoSubmitter.h; sourceTree = "<group>"; };
 		7988272815315A6200DCDB67 /* SalesforcePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalesforcePhotoSubmitter.m; sourceTree = "<group>"; };
 		7988272D1531625A00DCDB67 /* SalesforceAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceAPIKey.h; sourceTree = "<group>"; };
@@ -2438,8 +2442,8 @@
 		79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterImageEntity.m; sourceTree = "<group>"; };
 		79F58B68152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterVideoEntity.h; sourceTree = "<group>"; };
 		79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterVideoEntity.m; sourceTree = "<group>"; };
-		EA76226D14D0312100C54159 /* FlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashButton.h; path = Libraries/AVFoundationCameraController/FlashButton.h; sourceTree = "<group>"; };
-		EA76226E14D0312100C54159 /* FlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashButton.m; path = Libraries/AVFoundationCameraController/FlashButton.m; sourceTree = "<group>"; };
+		EA76226D14D0312100C54159 /* AVFoundationFlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationFlashButton.h; path = Libraries/AVFoundationCameraController/AVFoundationFlashButton.h; sourceTree = "<group>"; };
+		EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationFlashButton.m; path = Libraries/AVFoundationCameraController/AVFoundationFlashButton.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
 		EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPGrowingTextView.m; path = Libraries/HPGrowingTextView/HPGrowingTextView.m; sourceTree = "<group>"; };
 		EAAC412414E939AD00CDC2CC /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTextViewInternal.h; path = Libraries/HPGrowingTextView/HPTextViewInternal.h; sourceTree = "<group>"; };
@@ -3614,6 +3618,8 @@
 				7901ADF8150683B4003DA0DC /* MixiDownloadWebViewController.m */,
 				7901ADF9150683B4003DA0DC /* MixiDownloadWebViewDelegate.h */,
 				7901ADFA150683B4003DA0DC /* MixiDownloadWebViewDelegate.m */,
+				7986EE121564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.h */,
+				7986EE131564E8CB00D95625 /* MixiSDKAuthorizerWebViewController.m */,
 				7901ADFB150683B4003DA0DC /* MixiOrientationDelegate.h */,
 				7901ADFC150683B4003DA0DC /* MixiViewController.h */,
 				7901ADFD150683B4003DA0DC /* MixiViewController.m */,
@@ -3668,8 +3674,8 @@
 		7901AE0C150683B4003DA0DC /* GData */ = {
 			isa = PBXGroup;
 			children = (
-				7901AE0D150683B4003DA0DC /* GTMOAuth2ViewTouch.xib */,
 				7901AE0E150683B4003DA0DC /* Headers */,
+				7901AE0D150683B4003DA0DC /* GTMOAuth2ViewTouch.xib */,
 				7901AF48150683B4003DA0DC /* libGDataTouchStaticLib.a */,
 			);
 			path = GData;
@@ -4521,8 +4527,8 @@
 				7980588A14C86CC9006E3817 /* AVFoundationCameraController.m */,
 				79E7054715145585000C792B /* AVFoundationPreset.h */,
 				79E7054815145586000C792B /* AVFoundationPreset.m */,
-				EA76226D14D0312100C54159 /* FlashButton.h */,
-				EA76226E14D0312100C54159 /* FlashButton.m */,
+				EA76226D14D0312100C54159 /* AVFoundationFlashButton.h */,
+				EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */,
 			);
 			name = AVFoundationCameraController;
 			sourceTree = "<group>";
@@ -5581,7 +5587,7 @@
 				797E393014AC6A8800F17AC4 /* TTLang.m in Sources */,
 				797E395414B0377200F17AC4 /* SettingIndicatorView.m in Sources */,
 				7980588B14C86CC9006E3817 /* AVFoundationCameraController.m in Sources */,
-				EA76226F14D0312100C54159 /* FlashButton.m in Sources */,
+				EA76226F14D0312100C54159 /* AVFoundationFlashButton.m in Sources */,
 				79823CD714D2BCDE0094389D /* AAMFeedbackTopicsViewController.m in Sources */,
 				79823CD814D2BCDE0094389D /* AAMFeedbackViewController.m in Sources */,
 				EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */,
@@ -5901,6 +5907,7 @@
 				79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
 				7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
 				7985C65815429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
+				7986EE161564E8DC00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5930,7 +5937,7 @@
 				79924B51150CAE180043C16D /* TTLang.m in Sources */,
 				79924B52150CAE180043C16D /* SettingIndicatorView.m in Sources */,
 				79924B54150CAE180043C16D /* AVFoundationCameraController.m in Sources */,
-				79924B55150CAE180043C16D /* FlashButton.m in Sources */,
+				79924B55150CAE180043C16D /* AVFoundationFlashButton.m in Sources */,
 				79924B56150CAE180043C16D /* AAMFeedbackTopicsViewController.m in Sources */,
 				79924B57150CAE180043C16D /* AAMFeedbackViewController.m in Sources */,
 				79924B58150CAE180043C16D /* HPGrowingTextView.m in Sources */,
@@ -6250,6 +6257,7 @@
 				79865F8E153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */,
 				7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
 				7985C65915429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
+				7986EE151564E8DB00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6359,8 +6367,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				COPY_PHASE_STRIP = YES;
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -6371,8 +6379,8 @@
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -6425,8 +6433,8 @@
 		376E15671494C47800A34E7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					ISO8601DateFormatter.h,
 					ISO8601DateFormatter.m,
@@ -6457,8 +6465,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = tottepost;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
 				WRAPPER_EXTENSION = app;
@@ -6548,8 +6556,8 @@
 		79924CFA150CAE180043C16D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6581,8 +6589,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "tottepost lite";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
 				WRAPPER_EXTENSION = app;
@@ -6592,9 +6600,9 @@
 		79924CFB150CAE180043C16D /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6626,16 +6634,16 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "tottepost lite";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
 		};
-		79CF53B814D448860035032D /* Distribution */ = {
+		79B15A7F1550478E00FFBD0D /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -6653,20 +6661,20 @@
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "57FDFC23-A344-4785-8490-78FAE82A2FFA";
-				"PROVISIONING_PROFILE[sdk=*]" = "57FDFC23-A344-4785-8490-78FAE82A2FFA";
+				PROVISIONING_PROFILE = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				"PROVISIONING_PROFILE[sdk=*]" = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Distribution;
+			name = Adhoc;
 		};
-		79CF53B914D448860035032D /* Distribution */ = {
+		79B15A801550478E00FFBD0D /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					ISO8601DateFormatter.h,
 					ISO8601DateFormatter.m,
@@ -6697,9 +6705,144 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = tottepost;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				"PROVISIONING_PROFILE[sdk=*]" = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Adhoc;
+		};
+		79B15A811550478E00FFBD0D /* Adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				EXCLUDED_SOURCE_FILE_NAMES = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/**",
+					"/usr/include/libxml2/**",
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+				);
+				INFOPLIST_FILE = "tottepost/tottepost-lite-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/FlickrPhotoSubmitter/Libraries/objectiveflickr\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/FotolifePhotoSubmitter/Libraries/objc-atompub\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries/DropboxSDK\"",
+				);
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DLITE_VERSION=1",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "tottepost lite";
+				PROVISIONING_PROFILE = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				"PROVISIONING_PROFILE[sdk=*]" = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Adhoc;
+		};
+		79B15A821550478E00FFBD0D /* Adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tottepost.app/tottepost";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				INFOPLIST_FILE = "tottepostTests/tottepostTests-Info.plist";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Adhoc;
+		};
+		79CF53B814D448860035032D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				COPY_PHASE_STRIP = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		79CF53B914D448860035032D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					ISO8601DateFormatter.h,
+					ISO8601DateFormatter.m,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tottepost/tottepost-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/**",
+					"/usr/include/libxml2/**",
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+				);
+				INFOPLIST_FILE = "tottepost/tottepost-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/FlickrPhotoSubmitter/Libraries/objectiveflickr\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/FotolifePhotoSubmitter/Libraries/objc-atompub\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData\"",
+					"\"$(SRCROOT)/PhotoSubmitter/Services/DropboxPhotoSubmitter/Libraries/DropboxSDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = tottepost;
+				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
 				WRAPPER_EXTENSION = app;
@@ -6733,6 +6876,7 @@
 				376E15631494C47800A34E7D /* Debug */,
 				376E15641494C47800A34E7D /* Release */,
 				79CF53B814D448860035032D /* Distribution */,
+				79B15A7F1550478E00FFBD0D /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -6743,6 +6887,7 @@
 				376E15661494C47800A34E7D /* Debug */,
 				376E15671494C47800A34E7D /* Release */,
 				79CF53B914D448860035032D /* Distribution */,
+				79B15A801550478E00FFBD0D /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -6753,6 +6898,7 @@
 				376E15691494C47800A34E7D /* Debug */,
 				376E156A1494C47800A34E7D /* Release */,
 				79CF53BA14D448860035032D /* Distribution */,
+				79B15A821550478E00FFBD0D /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -6763,6 +6909,7 @@
 				79924CF9150CAE180043C16D /* Debug */,
 				79924CFA150CAE180043C16D /* Release */,
 				79924CFB150CAE180043C16D /* Distribution */,
+				79B15A811550478E00FFBD0D /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

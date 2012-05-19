@@ -11,7 +11,7 @@
 
 @protocol FlashButtonDelegate;
 
-@interface FlashButton : UIButton{
+@interface AVFoundationFlashButton : UIButton{
     __strong UILabel* label;
     __strong UIImageView* flashImageView_;
     __strong UIButton* onButton_;

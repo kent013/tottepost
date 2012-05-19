@@ -45,7 +45,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
 - (void) createCameraController;
-- (void) firstLaunched;
 - (void) onVideoButtonTimer;
 - (void) updateCameraIconImageView;
 - (void) cleanupVideoMode;
@@ -166,14 +165,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
         [self.view addSubview:launchImageView_];
-    }
-    
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    BOOL isNotFirstLaunched = [defaults boolForKey:@"IsNotFirstLaunched"];
-    if(isNotFirstLaunched == false)
-    {
-        [self firstLaunched];
-        [defaults setBool:YES forKey:@"IsNotFirstLaunched"];
     }
 }
 
@@ -446,16 +437,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [launchImageView_ removeFromSuperview];
     }
     [self updateCameraController];
-}
-
-/*!
- * first launched
- */
-- (void) firstLaunched{
-    UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:[TTLang localized:@"FirstAlert_Title"] message:[TTLang localized:@"FirstAlert_Message"]
-                              delegate:nil cancelButtonTitle:[TTLang localized:@"FirstAlert_OK"] otherButtonTitles:nil];
-    [alert show];
 }
 
 /*!

@@ -91,7 +91,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     shutterButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [shutterButton_ setTitle:@"Shutter" forState:UIControlStateNormal]; 
     [shutterButton_ addTarget:self action:@selector(handleShutterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    flashModeButton_ = [[FlashButton alloc] init];
+    flashModeButton_ = [[AVFoundationFlashButton alloc] init];
     flashModeButton_.delegate = self;
     cameraDeviceButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
     [cameraDeviceButton_ setBackgroundImage:[UIImage imageNamed:@"camera_change.png"] forState:UIControlStateNormal];
@@ -357,6 +357,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  */
 - (void) autofocus{
     if (adjustingExposure_) {
+        NSLog(@"adjusting");
         return;
     }
     NSError* error = nil;
@@ -741,14 +742,27 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  * setup AVFoundation
  */
 - (void)setupAVFoundation:(AVFoundationCameraMode)mode{  
+    
+    if(cameraDeviceType_ == AVFoundationCameraDeviceTypeBack){
+        device_ = self.backCameraDevice;
+    }else{
+        device_ = self.frontFacingCameraDevice;
+    }
+    NSError *error = nil;
+    [device_ lockForConfiguration:&error];
+    device_.flashMode = flashModeButton_.flashMode;
+    [device_ unlockForConfiguration];
+
     [session_ stopRunning];
-    session_ = [[AVCaptureSession alloc] init];
+
     [session_ beginConfiguration];
     [session_ removeInput:videoInput_];
     [session_ removeInput:audioInput_];
     [session_ removeOutput:videoDataOutput_];
     [session_ removeOutput:stillImageOutput_];
     [session_ removeOutput:movieFileOutput_];
+    
+    session_ = [[AVCaptureSession alloc] init];
     
     videoInput_ = [[AVCaptureDeviceInput alloc] initWithDevice:device_ error:nil];
     if([session_ canAddInput:videoInput_]){
@@ -1092,10 +1106,15 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
             return;
         }
         stillCameraMethod_ = stillCameraMethod;
+        
+        NSError *error = nil;
+        [device_ lockForConfiguration:&error];
+        device_.flashMode = flashModeButton_.flashMode;
+        [device_ unlockForConfiguration];
+
         [session_ beginConfiguration];
         [session_ removeOutput:videoDataOutput_];
         [session_ removeOutput:stillImageOutput_];
-        
         if(stillCameraMethod_ == AVFoundationStillCameraMethodStandard){
             stillImageOutput_ = [[AVCaptureStillImageOutput alloc] init];
             [stillImageOutput_ setOutputSettings:[[NSDictionary alloc] initWithObjectsAndKeys:

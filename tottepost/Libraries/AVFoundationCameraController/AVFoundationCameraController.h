@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "FlashButton.h"
+#import "AVFoundationFlashButton.h"
 
 typedef enum {
     AVFoundationCameraModeNotInitialized = -2,
@@ -42,7 +42,7 @@ typedef enum {
     __strong AVCaptureStillImageOutput *stillImageOutput_;
     __strong CALayer *indicatorLayer_;
     __strong UIButton *shutterButton_;
-    __strong FlashButton *flashModeButton_;
+    __strong AVFoundationFlashButton *flashModeButton_;
     __strong UIButton *cameraDeviceButton_;    
     __strong UIView *cameraControlView_;
     

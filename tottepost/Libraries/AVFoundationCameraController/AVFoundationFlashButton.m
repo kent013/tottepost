@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Ken Watanabe. All rights reserved.
 //
 
-#import "FlashButton.h"
+#import "AVFoundationFlashButton.h"
 #import "TTLang.h"
 #import "AVFoundationCameraController.h"
 
@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
-@interface FlashButton(PrivateImplementation)
+@interface AVFoundationFlashButton(PrivateImplementation)
 - (void) setText;
 - (void) open;
 - (void) close;
@@ -27,7 +27,7 @@
 - (void) setFrame:(CGRect)frame;
 @end
 
-@implementation FlashButton(PrivateImplementation)
+@implementation AVFoundationFlashButton(PrivateImplementation)
 
 /*!
  * initialize view
@@ -164,7 +164,7 @@
 
 @end
 
-@implementation FlashButton
+@implementation AVFoundationFlashButton
 @synthesize flashMode = flashMode_;
 @synthesize delegate = delegate_;
 @dynamic isOpen;
