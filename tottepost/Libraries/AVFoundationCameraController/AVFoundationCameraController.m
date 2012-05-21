@@ -121,7 +121,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     showsSquareGrid_ = NO;
     useTapToFocus_ = YES;
     showsVideoElapsedTimeLabel_ = YES;
-    freezeAfterShutter_ = YES;
+    freezeAfterShutter_ = NO;
     self.freezeInterval = 0.1;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
