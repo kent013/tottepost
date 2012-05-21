@@ -328,7 +328,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     
-    if(imagePicker_.showsSquareGrid){
+    if(imagePicker_.showsSquareGrid && content.isPhoto){
         PhotoSubmitterImageEntity *image = (PhotoSubmitterImageEntity *)content;
         image.squareCropRect = imagePicker_.squareGridRect;
         content = image;
