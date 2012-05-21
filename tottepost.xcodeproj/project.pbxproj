@@ -519,24 +519,8 @@
 		79848D13156893D900798E3C /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79848D11156893D900798E3C /* libGDataTouchStaticLib.a */; };
 		79848D2615689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */; };
 		79848D2715689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */; };
-		79848D2815689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1915689F5100798E3C /* picasa_16.png */; };
-		79848D2915689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1915689F5100798E3C /* picasa_16.png */; };
-		79848D2A15689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1A15689F5100798E3C /* picasa_16@2x.png */; };
-		79848D2B15689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1A15689F5100798E3C /* picasa_16@2x.png */; };
-		79848D2C15689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1B15689F5100798E3C /* picasa_32.png */; };
-		79848D2D15689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1B15689F5100798E3C /* picasa_32.png */; };
-		79848D2E15689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1C15689F5100798E3C /* picasa_32@2x.png */; };
-		79848D2F15689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1C15689F5100798E3C /* picasa_32@2x.png */; };
 		79848D3015689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */; };
 		79848D3115689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */; };
-		79848D3215689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2215689F5100798E3C /* picasa_16.png */; };
-		79848D3315689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2215689F5100798E3C /* picasa_16.png */; };
-		79848D3415689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2315689F5100798E3C /* picasa_16@2x.png */; };
-		79848D3515689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2315689F5100798E3C /* picasa_16@2x.png */; };
-		79848D3615689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2415689F5100798E3C /* picasa_32.png */; };
-		79848D3715689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2415689F5100798E3C /* picasa_32.png */; };
-		79848D3815689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2515689F5100798E3C /* picasa_32@2x.png */; };
-		79848D3915689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2515689F5100798E3C /* picasa_32@2x.png */; };
 		7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
 		7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
 		7985C64E154299E400083F0C /* mail_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C648154299E400083F0C /* mail_16.png */; };
@@ -1061,6 +1045,22 @@
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
 		79E2C160156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */; };
 		79E2C161156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */; };
+		79E2C166156A5381001C82C3 /* gdrive_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C162156A5380001C82C3 /* gdrive_16.png */; };
+		79E2C167156A5381001C82C3 /* gdrive_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C162156A5380001C82C3 /* gdrive_16.png */; };
+		79E2C168156A5381001C82C3 /* gdrive_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C163156A5380001C82C3 /* gdrive_16@2x.png */; };
+		79E2C169156A5381001C82C3 /* gdrive_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C163156A5380001C82C3 /* gdrive_16@2x.png */; };
+		79E2C16A156A5381001C82C3 /* gdrive_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C164156A5380001C82C3 /* gdrive_32.png */; };
+		79E2C16B156A5381001C82C3 /* gdrive_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C164156A5380001C82C3 /* gdrive_32.png */; };
+		79E2C16C156A5381001C82C3 /* gdrive_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C165156A5380001C82C3 /* gdrive_32@2x.png */; };
+		79E2C16D156A5381001C82C3 /* gdrive_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C165156A5380001C82C3 /* gdrive_32@2x.png */; };
+		79E2C172156A538F001C82C3 /* instagram_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C16E156A538F001C82C3 /* instagram_16.png */; };
+		79E2C173156A538F001C82C3 /* instagram_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C16E156A538F001C82C3 /* instagram_16.png */; };
+		79E2C174156A538F001C82C3 /* instagram_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C16F156A538F001C82C3 /* instagram_16@2x.png */; };
+		79E2C175156A538F001C82C3 /* instagram_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C16F156A538F001C82C3 /* instagram_16@2x.png */; };
+		79E2C176156A538F001C82C3 /* instagram_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C170156A538F001C82C3 /* instagram_32.png */; };
+		79E2C177156A538F001C82C3 /* instagram_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C170156A538F001C82C3 /* instagram_32.png */; };
+		79E2C178156A538F001C82C3 /* instagram_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C171156A538F001C82C3 /* instagram_32@2x.png */; };
+		79E2C179156A538F001C82C3 /* instagram_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E2C171156A538F001C82C3 /* instagram_32@2x.png */; };
 		79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
 		79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
 		79E70545151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */; };
@@ -2225,16 +2225,8 @@
 		79848D11156893D900798E3C /* libGDataTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDataTouchStaticLib.a; path = PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData/libGDataTouchStaticLib.a; sourceTree = SOURCE_ROOT; };
 		79848D1515689F5100798E3C /* GDrivePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDrivePhotoSubmitter.h; sourceTree = "<group>"; };
 		79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDrivePhotoSubmitter.m; sourceTree = "<group>"; };
-		79848D1915689F5100798E3C /* picasa_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_16.png; sourceTree = "<group>"; };
-		79848D1A15689F5100798E3C /* picasa_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_16@2x.png"; sourceTree = "<group>"; };
-		79848D1B15689F5100798E3C /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_32.png; sourceTree = "<group>"; };
-		79848D1C15689F5100798E3C /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_32@2x.png"; sourceTree = "<group>"; };
 		79848D1E15689F5100798E3C /* InstagramPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramPhotoSubmitter.h; sourceTree = "<group>"; };
 		79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramPhotoSubmitter.m; sourceTree = "<group>"; };
-		79848D2215689F5100798E3C /* picasa_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_16.png; sourceTree = "<group>"; };
-		79848D2315689F5100798E3C /* picasa_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_16@2x.png"; sourceTree = "<group>"; };
-		79848D2415689F5100798E3C /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_32.png; sourceTree = "<group>"; };
-		79848D2515689F5100798E3C /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_32@2x.png"; sourceTree = "<group>"; };
 		79848D3A1568A23F00798E3C /* GDriveAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDriveAPIKey.h; sourceTree = "<group>"; };
 		7985C644154299E400083F0C /* MailPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitter.h; sourceTree = "<group>"; };
 		7985C645154299E400083F0C /* MailPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitter.m; sourceTree = "<group>"; };
@@ -2434,6 +2426,14 @@
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
 		79E2C15E156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDrivePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDrivePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		79E2C162156A5380001C82C3 /* gdrive_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gdrive_16.png; sourceTree = "<group>"; };
+		79E2C163156A5380001C82C3 /* gdrive_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdrive_16@2x.png"; sourceTree = "<group>"; };
+		79E2C164156A5380001C82C3 /* gdrive_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gdrive_32.png; sourceTree = "<group>"; };
+		79E2C165156A5380001C82C3 /* gdrive_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdrive_32@2x.png"; sourceTree = "<group>"; };
+		79E2C16E156A538F001C82C3 /* instagram_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = instagram_16.png; sourceTree = "<group>"; };
+		79E2C16F156A538F001C82C3 /* instagram_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instagram_16@2x.png"; sourceTree = "<group>"; };
+		79E2C170156A538F001C82C3 /* instagram_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = instagram_32.png; sourceTree = "<group>"; };
+		79E2C171156A538F001C82C3 /* instagram_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instagram_32@2x.png"; sourceTree = "<group>"; };
 		79E7052715135C82000C792B /* CameraModeSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraModeSwitchView.h; sourceTree = "<group>"; };
 		79E7052815135C82000C792B /* CameraModeSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraModeSwitchView.m; sourceTree = "<group>"; };
 		79E705381513B518000C792B /* test_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpg; sourceTree = "<group>"; };
@@ -4620,10 +4620,10 @@
 		79848D1815689F5100798E3C /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				79848D1915689F5100798E3C /* picasa_16.png */,
-				79848D1A15689F5100798E3C /* picasa_16@2x.png */,
-				79848D1B15689F5100798E3C /* picasa_32.png */,
-				79848D1C15689F5100798E3C /* picasa_32@2x.png */,
+				79E2C162156A5380001C82C3 /* gdrive_16.png */,
+				79E2C163156A5380001C82C3 /* gdrive_16@2x.png */,
+				79E2C164156A5380001C82C3 /* gdrive_32.png */,
+				79E2C165156A5380001C82C3 /* gdrive_32@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -4649,10 +4649,10 @@
 		79848D2115689F5100798E3C /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				79848D2215689F5100798E3C /* picasa_16.png */,
-				79848D2315689F5100798E3C /* picasa_16@2x.png */,
-				79848D2415689F5100798E3C /* picasa_32.png */,
-				79848D2515689F5100798E3C /* picasa_32@2x.png */,
+				79E2C16E156A538F001C82C3 /* instagram_16.png */,
+				79E2C16F156A538F001C82C3 /* instagram_16@2x.png */,
+				79E2C170156A538F001C82C3 /* instagram_32.png */,
+				79E2C171156A538F001C82C3 /* instagram_32@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -5463,14 +5463,14 @@
 				7985C650154299E400083F0C /* mail_16@2x.png in Resources */,
 				7985C652154299E400083F0C /* mail_32.png in Resources */,
 				7985C654154299E400083F0C /* mail_32@2x.png in Resources */,
-				79848D2815689F5100798E3C /* picasa_16.png in Resources */,
-				79848D2A15689F5100798E3C /* picasa_16@2x.png in Resources */,
-				79848D2C15689F5100798E3C /* picasa_32.png in Resources */,
-				79848D2E15689F5100798E3C /* picasa_32@2x.png in Resources */,
-				79848D3215689F5100798E3C /* picasa_16.png in Resources */,
-				79848D3415689F5100798E3C /* picasa_16@2x.png in Resources */,
-				79848D3615689F5100798E3C /* picasa_32.png in Resources */,
-				79848D3815689F5100798E3C /* picasa_32@2x.png in Resources */,
+				79E2C166156A5381001C82C3 /* gdrive_16.png in Resources */,
+				79E2C168156A5381001C82C3 /* gdrive_16@2x.png in Resources */,
+				79E2C16A156A5381001C82C3 /* gdrive_32.png in Resources */,
+				79E2C16C156A5381001C82C3 /* gdrive_32@2x.png in Resources */,
+				79E2C172156A538F001C82C3 /* instagram_16.png in Resources */,
+				79E2C174156A538F001C82C3 /* instagram_16@2x.png in Resources */,
+				79E2C176156A538F001C82C3 /* instagram_32.png in Resources */,
+				79E2C178156A538F001C82C3 /* instagram_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5655,14 +5655,14 @@
 				7985C651154299E400083F0C /* mail_16@2x.png in Resources */,
 				7985C653154299E400083F0C /* mail_32.png in Resources */,
 				7985C655154299E400083F0C /* mail_32@2x.png in Resources */,
-				79848D2915689F5100798E3C /* picasa_16.png in Resources */,
-				79848D2B15689F5100798E3C /* picasa_16@2x.png in Resources */,
-				79848D2D15689F5100798E3C /* picasa_32.png in Resources */,
-				79848D2F15689F5100798E3C /* picasa_32@2x.png in Resources */,
-				79848D3315689F5100798E3C /* picasa_16.png in Resources */,
-				79848D3515689F5100798E3C /* picasa_16@2x.png in Resources */,
-				79848D3715689F5100798E3C /* picasa_32.png in Resources */,
-				79848D3915689F5100798E3C /* picasa_32@2x.png in Resources */,
+				79E2C167156A5381001C82C3 /* gdrive_16.png in Resources */,
+				79E2C169156A5381001C82C3 /* gdrive_16@2x.png in Resources */,
+				79E2C16B156A5381001C82C3 /* gdrive_32.png in Resources */,
+				79E2C16D156A5381001C82C3 /* gdrive_32@2x.png in Resources */,
+				79E2C173156A538F001C82C3 /* instagram_16.png in Resources */,
+				79E2C175156A538F001C82C3 /* instagram_16@2x.png in Resources */,
+				79E2C177156A538F001C82C3 /* instagram_32.png in Resources */,
+				79E2C179156A538F001C82C3 /* instagram_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
