@@ -328,8 +328,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         return;
     }
     
+    if(imagePicker_.showsSquareGrid){
+        PhotoSubmitterImageEntity *image = (PhotoSubmitterImageEntity *)content;
+        image.squareCropRect = imagePicker_.squareGridRect;
+        content = image;
+    }
+    
     if(content.isPhoto){
-        [manager submitPhoto:(PhotoSubmitterImageEntity *) content];
+        [manager submitPhoto:(PhotoSubmitterImageEntity *)content];
     }else if(content.isVideo){
         [manager submitVideo:(PhotoSubmitterVideoEntity *)content];
     }
@@ -433,6 +439,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
+        if([PhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
+            imagePicker_.showsSquareGrid = YES;
+        }
         [self applyCameraConfiguration];
         [launchImageView_ removeFromSuperview];
     }
@@ -734,6 +743,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         frame.origin.y = 0;
         frame.size.height += MAINVIEW_STATUS_BAR_HEIGHT;
         [self.view setFrame:frame];
+    }
+    if([PhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
+        imagePicker_.showsSquareGrid = YES;
+    }else{
+        imagePicker_.showsSquareGrid = NO;
     }
     if(self.refreshCameraNeeded){
         refreshCameraNeeded_ = NO;

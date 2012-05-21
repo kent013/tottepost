@@ -118,6 +118,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     showsCameraControls_ = YES;
     showsShutterButton_ = YES;
     showsIndicator_ = YES;
+    showsSquareGrid_ = NO;
     useTapToFocus_ = YES;
     showsVideoElapsedTimeLabel_ = YES;
     freezeAfterShutter_ = YES;
@@ -181,7 +182,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         device_ = self.frontFacingCameraDevice;
     }
     
-    // add layer
+    // add indicator layer
     [indicatorLayer_ removeFromSuperlayer];
     indicatorLayer_ = [CALayer layer];
     indicatorLayer_.borderColor = [[UIColor whiteColor] CGColor];
@@ -191,7 +192,22 @@ NSString *kTempVideoURL = @"kTempVideoURL";
                self.view.bounds.size.height/2.0 - INDICATOR_RECT_SIZE/2.0,
                INDICATOR_RECT_SIZE,
                INDICATOR_RECT_SIZE);
-    indicatorLayer_.hidden = NO;
+    indicatorLayer_.hidden = showsIndicator_;
+    
+    //add square grid layer
+    [squareGridLayer_ removeFromSuperlayer];
+    squareGridLayer_ = [CALayer layer];
+    squareGridLayer_.borderColor = [[UIColor whiteColor] CGColor];
+    squareGridLayer_.borderWidth = 1.0;
+    
+    CGFloat h = self.view.bounds.size.width;
+    if(self.view.bounds.size.height < self.view.bounds.size.width){
+        h = self.view.bounds.size.height;
+    }
+    squareGridLayer_.frame = 
+    CGRectMake((self.view.bounds.size.width - h) / 2.7,
+               (self.view.bounds.size.height - h) / 2.7, h, h);
+    squareGridLayer_.hidden = showsSquareGrid_;
 
     //set mode initializes session
     [self setupAVFoundation:mode];
@@ -215,6 +231,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     [cameraDeviceButton_ removeFromSuperview];
     [videoElapsedTimeLabel_ removeFromSuperview];
     indicatorLayer_.hidden = YES;
+    squareGridLayer_.hidden = YES;
     
     CGRect f = self.view.frame;
     if(mode_ == AVFoundationCameraModeVideo ){
@@ -242,6 +259,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         }
         if(showsIndicator_){
             indicatorLayer_.hidden = NO;
+        }
+        if(showsSquareGrid_){
+            squareGridLayer_.hidden = NO;
         }
     }
 }
@@ -357,7 +377,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  */
 - (void) autofocus{
     if (adjustingExposure_) {
-        NSLog(@"adjusting");
         return;
     }
     NSError* error = nil;
@@ -813,6 +832,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     }
     [session_ commitConfiguration];
     [indicatorLayer_ removeFromSuperlayer];
+    [squareGridLayer_ removeFromSuperlayer];
     [previewLayer_ removeFromSuperlayer];
     previewLayer_ = [AVCaptureVideoPreviewLayer layerWithSession:session_];
     previewLayer_.automaticallyAdjustsMirroring = NO;
@@ -820,6 +840,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     previewLayer_.frame = self.view.bounds;
     [self.view.layer addSublayer:previewLayer_];
     [self.view.layer addSublayer:indicatorLayer_];
+    [self.view.layer addSublayer:squareGridLayer_];
     
     if(lastMode_ != AVFoundationCameraModeNotInitialized){
         [UIView beginAnimations: @"TransitionAnimation" context:nil];
@@ -859,6 +880,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize showsShutterButton = showsShutterButton_;
 @synthesize showsVideoElapsedTimeLabel = showsVideoElapsedTimeLabel_;
 @synthesize showsIndicator = showsIndicator_;
+@synthesize showsSquareGrid = showsSquareGrid_;
 @synthesize useTapToFocus = useTapToFocus_;
 @synthesize freezeAfterShutter = freezeAfterShutter_;
 @synthesize freezeInterval;
@@ -869,6 +891,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize photoPreset = photoPreset_;
 @synthesize videoPreset = videoPreset_;
 @synthesize soundVolume = soundVolume_;
+@synthesize squareGridRect;
 
 #pragma mark -
 #pragma mark public implementation
@@ -1212,6 +1235,21 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
 - (void)setShowsIndicator:(BOOL)showsIndicator{
     showsIndicator_ = showsIndicator;
     [self updateCameraControls];
+}
+
+/*!
+ * shows squareGrid
+ */
+- (void)setShowsSquareGrid:(BOOL)showsSquareGrid{
+    showsSquareGrid_ = showsSquareGrid;
+    [self updateCameraControls];
+}
+
+/*!
+ * square grid rect
+ */
+- (CGRect)squareGridRect{
+    return squareGridLayer_.frame;
 }
 
 /*!

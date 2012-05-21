@@ -41,6 +41,7 @@ typedef enum {
     __strong AVCaptureMovieFileOutput *movieFileOutput_;
     __strong AVCaptureStillImageOutput *stillImageOutput_;
     __strong CALayer *indicatorLayer_;
+    __strong CALayer *squareGridLayer_;
     __strong UIButton *shutterButton_;
     __strong AVFoundationFlashButton *flashModeButton_;
     __strong UIButton *cameraDeviceButton_;    
@@ -65,6 +66,7 @@ typedef enum {
     BOOL showsIndicator_;
     BOOL useTapToFocus_;
     BOOL freezeAfterShutter_;
+    BOOL showsSquareGrid_;
     
     NSDate *videoRecordingStartedDate_;
     
@@ -100,6 +102,7 @@ typedef enum {
 @property(nonatomic, assign) BOOL showsCameraDeviceButton;
 @property(nonatomic, assign) BOOL showsIndicator;
 @property(nonatomic, assign) BOOL showsVideoElapsedTimeLabel;
+@property(nonatomic, assign) BOOL showsSquareGrid;
 @property(nonatomic, assign) BOOL useTapToFocus;
 @property(nonatomic, assign) BOOL freezeAfterShutter;
 @property(nonatomic, assign) CGFloat soundVolume;
@@ -114,6 +117,7 @@ typedef enum {
 @property(nonatomic, readonly) BOOL frontFacingCameraAvailable;
 @property(nonatomic, readonly) BOOL backCameraAvailable;
 @property(nonatomic, readonly) BOOL isRecordingVideo;
+@property(nonatomic, readonly) CGRect squareGridRect;
 
 @property(nonatomic, strong) NSString *photoPreset;
 @property(nonatomic, strong) NSString *videoPreset;

@@ -1059,6 +1059,8 @@
 		79D76F8D152824890051339E /* tooltip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D76F891528247F0051339E /* tooltip@2x.png */; };
 		79D8074114D0F81200064CB3 /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79D8074214D0F81200064CB3 /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
+		79E2C160156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */; };
+		79E2C161156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */; };
 		79E7052915135C83000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
 		79E7053E1513CECF000C792B /* CameraModeSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7052815135C82000C792B /* CameraModeSwitchView.m */; };
 		79E70545151450A5000C792B /* AVFoundationPresetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E70544151450A5000C792B /* AVFoundationPresetTableViewController.m */; };
@@ -2430,6 +2432,8 @@
 		79D76F891528247F0051339E /* tooltip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tooltip@2x.png"; sourceTree = "<group>"; };
 		79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AVFoundationCameraFlash.png; path = Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash.png; sourceTree = "<group>"; };
 		79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AVFoundationCameraFlash@2x.png"; path = "Libraries/AVFoundationCameraController/Images/AVFoundationCameraFlash@2x.png"; sourceTree = "<group>"; };
+		79E2C15E156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDrivePhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
+		79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDrivePhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
 		79E7052715135C82000C792B /* CameraModeSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraModeSwitchView.h; sourceTree = "<group>"; };
 		79E7052815135C82000C792B /* CameraModeSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraModeSwitchView.m; sourceTree = "<group>"; };
 		79E705381513B518000C792B /* test_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_image.jpg; sourceTree = "<group>"; };
@@ -4598,6 +4602,8 @@
 				79848D3A1568A23F00798E3C /* GDriveAPIKey.h */,
 				79848D1515689F5100798E3C /* GDrivePhotoSubmitter.h */,
 				79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */,
+				79E2C15E156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.h */,
+				79E2C15F156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m */,
 				79848D1715689F5100798E3C /* Resources */,
 			);
 			path = GDrivePhotoSubmitter;
@@ -6020,6 +6026,7 @@
 				7986EE161564E8DC00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
 				79848D2615689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
 				79848D3015689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
+				79E2C160156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6372,6 +6379,7 @@
 				7986EE151564E8DB00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
 				79848D2715689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
 				79848D3115689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
+				79E2C161156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
