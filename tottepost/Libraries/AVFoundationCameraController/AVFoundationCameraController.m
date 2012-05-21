@@ -749,9 +749,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         device_ = self.frontFacingCameraDevice;
     }
     NSError *error = nil;
-    [device_ lockForConfiguration:&error];
-    device_.flashMode = flashModeButton_.flashMode;
-    [device_ unlockForConfiguration];
+    
+    if(device_.isFlashAvailable){
+        [device_ lockForConfiguration:&error];
+        device_.flashMode = flashModeButton_.flashMode;
+        [device_ unlockForConfiguration];
+    }
 
     [session_ stopRunning];
 
@@ -1108,9 +1111,11 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
         stillCameraMethod_ = stillCameraMethod;
         
         NSError *error = nil;
-        [device_ lockForConfiguration:&error];
-        device_.flashMode = flashModeButton_.flashMode;
-        [device_ unlockForConfiguration];
+        if(device_.isFlashAvailable){
+            [device_ lockForConfiguration:&error];
+            device_.flashMode = flashModeButton_.flashMode;
+            [device_ unlockForConfiguration];
+        }
 
         [session_ beginConfiguration];
         [session_ removeOutput:videoDataOutput_];

@@ -203,7 +203,6 @@
 		7901B02A150683B5003DA0DC /* mixi_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901AE08150683B4003DA0DC /* mixi_32.png */; };
 		7901B02B150683B5003DA0DC /* mixi_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901AE09150683B4003DA0DC /* mixi_32@2x.png */; };
 		7901B02C150683B5003DA0DC /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7901AE0D150683B4003DA0DC /* GTMOAuth2ViewTouch.xib */; };
-		7901B02D150683B5003DA0DC /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7901AF48150683B4003DA0DC /* libGDataTouchStaticLib.a */; };
 		7901B02E150683B6003DA0DC /* PicasaPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7901AF4A150683B4003DA0DC /* PicasaPhotoSubmitter.m */; };
 		7901B02F150683B6003DA0DC /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901AF4D150683B4003DA0DC /* picasa_16.png */; };
 		7901B030150683B6003DA0DC /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7901AF4E150683B4003DA0DC /* picasa_16@2x.png */; };
@@ -516,6 +515,28 @@
 		7984270B1517509F00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */; };
 		798461F4153FF5BD004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
 		798461F5153FF5C4004FD9B2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798461E8153FF59D004FD9B2 /* libRestKit.a */; };
+		79848D12156893D900798E3C /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79848D11156893D900798E3C /* libGDataTouchStaticLib.a */; };
+		79848D13156893D900798E3C /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79848D11156893D900798E3C /* libGDataTouchStaticLib.a */; };
+		79848D2615689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */; };
+		79848D2715689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */; };
+		79848D2815689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1915689F5100798E3C /* picasa_16.png */; };
+		79848D2915689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1915689F5100798E3C /* picasa_16.png */; };
+		79848D2A15689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1A15689F5100798E3C /* picasa_16@2x.png */; };
+		79848D2B15689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1A15689F5100798E3C /* picasa_16@2x.png */; };
+		79848D2C15689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1B15689F5100798E3C /* picasa_32.png */; };
+		79848D2D15689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1B15689F5100798E3C /* picasa_32.png */; };
+		79848D2E15689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1C15689F5100798E3C /* picasa_32@2x.png */; };
+		79848D2F15689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D1C15689F5100798E3C /* picasa_32@2x.png */; };
+		79848D3015689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */; };
+		79848D3115689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */; };
+		79848D3215689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2215689F5100798E3C /* picasa_16.png */; };
+		79848D3315689F5100798E3C /* picasa_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2215689F5100798E3C /* picasa_16.png */; };
+		79848D3415689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2315689F5100798E3C /* picasa_16@2x.png */; };
+		79848D3515689F5100798E3C /* picasa_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2315689F5100798E3C /* picasa_16@2x.png */; };
+		79848D3615689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2415689F5100798E3C /* picasa_32.png */; };
+		79848D3715689F5100798E3C /* picasa_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2415689F5100798E3C /* picasa_32.png */; };
+		79848D3815689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2515689F5100798E3C /* picasa_32@2x.png */; };
+		79848D3915689F5100798E3C /* picasa_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79848D2515689F5100798E3C /* picasa_32@2x.png */; };
 		7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
 		7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C645154299E400083F0C /* MailPhotoSubmitter.m */; };
 		7985C64E154299E400083F0C /* mail_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C648154299E400083F0C /* mail_16.png */; };
@@ -924,7 +945,6 @@
 		79924C85150CAE180043C16D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 791BF31314E020A200697E05 /* libxml2.dylib */; };
 		79924C86150CAE180043C16D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7995E66E14F4DD68005C1453 /* libz.dylib */; };
 		79924C87150CAE180043C16D /* libobjc-atompub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7901AD87150683B4003DA0DC /* libobjc-atompub.a */; };
-		79924C88150CAE180043C16D /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7901AF48150683B4003DA0DC /* libGDataTouchStaticLib.a */; };
 		79924C8A150CAE180043C16D /* AVFoundationCameraFlash.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8073F14D0F81200064CB3 /* AVFoundationCameraFlash.png */; };
 		79924C8B150CAE180043C16D /* AVFoundationCameraFlash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D8074014D0F81200064CB3 /* AVFoundationCameraFlash@2x.png */; };
 		79924C8C150CAE180043C16D /* UserVoice.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7948AD5D150019F5004ABDAB /* UserVoice.strings */; };
@@ -1834,7 +1854,6 @@
 		7901AF45150683B4003DA0DC /* GTMOAuth2SignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2SignIn.h; sourceTree = "<group>"; };
 		7901AF46150683B4003DA0DC /* GTMOAuth2ViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuth2ViewControllerTouch.h; sourceTree = "<group>"; };
 		7901AF47150683B4003DA0DC /* GTMReadMonitorInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMReadMonitorInputStream.h; sourceTree = "<group>"; };
-		7901AF48150683B4003DA0DC /* libGDataTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGDataTouchStaticLib.a; sourceTree = "<group>"; };
 		7901AF49150683B4003DA0DC /* PicasaPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicasaPhotoSubmitter.h; sourceTree = "<group>"; };
 		7901AF4A150683B4003DA0DC /* PicasaPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicasaPhotoSubmitter.m; sourceTree = "<group>"; };
 		7901AF4D150683B4003DA0DC /* picasa_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_16.png; sourceTree = "<group>"; };
@@ -2201,6 +2220,20 @@
 		7984270815174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LitePhotoSubmitterSettingTableProvider.h; path = TottePostSettings/LitePhotoSubmitterSettingTableProvider.h; sourceTree = "<group>"; };
 		7984270915174E8D00D79FD6 /* LitePhotoSubmitterSettingTableProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LitePhotoSubmitterSettingTableProvider.m; path = TottePostSettings/LitePhotoSubmitterSettingTableProvider.m; sourceTree = "<group>"; };
 		798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		79848D11156893D900798E3C /* libGDataTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDataTouchStaticLib.a; path = PhotoSubmitter/Services/PicasaPhotoSubmitter/Libraries/GData/libGDataTouchStaticLib.a; sourceTree = SOURCE_ROOT; };
+		79848D1515689F5100798E3C /* GDrivePhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDrivePhotoSubmitter.h; sourceTree = "<group>"; };
+		79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDrivePhotoSubmitter.m; sourceTree = "<group>"; };
+		79848D1915689F5100798E3C /* picasa_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_16.png; sourceTree = "<group>"; };
+		79848D1A15689F5100798E3C /* picasa_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_16@2x.png"; sourceTree = "<group>"; };
+		79848D1B15689F5100798E3C /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_32.png; sourceTree = "<group>"; };
+		79848D1C15689F5100798E3C /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_32@2x.png"; sourceTree = "<group>"; };
+		79848D1E15689F5100798E3C /* InstagramPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramPhotoSubmitter.h; sourceTree = "<group>"; };
+		79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramPhotoSubmitter.m; sourceTree = "<group>"; };
+		79848D2215689F5100798E3C /* picasa_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_16.png; sourceTree = "<group>"; };
+		79848D2315689F5100798E3C /* picasa_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_16@2x.png"; sourceTree = "<group>"; };
+		79848D2415689F5100798E3C /* picasa_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picasa_32.png; sourceTree = "<group>"; };
+		79848D2515689F5100798E3C /* picasa_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picasa_32@2x.png"; sourceTree = "<group>"; };
+		79848D3A1568A23F00798E3C /* GDriveAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDriveAPIKey.h; sourceTree = "<group>"; };
 		7985C644154299E400083F0C /* MailPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitter.h; sourceTree = "<group>"; };
 		7985C645154299E400083F0C /* MailPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitter.m; sourceTree = "<group>"; };
 		7985C648154299E400083F0C /* mail_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail_16.png; sourceTree = "<group>"; };
@@ -2484,7 +2517,7 @@
 				791BF31414E020A200697E05 /* libxml2.dylib in Frameworks */,
 				7995E66F14F4DD69005C1453 /* libz.dylib in Frameworks */,
 				7901AFF0150683B5003DA0DC /* libobjc-atompub.a in Frameworks */,
-				7901B02D150683B5003DA0DC /* libGDataTouchStaticLib.a in Frameworks */,
+				79848D12156893D900798E3C /* libGDataTouchStaticLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2527,9 +2560,9 @@
 				79924C85150CAE180043C16D /* libxml2.dylib in Frameworks */,
 				79924C86150CAE180043C16D /* libz.dylib in Frameworks */,
 				79924C87150CAE180043C16D /* libobjc-atompub.a in Frameworks */,
-				79924C88150CAE180043C16D /* libGDataTouchStaticLib.a in Frameworks */,
 				79A7F9BF151DC7A000984F07 /* AudioToolbox.framework in Frameworks */,
 				79F24BD3153353D100E15CB2 /* CoreData.framework in Frameworks */,
+				79848D13156893D900798E3C /* libGDataTouchStaticLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2925,6 +2958,8 @@
 				7901AD49150683B4003DA0DC /* FilePhotoSubmitter */,
 				7901AD52150683B4003DA0DC /* FlickrPhotoSubmitter */,
 				7901AD67150683B4003DA0DC /* FotolifePhotoSubmitter */,
+				79848D1415689F5100798E3C /* GDrivePhotoSubmitter */,
+				79848D1D15689F5100798E3C /* InstagramPhotoSubmitter */,
 				7985C643154299E400083F0C /* MailPhotoSubmitter */,
 				7901AD8E150683B4003DA0DC /* MinusPhotoSubmitter */,
 				7901ADC0150683B4003DA0DC /* MixiPhotoSubmitter */,
@@ -3676,7 +3711,7 @@
 			children = (
 				7901AE0E150683B4003DA0DC /* Headers */,
 				7901AE0D150683B4003DA0DC /* GTMOAuth2ViewTouch.xib */,
-				7901AF48150683B4003DA0DC /* libGDataTouchStaticLib.a */,
+				79848D11156893D900798E3C /* libGDataTouchStaticLib.a */,
 			);
 			path = GData;
 			sourceTree = "<group>";
@@ -4557,6 +4592,65 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		79848D1415689F5100798E3C /* GDrivePhotoSubmitter */ = {
+			isa = PBXGroup;
+			children = (
+				79848D3A1568A23F00798E3C /* GDriveAPIKey.h */,
+				79848D1515689F5100798E3C /* GDrivePhotoSubmitter.h */,
+				79848D1615689F5100798E3C /* GDrivePhotoSubmitter.m */,
+				79848D1715689F5100798E3C /* Resources */,
+			);
+			path = GDrivePhotoSubmitter;
+			sourceTree = "<group>";
+		};
+		79848D1715689F5100798E3C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79848D1815689F5100798E3C /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		79848D1815689F5100798E3C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				79848D1915689F5100798E3C /* picasa_16.png */,
+				79848D1A15689F5100798E3C /* picasa_16@2x.png */,
+				79848D1B15689F5100798E3C /* picasa_32.png */,
+				79848D1C15689F5100798E3C /* picasa_32@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		79848D1D15689F5100798E3C /* InstagramPhotoSubmitter */ = {
+			isa = PBXGroup;
+			children = (
+				79848D1E15689F5100798E3C /* InstagramPhotoSubmitter.h */,
+				79848D1F15689F5100798E3C /* InstagramPhotoSubmitter.m */,
+				79848D2015689F5100798E3C /* Resources */,
+			);
+			path = InstagramPhotoSubmitter;
+			sourceTree = "<group>";
+		};
+		79848D2015689F5100798E3C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79848D2115689F5100798E3C /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		79848D2115689F5100798E3C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				79848D2215689F5100798E3C /* picasa_16.png */,
+				79848D2315689F5100798E3C /* picasa_16@2x.png */,
+				79848D2415689F5100798E3C /* picasa_32.png */,
+				79848D2515689F5100798E3C /* picasa_32@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		7985C643154299E400083F0C /* MailPhotoSubmitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -5363,6 +5457,14 @@
 				7985C650154299E400083F0C /* mail_16@2x.png in Resources */,
 				7985C652154299E400083F0C /* mail_32.png in Resources */,
 				7985C654154299E400083F0C /* mail_32@2x.png in Resources */,
+				79848D2815689F5100798E3C /* picasa_16.png in Resources */,
+				79848D2A15689F5100798E3C /* picasa_16@2x.png in Resources */,
+				79848D2C15689F5100798E3C /* picasa_32.png in Resources */,
+				79848D2E15689F5100798E3C /* picasa_32@2x.png in Resources */,
+				79848D3215689F5100798E3C /* picasa_16.png in Resources */,
+				79848D3415689F5100798E3C /* picasa_16@2x.png in Resources */,
+				79848D3615689F5100798E3C /* picasa_32.png in Resources */,
+				79848D3815689F5100798E3C /* picasa_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5547,6 +5649,14 @@
 				7985C651154299E400083F0C /* mail_16@2x.png in Resources */,
 				7985C653154299E400083F0C /* mail_32.png in Resources */,
 				7985C655154299E400083F0C /* mail_32@2x.png in Resources */,
+				79848D2915689F5100798E3C /* picasa_16.png in Resources */,
+				79848D2B15689F5100798E3C /* picasa_16@2x.png in Resources */,
+				79848D2D15689F5100798E3C /* picasa_32.png in Resources */,
+				79848D2F15689F5100798E3C /* picasa_32@2x.png in Resources */,
+				79848D3315689F5100798E3C /* picasa_16.png in Resources */,
+				79848D3515689F5100798E3C /* picasa_16@2x.png in Resources */,
+				79848D3715689F5100798E3C /* picasa_32.png in Resources */,
+				79848D3915689F5100798E3C /* picasa_32@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5908,6 +6018,8 @@
 				7985C64C154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
 				7985C65815429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
 				7986EE161564E8DC00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
+				79848D2615689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
+				79848D3015689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6258,6 +6370,8 @@
 				7985C64D154299E400083F0C /* MailPhotoSubmitter.m in Sources */,
 				7985C65915429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */,
 				7986EE151564E8DB00D95625 /* MixiSDKAuthorizerWebViewController.m in Sources */,
+				79848D2715689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
+				79848D3115689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
