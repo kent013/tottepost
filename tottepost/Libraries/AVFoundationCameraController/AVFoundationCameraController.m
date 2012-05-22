@@ -1003,12 +1003,12 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
     if(isVideoFrameCapturing_){
         isVideoFrameCapturing_ = NO;
-        if(freezeAfterShutter_){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self playShutterSound];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self playShutterSound];
+            if(freezeAfterShutter_){
                 [self freezeCaptureForInterval:self.freezeInterval];
-            });
-        }
+            }
+        });
         CVImageBufferRef buffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CVPixelBufferLockBaseAddress(buffer, 0);
         CGImageRef cgImage = [self newCGImageRefFromSampleBuffer:sampleBuffer];
