@@ -1098,6 +1098,9 @@
 		79F58B6C152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B67152B3E8200EB98F5 /* PhotoSubmitterImageEntity.m */; };
 		79F58B6D152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */; };
 		EA76226F14D0312100C54159 /* AVFoundationFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */; };
+		EAA92B13157253C100F618CA /* FlashView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA92B12157253C100F618CA /* FlashView.m */; };
+		EAA92B141572568D00F618CA /* FlashView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA92B12157253C100F618CA /* FlashView.m */; };
+		EAA92B15157256B300F618CA /* FlashView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA92B12157253C100F618CA /* FlashView.m */; };
 		EAAC412614E939AD00CDC2CC /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */; };
 		EAAC412714E939AD00CDC2CC /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAC412514E939AD00CDC2CC /* HPTextViewInternal.m */; };
 /* End PBXBuildFile section */
@@ -2485,6 +2488,8 @@
 		79F58B69152B3E8200EB98F5 /* PhotoSubmitterVideoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterVideoEntity.m; sourceTree = "<group>"; };
 		EA76226D14D0312100C54159 /* AVFoundationFlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVFoundationFlashButton.h; path = Libraries/AVFoundationCameraController/AVFoundationFlashButton.h; sourceTree = "<group>"; };
 		EA76226E14D0312100C54159 /* AVFoundationFlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVFoundationFlashButton.m; path = Libraries/AVFoundationCameraController/AVFoundationFlashButton.m; sourceTree = "<group>"; };
+		EAA92B11157253C100F618CA /* FlashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashView.h; sourceTree = "<group>"; };
+		EAA92B12157253C100F618CA /* FlashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashView.m; sourceTree = "<group>"; };
 		EAAC412214E939AD00CDC2CC /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPGrowingTextView.h; path = Libraries/HPGrowingTextView/HPGrowingTextView.h; sourceTree = "<group>"; };
 		EAAC412314E939AD00CDC2CC /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPGrowingTextView.m; path = Libraries/HPGrowingTextView/HPGrowingTextView.m; sourceTree = "<group>"; };
 		EAAC412414E939AD00CDC2CC /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTextViewInternal.h; path = Libraries/HPGrowingTextView/HPTextViewInternal.h; sourceTree = "<group>"; };
@@ -2582,6 +2587,8 @@
 			children = (
 				79E7052715135C82000C792B /* CameraModeSwitchView.h */,
 				79E7052815135C82000C792B /* CameraModeSwitchView.m */,
+				EAA92B11157253C100F618CA /* FlashView.h */,
+				EAA92B12157253C100F618CA /* FlashView.m */,
 				376A8D5E14A24A9E00637B68 /* MainViewControllerConstants.h */,
 				37FB64DB1496238600387490 /* MainViewController.h */,
 				37FB64DC1496238600387490 /* MainViewController.m */,
@@ -5695,6 +5702,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA92B141572568D00F618CA /* FlashView.m in Sources */,
 				7995E52614F29F8D005C1453 /* ScreenStatus.m in Sources */,
 				376E15491494C47800A34E7D /* main.m in Sources */,
 				376E154D1494C47800A34E7D /* AppDelegate.m in Sources */,
@@ -6042,6 +6050,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				376E15621494C47800A34E7D /* tottepostTests.m in Sources */,
+				EAA92B13157253C100F618CA /* FlashView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6049,6 +6058,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA92B15157256B300F618CA /* FlashView.m in Sources */,
 				79924B46150CAE180043C16D /* ScreenStatus.m in Sources */,
 				79924B47150CAE180043C16D /* main.m in Sources */,
 				79924B48150CAE180043C16D /* AppDelegate.m in Sources */,

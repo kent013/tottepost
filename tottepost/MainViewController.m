@@ -166,6 +166,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         launchImageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
         [self.view addSubview:launchImageView_];
     }
+    
+    //flashView
+    flashView_ = [[FlashView alloc] initWithFrame:CGRectMake(0, 0, aFrame.size.width, aFrame.size.height - MAINVIEW_TOOLBAR_HEIGHT)];
+    [self.view addSubview:flashView_];
 }
 
 /*!
@@ -289,6 +293,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 #else
         [imagePicker_ takePicture];
 #endif
+        [self.view bringSubviewToFront:flashView_];
+        [flashView_ flash];
     }else{
         if(cameraButton_.enabled == NO){
             return;

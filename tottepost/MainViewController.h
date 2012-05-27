@@ -18,6 +18,7 @@
 #import "PhotoSubmitterAccountTableViewController.h"
 #import "CameraModeSwitchView.h"
 #import "UVDelegate.h"
+#import "FlashView.h"
 
 /*!
  * Main view controller
@@ -42,6 +43,7 @@
     __strong UIImageView *cameraIconImageView_;
     __strong CameraModeSwitchView *cameraModeSwitchView_;
     __strong id<PhotoSubmitterServiceSettingTableViewDelegate> settingTableViewDelegate_;
+    __strong FlashView *flashView_;
     UIDeviceOrientation orientation_;
     UIDeviceOrientation lastOrientation_;
     BOOL refreshCameraNeeded_;
