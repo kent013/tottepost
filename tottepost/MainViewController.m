@@ -279,6 +279,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)didCameraButtonTapped:(id)sender
 {
+    [TimeLogger lap];
     if(imagePicker_.mode == AVFoundationCameraModePhoto){
 #if TARGET_IPHONE_SIMULATOR
         imagePicker_.showsCameraControls = NO;
@@ -376,6 +377,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * preview content
  */
 - (void)previewContent:(PhotoSubmitterContentEntity *)content{
+    [TimeLogger log];
     [self.view addSubview:previewImageView_];
     [previewImageView_ presentWithContent:content videoOrientation:orientation_];
     [self.view bringSubviewToFront:toolbar_];

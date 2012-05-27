@@ -71,7 +71,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
 //-----------------------------------------------------------------------------
 //Public Implementations
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 @implementation CameraModeSwitchView
 @synthesize enabled = enabled_;
 @synthesize delegate;

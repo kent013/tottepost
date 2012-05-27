@@ -13,6 +13,9 @@
 #import "PhotoSubmitterManager.h"
 #import "PSLang.h"
 
+#define PPV_WIDTH 960
+#define PPV_HEIGHT 720
+
 //-----------------------------------------------------------------------------
 //Private Implementations
 //-----------------------------------------------------------------------------
@@ -355,6 +358,12 @@
     
     if(content.isPhoto){
         PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
+        /*
+        CGSize size = CGSizeMake(PPV_WIDTH, PPV_HEIGHT);
+        if(photo.image.size.width < photo.image.size.height){
+            size = CGSizeMake(PPV_HEIGHT, PPV_WIDTH);
+        }*/
+        
         UIImage *image = photo.image.fixOrientation;
         if(orientation == UIDeviceOrientationLandscapeLeft){
             image = [image UIImageRotateByAngle:270];                

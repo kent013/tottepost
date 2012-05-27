@@ -533,6 +533,8 @@
 		7985C655154299E400083F0C /* mail_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7985C64B154299E400083F0C /* mail_32@2x.png */; };
 		7985C65815429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */; };
 		7985C65915429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */; };
+		7986534A1571BB9B00A394FB /* TimeLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 798653491571BB9B00A394FB /* TimeLogger.m */; };
+		7986534B1571BB9B00A394FB /* TimeLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 798653491571BB9B00A394FB /* TimeLogger.m */; };
 		79865F89153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8A153DA3A000085CCE /* PhotoSubmitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */; };
 		79865F8D153DA3BB00085CCE /* PhotoSubmitterAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 79865F8C153DA3BB00085CCE /* PhotoSubmitterAccountManager.m */; };
@@ -2236,6 +2238,8 @@
 		7985C64B154299E400083F0C /* mail_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mail_32@2x.png"; sourceTree = "<group>"; };
 		7985C65615429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailPhotoSubmitterSettingTableViewController.h; sourceTree = "<group>"; };
 		7985C65715429EBC00083F0C /* MailPhotoSubmitterSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailPhotoSubmitterSettingTableViewController.m; sourceTree = "<group>"; };
+		798653481571BB9B00A394FB /* TimeLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLogger.h; path = Util/TimeLogger.h; sourceTree = "<group>"; };
+		798653491571BB9B00A394FB /* TimeLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLogger.m; path = Util/TimeLogger.m; sourceTree = "<group>"; };
 		79865F87153DA3A000085CCE /* PhotoSubmitterAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccount.h; sourceTree = "<group>"; };
 		79865F88153DA3A000085CCE /* PhotoSubmitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSubmitterAccount.m; sourceTree = "<group>"; };
 		79865F8B153DA3BB00085CCE /* PhotoSubmitterAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoSubmitterAccountManager.h; sourceTree = "<group>"; };
@@ -2738,6 +2742,8 @@
 				37FB65C4149C53D000387490 /* FBRequest+UploadProgress.m */,
 				797E392E14AC6A8800F17AC4 /* TTLang.h */,
 				797E392F14AC6A8800F17AC4 /* TTLang.m */,
+				798653481571BB9B00A394FB /* TimeLogger.h */,
+				798653491571BB9B00A394FB /* TimeLogger.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -6027,6 +6033,7 @@
 				79848D2615689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
 				79848D3015689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
 				79E2C160156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */,
+				7986534A1571BB9B00A394FB /* TimeLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6380,6 +6387,7 @@
 				79848D2715689F5100798E3C /* GDrivePhotoSubmitter.m in Sources */,
 				79848D3115689F5100798E3C /* InstagramPhotoSubmitter.m in Sources */,
 				79E2C161156A403D001C82C3 /* GDrivePhotoSubmitterSettingTableViewController.m in Sources */,
+				7986534B1571BB9B00A394FB /* TimeLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
