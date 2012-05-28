@@ -358,11 +358,6 @@
     
     if(content.isPhoto){
         PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
-        /*
-        CGSize size = CGSizeMake(PPV_WIDTH, PPV_HEIGHT);
-        if(photo.image.size.width < photo.image.size.height){
-            size = CGSizeMake(PPV_HEIGHT, PPV_WIDTH);
-        }*/
         
         UIImage *image = photo.image.fixOrientation;
         if(orientation == UIDeviceOrientationLandscapeLeft){

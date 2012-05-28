@@ -936,7 +936,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
             }
             if (videoConnection) { break; }
         }
-        [TimeLogger logOnce];
         [stillImageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
          {
              if(freezeAfterShutter_){
@@ -948,7 +947,6 @@ NSString *kTempVideoURL = @"kTempVideoURL";
              if(scale_ != 1.0){
                  imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
              }
-             [TimeLogger logOnce];
              if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
                  image = [[UIImage alloc] initWithData:imageData];
                  [self.delegate cameraController:self didFinishPickingImage:image];

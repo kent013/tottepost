@@ -383,7 +383,6 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * preview content
  */
 - (void)previewContent:(PhotoSubmitterContentEntity *)content{
-    [TimeLogger log];
     [self.view addSubview:previewImageView_];
     [previewImageView_ presentWithContent:content videoOrientation:orientation_];
     [self.view bringSubviewToFront:toolbar_];
