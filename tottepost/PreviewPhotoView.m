@@ -358,14 +358,7 @@
     
     if(content.isPhoto){
         PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
-        
-        UIImage *image = photo.image.fixOrientation;
-        if(orientation == UIDeviceOrientationLandscapeLeft){
-            image = [image UIImageRotateByAngle:270];                
-        }else if(orientation == UIDeviceOrientationLandscapeRight){
-            image = [image UIImageRotateByAngle:90];                 
-        }
-        imageView_.image = image.fixOrientation;
+        imageView_.image = [photo imageForPreviewWithOrientation:orientation];
         [self addSubview:imageView_];      
     }else if(content.isVideo){
         PhotoSubmitterVideoEntity *video = (PhotoSubmitterVideoEntity *)content;

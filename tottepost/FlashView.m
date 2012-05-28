@@ -24,6 +24,7 @@
 
 // flash this view
 -(void)flash{
+    self.image = nil;
     self.alpha = firstAlpha_;
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];

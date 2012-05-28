@@ -446,7 +446,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.delegate = self;
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
-        imagePicker_.freezeAfterShutter = YES;
+        imagePicker_.freezeAfterShutter = NO;
         if([PhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
             imagePicker_.showsSquareGrid = YES;
         }
