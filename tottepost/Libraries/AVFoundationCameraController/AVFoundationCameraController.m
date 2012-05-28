@@ -60,6 +60,8 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void) applicationDidBecomeActive;
 
 - (void) startRecordingVideoInternal:(NSURL *)url;
+- (void) disableShutterForInterval:(NSTimeInterval)interval;
+- (void) enableShutter;
 @end
 
 @implementation AVFoundationCameraController(PrivateImplementation)
@@ -122,6 +124,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     useTapToFocus_ = YES;
     showsVideoElapsedTimeLabel_ = YES;
     freezeAfterShutter_ = NO;
+    canTakePicture_ = YES;
     self.freezeInterval = 0.1;
     if(device_.isTorchAvailable){
         showsFlashModeButton_ = YES;
@@ -868,6 +871,24 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 - (void)startRecordingVideoInternal:(NSURL *)url{
     [movieFileOutput_ startRecordingToOutputFileURL:url recordingDelegate:self];
 }
+
+/*!
+ * disable shutter for interval
+ */
+- (void)disableShutterForInterval:(NSTimeInterval)interval{
+    canTakePicture_ = NO;
+    [self.delegate shutterStateChanged:canTakePicture_];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(enableShutter) object:nil];
+    [self performSelector:@selector(enableShutter) withObject:nil afterDelay:interval];
+}
+
+/*!
+ * enable shutter
+ */
+-(void)enableShutter{
+    canTakePicture_ = YES;
+    [self.delegate shutterStateChanged:canTakePicture_];
+}
 @end
 
 //-----------------------------------------------------------------------------
@@ -893,6 +914,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
 @synthesize videoPreset = videoPreset_;
 @synthesize soundVolume = soundVolume_;
 @synthesize squareGridRect;
+@synthesize canTakePicture = canTakePicture_;
 
 #pragma mark -
 #pragma mark public implementation
@@ -916,6 +938,10 @@ NSString *kTempVideoURL = @"kTempVideoURL";
  */
 -(void)takePicture
 {
+    if(canTakePicture_ == NO){
+        return;
+    }
+    [self disableShutterForInterval:0.5];
     if(mode_ == AVFoundationCameraModeVideo){
         NSLog(@"Controller is in video mode. %s", __PRETTY_FUNCTION__);
         return;
@@ -939,6 +965,9 @@ NSString *kTempVideoURL = @"kTempVideoURL";
         }
         [stillImageOutput_ captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
          {
+             if(imageSampleBuffer == nil){
+                 return;
+             }
              if(freezeAfterShutter_){
                  [self freezeCaptureForInterval:self.freezeInterval];
              }
@@ -947,6 +976,10 @@ NSString *kTempVideoURL = @"kTempVideoURL";
              UIImage *image = nil;
              if(scale_ != 1.0){
                  imageData = [self cropImageData:imageData withViewRect:croppedViewRect_ andScale:scale_];
+             }
+             
+             if(imageData == nil){
+                 return;
              }
              if([self.delegate respondsToSelector:@selector(cameraController:didFinishPickingImage:)]){
                  image = [[UIImage alloc] initWithData:imageData];

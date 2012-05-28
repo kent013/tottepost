@@ -67,6 +67,7 @@ typedef enum {
     BOOL useTapToFocus_;
     BOOL freezeAfterShutter_;
     BOOL showsSquareGrid_;
+    BOOL canTakePicture_;;
     
     NSDate *videoRecordingStartedDate_;
     
@@ -118,6 +119,7 @@ typedef enum {
 @property(nonatomic, readonly) BOOL backCameraAvailable;
 @property(nonatomic, readonly) BOOL isRecordingVideo;
 @property(nonatomic, readonly) CGRect squareGridRect;
+@property(nonatomic, readonly) BOOL canTakePicture;
 
 @property(nonatomic, strong) NSString *photoPreset;
 @property(nonatomic, strong) NSString *videoPreset;
@@ -148,4 +150,5 @@ typedef enum {
 - (void) cameraController:(AVFoundationCameraController *)cameraController didScaledTo:(CGFloat) scale viewRect:(CGRect)rect;
 - (void) didRotatedDeviceOrientation:(UIDeviceOrientation) orientation;
 - (void) cameraControllerDidInitialized:(AVFoundationCameraController *)cameraController;
+- (void) shutterStateChanged:(BOOL)enabled;
 @end

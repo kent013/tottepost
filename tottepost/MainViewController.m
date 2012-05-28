@@ -653,6 +653,13 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     [[CMPopTipViewManager sharedInstance] markAsArchived:CMPopTipTargetMainVideoCamera];
 }
 
+/*!
+ * shutter state changed
+ */
+- (void)shutterStateChanged:(BOOL)enabled{
+    cameraButton_.enabled  = enabled;
+}
+
 #pragma mark -
 #pragma mark PhotoSubmitter delegate
 /*!
