@@ -838,6 +838,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
     previewLayer_.automaticallyAdjustsMirroring = NO;
     previewLayer_.videoGravity = AVLayerVideoGravityResizeAspectFill;
     previewLayer_.frame = self.view.bounds;
+    
     [self.view.layer addSublayer:previewLayer_];
     [self.view.layer addSublayer:indicatorLayer_];
     [self.view.layer addSublayer:squareGridLayer_];

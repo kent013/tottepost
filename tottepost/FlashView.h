@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FlashView : UIImageView{
+@interface FlashView : UIView{
     NSTimeInterval flashInterval_;
     float firstAlpha_;
 }
