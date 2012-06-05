@@ -255,6 +255,12 @@ static NSString *kTwitterPhotoSubmitterType = @"TwitterPhotoSubmitter";
 
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"alreadyOpenedSettings"];
+}
+
 #pragma mark -
 #pragma mark AboutSettingViewController delegate
 - (void)didUserVoiceFeedbackButtonPressed{

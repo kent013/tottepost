@@ -50,8 +50,7 @@
     BOOL settingViewPresented_;
     BOOL isConnected_;
     BOOL isMailFeedbackButtonPressed_;
-    BOOL isUserVoiceFeedbackButtonPressed_;
-    
+    BOOL isUserVoiceFeedbackButtonPressed_;    
     BOOL videoButtonFlush_;
     NSTimer *videoButtonTimer_;
 }

@@ -52,6 +52,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) applyCameraConfiguration;
 - (void) enableCameraButton;
 - (void) showTooltips;
+- (void) showWelcomeMessage;
 @end
 
 @implementation MainViewController(PrivateImplementation)
@@ -170,6 +171,13 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     //flashView
     flashView_ = [[FlashView alloc] initWithFrame:CGRectMake(0, 0, aFrame.size.width, aFrame.size.height - MAINVIEW_TOOLBAR_HEIGHT)];
     [self.view addSubview:flashView_];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    BOOL alreadyOpenedSettings = [defaults boolForKey:@"alreadyOpenedSettings"];
+    if(alreadyOpenedSettings == NO && [PhotoSubmitterManager sharedInstance].enabledSubmitterCount == 0)
+    {
+        [self showWelcomeMessage];
+    }
 }
 
 /*!
@@ -454,6 +462,16 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [launchImageView_ removeFromSuperview];
     }
     [self updateCameraController];
+}
+
+/*!
+ * show welcome message
+ */
+- (void) showWelcomeMessage{
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:[TTLang localized:@"FirstAlert_Title"] message:[TTLang localized:@"FirstAlert_Message"]
+                              delegate:nil cancelButtonTitle:[TTLang localized:@"FirstAlert_OK"] otherButtonTitles:nil];
+    [alert show];
 }
 
 /*!
