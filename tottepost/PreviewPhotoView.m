@@ -375,6 +375,7 @@
         
         movieTimer_ = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(onMovieTimer) userInfo:nil repeats:YES];
         [movieTimer_ fire];
+        [movieTimer_ invalidate];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil]; 

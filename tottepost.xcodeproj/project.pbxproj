@@ -245,6 +245,36 @@
 		792721DE151D897F00807529 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DC151D897F00807529 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		792721E4151D8C1600807529 /* MAConfirmButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DA151D897F00807529 /* MAConfirmButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		792721E5151D8C1600807529 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 792721DC151D897F00807529 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		792F272715EF647600448456 /* MetaMovicsPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F272015EF647600448456 /* MetaMovicsPhotoSubmitter.m */; };
+		792F272815EF647600448456 /* MetaMovicsPhotoSubmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F272015EF647600448456 /* MetaMovicsPhotoSubmitter.m */; };
+		792F272915EF647600448456 /* metamovics_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272315EF647600448456 /* metamovics_16.png */; };
+		792F272A15EF647600448456 /* metamovics_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272315EF647600448456 /* metamovics_16.png */; };
+		792F272B15EF647600448456 /* metamovics_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272415EF647600448456 /* metamovics_16@2x.png */; };
+		792F272C15EF647600448456 /* metamovics_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272415EF647600448456 /* metamovics_16@2x.png */; };
+		792F272D15EF647600448456 /* metamovics_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272515EF647600448456 /* metamovics_32.png */; };
+		792F272E15EF647600448456 /* metamovics_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272515EF647600448456 /* metamovics_32.png */; };
+		792F272F15EF647600448456 /* metamovics_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272615EF647600448456 /* metamovics_32@2x.png */; };
+		792F273015EF647600448456 /* metamovics_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 792F272615EF647600448456 /* metamovics_32@2x.png */; };
+		792F276A15F058C000448456 /* MetaMovicsAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276415F058C000448456 /* MetaMovicsAuth.m */; };
+		792F276B15F058C000448456 /* MetaMovicsAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276415F058C000448456 /* MetaMovicsAuth.m */; };
+		792F276C15F058C000448456 /* MetaMovicsConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276615F058C000448456 /* MetaMovicsConnect.m */; };
+		792F276D15F058C000448456 /* MetaMovicsConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276615F058C000448456 /* MetaMovicsConnect.m */; };
+		792F276E15F058C000448456 /* MetaMovicsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276915F058C000448456 /* MetaMovicsRequest.m */; };
+		792F276F15F058C000448456 /* MetaMovicsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 792F276915F058C000448456 /* MetaMovicsRequest.m */; };
+		792F27FB15F2378C00448456 /* ChangeLogUnzip in Resources */ = {isa = PBXBuildFile; fileRef = 792F27EE15F2378C00448456 /* ChangeLogUnzip */; };
+		792F27FC15F2378C00448456 /* ChangeLogUnzip in Resources */ = {isa = PBXBuildFile; fileRef = 792F27EE15F2378C00448456 /* ChangeLogUnzip */; };
+		792F27FD15F2378C00448456 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F015F2378C00448456 /* ioapi.c */; };
+		792F27FE15F2378C00448456 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F015F2378C00448456 /* ioapi.c */; };
+		792F27FF15F2378C00448456 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F215F2378C00448456 /* Makefile */; };
+		792F280015F2378C00448456 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F215F2378C00448456 /* Makefile */; };
+		792F280115F2378C00448456 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F315F2378C00448456 /* mztools.c */; };
+		792F280215F2378C00448456 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F315F2378C00448456 /* mztools.c */; };
+		792F280315F2378C00448456 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F515F2378C00448456 /* unzip.c */; };
+		792F280415F2378C00448456 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F515F2378C00448456 /* unzip.c */; };
+		792F280515F2378C00448456 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F715F2378C00448456 /* zip.c */; };
+		792F280615F2378C00448456 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 792F27F715F2378C00448456 /* zip.c */; };
+		792F280715F2378C00448456 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 792F27FA15F2378C00448456 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		792F280815F2378C00448456 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 792F27FA15F2378C00448456 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E11150F75C40026CE62 /* YRDropdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 793F4E0E150F75C40026CE62 /* YRDropdownView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E13150F7C500026CE62 /* YRDropdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 793F4E0E150F75C40026CE62 /* YRDropdownView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		793F4E25150F81130026CE62 /* bg-glossLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 793F4E1B150F81120026CE62 /* bg-glossLayer.png */; };
@@ -1935,6 +1965,34 @@
 		792721DA151D897F00807529 /* MAConfirmButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAConfirmButton.m; sourceTree = "<group>"; };
 		792721DB151D897F00807529 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
 		792721DC151D897F00807529 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
+		792F271F15EF647600448456 /* MetaMovicsPhotoSubmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsPhotoSubmitter.h; sourceTree = "<group>"; };
+		792F272015EF647600448456 /* MetaMovicsPhotoSubmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetaMovicsPhotoSubmitter.m; sourceTree = "<group>"; };
+		792F272315EF647600448456 /* metamovics_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metamovics_16.png; sourceTree = "<group>"; };
+		792F272415EF647600448456 /* metamovics_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "metamovics_16@2x.png"; sourceTree = "<group>"; };
+		792F272515EF647600448456 /* metamovics_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metamovics_32.png; sourceTree = "<group>"; };
+		792F272615EF647600448456 /* metamovics_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "metamovics_32@2x.png"; sourceTree = "<group>"; };
+		792F273F15EF66AC00448456 /* MetaMovicsAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsAPIKey.h; sourceTree = "<group>"; };
+		792F276315F058C000448456 /* MetaMovicsAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsAuth.h; sourceTree = "<group>"; };
+		792F276415F058C000448456 /* MetaMovicsAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetaMovicsAuth.m; sourceTree = "<group>"; };
+		792F276515F058C000448456 /* MetaMovicsConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsConnect.h; sourceTree = "<group>"; };
+		792F276615F058C000448456 /* MetaMovicsConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetaMovicsConnect.m; sourceTree = "<group>"; };
+		792F276715F058C000448456 /* MetaMovicsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsProtocol.h; sourceTree = "<group>"; };
+		792F276815F058C000448456 /* MetaMovicsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsRequest.h; sourceTree = "<group>"; };
+		792F276915F058C000448456 /* MetaMovicsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetaMovicsRequest.m; sourceTree = "<group>"; };
+		792F278715F21C9D00448456 /* MetaMovicsConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaMovicsConstants.h; sourceTree = "<group>"; };
+		792F27EE15F2378C00448456 /* ChangeLogUnzip */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLogUnzip; sourceTree = "<group>"; };
+		792F27EF15F2378C00448456 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		792F27F015F2378C00448456 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		792F27F115F2378C00448456 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		792F27F215F2378C00448456 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		792F27F315F2378C00448456 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		792F27F415F2378C00448456 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		792F27F515F2378C00448456 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		792F27F615F2378C00448456 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		792F27F715F2378C00448456 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		792F27F815F2378C00448456 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		792F27F915F2378C00448456 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		792F27FA15F2378C00448456 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		793AAF32150CE4DC00285BED /* tottepost-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tottepost-Info.plist"; sourceTree = "<group>"; };
 		793D3D91150AAC0100098A79 /* MixiWebViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixiWebViewControllerDelegate.h; sourceTree = "<group>"; };
 		793F4E0D150F75C40026CE62 /* YRDropdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDropdownView.h; sourceTree = "<group>"; };
@@ -2368,22 +2426,6 @@
 		798827A6153172B600DCDB67 /* SFOAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFOAuthViewController.xib; sourceTree = "<group>"; };
 		798B1B281503B98E003EFF54 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		798B1B291503B98E003EFF54 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
-		79924995150BA67E0043C16D /* DBBase64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DBBase64Transcoder.c; sourceTree = "<group>"; };
-		79924996150BA67E0043C16D /* MPOAuthAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAPI.m; sourceTree = "<group>"; };
-		79924997150BA67E0043C16D /* MPOAuthAPIRequestLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAPIRequestLoader.m; sourceTree = "<group>"; };
-		79924998150BA67E0043C16D /* MPOAuthAuthenticationMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAuthenticationMethod.m; sourceTree = "<group>"; };
-		79924999150BA67E0043C16D /* MPOAuthAuthenticationMethodOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAuthenticationMethodOAuth.m; sourceTree = "<group>"; };
-		7992499A150BA67E0043C16D /* MPOAuthConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthConnection.m; sourceTree = "<group>"; };
-		7992499B150BA67E0043C16D /* MPOAuthCredentiaIConcreteStore+KeychainAdditionsMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPOAuthCredentiaIConcreteStore+KeychainAdditionsMac.m"; sourceTree = "<group>"; };
-		7992499C150BA67E0043C16D /* MPOAuthCredentialConcreteStore+KeychainAdditionsiPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPOAuthCredentialConcreteStore+KeychainAdditionsiPhone.m"; sourceTree = "<group>"; };
-		7992499D150BA67E0043C16D /* MPOAuthCredentialConcreteStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthCredentialConcreteStore.m; sourceTree = "<group>"; };
-		7992499E150BA67E0043C16D /* MPOAuthSignatureParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthSignatureParameter.m; sourceTree = "<group>"; };
-		7992499F150BA67E0043C16D /* MPOAuthURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthURLRequest.m; sourceTree = "<group>"; };
-		799249A0150BA67E0043C16D /* MPOAuthURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthURLResponse.m; sourceTree = "<group>"; };
-		799249A1150BA67E0043C16D /* MPURLRequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPURLRequestParameter.m; sourceTree = "<group>"; };
-		799249A2150BA67E0043C16D /* NSString+URLEscapingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEscapingAdditions.m"; sourceTree = "<group>"; };
-		799249A3150BA67E0043C16D /* NSURL+MPURLParameterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPURLParameterAdditions.m"; sourceTree = "<group>"; };
-		799249A4150BA67E0043C16D /* NSURLResponse+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+Encoding.m"; sourceTree = "<group>"; };
 		79924AEB150C1FFE0043C16D /* NYXImagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesHelper.h; sourceTree = "<group>"; };
 		79924AEC150C1FFE0043C16D /* NYXImagesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXImagesHelper.m; sourceTree = "<group>"; };
 		79924AED150C1FFE0043C16D /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
@@ -2852,7 +2894,6 @@
 			isa = PBXGroup;
 			children = (
 				798461DC153FF59C004FD9B2 /* RestKit.xcodeproj */,
-				79924993150BA67E0043C16D /* MPOAuth */,
 				7901AC55150683B3003DA0DC /* FBNetworkReachability */,
 				7901AC58150683B3003DA0DC /* ios-queue-object */,
 				7901AC5B150683B3003DA0DC /* json-framework */,
@@ -2863,6 +2904,7 @@
 				7901AC8A150683B3003DA0DC /* Reachability */,
 				7901AC8D150683B3003DA0DC /* RegexKitLite */,
 				79F461B8150A3C6F009787F0 /* SVProgressHUD */,
+				792F27EC15F2378A00448456 /* ZipArchive */,
 				7901AC90150683B3003DA0DC /* UIImage-categories */,
 			);
 			path = Libraries;
@@ -2989,6 +3031,7 @@
 				79848D1415689F5100798E3C /* GDrivePhotoSubmitter */,
 				79848D1D15689F5100798E3C /* InstagramPhotoSubmitter */,
 				7985C643154299E400083F0C /* MailPhotoSubmitter */,
+				792F271C15EF647600448456 /* MetaMovicsPhotoSubmitter */,
 				7901AD8E150683B4003DA0DC /* MinusPhotoSubmitter */,
 				7901ADC0150683B4003DA0DC /* MixiPhotoSubmitter */,
 				7901AE0A150683B4003DA0DC /* PicasaPhotoSubmitter */,
@@ -4172,6 +4215,88 @@
 			path = MAConfirmButton;
 			sourceTree = "<group>";
 		};
+		792F271C15EF647600448456 /* MetaMovicsPhotoSubmitter */ = {
+			isa = PBXGroup;
+			children = (
+				792F271D15EF647600448456 /* Libraries */,
+				792F272115EF647600448456 /* Resources */,
+				792F273F15EF66AC00448456 /* MetaMovicsAPIKey.h */,
+				792F271F15EF647600448456 /* MetaMovicsPhotoSubmitter.h */,
+				792F272015EF647600448456 /* MetaMovicsPhotoSubmitter.m */,
+			);
+			path = MetaMovicsPhotoSubmitter;
+			sourceTree = "<group>";
+		};
+		792F271D15EF647600448456 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				792F276215F058C000448456 /* MetaMovicsConnect */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		792F272115EF647600448456 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				792F272215EF647600448456 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		792F272215EF647600448456 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				792F272315EF647600448456 /* metamovics_16.png */,
+				792F272415EF647600448456 /* metamovics_16@2x.png */,
+				792F272515EF647600448456 /* metamovics_32.png */,
+				792F272615EF647600448456 /* metamovics_32@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		792F276215F058C000448456 /* MetaMovicsConnect */ = {
+			isa = PBXGroup;
+			children = (
+				792F276315F058C000448456 /* MetaMovicsAuth.h */,
+				792F276415F058C000448456 /* MetaMovicsAuth.m */,
+				792F276515F058C000448456 /* MetaMovicsConnect.h */,
+				792F276615F058C000448456 /* MetaMovicsConnect.m */,
+				792F276715F058C000448456 /* MetaMovicsProtocol.h */,
+				792F276815F058C000448456 /* MetaMovicsRequest.h */,
+				792F276915F058C000448456 /* MetaMovicsRequest.m */,
+				792F278715F21C9D00448456 /* MetaMovicsConstants.h */,
+			);
+			path = MetaMovicsConnect;
+			sourceTree = "<group>";
+		};
+		792F27EC15F2378A00448456 /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				792F27ED15F2378C00448456 /* minizip */,
+				792F27F915F2378C00448456 /* ZipArchive.h */,
+				792F27FA15F2378C00448456 /* ZipArchive.mm */,
+			);
+			path = ZipArchive;
+			sourceTree = "<group>";
+		};
+		792F27ED15F2378C00448456 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				792F27EE15F2378C00448456 /* ChangeLogUnzip */,
+				792F27EF15F2378C00448456 /* crypt.h */,
+				792F27F015F2378C00448456 /* ioapi.c */,
+				792F27F115F2378C00448456 /* ioapi.h */,
+				792F27F215F2378C00448456 /* Makefile */,
+				792F27F315F2378C00448456 /* mztools.c */,
+				792F27F415F2378C00448456 /* mztools.h */,
+				792F27F515F2378C00448456 /* unzip.c */,
+				792F27F615F2378C00448456 /* unzip.h */,
+				792F27F715F2378C00448456 /* zip.c */,
+				792F27F815F2378C00448456 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 		793F4E0A150F75C40026CE62 /* YRDropdownView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4954,37 +5079,6 @@
 			path = Libraries/appirater;
 			sourceTree = "<group>";
 		};
-		79924993150BA67E0043C16D /* MPOAuth */ = {
-			isa = PBXGroup;
-			children = (
-				79924994150BA67E0043C16D /* Crypto */,
-				79924996150BA67E0043C16D /* MPOAuthAPI.m */,
-				79924997150BA67E0043C16D /* MPOAuthAPIRequestLoader.m */,
-				79924998150BA67E0043C16D /* MPOAuthAuthenticationMethod.m */,
-				79924999150BA67E0043C16D /* MPOAuthAuthenticationMethodOAuth.m */,
-				7992499A150BA67E0043C16D /* MPOAuthConnection.m */,
-				7992499B150BA67E0043C16D /* MPOAuthCredentiaIConcreteStore+KeychainAdditionsMac.m */,
-				7992499C150BA67E0043C16D /* MPOAuthCredentialConcreteStore+KeychainAdditionsiPhone.m */,
-				7992499D150BA67E0043C16D /* MPOAuthCredentialConcreteStore.m */,
-				7992499E150BA67E0043C16D /* MPOAuthSignatureParameter.m */,
-				7992499F150BA67E0043C16D /* MPOAuthURLRequest.m */,
-				799249A0150BA67E0043C16D /* MPOAuthURLResponse.m */,
-				799249A1150BA67E0043C16D /* MPURLRequestParameter.m */,
-				799249A2150BA67E0043C16D /* NSString+URLEscapingAdditions.m */,
-				799249A3150BA67E0043C16D /* NSURL+MPURLParameterAdditions.m */,
-				799249A4150BA67E0043C16D /* NSURLResponse+Encoding.m */,
-			);
-			path = MPOAuth;
-			sourceTree = "<group>";
-		};
-		79924994150BA67E0043C16D /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				79924995150BA67E0043C16D /* DBBase64Transcoder.c */,
-			);
-			path = Crypto;
-			sourceTree = "<group>";
-		};
 		79924AEA150C1FFE0043C16D /* NYXImagesKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -5499,6 +5593,11 @@
 				79E2C174156A538F001C82C3 /* instagram_16@2x.png in Resources */,
 				79E2C176156A538F001C82C3 /* instagram_32.png in Resources */,
 				79E2C178156A538F001C82C3 /* instagram_32@2x.png in Resources */,
+				792F272915EF647600448456 /* metamovics_16.png in Resources */,
+				792F272B15EF647600448456 /* metamovics_16@2x.png in Resources */,
+				792F272D15EF647600448456 /* metamovics_32.png in Resources */,
+				792F272F15EF647600448456 /* metamovics_32@2x.png in Resources */,
+				792F27FB15F2378C00448456 /* ChangeLogUnzip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5690,6 +5789,11 @@
 				79E2C175156A538F001C82C3 /* instagram_16@2x.png in Resources */,
 				79E2C177156A538F001C82C3 /* instagram_32.png in Resources */,
 				79E2C179156A538F001C82C3 /* instagram_32@2x.png in Resources */,
+				792F272A15EF647600448456 /* metamovics_16.png in Resources */,
+				792F272C15EF647600448456 /* metamovics_16@2x.png in Resources */,
+				792F272E15EF647600448456 /* metamovics_32.png in Resources */,
+				792F273015EF647600448456 /* metamovics_32@2x.png in Resources */,
+				792F27FC15F2378C00448456 /* ChangeLogUnzip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6060,6 +6164,16 @@
 				7981F923157DAFAE007173D6 /* NSString+Dropbox.m in Sources */,
 				7981F925157DAFAE007173D6 /* UIAlertView+Dropbox.m in Sources */,
 				7981F929157DB1BE007173D6 /* DBBase64Transcoder.c in Sources */,
+				792F272715EF647600448456 /* MetaMovicsPhotoSubmitter.m in Sources */,
+				792F276A15F058C000448456 /* MetaMovicsAuth.m in Sources */,
+				792F276C15F058C000448456 /* MetaMovicsConnect.m in Sources */,
+				792F276E15F058C000448456 /* MetaMovicsRequest.m in Sources */,
+				792F27FD15F2378C00448456 /* ioapi.c in Sources */,
+				792F27FF15F2378C00448456 /* Makefile in Sources */,
+				792F280115F2378C00448456 /* mztools.c in Sources */,
+				792F280315F2378C00448456 /* unzip.c in Sources */,
+				792F280515F2378C00448456 /* zip.c in Sources */,
+				792F280715F2378C00448456 /* ZipArchive.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6420,6 +6534,16 @@
 				7981F924157DAFAE007173D6 /* NSString+Dropbox.m in Sources */,
 				7981F926157DAFAE007173D6 /* UIAlertView+Dropbox.m in Sources */,
 				7981F92A157DB1BE007173D6 /* DBBase64Transcoder.c in Sources */,
+				792F272815EF647600448456 /* MetaMovicsPhotoSubmitter.m in Sources */,
+				792F276B15F058C000448456 /* MetaMovicsAuth.m in Sources */,
+				792F276D15F058C000448456 /* MetaMovicsConnect.m in Sources */,
+				792F276F15F058C000448456 /* MetaMovicsRequest.m in Sources */,
+				792F27FE15F2378C00448456 /* ioapi.c in Sources */,
+				792F280015F2378C00448456 /* Makefile in Sources */,
+				792F280215F2378C00448456 /* mztools.c in Sources */,
+				792F280415F2378C00448456 /* unzip.c in Sources */,
+				792F280615F2378C00448456 /* zip.c in Sources */,
+				792F280815F2378C00448456 /* ZipArchive.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
