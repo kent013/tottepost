@@ -9,9 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "PreviewPhotoView.h"
 #import "MainViewControllerConstants.h"
-#import "UIImage+AutoRotation.h"
-#import "PhotoSubmitterManager.h"
-#import "PSLang.h"
+#import "UIImage+ENGAutoRotation.h"
+#import "ENGPhotoSubmitterManager.h"
+#import "ENGPhotoSubmitterLocalization.h"
 
 #define PPV_WIDTH 960
 #define PPV_HEIGHT 720
@@ -330,7 +330,7 @@
 /*!
  * show view
  */
-- (void)presentWithContent:(PhotoSubmitterContentEntity *)content {
+- (void)presentWithContent:(ENGPhotoSubmitterContentEntity *)content {
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     [self presentWithContent:content videoOrientation:orientation];
 }
@@ -338,10 +338,10 @@
 /*!
  * show view
  */
-- (void) presentWithContent:(PhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation{
+- (void) presentWithContent:(ENGPhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation{
     commentTextView_.text = @"";
     
-    int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+    int max = [ENGPhotoSubmitterManager sharedInstance].maxCommentLength;
     if(max){
         textCountview_.text = [NSString stringWithFormat:@"%d/%d",commentTextView_.text.length, max];    
     }else{
@@ -357,11 +357,11 @@
     [movieTimer_ invalidate];
     
     if(content.isPhoto){
-        PhotoSubmitterImageEntity *photo = (PhotoSubmitterImageEntity *)content;
+        ENGPhotoSubmitterImageEntity *photo = (ENGPhotoSubmitterImageEntity *)content;
         imageView_.image = [photo imageForPreviewWithOrientation:orientation];
         [self addSubview:imageView_];      
     }else if(content.isVideo){
-        PhotoSubmitterVideoEntity *video = (PhotoSubmitterVideoEntity *)content;
+        ENGPhotoSubmitterVideoEntity *video = (ENGPhotoSubmitterVideoEntity *)content;
         moviePlayerView_ = [[MPMoviePlayerViewController alloc] initWithContentURL:video.url];
         moviePlayerView_.moviePlayer.controlStyle = MPMovieControlStyleNone;
         moviePlayerView_.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
@@ -395,10 +395,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     if(force == NO){
-        int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+        int max = [ENGPhotoSubmitterManager sharedInstance].maxCommentLength;
         if(max && commentTextView_.text.length > max){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[PSLang localized:@"Alert_Error"] 
-                                                            message:[PSLang localized:@"Alert_Comment_Too_Long"]
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ENGPhotoSubmitterLocalization(@"Alert_Error")
+                                                            message:ENGPhotoSubmitterLocalization(@"Alert_Comment_Too_Long")
                                                            delegate:nil 
                                                   cancelButtonTitle:@"OK" 
                                                   otherButtonTitles:nil];
@@ -430,7 +430,7 @@
  * did changed text in textView
  */
 - (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
-    int max = [PhotoSubmitterManager sharedInstance].maxCommentLength;
+    int max = [ENGPhotoSubmitterManager sharedInstance].maxCommentLength;
     if(max){
         textCountview_.text = [NSString stringWithFormat:@"%d/%d",commentTextView_.text.length, max];    
     }else{

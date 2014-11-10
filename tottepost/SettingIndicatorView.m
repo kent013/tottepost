@@ -7,8 +7,8 @@
 //
 
 #import "SettingIndicatorView.h"
-#import "PhotoSubmitterManager.h"
-#import "FilePhotoSubmitter.h"
+#import "ENGPhotoSubmitterManager.h"
+#import "ENGFilePhotoSubmitter.h"
 
 static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 
@@ -63,8 +63,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         }
     }
     int x = label_.frame.size.width + 4;
-    NSArray *submitters = [PhotoSubmitterManager sharedInstance].submitters;
-    for (id<PhotoSubmitterProtocol> submitter in submitters){
+    NSArray *submitters = [ENGPhotoSubmitterManager sharedInstance].submitters;
+    for (id<ENGPhotoSubmitterProtocol> submitter in submitters){
         if(submitter.isLogined){
             CGRect rect = CGRectMake(x, 0, submitter.smallIcon.size.width, submitter.smallIcon.size.height);
             UIImageView *iv = [[UIImageView alloc] initWithImage:submitter.smallIcon];
@@ -75,7 +75,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
             x += submitter.smallIcon.size.width + 2;
         }
     }
-    if([PhotoSubmitterManager sharedInstance].enableGeoTagging){
+    if([ENGPhotoSubmitterManager sharedInstance].enableGeoTagging){
         label_.text = @"GPS ON";
     }else{
         label_.text = @"";
@@ -86,8 +86,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * content Size
  */
 - (CGSize)contentSize{
-    id<PhotoSubmitterProtocol> submitter = [[PhotoSubmitterManager sharedInstance].submitters objectAtIndex:0];
-    int count = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+    id<ENGPhotoSubmitterProtocol> submitter = [[ENGPhotoSubmitterManager sharedInstance].submitters objectAtIndex:0];
+    int count = [ENGPhotoSubmitterManager sharedInstance].enabledSubmitterCount;
     return CGSizeMake(label_.frame.size.width + 4 + submitter.smallIcon.size.width * count + (2 * count - 1), submitter.smallIcon.size.height);
     
 }

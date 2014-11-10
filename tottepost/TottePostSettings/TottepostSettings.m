@@ -12,7 +12,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "TottepostSettings.h"
-#import "PhotoSubmitterSettings.h"
+#import "ENGPhotoSubmitterSettings.h"
 
 /*!
  * singleton instance

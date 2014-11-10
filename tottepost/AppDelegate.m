@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 cocotomo. All rights reserved.
 //
 
+#import "ENGPhotoSubmitterManager.h"
 #import "AppDelegate.h"
-#import "PhotoSubmitterManager.h"
 #import "Appirater.h"
 
 @implementation AppDelegate
@@ -30,7 +30,7 @@
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
     
-    [[PhotoSubmitterManager sharedInstance] wakeup];
+    [[ENGPhotoSubmitterManager sharedInstance] wakeup];
     [Appirater appLaunched:YES];
     return YES;
 }
@@ -41,7 +41,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     applicationBecomeActiveAfterOpenURL = YES;
-    return [[PhotoSubmitterManager sharedInstance] didOpenURL:url];
+    return [[ENGPhotoSubmitterManager sharedInstance] didOpenURL:url];
 }
 
 /*!
@@ -56,7 +56,7 @@
     
     backgroundTaskIdentifer = [app beginBackgroundTaskWithExpirationHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[PhotoSubmitterManager sharedInstance] suspend];
+            [[ENGPhotoSubmitterManager sharedInstance] suspend];
             if (backgroundTaskIdentifer != UIBackgroundTaskInvalid) {
                 [app endBackgroundTask:backgroundTaskIdentifer];
                 backgroundTaskIdentifer = UIBackgroundTaskInvalid;
@@ -66,7 +66,7 @@
     
     // Start the long-running task and return immediately.    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        while([[PhotoSubmitterManager sharedInstance] isUploading] &&
+        while([[ENGPhotoSubmitterManager sharedInstance] isUploading] &&
               backgroundTaskIdentifer != UIBackgroundTaskInvalid){
             //NSLog(@"continue: %d, %d", [[PhotoSubmitterManager sharedInstance] isUploading], backgroundTaskIdentifer);
             [NSThread sleepForTimeInterval:1];
@@ -82,11 +82,11 @@
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[PhotoSubmitterManager sharedInstance] refreshCredentials];
+    [[ENGPhotoSubmitterManager sharedInstance] refreshCredentials];
     UIApplication* app = [UIApplication sharedApplication];
     if(applicationBecomeActiveAfterOpenURL == NO){
         [self.mainViewController applicationDidBecomeActive];
-        [[PhotoSubmitterManager sharedInstance] wakeup];
+        [[ENGPhotoSubmitterManager sharedInstance] wakeup];
     }
     applicationBecomeActiveAfterOpenURL = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -102,7 +102,7 @@
  */
 - (void)applicationWillTerminate:(UIApplication *)application{
     NSLog(@"term");
-    [[PhotoSubmitterManager sharedInstance] suspend];
+    [[ENGPhotoSubmitterManager sharedInstance] suspend];
 }
 
 /*!

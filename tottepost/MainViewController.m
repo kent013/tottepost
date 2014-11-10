@@ -8,8 +8,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "ENGPhotoSubmitterSettings.h"
 #import "MainViewController.h"
-#import "PhotoSubmitterSettings.h"
 #import "MainViewControllerConstants.h"
 #import "TTLang.h"
 #import "UIColor-Expanded.h"
@@ -39,9 +39,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 - (void) didCameraButtonTapped: (id)sender;
 - (void) updateCoordinates;
 - (void) updateIndicatorCoordinate;
-- (void) previewContent:(PhotoSubmitterContentEntity *)content;
+- (void) previewContent:(ENGPhotoSubmitterContentEntity *)content;
 - (BOOL) closePreview:(BOOL)force;
-- (void) postContent:(PhotoSubmitterContentEntity *)content;
+- (void) postContent:(ENGPhotoSubmitterContentEntity *)content;
 - (void) changeCenterButtonTo: (UIBarButtonItem *)toButton;
 - (void) updateCameraController;
 - (void) createCameraController;
@@ -70,9 +70,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //if you want to set schema suffix, call this before anything else
 #ifdef LITE_VERSION
-    [PhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostlite"];
+    [ENGPhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostlite"];
 #else
-    [PhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostpaid"];
+    [ENGPhotoSubmitterManager setPhotoSubmitterCustomSchemaSuffix:@"tottepostpaid"];
 #endif
     
     //free mode
@@ -82,10 +82,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 #endif
     
     //photo submitter setting
-    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
-    [PhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
-    [PhotoSubmitterManager sharedInstance].navigationControllerDelegate = self;
-    [PhotoSubmitterManager sharedInstance].settingViewFactory = self;
+    [[ENGPhotoSubmitterManager sharedInstance] addPhotoDelegate:self];
+    [ENGPhotoSubmitterManager sharedInstance].submitPhotoWithOperations = YES;
+    [ENGPhotoSubmitterManager sharedInstance].navigationControllerDelegate = self;
+    [ENGPhotoSubmitterManager sharedInstance].settingViewFactory = self;
     
     //setting view
     
@@ -153,9 +153,9 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     //progress summary
     progressSummaryView_ = [[ProgressSummaryView alloc] initWithFrame:CGRectZero];
-    [[PhotoSubmitterManager sharedInstance] addPhotoDelegate: progressSummaryView_];
-    [PhotoSubmitterManager sharedInstance].enableGeoTagging = 
-      [PhotoSubmitterSettings getInstance].gpsEnabled;
+    [[ENGPhotoSubmitterManager sharedInstance] addPhotoDelegate: progressSummaryView_];
+    [ENGPhotoSubmitterManager sharedInstance].enableGeoTagging =
+      [ENGPhotoSubmitterSettings getInstance].gpsEnabled;
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown){
         orientation_ = UIDeviceOrientationPortraitUpsideDown;
     }else{
@@ -174,7 +174,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     BOOL alreadyOpenedSettings = [defaults boolForKey:@"alreadyOpenedSettings"];
-    if(alreadyOpenedSettings == NO && [PhotoSubmitterManager sharedInstance].enabledSubmitterCount == 0)
+    if(alreadyOpenedSettings == NO && [ENGPhotoSubmitterManager sharedInstance].enabledSubmitterCount == 0)
     {
         [self showWelcomeMessage];
     }
@@ -198,7 +198,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on comment button tapped, switch toggle comment post
  */
 - (void) didCommentButtonTapped:(id)sender{
-    [PhotoSubmitterSettings getInstance].commentPostEnabled = ![PhotoSubmitterSettings getInstance].commentPostEnabled;
+    [PhotoSubmitterSettings getInstance].commentPostEnabled = ![ENGPhotoSubmitterSettings getInstance].commentPostEnabled;
     [self updateCoordinates];
 }
 
@@ -335,8 +335,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * post photo
  */
-- (void)postContent:(PhotoSubmitterContentEntity *)content{
-    PhotoSubmitterManager *manager = [PhotoSubmitterManager sharedInstance];
+- (void)postContent:(ENGPhotoSubmitterContentEntity *)content{
+    ENGPhotoSubmitterManager *manager = [ENGPhotoSubmitterManager sharedInstance];
     if(manager.enabledSubmitterCount == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Alert_Error"] message:[TTLang localized:@"Alert_NoSubmittersEnabled"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -344,15 +344,15 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     
     if(imagePicker_.showsSquareGrid && content.isPhoto){
-        PhotoSubmitterImageEntity *image = (PhotoSubmitterImageEntity *)content;
+        ENGPhotoSubmitterImageEntity *image = (ENGPhotoSubmitterImageEntity *)content;
         image.squareCropRect = imagePicker_.squareGridRect;
         content = image;
     }
     
     if(content.isPhoto){
-        [manager submitPhoto:(PhotoSubmitterImageEntity *)content];
+        [manager submitPhoto:(ENGPhotoSubmitterImageEntity *)content];
     }else if(content.isVideo){
-        [manager submitVideo:(PhotoSubmitterVideoEntity *)content];
+        [manager submitVideo:(ENGPhotoSubmitterVideoEntity *)content];
     }
 }
 
@@ -390,7 +390,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * preview content
  */
-- (void)previewContent:(PhotoSubmitterContentEntity *)content{
+- (void)previewContent:(ENGPhotoSubmitterContentEntity *)content{
     [self.view addSubview:previewImageView_];
     [previewImageView_ presentWithContent:content videoOrientation:orientation_];
     [self.view bringSubviewToFront:toolbar_];
@@ -455,7 +455,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         imagePicker_.showsCameraControls = YES;
         imagePicker_.showsShutterButton = NO;
         imagePicker_.freezeAfterShutter = NO;
-        if([PhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
+        if([ENGPhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
             imagePicker_.showsSquareGrid = YES;
         }
         [self applyCameraConfiguration];
@@ -622,8 +622,8 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  */
 - (void)cameraController:(AVFoundationCameraController *)cameraController didFinishPickingImageData:(NSData *)data{
     [self cleanupVideoMode];
-    PhotoSubmitterImageEntity *photo = [[PhotoSubmitterImageEntity alloc] initWithData:data];
-    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
+    ENGPhotoSubmitterImageEntity *photo = [[ENGPhotoSubmitterImageEntity alloc] initWithData:data];
+    if([ENGPhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewContent:photo];
     }else{
         [self postContent:photo];
@@ -661,7 +661,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         }
         return;
     }
-    PhotoSubmitterVideoEntity *video = [[PhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
+    ENGPhotoSubmitterVideoEntity *video = [[ENGPhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
     
     if([PhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewContent:video];
@@ -683,7 +683,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * photo upload start
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }
@@ -697,7 +697,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * photo submitted
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     //NSLog(@"%@ submitted.", imageHash);
     
     NSString *msg = [TTLang localized:@"ProgressCell_Completed"];
@@ -728,7 +728,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * photo upload progress changed
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
     }
@@ -742,7 +742,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * photo submitter did canceled
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{   
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
     NSString *msg = [TTLang localized:@"ProgressCell_Canceled"];
     if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
         return;
@@ -777,7 +777,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         frame.size.height += MAINVIEW_STATUS_BAR_HEIGHT;
         [self.view setFrame:frame];
     }
-    if([PhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
+    if([ENGPhotoSubmitterManager sharedInstance].isSquarePhotoRequired){
         imagePicker_.showsSquareGrid = YES;
     }else{
         imagePicker_.showsSquareGrid = NO;
@@ -836,7 +836,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * create setting view
  */
-- (id)createSettingViewWithSubmitter:(id<PhotoSubmitterProtocol>)submitter{
+- (id)createSettingViewWithSubmitter:(id<ENGPhotoSubmitterProtocol>)submitter{
     return nil;
 }
 

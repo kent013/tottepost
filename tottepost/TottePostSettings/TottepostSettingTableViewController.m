@@ -8,8 +8,8 @@
 
 #import "TottepostSettingTableViewController.h"
 #import "TTLang.h"
-#import "PhotoSubmitterSettings.h"
-#import "PhotoSubmitterSettingTableViewProtocol.h"
+#import "ENGPhotoSubmitterSettings.h"
+#import "ENGPhotoSubmitterSettingTableViewProtocol.h"
 #import "MAConfirmButton.h"
 #import "TottepostSettings.h"
 

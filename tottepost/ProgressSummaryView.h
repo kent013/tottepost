@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PhotoSubmitterProtocol.h"
-#import "PhotoSubmitterManager.h"
+#import "ENGPhotoSubmitterProtocol.h"
+#import "ENGPhotoSubmitterManager.h"
 
-@interface ProgressSummaryView : UIView<PhotoSubmitterPhotoDelegate,PhotoSubmitterManagerDelegate,UIAlertViewDelegate>{
+@interface ProgressSummaryView : UIView<ENGPhotoSubmitterPhotoDelegate,ENGPhotoSubmitterManagerDelegate,UIAlertViewDelegate>{
     __strong UILabel *textLabel_;
     __strong UIImageView *imageView;
     __strong UIImage *cancelImage;

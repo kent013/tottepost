@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhotoSubmitterManager.h"
+#import "ENGPhotoSubmitterManager.h"
 
 @interface UploadProgressEntity : NSObject
 @property (nonatomic, assign) CGFloat progress;
-@property (nonatomic, strong) PhotoSubmitterAccount *account;
-@property (nonatomic, readonly) id<PhotoSubmitterProtocol> submitter;
+@property (nonatomic, strong) ENGPhotoSubmitterAccount *account;
+@property (nonatomic, readonly) id<ENGPhotoSubmitterProtocol> submitter;
 @property (nonatomic, readonly) NSString *progressHash;
 @property (strong, nonatomic) NSString *contentHash;
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
-#import "AlbumPhotoSubmitterSettingTableViewController.h"
-#import "PhotoSubmitterServiceSettingTableViewController.h"
+#import "ENGAlbumPhotoSubmitterSettingTableViewController.h"
+#import "ENGPhotoSubmitterServiceSettingTableViewController.h"
 
-@interface LitePhotoSubmitterSettingTableProvider: NSObject<PhotoSubmitterServiceSettingTableViewDelegate>
+@interface LitePhotoSubmitterSettingTableProvider: NSObject<ENGPhotoSubmitterServiceSettingTableViewDelegate>
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "PhotoSubmitterImageEntity.h"
+#import "ENGPhotoSubmitterImageEntity.h"
 #import "HPGrowingTextView.h"
 
 @protocol PreviewPhotoViewDelegate;

@@ -7,3 +7,6 @@ xcuserdatad
 tottepost/UserVoiceAPIKey.h
 tottepost/PhotoSubmitter/PhotoSubmitterAPIKey.h
 tottepost.xcworkspace/xcuserdata/ishitoya.xcuserdatad/UserInterfaceState.xcuserstate
+
+Pods
+Podfile.lock

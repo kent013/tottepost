@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ProgressSummaryView.h"
-#import "PhotoSubmitterManager.h"
+#import "ENGPhotoSubmitterManager.h"
 #import "TTLang.h"
 #import "FBNetworkReachability.h"
 
@@ -55,15 +55,15 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGesture];
-    [[PhotoSubmitterManager sharedInstance] addDelegate:self];
+    [[ENGPhotoSubmitterManager sharedInstance] addDelegate:self];
 }
 
 /*!
  * update Label
  */
 - (void)updateLabel{        
-    if([PhotoSubmitterManager sharedInstance].isError &&
-       [PhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
+    if([ENGPhotoSubmitterManager sharedInstance].isError &&
+       [ENGPhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
         imageView.image = retryImage;
     }else{
         imageView.image = cancelImage;
@@ -81,11 +81,11 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * handle tap gesture
  */
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender{
-    [[PhotoSubmitterManager sharedInstance] pause];
+    [[ENGPhotoSubmitterManager sharedInstance] pause];
     UIAlertView *alert = nil;
     
-    if([PhotoSubmitterManager sharedInstance].isError &&
-       [PhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
+    if([ENGPhotoSubmitterManager sharedInstance].isError &&
+       [ENGPhotoSubmitterManager sharedInstance].errorOperationCount == operationCount_){
         alert = [[UIAlertView alloc] initWithTitle:[TTLang localized:@"Restart_Alert_Message"]
                                            message:[TTLang localized:@"Restart_Alert_Message"]
                                           delegate:self 
@@ -157,10 +157,10 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * PhotoSubmitterPhotoDelegate will start upload
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter willStartUpload:(NSString *)imageHash{
     dispatch_async(dispatch_get_main_queue(), ^{
-        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
-        enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+        operationCount_ = [ENGPhotoSubmitterManager sharedInstance].uploadOperationCount;
+        enabledAppCount_ = [ENGPhotoSubmitterManager sharedInstance].enabledSubmitterCount;
         [self updateLabel];
         if(operationCount_ != 0 && isVisible_ == NO){
             [self show];
@@ -171,14 +171,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * PhotoSubmitterPhotoDelegate did submitted
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{    
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didSubmitted:(NSString *)imageHash suceeded:(BOOL)suceeded message:(NSString *)message{
     dispatch_async(dispatch_get_main_queue(), ^{
         if([photoSubmitter.type isEqualToString:kFilePhotoSubmitterType]){
             return;
         }
         if(suceeded){
             operationCount_--;
-            enabledAppCount_ = [PhotoSubmitterManager sharedInstance].enabledSubmitterCount;
+            enabledAppCount_ = [ENGPhotoSubmitterManager sharedInstance].enabledSubmitterCount;
             if(operationCount_ <= 0 && isVisible_){
                 [self hide];
             }
@@ -190,14 +190,14 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
 /*!
  * PhotoSubmitterPhotoDelegate did progress changed
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didProgressChanged:(NSString *)imageHash progress:(CGFloat)progress{
     //do nothing
 }
 
 /*!
  * PhotoSubmitterPhotoDelegate did cancel
  */
-- (void)photoSubmitter:(id<PhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
+- (void)photoSubmitter:(id<ENGPhotoSubmitterProtocol>)photoSubmitter didCanceled:(NSString *)imageHash{
     //do nothing
 }
 
@@ -213,13 +213,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                     if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
                         break;
                     }
-                    [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
+                    [[ENGPhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
                     [self updateLabel];            
                     break;
                 }
                 case 1:{
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[PhotoSubmitterManager sharedInstance] cancel];
+                        [[ENGPhotoSubmitterManager sharedInstance] cancel];
                         [self updateLabel];
                     });
                     break;
@@ -235,7 +235,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                     if([FBNetworkReachability sharedInstance].connectionMode == FBNetworkReachableNon){
                         break;
                     }
-                    [[PhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
+                    [[ENGPhotoSubmitterManager sharedInstance] performSelector:@selector(restart) withObject:nil afterDelay:PSV_RETRY_INTERVAL];
                     [self updateLabel]; 
                     break;
                 }
@@ -250,9 +250,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 /*!
  * PhotoSubmitterManager delegate did operation added
  */
-- (void)photoSubmitterManager:(PhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(PhotoSubmitterOperation *)operation{
+- (void)photoSubmitterManager:(ENGPhotoSubmitterManager *)photoSubmitterManager didOperationAdded:(ENGPhotoSubmitterOperation *)operation{
     dispatch_async(dispatch_get_main_queue(), ^{
-        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+        operationCount_ = [ENGPhotoSubmitterManager sharedInstance].uploadOperationCount;
         [self updateLabel];
     });
 }
@@ -262,7 +262,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
  */
 - (void) didUploadCanceled{
     dispatch_async(dispatch_get_main_queue(), ^{
-        operationCount_ = [PhotoSubmitterManager sharedInstance].uploadOperationCount;
+        operationCount_ = [ENGPhotoSubmitterManager sharedInstance].uploadOperationCount;
         [self updateLabel];
         if(operationCount_ == 0 && isVisible_){
             [self hide];

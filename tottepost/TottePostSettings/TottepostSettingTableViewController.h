@@ -6,17 +6,17 @@
 //  Copyright (c) 2012 cocotomo. All rights reserved.
 //
 
-#import "PhotoSubmitterSettingTableViewController.h"
+#import "ENGPhotoSubmitterSettingTableViewController.h"
 #import "AboutSettingViewController.h"
 #import "AVFoundationPresetTableViewController.h"
 
 @protocol TottepostSettingTableViewControllerDelegate;
-@interface TottepostSettingTableViewController : PhotoSubmitterSettingTableViewController<AboutSettingViewControllerDelegate>{
+@interface TottepostSettingTableViewController : ENGPhotoSubmitterSettingTableViewController<AboutSettingViewControllerDelegate>{
     __strong AboutSettingViewController *aboutSettingViewController_;
     __strong AVFoundationPresetTableViewController *presetSettingViewController_;
 }
 @end
-@protocol TottepostSettingTableViewControllerDelegate<PhotoSubmitterSettingTableViewControllerDelegate>
+@protocol TottepostSettingTableViewControllerDelegate<ENGPhotoSubmitterSettingTableViewControllerDelegate>
 - (void) didMailFeedbackButtonPressed;
 - (void) didUserVoiceFeedbackButtonPressed;
 @end

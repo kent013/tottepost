@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PhotoSubmitterProtocol.h"
+#import "ENGPhotoSubmitterProtocol.h"
 #import "FBProgressView.h"
 
 @interface ProgressTableViewCell : UITableViewCell{
@@ -15,6 +15,6 @@
 }
 @property (strong, readonly) FBProgressView *progressView;
 
-- (id)initWithSubmitter: (id<PhotoSubmitterProtocol>) submitter andSize:(CGSize)size;
+- (id)initWithSubmitter: (id<ENGPhotoSubmitterProtocol>) submitter andSize:(CGSize)size;
 - (void)showText:(NSString *)text;
 @end

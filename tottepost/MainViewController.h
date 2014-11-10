@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ENGPhotoSubmitterSettings.h"
+#import "ENGPhotoSubmitterAccountTableViewController.h"
 #import "TottepostSettingTableViewController.h"
-#import "PhotoSubmitterSettings.h"
 #import "Facebook.h"
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
 #import "PreviewPhotoView.h"
 #import "SettingIndicatorView.h"
 #import "AVFoundationCameraController.h"
-#import "PhotoSubmitterAccountTableViewController.h"
 #import "CameraModeSwitchView.h"
 #import "UVDelegate.h"
 #import "FlashView.h"
@@ -23,7 +23,7 @@
 /*!
  * Main view controller
  */
-@interface MainViewController : UIViewController<UINavigationControllerDelegate, PhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, PhotoSubmitterNavigationControllerDelegate, UVDelegate, CameraModeSwitchViewDelegate, PhotoSubmitterSettingViewFactoryProtocol>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate, ENGPhotoSubmitterPhotoDelegate, TottepostSettingTableViewControllerDelegate, AVFoundationCameraControllerDelegate, PreviewPhotoViewDelegate, ENGPhotoSubmitterNavigationControllerDelegate, UVDelegate, CameraModeSwitchViewDelegate, ENGPhotoSubmitterSettingViewFactoryProtocol>{
 @protected
     __strong TottepostSettingTableViewController *settingViewController_;
     __strong ProgressTableViewController *progressTableViewController_;
