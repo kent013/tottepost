@@ -16,10 +16,8 @@
 #import "AAMFeedbackViewController.h"
 #import "UserVoiceAPIKey.h"
 #import "UserVoice.h"
-#import "UVSession.h"
-#import "UVToken.h"
-#import "NSData+Digest.h"
-#import "FilePhotoSubmitter.h"
+#import "NSData+ENGDigest.h"
+#import "ENGFilePhotoSubmitter.h"
 #import "YRDropdownView.h"
 #import "TottepostSettings.h"
 #import "LitePhotoSubmitterSettingTableProvider.h"
@@ -198,7 +196,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
  * on comment button tapped, switch toggle comment post
  */
 - (void) didCommentButtonTapped:(id)sender{
-    [PhotoSubmitterSettings getInstance].commentPostEnabled = ![ENGPhotoSubmitterSettings getInstance].commentPostEnabled;
+    [ENGPhotoSubmitterSettings getInstance].commentPostEnabled = ![ENGPhotoSubmitterSettings getInstance].commentPostEnabled;
     [self updateCoordinates];
 }
 
@@ -236,7 +234,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     postCancelButton_.width = MAINVIEW_POSTCANCEL_BUTTON_WIDTH;
     
     UIButton *commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, 42)];
-    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
+    if([ENGPhotoSubmitterSettings getInstance].commentPostEnabled){
         [commentButton setBackgroundImage:[UIImage imageNamed:@"comment-selected.png"]forState:UIControlStateNormal];
     }else{
         [commentButton setBackgroundImage:[UIImage imageNamed:@"comment.png"]forState:UIControlStateNormal];
@@ -663,7 +661,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     }
     ENGPhotoSubmitterVideoEntity *video = [[ENGPhotoSubmitterVideoEntity alloc] initWithUrl:outputFileURL];
     
-    if([PhotoSubmitterSettings getInstance].commentPostEnabled){
+    if([ENGPhotoSubmitterSettings getInstance].commentPostEnabled){
         [self previewContent:video];
     }else{
         [self postContent:video];        
@@ -712,7 +710,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [progressTableViewController_ removeProgressWithAccount:photoSubmitter.account
                                                      forHash:imageHash 
                                                      message:msg delay:delay];
-        if(suceeded == NO){
+        if(suceeded == NO){/*
             [YRDropdownView showDropdownInView:self.view 
                                          title:[TTLang localized:@"PS_Upload_Failed"]
                                         detail:[TTLang localized:@"PS_Upload_Failed_Detail"]
@@ -720,7 +718,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
                                       animated:YES 
                                      hideAfter:8.0 
                                     setUIcolor:[UIColor colorWithRed:1 green:0 blue:0 alpha:1] 
-                                setPrettylayer:@"glossLayer"];
+                                setPrettylayer:@"glossLayer"];*/
         }
     });
 }
@@ -874,7 +872,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
     if(imagePicker_ == nil){
         [self createCameraController];
     }
-    if(isMailFeedbackButtonPressed_){
+    if(isMailFeedbackButtonPressed_){/*
         isMailFeedbackButtonPressed_ = NO;
         isUserVoiceFeedbackButtonPressed_ = NO;
         AAMFeedbackViewController *fv = [[AAMFeedbackViewController alloc] init];
@@ -889,7 +887,7 @@ static NSString *kFilePhotoSubmitterType = @"FilePhotoSubmitter";
         [UserVoice presentUserVoiceModalViewControllerForParent:self
                     andSite:TOTTEPOST_USERVOICE_API_SITE
                      andKey:TOTTEPOST_USERVOICE_API_KEY
-                  andSecret:TOTTEPOST_USERVOICE_API_SECRET];
+                  andSecret:TOTTEPOST_USERVOICE_API_SECRET];*/
     }
 }
 

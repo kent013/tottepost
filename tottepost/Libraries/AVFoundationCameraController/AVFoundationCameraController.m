@@ -10,10 +10,10 @@
 #import <ImageIO/ImageIO.h>
 #import "AVFoundationCameraController.h"
 #import "UIImage+Resize.h"
-#import "UIImage+AutoRotation.h"
+#import "UIImage+ENGAutoRotation.h"
 #import "ScreenStatus.h"
 #import "AVFoundationPreset.h"
-#import "UIImage+AutoRotation.h"
+#import "UIImage+ENGSubImageWithRect.h"
 
 #define INDICATOR_RECT_SIZE 50.0
 #define PICKER_MAXIMUM_ZOOM_SCALE 3 
@@ -811,7 +811,7 @@ NSString *kTempVideoURL = @"kTempVideoURL";
             [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
             dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
             [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
-            dispatch_release(queue);
+            //dispatch_release(queue);
             
             if([session_ canAddOutput:videoDataOutput_]){
                 [session_ addOutput:videoDataOutput_];
@@ -1197,7 +1197,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)anOutputFileURL
             [videoDataOutput_ setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
             dispatch_queue_t queue = dispatch_queue_create("com.tottepost.videoDataOutput", NULL);
             [videoDataOutput_ setSampleBufferDelegate:self queue:queue];
-            dispatch_release(queue);
+            //dispatch_release(queue);
             
             if([session_ canAddOutput:videoDataOutput_]){
                 [session_ addOutput:videoDataOutput_];

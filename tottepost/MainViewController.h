@@ -10,7 +10,6 @@
 #import "ENGPhotoSubmitterSettings.h"
 #import "ENGPhotoSubmitterAccountTableViewController.h"
 #import "TottepostSettingTableViewController.h"
-#import "Facebook.h"
 #import "ProgressTableViewController.h"
 #import "ProgressSummaryView.h"
 #import "PreviewPhotoView.h"
@@ -42,7 +41,7 @@
     __strong UIImageView *launchImageView_;
     __strong UIImageView *cameraIconImageView_;
     __strong CameraModeSwitchView *cameraModeSwitchView_;
-    __strong id<PhotoSubmitterServiceSettingTableViewDelegate> settingTableViewDelegate_;
+    __strong id<ENGPhotoSubmitterServiceSettingTableViewDelegate> settingTableViewDelegate_;
     __strong FlashView *flashView_;
     UIDeviceOrientation orientation_;
     UIDeviceOrientation lastOrientation_;

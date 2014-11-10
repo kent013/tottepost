@@ -8,7 +8,7 @@ target 'tottepost' do
   pod "CMPopTipView"
   pod "DCRoundSwitch"
   pod "HPGrowingTextView"
-  pod "HTTPRiot"
+  pod "KissXML"
   pod "uidevice-extension"
   pod "YRDropdownView"
   pod "uservoice-iphone-sdk"
@@ -21,6 +21,13 @@ target 'tottepost' do
 end
 
 target 'tottepost lite' do
+  pod "Appirater"
+  pod "CMPopTipView"
+  pod "DCRoundSwitch"
+  pod "HPGrowingTextView"
+  pod "uidevice-extension"
+  pod "YRDropdownView"
+  pod "uservoice-iphone-sdk"
   pod "FBNetworkReachability", :git => "https://github.com/dev5tec/FBNetworkReachability.git"
   pod "PhotoSubmitter/Core", :git => "https://github.com/kent013/PhotoSubmitter.git"
   pod "PhotoSubmitter/Facebook", :git => "https://github.com/kent013/PhotoSubmitter.git"

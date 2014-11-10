@@ -9,7 +9,7 @@
 #import "LitePhotoSubmitterSettingTableProvider.h"
 #import "MAConfirmButton.h"
 #import "TTLang.h"
-#import "PSLang.h"
+#import "ENGPhotoSubmitterLocalization.h"
 
 #define FSV_SECTION_ALBUMS 1
 
@@ -38,14 +38,14 @@
 /*!
  * sections
  */
-- (NSInteger)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController numberOfSectionsInTableView:(UITableView *)tableView{
     return -1;
 }
 
 /*!
  * rows
  */
-- (NSInteger)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section{
     return -1;
 }
 
@@ -53,27 +53,27 @@
 /*!
  * header
  */
-- (NSString *)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+- (NSString *)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     return nil;
 }
 
 /*!
  * footer
  */
-- (NSString *)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+- (NSString *)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     return nil;
 }
 
 /*!
  * request for cell
  */
-- (UITableViewCell *)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([settingViewController isKindOfClass:[AlbumPhotoSubmitterSettingTableViewController class]]){
+- (UITableViewCell *)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if([settingViewController isKindOfClass:[ENGAlbumPhotoSubmitterSettingTableViewController class]]){
         if(indexPath.section == FSV_SECTION_ALBUMS && 
            settingViewController.submitter.isAlbumSupported){
             if(settingViewController.submitter.albumList.count == indexPath.row){
                 UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-                cell.textLabel.text = [PSLang localized:@"Album_Detail_Section_Create_Album_Title"];
+                cell.textLabel.text = ENGPhotoSubmitterLocalization(@"Album_Detail_Section_Create_Album_Title");
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
                 [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -86,7 +86,7 @@
     if(indexPath.section == SV_SECTION_ACCOUNT &&
              indexPath.row == SV_ROW_ACCOUNT_ADD){
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        cell.textLabel.text = [PSLang localized:@"Detail_Row_AddAccount"];
+        cell.textLabel.text = ENGPhotoSubmitterLocalization(@"Detail_Row_AddAccount");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         MAConfirmButton *proButton = [MAConfirmButton buttonWithTitle:@"PRO" confirm:[TTLang localized:@"AppStore_Open"]];
         [proButton addTarget:self action:@selector(handleProButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -100,8 +100,8 @@
 /*!
  * cell selected
  */
-- (BOOL)settingViewController:(PhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([settingViewController isKindOfClass:[AlbumPhotoSubmitterSettingTableViewController class]]){
+- (BOOL)settingViewController:(ENGPhotoSubmitterServiceSettingTableViewController *)settingViewController tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if([settingViewController isKindOfClass:[ENGAlbumPhotoSubmitterSettingTableViewController class]]){
         if(indexPath.section == FSV_SECTION_ALBUMS && 
            settingViewController.submitter.isAlbumSupported && 
            indexPath.row == settingViewController.submitter.albumList.count){

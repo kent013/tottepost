@@ -16,6 +16,6 @@
 @property (nonatomic, readonly) NSString *progressHash;
 @property (strong, nonatomic) NSString *contentHash;
 
-- (id)initWithAccount:(PhotoSubmitterAccount *)account contentHash:(NSString *)contentHash;
-+ (NSString *) generateProgressHashWithAccount:(PhotoSubmitterAccount *)account hash:(NSString *)hash;
+- (id)initWithAccount:(ENGPhotoSubmitterAccount *)account contentHash:(NSString *)contentHash;
++ (NSString *) generateProgressHashWithAccount:(ENGPhotoSubmitterAccount *)account hash:(NSString *)hash;
 @end

@@ -1333,7 +1333,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"$(inherited)",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "8D5E70B4-2B2A-464F-8C4D-2EEB46DB0697";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D5E70B4-2B2A-464F-8C4D-2EEB46DB0697";
@@ -1357,7 +1360,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"$(inherited)",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
@@ -1372,6 +1378,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3FB3BE7F031F54EAB0820628 /* Pods-tottepost.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = (
@@ -1395,7 +1402,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1404,6 +1411,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01345384B25B49564AA0536D /* Pods-tottepost.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				EXCLUDED_SOURCE_FILE_NAMES = (
@@ -1427,7 +1435,7 @@
 				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1602,7 +1610,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"$(inherited)",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "7E1BCC09-8A0D-484C-99C1-FF23A4E89CB5";
@@ -1617,6 +1628,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BBEE311131B23F1ECA250C5B /* Pods-tottepost.adhoc.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
@@ -1642,7 +1654,7 @@
 				"PROVISIONING_PROFILE[sdk=*]" = "F6453CF0-5687-4FA3-A016-6AC9D0014ED9";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F6453CF0-5687-4FA3-A016-6AC9D0014ED9";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Adhoc;
@@ -1721,7 +1733,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**",
+					"$(inherited)",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
@@ -1736,6 +1751,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEBC81FDECEEF23FB28BD539 /* Pods-tottepost.distribution.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kentaro ISHITOYA";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kentaro ISHITOYA";
@@ -1761,7 +1777,7 @@
 				"PROVISIONING_PROFILE[sdk=*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CD9996C6-8941-4C1E-BA94-6D9AFBC27861";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "PhotoSubmitter/Services/EvernotePhotoSubmitter/Libraries/Evernote/thrift/** /usr/include/libxml2";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;

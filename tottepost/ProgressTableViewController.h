@@ -20,7 +20,7 @@
 - (id) initWithFrame:(CGRect)frame andProgressSize:(CGSize)size;
 - (void) updateWithFrame:(CGRect)frame;
 - (void) update;
-- (void) addProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash;
-- (void) updateProgressWithAccount:(PhotoSubmitterAccount *)account forHash: (NSString *)hash progress:(CGFloat)progress;
-- (void) removeProgressWithAccount:(PhotoSubmitterAccount *)account forHash: (NSString *)hash message:(NSString *)message delay:(int)delay;
+- (void) addProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash:(NSString *)hash;
+- (void) updateProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash: (NSString *)hash progress:(CGFloat)progress;
+- (void) removeProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash: (NSString *)hash message:(NSString *)message delay:(int)delay;
 @end

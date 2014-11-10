@@ -26,7 +26,7 @@
     __strong NSTimer *movieTimer_;
     BOOL isMovieSeeking_;
     
-    __strong PhotoSubmitterContentEntity *content_;
+    __strong ENGPhotoSubmitterContentEntity *content_;
     __weak id<PreviewPhotoViewDelegate> delegate_;
     BOOL isKeyboardPresented_;
     BOOL isApplicationActive_;
@@ -34,11 +34,11 @@
     CGFloat lastMovieSliderValue_;
 }
 @property (weak, nonatomic) id<PreviewPhotoViewDelegate> delegate;
-@property (readonly, nonatomic) PhotoSubmitterContentEntity *content;
+@property (readonly, nonatomic) ENGPhotoSubmitterContentEntity *content;
 
 - (void) updateWithFrame:(CGRect)frame;
-- (void) presentWithContent:(PhotoSubmitterContentEntity *)content;
-- (void) presentWithContent:(PhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation;
+- (void) presentWithContent:(ENGPhotoSubmitterContentEntity *)content;
+- (void) presentWithContent:(ENGPhotoSubmitterContentEntity *)content videoOrientation:(UIDeviceOrientation) orientation;
 - (BOOL) dismiss:(BOOL)force;
 @end
 

@@ -28,7 +28,7 @@
 /*!
  * initialize
  */
-- (id)initWithAccount:(PhotoSubmitterAccount *)inAccount contentHash:(NSString *)inContentHash{
+- (id)initWithAccount:(ENGPhotoSubmitterAccount *)inAccount contentHash:(NSString *)inContentHash{
     self = [super init];
     if(self){
         account = inAccount;
@@ -55,14 +55,14 @@
 /*!
  * submitter
  */
-- (id<PhotoSubmitterProtocol>)submitter{
-    return [PhotoSubmitterManager submitterForAccount:self.account];
+- (id<ENGPhotoSubmitterProtocol>)submitter{
+    return [ENGPhotoSubmitterManager submitterForAccount:self.account];
 }
 
 /*!
  * generate hash
  */
-+ (NSString *)generateProgressHashWithAccount:(PhotoSubmitterAccount *)account hash:(NSString *)hash{
++ (NSString *)generateProgressHashWithAccount:(ENGPhotoSubmitterAccount *)account hash:(NSString *)hash{
     return [account.accountHash stringByAppendingString:hash];
 }
 @end

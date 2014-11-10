@@ -15,7 +15,7 @@
 - (void) setupInitialState:(CGRect)frame;
 - (void) removeProgressCell:(UploadProgressEntity *)entity;
 - (void) showText:(UploadProgressEntity *)entity text:(NSString *)text;
-- (UploadProgressEntity *) progressForAccount:(PhotoSubmitterAccount *)account andHash:(NSString *)hash;
+- (UploadProgressEntity *) progressForAccount:(ENGPhotoSubmitterAccount *)account andHash:(NSString *)hash;
 - (int) indexForProgress:(UploadProgressEntity *)e;
 @end
 
@@ -125,7 +125,7 @@
 /*!
  * get progress entity
  */
-- (UploadProgressEntity *)progressForAccount:(PhotoSubmitterAccount *)account andHash:(NSString *)hash{
+- (UploadProgressEntity *)progressForAccount:(ENGPhotoSubmitterAccount *)account andHash:(NSString *)hash{
     for(UploadProgressEntity *e in progresses_){
         if([e.account.accountHash isEqualToString:account.accountHash] && 
            [e.contentHash isEqualToString:hash]){
@@ -189,7 +189,7 @@
 /*!
  * add progress
  */
-- (void)addProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash{
+- (void)addProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash:(NSString *)hash{
     UploadProgressEntity *entity = [[UploadProgressEntity alloc] initWithAccount:account contentHash:hash];
     if(entity == nil){
         return;
@@ -201,7 +201,7 @@
 /*!
  * update progress
  */
-- (void)updateProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash progress:(CGFloat)progress{
+- (void)updateProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash:(NSString *)hash progress:(CGFloat)progress{
     UploadProgressEntity *entity = [self progressForAccount:account andHash:hash];
     if(entity == nil){
         return;
@@ -216,7 +216,7 @@
 /*! 
  * remove progress with message
  */
-- (void)removeProgressWithAccount:(PhotoSubmitterAccount *)account forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
+- (void)removeProgressWithAccount:(ENGPhotoSubmitterAccount *)account forHash:(NSString *)hash message:(NSString *)message delay:(int)delay{
     UploadProgressEntity *entity = [self progressForAccount:account andHash:hash];
     if(entity == nil){
         return;

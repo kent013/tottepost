@@ -13,7 +13,7 @@
 @interface FBRequest(UploadProgress)
 @end
 
-@protocol FBRequestWithUploadProgressDelegate <FBRequestDelegate>
+@protocol FBRequestWithUploadProgressDelegate <NSObject, FBRequestDelegate>
 @optional
 /**
  * Called as the body (message data) of a request

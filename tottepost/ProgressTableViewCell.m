@@ -13,11 +13,11 @@
 //Private Implementations
 //-----------------------------------------------------------------------------
 @interface ProgressTableViewCell(PrivateImplementation)
-- (void)setupInitialState:(id<PhotoSubmitterProtocol>) submitter andSize:(CGSize)size;
+- (void)setupInitialState:(id<ENGPhotoSubmitterProtocol>) submitter andSize:(CGSize)size;
 @end
 
 @implementation ProgressTableViewCell(PrivateImplementation)
-- (void)setupInitialState:(id<PhotoSubmitterProtocol>)submitter andSize:(CGSize)size{
+- (void)setupInitialState:(id<ENGPhotoSubmitterProtocol>)submitter andSize:(CGSize)size{
     [self.layer setCornerRadius:5.0];
     [self setClipsToBounds:YES];
     
@@ -43,7 +43,7 @@
 @implementation ProgressTableViewCell
 @synthesize progressView = progressView_;
 
-- (id)initWithSubmitter: (id<PhotoSubmitterProtocol>) submitter andSize:(CGSize)size
+- (id)initWithSubmitter: (id<ENGPhotoSubmitterProtocol>) submitter andSize:(CGSize)size
 {
     self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     if (self) {
